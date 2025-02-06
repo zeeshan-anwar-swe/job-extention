@@ -2,6 +2,7 @@ import React, { FC, HTMLAttributes } from 'react';
 import colors from 'tailwindcss/colors';
 import themeConfig from '../../../config/theme.config';
 
+
 type ILogoTemplateProps = HTMLAttributes<HTMLOrSVGElement>;
 const LogoTemplate: FC<ILogoTemplateProps> = (props) => {
 	const { ...rest } = props;

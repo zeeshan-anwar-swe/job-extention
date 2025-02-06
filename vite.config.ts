@@ -6,4 +6,7 @@ import EnvironmentPlugin from 'vite-plugin-environment';
 export default defineConfig({
 	plugins: [react(), EnvironmentPlugin({})],
 	assetsInclude: ['**/*.md'],
+	server: {
+		port: 7111
+	  },
 });

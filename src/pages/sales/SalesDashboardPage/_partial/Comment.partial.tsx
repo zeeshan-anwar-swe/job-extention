@@ -51,9 +51,9 @@ const CommentPartial = () => {
 		<Card className='h-full'>
 			<CardHeader>
 				<CardHeaderChild>
-					<CardTitle>Comments</CardTitle>
+					<CardTitle>Client Feedback</CardTitle>
 				</CardHeaderChild>
-				<CardHeaderChild>
+				{/* <CardHeaderChild>
 					<div className='flex -space-x-2 overflow-hidden'>
 						<img
 							src={usersDb[0].image?.thumb}
@@ -76,7 +76,7 @@ const CommentPartial = () => {
 							className='inline-block h-12 w-12 rounded-full ring-2 ring-white dark:ring-zinc-900'
 						/>
 					</div>
-				</CardHeaderChild>
+				</CardHeaderChild> */}
 			</CardHeader>
 			<CardBody>
 				<div className='flex flex-col gap-4'>

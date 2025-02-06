@@ -3,6 +3,7 @@ import productsDb from '../mocks/db/products.db';
 import usersDb from '../mocks/db/users.db';
 import rolesDb from '../mocks/db/roles.db';
 import projectsDb from '../mocks/db/projects.db';
+import Icon from '../components/icon/Icon';
 
 export const examplePages = {
 	examplesPage: {
@@ -20,6 +21,61 @@ export const examplePages = {
 };
 
 export const appPages = {
+	dashboardAppPages: {
+		id: 'dashboardHomeApp',
+		to: '/',
+		text: 'Dashboard',
+		icon:'HeroSquares2X2',	
+	},
+
+	candidatesAppPages: {
+		id: 'candidatesApp',
+		to: '/candidates',
+		text: 'Candidates',
+		icon: 'HeroUsers',
+	},
+	jobsAppPages: {
+		id: 'jobsApp',
+		to: '/jobs',
+		text: 'Jobs',
+		icon: 'HeroDocumentText',
+	},
+	cientsAppPages: {
+		id: 'clientsApp',
+		to: '/clients',
+		text: 'Clients',
+		icon: 'HeroBriefcase',
+	},
+
+	taskBoardAppPages: {
+		id: 'taskBoardApp',
+		to: '/task-board',
+		text: 'Task Board',
+		icon: 'HeroTableCells',
+	},
+
+	reportAndAnalyticsAppPages: {
+		id: 'reportAndAnalyticsApp',
+		to: '/report-and-analytics',
+		text: 'Report & Analytics',
+		icon: 'HeroPresentationChartBar',
+	},
+
+	aiInterviewAppPages: {
+		id: 'aiInterviewApp',
+		to: '/ai-interview',
+		text: 'AI Interview',
+		icon: 'HeroChatBubbleLeftRight',
+	},
+
+	KoalaByteAssistantAppPages: {
+		id: 'KoalaByteAssistantApp',
+		to: '/koalabyte-assistant',
+		text: 'KoalaByte Assistant',
+		icon: 'HeroChatBubbleLeftRight',
+	},
+
+
 	aiAppPages: {
 		id: 'aiApp',
 		to: '/ai',
@@ -75,8 +131,8 @@ export const appPages = {
 			salesDashboardPage: {
 				id: 'salesDashboardPage',
 				to: '/',
-				text: 'Sales Dashboard',
-				icon: 'HeroRectangleGroup',
+				text: 'Dashboard',
+				icon: 'HeroSquare2X2',
 			},
 			productPage: {
 				id: 'productPage',
@@ -137,8 +193,8 @@ export const appPages = {
 			crmDashboardPage: {
 				id: 'crmDashboardPage',
 				to: '/crm/dashboard',
-				text: 'CRM Dashboard',
-				icon: 'HeroUserCircle',
+				text: 'Candidates',
+				icon: 'HeroUserGroup',
 			},
 			customerPage: {
 				id: 'customerPage',

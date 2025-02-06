@@ -12,7 +12,7 @@ module.exports = {
 			},
 			backgroundImage: {
 				chevronDown: '/src/assets/required/chevron-down.svg',
-				chevronDownDark: '/src/assets/required/dark:chevron-down.svg',
+				chevronDownDark: '/src/assets/required/dark_chevron-down.svg',
 			},
 			transitionProperty: {
 				margin: 'margin',

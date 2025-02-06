@@ -68,7 +68,7 @@ const ChartPartial = () => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody>
-				<Chart series={state.series} options={state.options} type='bar' height={400} />
+				<Chart series={state.series} options={state.options} type='rangeBar' height={400} />
 			</CardBody>
 		</Card>
 	);
