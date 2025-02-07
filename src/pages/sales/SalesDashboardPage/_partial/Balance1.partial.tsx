@@ -1,11 +1,9 @@
-import React from 'react';
 import Card, { CardBody } from '../../../../components/ui/Card';
 import Icon from '../../../../components/icon/Icon';
 import Tooltip from '../../../../components/ui/Tooltip';
 import Balance from '../../../../components/Balance';
-import { TPeriod } from '../../../../constants/periods.constant';
 
-const Balance1Partial = ({ activeTab }: { activeTab: TPeriod }) => {
+const Balance1Partial = () => {
 	return (
 		<Card>
 			<CardBody>
@@ -14,8 +12,8 @@ const Balance1Partial = ({ activeTab }: { activeTab: TPeriod }) => {
 						<Icon icon='HeroCalendar' size='text-3xl' className='text-white' />
 					</div>
 					<div className='space-x-1 text-zinc-500 rtl:space-x-reverse'>
-						<span className='font-semibold'>Period: {activeTab.text} / Sales</span>
-						<Tooltip text='Total sales amount.' />
+						<span className='font-semibold'>New Jobs</span>
+						<Tooltip  text='Total number of new jobs.' />
 					</div>
 					<div className='text-4xl font-semibold'>238K</div>
 					<div className='flex'>

@@ -151,16 +151,16 @@ const SalesDashboardPage = () => {
 				<Container>
 					<div className='grid grid-cols-12 gap-4'>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance1Partial activeTab={activeTab} />
+							<Balance1Partial />
 						</div>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance2Partial activeTab={activeTab} />
+							<Balance2Partial />
 						</div>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance3Partial activeTab={activeTab} />
+							<Balance3Partial />
 						</div>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance4Partial activeTab={activeTab} />
+							<Balance4Partial />
 						</div>
 
 						<div className='col-span-12 2xl:col-span-8'>

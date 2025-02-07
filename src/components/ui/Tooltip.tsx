@@ -105,7 +105,7 @@ const Tooltip: FC<ITooltipProps> = (props) => {
 								className={classNames(
 									'z-[9999] m-2 px-2 py-1',
 									'max-w-xs',
-									'border-zinc-500/10 shadow-lg backdrop-blur-sm',
+									'border-zinc-500/10 shadow-lg bg-white',
 									[`${borderWidth as TBorderWidth}`],
 									[`${rounded as TRounded}`],
 									className,

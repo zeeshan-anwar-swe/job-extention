@@ -1,11 +1,9 @@
-import React from 'react';
 import Card, { CardBody } from '../../../../components/ui/Card';
 import Icon from '../../../../components/icon/Icon';
 import Tooltip from '../../../../components/ui/Tooltip';
 import Balance from '../../../../components/Balance';
-import { TPeriod } from '../../../../constants/periods.constant';
 
-const Balance3Partial = ({ activeTab }: { activeTab: TPeriod }) => {
+const Balance3Partial = () => {
 	return (
 		<Card>
 			<CardBody>
@@ -14,10 +12,10 @@ const Balance3Partial = ({ activeTab }: { activeTab: TPeriod }) => {
 						<Icon icon='HeroRocketLaunch' size='text-3xl' className='text-white' />
 					</div>
 					<div className='space-x-1 text-zinc-500 rtl:space-x-reverse'>
-						<span className='font-semibold'>Period: {activeTab.text} / Shipping</span>
-						<Tooltip text='Shipments sent.' />
+						<span className='font-semibold'>In Interview</span>
+						<Tooltip text='Number of candidate in interview.' />
 					</div>
-					<div className='text-4xl font-semibold'>4128</div>
+					<div className='text-4xl font-semibold'>12</div>
 					<div className='flex'>
 						<Balance status='fixed' value='0%'>
 							Balance
