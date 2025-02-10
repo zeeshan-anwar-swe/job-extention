@@ -4,6 +4,7 @@ import usersDb from '../mocks/db/users.db';
 import rolesDb from '../mocks/db/roles.db';
 import projectsDb from '../mocks/db/projects.db';
 import Icon from '../components/icon/Icon';
+import { text } from 'd3-fetch';
 
 export const examplePages = {
 	examplesPage: {
@@ -33,6 +34,14 @@ export const appPages = {
 		to: '/candidates',
 		text: 'Candidates',
 		icon: 'HeroUsers',
+		subPages:{
+			cadidateProfileAppPage:{
+				id:"cadidateProfileApp",
+				to:"candidates/profile",
+				text:"Candidate Profile",
+				icon:"HeroIdentification"
+			}
+		}
 	},
 	jobsAppPages: {
 		id: 'jobsApp',
@@ -538,6 +547,12 @@ export const authPages = {
 		id: 'loginPage',
 		to: '/login',
 		text: 'Login',
+		icon: 'HeroArrowRightOnRectangle',
+	},
+	signupPage: {
+		id: 'signupPage',
+		to: '/signup',
+		text: 'Signup',
 		icon: 'HeroArrowRightOnRectangle',
 	},
 	profilePage: {

@@ -6,9 +6,38 @@ import ComponentAndTemplateHeaderTemplate from '../templates/layouts/Headers/Com
 
 const headerRoutes: RouteProps[] = [
 	{ path: authPages.loginPage.to, element: null },
+	{ path: authPages.signupPage.to, element: null },
 	{
 		path: `${componentsPages.uiPages.to}/*`,
 		element: <ComponentAndTemplateHeaderTemplate />,
+	},
+	{
+		path: `${appPages.candidatesAppPages.to}/*`,
+		element: null,
+	},
+	{
+		path: `${appPages.jobsAppPages.to}/*`,
+		element: null,
+	},
+	{
+		path: `${appPages.cientsAppPages.to}/*`,
+		element: null,
+	},
+	{
+		path: `${appPages.taskBoardAppPages.to}/*`,
+		element: null,
+	},
+	{
+		path: `${appPages.reportAndAnalyticsAppPages.to}/*`,
+		element: null,
+	},
+	{
+		path: `${appPages.aiInterviewAppPages.to}/*`,
+		element: null,
+	},
+	{
+		path: `${appPages.KoalaByteAssistantAppPages.to}/*`,
+		element: null,
 	},
 	{
 		path: `${componentsPages.formPages.to}/*`,

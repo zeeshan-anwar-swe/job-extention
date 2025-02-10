@@ -6,42 +6,51 @@ import PageWrapper from '../components/layouts/PageWrapper/PageWrapper';
 import Button from '../components/ui/Button';
 import { useAuth } from '../context/authContext';
 import Input from '../components/form/Input';
-import usersDb from '../mocks/db/users.db';
 import LogoTemplate from '../templates/layouts/Logo/Logo.template';
 import FieldWrap from '../components/form/FieldWrap';
 import Icon from '../components/icon/Icon';
 import Validation from '../components/form/Validation';
 
 type TValues = {
-	username: string;
+	email: string;
+	name: string;
 	password: string;
 };
 
-const LoginPage = () => {
+const SignupPage = () => {
 	const { onLogin } = useAuth();
 
 	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
 
 	const formik = useFormik({
 		initialValues: {
-			username: '',
+			name: '',
+			email: '',
 			password: '',
 		},
+
 		validate: (values: TValues) => {
 			const errors: Partial<TValues> = {};
 
-			if (!values.username) {
-				errors.username = 'Required';
+			if (!values.name) {
+				errors.name = 'Required';
+			}
+
+			if (!values.email) {
+				errors.email = 'Required';
 			}
 
 			if (!values.password) {
 				errors.password = 'Required';
+			} else if (values.password.length < 8) {
+				errors.password = 'Password must be at least 8 characters long';
+			} else if (!/[!@#$%^&*()_+\-=[\]{};':",\\|,.<>\/]/.test(values.password)) {
+				errors.password = 'Password must contain at least one special character';
 			}
-
 			return errors;
 		},
 		onSubmit: (values: TValues, { setFieldError }) => {
-			onLogin(values.username, values.password)
+			onLogin(values.email, values.password)
 				.then(() => {})
 				.catch((e: Error) => {
 					if (e.cause === 'username') {
@@ -53,11 +62,16 @@ const LoginPage = () => {
 		},
 	});
 
+	const isPasswordValidLength = formik.values.password.length >= 8;
+	const isPasswordValidSpecialChar = /[!@#$%^&*()_+\-=[\]{};':",\\|,.<>\/]/.test(
+		formik.values.password,
+	);
+
 	return (
 		<PageWrapper
 			isProtectedRoute={false}
 			className='grid grid-cols-2 gap-x-32 bg-white dark:bg-inherit'
-			name='Sign In'>
+			name='Sign Up'>
 			<div className='py-16'>
 				<div className="relative ml-auto h-full w-8/12 rounded-2xl bg-[url('/images/sin-sup-side-bg.png')] bg-cover bg-center px-8">
 					<div className='absolute bottom-4 left-1/2 w-11/12 -translate-x-1/2  rounded-2xl border-2 border-white p-4 backdrop-blur-md'>
@@ -70,18 +84,17 @@ const LoginPage = () => {
 					</div>
 				</div>
 			</div>
-			<div className='container  flex h-full items-center justify-center'>
-				<div className='mr-auto flex max-w-sm flex-col gap-8'>
+			<div className='container mx-auto flex h-full items-center justify-center'>
+				<div className='flex mr-auto max-w-sm flex-col gap-8'>
 					<div>
 						<LogoTemplate className='h-12' />
 					</div>
 					<div>
-						<span className='text-4xl font-semibold'>Sign in</span>
+						<span className='text-4xl font-semibold'>Sign Up</span>
 					</div>
 					<div>
-						<span>Welcome back please enter the details.</span>
+						<span>Get started for effortless recruitment</span>
 					</div>
-
 					<form className='flex flex-col gap-4' noValidate>
 						<div
 							className={classNames({
@@ -89,18 +102,41 @@ const LoginPage = () => {
 							})}>
 							<Validation
 								isValid={formik.isValid}
-								isTouched={formik.touched.username}
-								invalidFeedback={formik.errors.username}
+								isTouched={formik.touched.name}
+								invalidFeedback={formik.errors.name}
+								validFeedback='Good'>
+								<FieldWrap firstSuffix={<Icon icon='HeroUser' className='mx-2' />}>
+									<Input
+										dimension='lg'
+										id='name'
+										autoComplete='name'
+										name='name'
+										placeholder='Enter your name'
+										value={formik.values.name}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FieldWrap>
+							</Validation>
+						</div>
+						<div
+							className={classNames({
+								'mb-2': !formik.isValid,
+							})}>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.email}
+								invalidFeedback={formik.errors.email}
 								validFeedback='Good'>
 								<FieldWrap
 									firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
 									<Input
 										dimension='lg'
-										id='username'
-										autoComplete='username'
-										name='username'
+										id='email'
+										autoComplete='email'
+										name='email'
 										placeholder='Enter your email'
-										value={formik.values.username}
+										value={formik.values.email}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
@@ -133,13 +169,45 @@ const LoginPage = () => {
 										autoComplete='current-password'
 										id='password'
 										name='password'
-										placeholder='Enter your password'
+										placeholder='Password'
 										value={formik.values.password}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>
 							</Validation>
+							<div className='mt-2 flex flex-col gap-2'>
+								<div className='flex items-center gap-2'>
+									<Icon
+										icon={
+											isPasswordValidLength
+												? 'HeroCheckCircle'
+												: 'HeroCheckCircle'
+										}
+										className={
+											isPasswordValidLength
+												? 'text-green-500'
+												: 'text-gray-400'
+										}
+									/>
+									<span className='text-sm'>At least 8 characters</span>
+								</div>
+								<div className='flex items-center gap-2'>
+									<Icon
+										icon={
+											isPasswordValidSpecialChar
+												? 'HeroCheckCircle'
+												: 'HeroCheckCircle'
+										}
+										className={
+											isPasswordValidSpecialChar
+												? 'text-green-500'
+												: 'text-gray-400'
+										}
+									/>
+									<span className='text-sm'>At least one special character</span>
+								</div>
+							</div>
 						</div>
 						<div>
 							<Button
@@ -147,7 +215,7 @@ const LoginPage = () => {
 								variant='solid'
 								className='w-full font-semibold'
 								onClick={() => formik.handleSubmit()}>
-								Sign in
+								Sign up
 							</Button>
 						</div>
 					</form>
@@ -159,7 +227,7 @@ const LoginPage = () => {
 								color='zinc'
 								size='lg'
 								className='w-full'>
-								Sign in with Google
+								Sign up with Google
 							</Button>
 						</div>
 						<div className='col-span-12'>
@@ -169,18 +237,17 @@ const LoginPage = () => {
 								color='zinc'
 								size='lg'
 								className='w-full'>
-								Sign in with Linked In
+								Sign up with LinkedIn
 							</Button>
 						</div>
 					</div>
-
 					<div>
 						<span className='flex gap-2 text-sm'>
 							<span className='text-zinc-400 dark:text-zinc-600'>
-								Don’t have an account?
+								Already have an account?
 							</span>
-							<Link to='/signup' className='hover:text-inherit'>
-								Sign up
+							<Link to='/login' className='hover:text-inherit'>
+								Login
 							</Link>
 						</span>
 					</div>
@@ -190,4 +257,4 @@ const LoginPage = () => {
 	);
 };
 
-export default LoginPage;
+export default SignupPage;

@@ -3,6 +3,8 @@ import { RouteProps } from 'react-router-dom';
 import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
 import NotFoundPage from '../pages/NotFound.page';
 import LoginPage from '../pages/Login.page';
+import SignupPage from '../pages/Signup.page';
+import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 
 /**
  * UI
@@ -103,6 +105,19 @@ const DuotoneIconsPage = lazy(
 const SalesDashboardPage = lazy(
 	() => import('../pages/sales/SalesDashboardPage/SalesDashboard.page'),
 );
+
+const CandidatesPage = lazy(
+	() => import('../pages/CandidatesPage/Candidates.page'),
+)
+
+
+const CandidateProfilePage = lazy(
+	() => import('../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page'),
+)
+
+
+
+
 const ProductListPage = lazy(
 	() => import('../pages/sales/products/ProductListPage/ProductList.page'),
 );
@@ -182,6 +197,28 @@ const contentRoutes: RouteProps[] = [
 	/**
 	 * SALES::END
 	 */
+
+
+	/**
+	 * Candidates::BEGIN
+	 */
+	{
+		path: appPages.candidatesAppPages.to,
+		element: <CandidatesPage />
+	},
+
+
+	{
+		path: appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to,
+		element: <CandidatesProfilePage />
+	},
+
+
+
+	/**
+	 * Candidates::END
+	 */
+
 
 	/**
 	 * CRM::BEGIN
@@ -382,6 +419,7 @@ const contentRoutes: RouteProps[] = [
 	 */
 
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
+	{ path: authPages.signupPage.to, element: <SignupPage /> },
 	{ path: authPages.profilePage.to, element: <ProfilePage /> },
 
 	{ path: '*', element: <NotFoundPage /> },

@@ -5,6 +5,7 @@ import { authPages } from '../config/pages.config';
 
 const asideRoutes: RouteProps[] = [
 	{ path: authPages.loginPage.to, element: null },
+	{ path: authPages.signupPage.to, element: null },
 	{ path: '*', element: <DefaultAsideTemplate /> },
 ];
 
