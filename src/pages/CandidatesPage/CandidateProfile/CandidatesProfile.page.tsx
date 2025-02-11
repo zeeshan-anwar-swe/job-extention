@@ -18,6 +18,8 @@ import LabelTitlepartial from './_partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 import Alert from '../../../components/ui/Alert';
+import CandiateProfilePageHeaderPartial from './_partial/AssignJob.partial';
+import HeaderPartial from './_partial/Header.partial';
 
 const CandidatesProfilePage = () => {
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -106,39 +108,7 @@ const CandidatesProfilePage = () => {
 					</SubheaderLeft>
 				</Subheader>
 				<Container>
-					<Card className='flex'>
-						<div className='flex items-center justify-between px-4 py-2'>
-							<TableDataProfilePartial
-								title='Dalia Benz'
-								subTitle='dali@hotmail.com'
-							/>
-							<div className='flex justify-end gap-x-4'>
-								<Button className='h-fit' variant='solid'>
-									Assign to a job
-								</Button>
-								<Button
-									rightIcon='HeroPaperAirplane'
-									className='h-fit'
-									variant='solid'>
-									Send To ATS
-								</Button>
-								<Button
-									rightIcon='HeroPencilSquare'
-									className='h-fit'
-									variant='outline'
-									color='zinc'>
-									Edit CV
-								</Button>
-								<Button
-									rightIcon='HeroArrowDown'
-									className='h-fit'
-									variant='outline'
-									color='zinc'>
-									Download
-								</Button>
-							</div>
-						</div>
-					</Card>
+					<HeaderPartial />
 					<div className='mt-4 grid grid-cols-12 gap-4'>
 						<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
 							<div>
@@ -228,12 +198,12 @@ const CandidatesProfilePage = () => {
 									<p className='font-light'>Download or view Candidate CV</p>
 								</div>
 
-								<div className='flex items-center justify-between rounded-xl border-2 border-zinc-100 px-4'>
-									<Button className='h-fit' icon='HeroDocument' color='zinc'>
+								<Link target='_blank' to={"#"} className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
+									<Button className='h-fit' icon='HeroPdf' color='zinc'>
 										FluerCook.pdf
 									</Button>
 									<Alert icon='HeroArrowDown'>{''}</Alert>
-								</div>
+								</Link>
 							</Card>
 
 							<Card className='h-fit p-4'>
@@ -241,19 +211,19 @@ const CandidatesProfilePage = () => {
 									<h1>Social Profiles</h1>
 									<p className='font-light'>Social profile insights</p>
 								</div>
-								<div className='flex-cols flex gap-4'>
-									<div className='flex items-center justify-between rounded-xl border-2 border-zinc-100 px-4'>
-										<Button className='h-fit' icon='HeroDocument' color='zinc'>
+								<div className='flex flex-col gap-2' >
+									<Link target='_blank' to={"#"} className='flex items-center justify-between rounded-xl border-2 border-zinc-100 '>
+										<Button className='h-fit' icon='HeroLinkedIn' color='zinc'>
 											Linked In
 										</Button>
 										<Alert icon='HeroArrowUpRight'>{''}</Alert>
-									</div>
-									<div className='flex items-center justify-between rounded-xl border-2 border-zinc-100 px-4'>
-										<Button className='h-fit' icon='HeroDocument' color='zinc'>
+									</Link>
+									<Link target='_blank' to={"/"} className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
+										<Button className='h-fit' icon='HeroGitHub' color='zinc'>
 											Git Hub
 										</Button>
 										<Alert icon='HeroArrowUpRight'>{''}</Alert>
-									</div>
+									</Link>
 								</div>
 							</Card>
 						</div>

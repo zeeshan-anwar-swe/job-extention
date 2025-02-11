@@ -21,7 +21,7 @@ const SearchPartial = () => {
 			<Input
 				id='example'
 				name='example'
-				placeholder='Search Candidate...'
+				placeholder='Search...'
 				value={searchValue}
 				className='rounded-full'
 				onChange={(e) => setSearchValue(e.target.value)}

@@ -8,6 +8,7 @@ import TableDataPositionPartial from './TableDataPosition.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
 import TableDataSourcePartial from './TableDataSource.partial';
+import { Link } from 'react-router-dom';
 
 const TablePartial = () => {
 	return (
@@ -61,6 +62,7 @@ const TablePartial = () => {
 								<TableDataActionsPartial />
 							</Td>
 						</Tr>
+
 						<Tr>
 							<Td>
 								<TableDataProfilePartial

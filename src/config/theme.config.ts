@@ -38,7 +38,7 @@ type TThemeConfigs = {
 };
 
 const themeConfig: TThemeConfigs = {
-	projectTitle: 'Fyr',
+	projectTitle: 'KoalaByte',
 	projectName: 'React TypeScript Tailwind Admin & AI Chat Template',
 	language: 'en',
 	theme: DARK_MODE.SYSTEM,

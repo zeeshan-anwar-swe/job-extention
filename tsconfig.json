@@ -20,6 +20,6 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src", "./src/declaration.d.ts"],
+	"include": ["src", "./src/declaration.d.ts", "src/pages/CandidatesPage/CandidateProfile/_partial/AssignJob.partial.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

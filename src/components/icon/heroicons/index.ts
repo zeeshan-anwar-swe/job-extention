@@ -1,4 +1,7 @@
 export { default as HeroAcademicCap } from './AcademicCap';
+export { default as HeroLinkedIn } from './LinkedIn';
+export { default as HeroPdf } from './Pdf';
+export { default as HeroGitHub } from './GitHub';
 export { default as HeroAdjustmentsHorizontal } from './AdjustmentsHorizontal';
 export { default as HeroAdjustmentsVertical } from './AdjustmentsVertical';
 export { default as HeroArchiveBoxArrowDown } from './ArchiveBoxArrowDown';

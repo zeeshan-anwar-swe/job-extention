@@ -209,7 +209,7 @@ const contentRoutes: RouteProps[] = [
 
 
 	{
-		path: appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to,
+		path: `${appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to}/:id`,
 		element: <CandidatesProfilePage />
 	},
 
