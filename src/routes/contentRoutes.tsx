@@ -1,10 +1,11 @@
-import React, { lazy } from 'react';
-import { RouteProps } from 'react-router-dom';
-import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
-import NotFoundPage from '../pages/NotFound.page';
+import { lazy } from 'react';
 import LoginPage from '../pages/Login.page';
 import SignupPage from '../pages/Signup.page';
+import { RouteProps } from 'react-router-dom';
+import NotFoundPage from '../pages/NotFound.page';
+import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
 import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
+import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
 
 /**
  * UI
@@ -110,14 +111,6 @@ const CandidatesPage = lazy(
 	() => import('../pages/CandidatesPage/Candidates.page'),
 )
 
-
-const CandidateProfilePage = lazy(
-	() => import('../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page'),
-)
-
-
-
-
 const ProductListPage = lazy(
 	() => import('../pages/sales/products/ProductListPage/ProductList.page'),
 );
@@ -211,6 +204,11 @@ const contentRoutes: RouteProps[] = [
 	{
 		path: `${appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to}/:id`,
 		element: <CandidatesProfilePage />
+	},
+
+	{
+		path: `${appPages.candidatesAppPages.subPages.candidateCVEditAppPage.to}/:id`,
+		element: <CandidateCVEditPage/>
 	},
 
 

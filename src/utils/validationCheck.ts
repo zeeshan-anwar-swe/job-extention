@@ -33,7 +33,7 @@ export const arrayValidationCheck: ArrayValidationCheckType = (value) => {
 
 
 export const profileImageUrlValidationCheck:profileImageUrlValidationCheckType = (url) =>{
-	if (url === null || url === undefined || typeof url !== 'string'){
+	if (url === null || url === undefined || typeof url !== 'string' || url === ""){
 		return DummyProfileImage
 	}else{
 		if(url.startsWith("http") || url.startsWith("https")){

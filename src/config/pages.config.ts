@@ -40,6 +40,12 @@ export const appPages = {
 				to:"candidates/profile",
 				text:"Candidate Profile",
 				icon:"HeroIdentification"
+			},
+			candidateCVEditAppPage:{
+				id:"cadidateProfileApp",
+				to:"candidates/cv-edit",
+				text:"Candidate Profile",
+				icon:"HeroPencilSquare"
 			}
 		}
 	},
