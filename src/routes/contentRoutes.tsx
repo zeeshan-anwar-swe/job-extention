@@ -7,6 +7,7 @@ import { appPages, authPages, componentsPages, examplePages } from '../config/pa
 import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
 import JobsPage from '../pages/Jobs/Jobs.page';
+import JobsViewCandidatesPage from '../pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
 /**
  * SALES
  */
@@ -87,16 +88,23 @@ const contentRoutes: RouteProps[] = [
 		element: <JobsPage />,
 	},
 
+	{
+		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}/:id`,
+		element: <JobsViewCandidatesPage />,
+	},
+
+	{
+		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}/:id`,
+		element: <JobsPage />,
+	},
 
 	/**
 	 * Jobs::BEGIN
 	 */
 
-
 	/**
 	 * Jobs::END
 	 */
-	
 
 	/**
 	 * Project::BEGIN

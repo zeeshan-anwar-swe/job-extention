@@ -26,7 +26,7 @@ export const appPages = {
 		id: 'dashboardHomeApp',
 		to: '/',
 		text: 'Dashboard',
-		icon:'HeroSquares2X2',	
+		icon: 'HeroSquares2X2',
 	},
 
 	candidatesAppPages: {
@@ -34,26 +34,40 @@ export const appPages = {
 		to: '/candidates',
 		text: 'Candidates',
 		icon: 'HeroUsers',
-		subPages:{
-			cadidateProfileAppPage:{
-				id:"cadidateProfileApp",
-				to:"candidates/profile",
-				text:"Candidate Profile",
-				icon:"HeroIdentification"
+		subPages: {
+			cadidateProfileAppPage: {
+				id: 'cadidateProfileApp',
+				to: 'candidates/profile',
+				text: 'Candidate Profile',
+				icon: 'HeroIdentification',
 			},
-			candidateCVEditAppPage:{
-				id:"cadidateProfileApp",
-				to:"candidates/cv-edit",
-				text:"Candidate Profile",
-				icon:"HeroPencilSquare"
-			}
-		}
+			candidateCVEditAppPage: {
+				id: 'cadidateProfileApp',
+				to: 'candidates/cv-edit',
+				text: 'Candidate Profile',
+				icon: 'HeroPencilSquare',
+			},
+		},
 	},
 	jobsAppPages: {
 		id: 'jobsApp',
 		to: '/jobs',
 		text: 'Jobs',
 		icon: 'HeroDocumentText',
+		subPages: {
+			viewCadidatesAppPages: {
+				id: 'jobsViewCadidatesApp',
+				to: '/jobs/view-cadidates',
+				text: 'View Cadidates',
+				icon: 'HeroUser',
+			},
+			createJobsAppPages: {
+				id: 'jobsCreateJobsApp',
+				to: '/jobs/create-job',
+				text: 'Create Job',
+				icon: 'Heroplus',
+			},
+		},
 	},
 	cientsAppPages: {
 		id: 'clientsApp',
@@ -89,7 +103,6 @@ export const appPages = {
 		text: 'KoalaByte Assistant',
 		icon: 'HeroChatBubbleLeftRight',
 	},
-
 
 	aiAppPages: {
 		id: 'aiApp',

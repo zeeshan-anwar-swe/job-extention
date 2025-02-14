@@ -1,17 +1,14 @@
 import Alert from '../../../components/ui/Alert';
 
-
-const TableDataSourcePartial = ({ title }: { title?: string }) => {
-	
+const TableDataSourcePartial = () => {
 	return (
-		<div className='mx-auto w-fit flex'>
-			<Alert icon='HeroBell'>
-				{""}
+		<div className='mx-auto flex w-fit'>
+			<Alert className='!p-1' icon='HeroGitHub'>
+				{''}
 			</Alert>
-			<Alert icon='HeroSignal'>
-				{""}
+			<Alert className='!p-1' icon='HeroLinkedIn'>
+				{''}
 			</Alert>
-
 		</div>
 	);
 };

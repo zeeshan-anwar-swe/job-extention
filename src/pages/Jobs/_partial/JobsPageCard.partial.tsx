@@ -1,12 +1,19 @@
 import Alert from '../../../components/ui/Alert';
 import Button from '../../../components/ui/Button';
-import Card, { CardBody, CardFooter, CardHeader } from '../../../components/ui/Card';
-import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 import CardBodyTagPartial from './CardBodyTag.partial';
+import CardDropdownPartial from './CardDropdown.partial';
+import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
+import Card, {
+	CardBody,
+	CardFooter,
+	CardFooterChild,
+	CardHeader,
+} from '../../../components/ui/Card';
+import { Link } from 'react-router-dom';
 
 const JobsPageCardPartial = () => {
 	return (
-		<Card className='col-span-4 flex flex-col gap-2 max-lg:col-span-12'>
+		<Card className='col-span-4 flex flex-col gap-2 border-2 border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
 			<CardHeader>
 				<Alert icon='HeroFolder' variant='solid'>
 					{''}
@@ -28,7 +35,7 @@ const JobsPageCardPartial = () => {
 					</Button>
 				</div>
 				<div className='h-full'>
-					<Button size='lg' icon='HeroEllipsisHorizontal'></Button>
+					<CardDropdownPartial />
 				</div>
 			</CardHeader>
 			<CardBody className='flex flex-col gap-4'>
@@ -42,12 +49,41 @@ const JobsPageCardPartial = () => {
 				</div>
 			</CardBody>
 			<CardFooter className='border-t-2 !py-2'>
-				<Button
-					size='lg'
-					className='!px-0 !text-xl !font-bold'
-					rightIcon='HeroArrowUpRight'>
-					View Cadidates
-				</Button>
+				<CardFooterChild>
+					<Link to='/jobs/view-cadidates/web-developer'>
+						<Button
+							size='lg'
+							className='!px-0 !text-xl !font-bold'
+							rightIcon='HeroArrowUpRight'>
+							View Cadidates
+						</Button>
+					</Link>
+				</CardFooterChild>
+				<CardFooterChild>
+					<div className='flex items-center'>
+						<img
+							className='-mr-6 aspect-square w-10 object-cover'
+							src={profileImageUrlValidationCheck('')}
+						/>
+						<img
+							className='-mr-6 aspect-square w-10 object-cover'
+							src={profileImageUrlValidationCheck('')}
+						/>
+						<img
+							className='-mr-6 aspect-square w-10 object-cover'
+							src={profileImageUrlValidationCheck('')}
+						/>
+						<img
+							className='-mr-6 aspect-square w-10 object-cover'
+							src={profileImageUrlValidationCheck('')}
+						/>
+						<Button
+							variant='outline'
+							rounded='rounded-full'
+							className='!bg-white'
+							icon='HeroPlus'></Button>
+					</div>
+				</CardFooterChild>
 			</CardFooter>
 		</Card>
 	);

@@ -70,6 +70,7 @@ const SalesDashboardPage = () => {
 		}
 		return () => {};
 	}, [activeTab]);
+
 	useEffect(() => {
 		const selectedStart = dayjs(selectedDate[0].startDate).format('LL');
 		const selectedEnd = dayjs(selectedDate[0].endDate).format('LL');
