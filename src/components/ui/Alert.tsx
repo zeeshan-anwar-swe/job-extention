@@ -79,7 +79,7 @@ const Alert: FC<IAlertProps> = (props) => {
 				{icon && (
 					<Icon
 						icon={icon}
-						className='shrink-0 self-center ltr:mr-4 rtl:ml-4'
+						className='shrink-0 self-center ltr:mr-0 rtl:ml-0'
 						size={iconSize}
 					/>
 				)}

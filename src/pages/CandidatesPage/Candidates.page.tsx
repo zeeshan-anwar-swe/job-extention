@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import { DateRangePicker, Range } from 'react-date-range';
+import { Range } from 'react-date-range';
 import colors from 'tailwindcss/colors';
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
@@ -11,7 +11,6 @@ import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
 } from '../../components/layouts/Subheader/Subheader';
-import PeriodButtonsPartial from './_partial/PeriodButtons.partial';
 import PERIOD, { TPeriod } from '../../constants/periods.constant';
 import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';

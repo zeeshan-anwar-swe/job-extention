@@ -6,6 +6,7 @@ import { RouteProps } from 'react-router-dom';
 import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
 import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
+import JobsPage from '../pages/Jobs/Jobs.page';
 /**
  * SALES
  */
@@ -77,6 +78,25 @@ const contentRoutes: RouteProps[] = [
 		path: `${appPages.candidatesAppPages.subPages.candidateCVEditAppPage.to}/:id`,
 		element: <CandidateCVEditPage />,
 	},
+
+	/**
+	 * Candidates::END
+	 */
+	{
+		path: appPages.jobsAppPages.to,
+		element: <JobsPage />,
+	},
+
+
+	/**
+	 * Jobs::BEGIN
+	 */
+
+
+	/**
+	 * Jobs::END
+	 */
+	
 
 	/**
 	 * Project::BEGIN

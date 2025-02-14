@@ -6,9 +6,8 @@ import {
 } from '../types/validationCheck.type';
 
 
-import DummyProfileImage from '../assets/svg-images/dummy-profile.svg';
+import DummyProfileImage from '../assets/svg-images/dummy-profile.png';
 
-const serverPrefixUrl = import.meta.env.VITE_SERVER_PREFIX_URL;
 
 export const textValidationCheck: TextValidationCheckType = (value) => {
 	if (value === null || value === undefined || value === '') {
@@ -40,7 +39,7 @@ export const profileImageUrlValidationCheck:profileImageUrlValidationCheckType =
 			return url
 		}
 		else{
-			return serverPrefixUrl+url
+			return url
 		}
 	}
 
