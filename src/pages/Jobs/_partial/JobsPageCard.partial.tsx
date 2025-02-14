@@ -39,11 +39,11 @@ const JobsPageCardPartial = () => {
 				</div>
 			</CardHeader>
 			<CardBody className='flex flex-col gap-4'>
-				<div className='flex items-center gap-2'>
+				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='No. of Positions:' value='4' />
 					<CardBodyTagPartial title='Experience:' value='1-4 Years' />
 				</div>
-				<div className='flex items-center gap-2'>
+				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='Location:' value='Miami' />
 					<CardBodyTagPartial title='Job Type:' value='Full Time, On Site' />
 				</div>

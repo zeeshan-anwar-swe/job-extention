@@ -1,7 +1,13 @@
-import Badge from '../../../components/ui/Badge';
-import { textValidationCheck } from '../../../utils/validationCheck';
+import Badge from '../../../../components/ui/Badge';
+import { textValidationCheck } from '../../../../utils/validationCheck';
 
-const TableDataFeedbackPartial = ({ title }: { title?: string }) => {
+const TableDataFeedbackPartial = ({
+	title,
+	className = '',
+}: {
+	title?: string;
+	className?: string;
+}) => {
 	const badgeColor = (() => {
 		switch (title) {
 			case 'Fair':
@@ -21,7 +27,7 @@ const TableDataFeedbackPartial = ({ title }: { title?: string }) => {
 		}
 	})();
 	return (
-		<div className='mx-auto w-fit'>
+		<div className={`mx-auto w-fit ${className}`}>
 			<Badge variant='outline' borderWidth='border-0' color={badgeColor}>
 				{textValidationCheck(title)}
 			</Badge>

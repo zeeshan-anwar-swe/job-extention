@@ -9,80 +9,26 @@ import Header, { HeaderLeft, HeaderRight } from '../../../components/layouts/Hea
 import DefaultHeaderRightCommon from '../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../components/ui/Button';
 import Breadcrumb from '../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card from '../../../components/ui/Card';
+import Card, {
+	CardBody,
+	CardFooter,
+	CardFooterChild,
+	CardHeader,
+	CardHeaderChild,
+} from '../../../components/ui/Card';
 import { Link } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 import Alert from '../../../components/ui/Alert';
 import HeaderPartial from './_partial/Header.partial';
+import TablePartial from './_partial/Table.partial';
+import Badge from '../../../components/ui/Badge';
+import TableDataFeedbackPartial from './_partial/TableDataFeedback.partial';
+import ResultUserDataPartial from './_partial/ResultUserData.partial';
+import SearchPartial from '../_partial/Search.partial';
 
 const JobsViewCandidatesPage = () => {
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
-
-	const [selectedDate, setSelectedDate] = useState<Range[]>([
-		{
-			startDate: dayjs().startOf('week').add(-1, 'week').toDate(),
-			endDate: dayjs().endOf('week').toDate(),
-			key: 'selection',
-		},
-	]);
-
-	useEffect(() => {
-		if (activeTab === PERIOD.DAY) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('day').toDate(),
-					endDate: dayjs().endOf('day').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.WEEK) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('week').toDate(),
-					endDate: dayjs().endOf('week').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.MONTH) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('month').toDate(),
-					endDate: dayjs().endOf('month').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		return () => {};
-	}, [activeTab]);
-	useEffect(() => {
-		const selectedStart = dayjs(selectedDate[0].startDate).format('LL');
-		const selectedEnd = dayjs(selectedDate[0].endDate).format('LL');
-
-		if (
-			selectedStart === dayjs().startOf('day').format('LL') &&
-			selectedEnd === dayjs().endOf('day').format('LL')
-		) {
-			setActiveTab(PERIOD.DAY);
-		}
-		if (
-			selectedStart === dayjs().startOf('week').format('LL') &&
-			selectedEnd === dayjs().endOf('week').format('LL')
-		) {
-			setActiveTab(PERIOD.WEEK);
-		}
-		if (
-			selectedStart === dayjs().startOf('month').format('LL') &&
-			selectedEnd === dayjs().endOf('month').format('LL')
-		) {
-			setActiveTab(PERIOD.MONTH);
-		}
-		return () => {};
-	}, [selectedDate]);
-
 	return (
 		<>
 			<Header>
@@ -103,136 +49,81 @@ const JobsViewCandidatesPage = () => {
 						</Link>
 					</SubheaderLeft>
 				</Subheader>
-				<Container>
-					<HeaderPartial />
-					<div className='mt-4 grid grid-cols-12 gap-4'>
-						<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
-							<div>
-								<h1>Primary Details</h1>
-								<p className='font-light'>
-									Get an overview of the candidate's key details.
-								</p>
-							</div>
-
-							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial
-									label='About'
-									detail='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-									eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-									enim ad minim veniam, quis nostrud exercitation ullamco laboris
-									nisi ut aliquip ex ea commodo consequat. Ut enim ad minim
-									veniam, quis nostrud exercitation ullamco laboris nisi ut
-									aliquip ex ea commodo consequat.'
-								/>
-							</div>
-
-							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial
-									label='Roles'
-									detail='Product Designer, UI/UX Designer'
-								/>
-								<LabelTitlepartial label='Location' detail='Miami, USA' />
-							</div>
-							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial label='Experience' detail='3 Years' />
-								<LabelTitlepartial
-									label='Education'
-									detail='BS in Product Design'
-								/>
-							</div>
-							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial
-									label='Availability'
-									detail='Open to New Opportunities'
-								/>
-								<LabelTitlepartial
-									label='Education'
-									detail='BS in Product Design'
-								/>
-							</div>
-							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial
-									label='Top Skills'
-									detail='Figma, Photoshop, Illustrator, Product Design, User Testing'
-								/>
-							</div>
-						</Card>
-
-						<div className='col-span-4 flex flex-col gap-4 max-lg:col-span-12'>
-							<Card className='h-fit w-full p-4'>
+				<Container className='grid grid-cols-12 gap-4'>
+					<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+						<CardHeader>
+							<CardHeaderChild className='!flex-col !items-start '>
+								<h1>Web Developer - Candidates</h1>
+								<p>Web Developer - Candidates</p>
+							</CardHeaderChild>
+							<CardHeaderChild>
+								<Button size='xl' variant='solid' rightIcon='HeroEnvelope'>
+									Email
+								</Button>
+								<Button size='xl' variant='solid' rightIcon='HeroPlus'>
+									Assign to Candidate
+								</Button>
+							</CardHeaderChild>
+						</CardHeader>
+						<CardBody className=' overflow-scroll'>
+							<TablePartial />
+							<NavSeparator className='mt-8' />
+						</CardBody>
+						<CardFooter>
+							<ResultUserDataPartial />
+							<ResultUserDataPartial />
+						</CardFooter>
+					</Card>
+					<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+						<CardHeader>
+							<CardHeaderChild>
 								<div>
-									<h1>Jobs Assigned</h1>
-									<p className='font-light'>
-										View the jobs, candidate is assigned to.
-									</p>
+									<h1>Jobs Details</h1>
+									<p className='mb-0 mt-2'>Edit Job description and details.</p>
 								</div>
-								<div className='flex flex-col gap-2 rounded-xl bg-zinc-100 p-4'>
-									<div>
-										<h3>Product Designer</h3>
-										<p className='font-light'>
-											Product Designer with 3 years of experience. Full time
-											On site Job.
-										</p>
-									</div>
+							</CardHeaderChild>
+							<CardHeaderChild>
+								<Button icon='HeroEllipsisHorizontal'></Button>
+							</CardHeaderChild>
+						</CardHeader>
+						<CardHeader className=' !justify-start'>
+							<Button
+								variant='outline'
+								color='zinc'
+								rounded='rounded-full'
+								className='!justify-start gap-2 !py-0 !pl-0 !pr-2 '>
+								<img
+									className='aspect-square w-8'
+									src={profileImageUrlValidationCheck('')}
+									alt='profile-image'
+								/>
+								<span>Paul Walker</span>
+							</Button>
 
-									<NavSeparator />
-
-									<div className='flex items-center gap-4'>
-										<img
-											className='aspect-square w-10'
-											src={profileImageUrlValidationCheck(null)}
-											alt='profile'
-										/>
-										<h5>Phoenix Baker</h5>
-										<p className='m-0 p-0 font-light'>1:22PM Yesterday </p>
-									</div>
-								</div>
-							</Card>
-							<Card className='h-fit p-4'>
-								<div>
-									<h1>CV</h1>
-									<p className='font-light'>Download or view Candidate CV</p>
-								</div>
-
-								<Link
-									target='_blank'
-									to={'#'}
-									className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
-									<Button className='h-fit' icon='HeroPdf' color='zinc'>
-										FluerCook.pdf
-									</Button>
-									<Alert icon='HeroArrowDown'>{''}</Alert>
-								</Link>
-							</Card>
-
-							<Card className='h-fit p-4'>
-								<div>
-									<h1>Social Profiles</h1>
-									<p className='font-light'>Social profile insights</p>
-								</div>
-								<div className='flex flex-col gap-2'>
-									<Link
-										target='_blank'
-										to={'#'}
-										className='flex items-center justify-between rounded-xl border-2 border-zinc-100 '>
-										<Button className='h-fit' icon='HeroLinkedIn' color='zinc'>
-											Linked In
-										</Button>
-										<Alert icon='HeroArrowUpRight'>{''}</Alert>
-									</Link>
-									<Link
-										target='_blank'
-										to={'/'}
-										className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
-										<Button className='h-fit' icon='HeroGitHub' color='zinc'>
-											Git Hub
-										</Button>
-										<Alert icon='HeroArrowUpRight'>{''}</Alert>
-									</Link>
-								</div>
-							</Card>
-						</div>
-					</div>
+							<Button
+								variant='outline'
+								color='zinc'
+								rounded='rounded-full'
+								className='!justify-start gap-2'>
+								<span>In Progress</span>
+							</Button>
+						</CardHeader>
+						<CardBody className='!h-fit gap-4'>
+							<NavSeparator className='' />
+							<LabelTitlepartial label='Job Title' detail='Web Developer' />
+							<LabelTitlepartial label='No of position' detail='3' />
+							<LabelTitlepartial label='Experience' detail='2-3 years' />
+							<LabelTitlepartial label='Job Type' detail='Full Time' />
+							<LabelTitlepartial label='Location' detail='Remote' />
+							<LabelTitlepartial label='Skill Required' detail='MER Stack' />
+						</CardBody>
+						<CardFooter>
+							<CardFooterChild>
+								<Button variant='outline'>Cancel</Button>
+								<Button variant='solid'>Save and update the job</Button>
+							</CardFooterChild>
+						</CardFooter>
+					</Card>
 				</Container>
 			</PageWrapper>
 		</>
