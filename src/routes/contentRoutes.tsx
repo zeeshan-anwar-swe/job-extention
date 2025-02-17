@@ -1,13 +1,14 @@
-import { lazy } from 'react';
+import React, { lazy } from 'react';
+import { RouteProps } from 'react-router-dom';
 import LoginPage from '../pages/Login.page';
 import SignupPage from '../pages/Signup.page';
-import { RouteProps } from 'react-router-dom';
 // import NotFoundPage from '../pages/NotFound.page';
-import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
+import { appPages, authPages } from '../config/pages.config';
 import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
 import JobsPage from '../pages/Jobs/Jobs.page';
 import JobsViewCandidatesPage from '../pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
+import JobsCreateNewJobPage from '../pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page';
 /**
  * SALES
  */
@@ -83,6 +84,11 @@ const contentRoutes: RouteProps[] = [
 	/**
 	 * Candidates::END
 	 */
+
+	/**
+	 * Jobs::BEGIN
+	 */
+
 	{
 		path: appPages.jobsAppPages.to,
 		element: <JobsPage />,
@@ -94,13 +100,9 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{
-		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}/:id`,
-		element: <JobsPage />,
+		path: appPages.jobsAppPages.subPages.createJobsAppPages.to,
+		element: <JobsCreateNewJobPage />,
 	},
-
-	/**
-	 * Jobs::BEGIN
-	 */
 
 	/**
 	 * Jobs::END

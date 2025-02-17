@@ -1,10 +1,7 @@
-import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import { Range } from 'react-date-range';
+import React from 'react';
 import Container from '../../../components/layouts/Container/Container';
 import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
 import Subheader, { SubheaderLeft } from '../../../components/layouts/Subheader/Subheader';
-import PERIOD, { TPeriod } from '../../../constants/periods.constant';
 import Header, { HeaderLeft, HeaderRight } from '../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../components/ui/Button';
@@ -19,21 +16,16 @@ import Card, {
 import { Link } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
-import Alert from '../../../components/ui/Alert';
-import HeaderPartial from './_partial/Header.partial';
 import TablePartial from './_partial/Table.partial';
-import Badge from '../../../components/ui/Badge';
-import TableDataFeedbackPartial from './_partial/TableDataFeedback.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
-import SearchPartial from '../_partial/Search.partial';
+import SearchPartial from './_partial/Search.partial';
 
-const JobsViewCandidatesPage = () => {
+const JobsCreateNewJobPage = () => {
 	return (
 		<>
 			<Header>
 				<HeaderLeft>
-					<Breadcrumb path='Pages / Jobs' currentPage='View Candidates' />
+					<Breadcrumb path='Pages / Jobs' currentPage='Create Job' />
 				</HeaderLeft>
 				<HeaderRight>
 					<DefaultHeaderRightCommon />
@@ -53,63 +45,62 @@ const JobsViewCandidatesPage = () => {
 					<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
 						<CardHeader>
 							<CardHeaderChild className='!flex-col !items-start '>
-								<h1>Web Developer - Candidates</h1>
-								<p>Web Developer - Candidates</p>
-							</CardHeaderChild>
-							<CardHeaderChild>
-								<Button size='xl' variant='solid' rightIcon='HeroEnvelope'>
-									Email
-								</Button>
-								<Link to='/jobs/create-job'>
-									<Button size='xl' variant='solid' rightIcon='HeroPlus'>
-										Assign to Candidate
-									</Button>
-								</Link>
+								<h1>Create a New Job</h1>
+								<p>
+									Effortlessly create jobs, assign candidates, send to a client.
+								</p>
 							</CardHeaderChild>
 						</CardHeader>
-						<CardBody className=' overflow-scroll'>
-							<TablePartial />
+						<CardBody className='gap-4'>
+							<LabelTitlepartial
+								label='Job Title'
+								detail='Product Designer, UI/UX Designer'
+							/>
+							<div className='flex items-center'>
+								<LabelTitlepartial label='No. of Positions' detail='3' />
+								<LabelTitlepartial label='Experience' detail='3-5 Years' />
+							</div>
+							<div className='flex items-center'>
+								<LabelTitlepartial label='Job Type' detail='Remote' />
+								<LabelTitlepartial label='Location' detail='Miami' />
+							</div>
+							<LabelTitlepartial
+								label='Skills Required'
+								detail='Figma, Photoshop, Illustrator, Product Design, User Testing'
+							/>
 							<NavSeparator className='mt-8' />
 						</CardBody>
-						<CardFooter>
-							<ResultUserDataPartial />
-							<ResultUserDataPartial />
+						<CardFooter className='!flex-col !items-start'>
+							<h1>Assigned Candidates</h1>
+
+							<div className='flex w-full items-center gap-4'>
+								<ResultUserDataPartial />
+								<ResultUserDataPartial />
+								<ResultUserDataPartial />
+							</div>
 						</CardFooter>
 					</Card>
+
 					<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
 						<CardHeader>
 							<CardHeaderChild>
 								<div>
-									<h1>Jobs Details</h1>
-									<p className='mb-0 mt-2'>Edit Job description and details.</p>
+									<h1>Assign Candidates</h1>
+									<p className='mb-0 mt-2'>Add Candidates to the Job</p>
 								</div>
 							</CardHeaderChild>
 							<CardHeaderChild>
-								<Button icon='HeroEllipsisHorizontal'></Button>
+								<SearchPartial />
+								<Button
+									rounded='rounded-full'
+									variant='outline'
+									color='zinc'
+									icon='HeroBarFilter'>
+									Filter
+								</Button>
 							</CardHeaderChild>
 						</CardHeader>
-						<CardHeader className=' !justify-start'>
-							<Button
-								variant='outline'
-								color='zinc'
-								rounded='rounded-full'
-								className='!justify-start gap-2 !py-0 !pl-0 !pr-2 '>
-								<img
-									className='aspect-square w-8'
-									src={profileImageUrlValidationCheck('')}
-									alt='profile-image'
-								/>
-								<span>Paul Walker</span>
-							</Button>
 
-							<Button
-								variant='outline'
-								color='zinc'
-								rounded='rounded-full'
-								className='!justify-start gap-2'>
-								<span>In Progress</span>
-							</Button>
-						</CardHeader>
 						<CardBody className='!h-fit gap-4'>
 							<NavSeparator className='' />
 							<LabelTitlepartial label='Job Title' detail='Web Developer' />
@@ -132,4 +123,4 @@ const JobsViewCandidatesPage = () => {
 	);
 };
 
-export default JobsViewCandidatesPage;
+export default JobsCreateNewJobPage;

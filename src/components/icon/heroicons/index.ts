@@ -228,6 +228,7 @@ export { default as HeroPlayCircle } from './PlayCircle';
 export { default as HeroPlayPause } from './PlayPause';
 export { default as HeroPlay } from './Play';
 export { default as HeroPlusCircle } from './PlusCircle';
+export { default as HeroBarFilter } from './BarFilter';
 export { default as HeroPlusSmall } from './PlusSmall';
 export { default as HeroPlus } from './Plus';
 export { default as HeroPower } from './Power';
