@@ -14,27 +14,25 @@ import { Link } from 'react-router-dom';
 const JobsPageCardPartial = () => {
 	return (
 		<Card className='col-span-4 flex flex-col gap-2 border-2 border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
-			<CardHeader>
-				<Alert icon='HeroFolder' variant='solid'>
-					{''}
-				</Alert>
+			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
+				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
-					<h4>Web Developer</h4>
+					<h4 className='max-md:text-sm'>Web Developer</h4>
 					<Button
 						rounded='rounded-full'
 						variant='outline'
 						color='zinc'
-						className='gap-2 !px-2 !py-1 '
+						className='gap-2 !px-2 !py-1'
 						rightIcon='Hero'>
 						<img
 							className='aspect-square w-6 '
 							src={profileImageUrlValidationCheck('')}
 							alt='profile-image'
 						/>
-						<h5>Alex Hales</h5>
+						<h5 className='max-md:text-sm'>Alex Hales</h5>
 					</Button>
 				</div>
-				<div className='h-full'>
+				<div className='h-full max-md:flex-1'>
 					<CardDropdownPartial />
 				</div>
 			</CardHeader>

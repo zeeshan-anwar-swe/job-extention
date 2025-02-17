@@ -1,6 +1,4 @@
-import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
-import TableDataProfilePartial from './TableDataProfile.partial';
 import Modal, {
 	ModalBody,
 	ModalFooter,
@@ -8,7 +6,6 @@ import Modal, {
 	ModalHeader,
 } from '../../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
-import Alert from '../../../../components/ui/Alert';
 import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
 
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
@@ -25,13 +22,20 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 					<AssignJobModalListItemPartial />
 					<AssignJobModalListItemPartial />
 					<AssignJobModalListItemPartial />
-					
 				</div>
 			</ModalBody>
 			<ModalFooter>
 				<ModalFooterChild className='w-full pt-4'>
-					<Button onClick={() => setModal(false)} className='w-full' variant='outline' color='zinc'>Cancel</Button>
-					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>Done</Button>
+					<Button
+						onClick={() => setModal(false)}
+						className='w-full'
+						variant='outline'
+						color='zinc'>
+						Cancel
+					</Button>
+					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+						Done
+					</Button>
 				</ModalFooterChild>
 			</ModalFooter>
 		</Modal>

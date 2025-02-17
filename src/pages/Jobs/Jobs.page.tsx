@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import colors from 'tailwindcss/colors';
 import themeConfig from '../../config/theme.config';
+import HeaderPartial from './_partial/Header.partial';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
@@ -107,7 +108,7 @@ const JobsPage = () => {
 							color='zinc'
 							variant='outline'
 							rounded='rounded-full'
-							icon='HeroBarsArrowDown'>
+							icon='HeroBarFilter'>
 							Filter
 						</Button>
 					</SubheaderLeft>
@@ -161,9 +162,7 @@ const JobsPage = () => {
 								</div>
 							</CardHeaderChild>
 							<CardHeaderChild>
-								<Button variant='solid' rightIcon='HeroPlus'>
-									Create a new job
-								</Button>
+								<HeaderPartial />
 							</CardHeaderChild>
 						</CardHeader>
 						<CardBody className='col-span-12 grid grid-cols-12 gap-4'>

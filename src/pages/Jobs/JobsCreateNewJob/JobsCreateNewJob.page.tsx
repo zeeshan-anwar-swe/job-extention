@@ -19,6 +19,7 @@ import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import TablePartial from './_partial/Table.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 import SearchPartial from './_partial/Search.partial';
+import CandidateCardPartial from './_partial/CandidateCard.partial';
 
 const JobsCreateNewJobPage = () => {
 	return (
@@ -42,7 +43,7 @@ const JobsCreateNewJobPage = () => {
 					</SubheaderLeft>
 				</Subheader>
 				<Container className='grid grid-cols-12 gap-4'>
-					<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+					<Card className='col-span-8 flex flex-col gap-2 max-lg:col-span-12'>
 						<CardHeader>
 							<CardHeaderChild className='!flex-col !items-start '>
 								<h1>Create a New Job</h1>
@@ -56,11 +57,11 @@ const JobsCreateNewJobPage = () => {
 								label='Job Title'
 								detail='Product Designer, UI/UX Designer'
 							/>
-							<div className='flex items-center'>
+							<div className='flex items-center gap-4'>
 								<LabelTitlepartial label='No. of Positions' detail='3' />
 								<LabelTitlepartial label='Experience' detail='3-5 Years' />
 							</div>
-							<div className='flex items-center'>
+							<div className='flex items-center gap-4'>
 								<LabelTitlepartial label='Job Type' detail='Remote' />
 								<LabelTitlepartial label='Location' detail='Miami' />
 							</div>
@@ -71,17 +72,24 @@ const JobsCreateNewJobPage = () => {
 							<NavSeparator className='mt-8' />
 						</CardBody>
 						<CardFooter className='!flex-col !items-start'>
-							<h1>Assigned Candidates</h1>
+							<CardFooterChild>
+								<h1>Assigned Candidates</h1>
 
-							<div className='flex w-full items-center gap-4'>
-								<ResultUserDataPartial />
-								<ResultUserDataPartial />
-								<ResultUserDataPartial />
-							</div>
+								<div className='flex w-full items-center gap-4 max-md:flex-col max-md:items-start'>
+									<ResultUserDataPartial />
+									<ResultUserDataPartial />
+									<ResultUserDataPartial />
+								</div>
+							</CardFooterChild>
+							<CardFooterChild className='ml-auto'>
+								<Button variant='outline'>Cancel</Button>
+								<Button variant='solid'>Save Job</Button>
+								<Button variant='solid'>Assign To client</Button>
+							</CardFooterChild>
 						</CardFooter>
 					</Card>
 
-					<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+					<Card className='col-span-4 flex flex-col gap-2 max-lg:col-span-12'>
 						<CardHeader>
 							<CardHeaderChild>
 								<div>
@@ -101,21 +109,40 @@ const JobsCreateNewJobPage = () => {
 							</CardHeaderChild>
 						</CardHeader>
 
-						<CardBody className='!h-fit gap-4'>
-							<NavSeparator className='' />
-							<LabelTitlepartial label='Job Title' detail='Web Developer' />
-							<LabelTitlepartial label='No of position' detail='3' />
-							<LabelTitlepartial label='Experience' detail='2-3 years' />
-							<LabelTitlepartial label='Job Type' detail='Full Time' />
-							<LabelTitlepartial label='Location' detail='Remote' />
-							<LabelTitlepartial label='Skill Required' detail='MER Stack' />
+						<CardBody>
+							<NavSeparator className='mb-8' />
+							<div className='flex flex-col gap-4'>
+								<CandidateCardPartial
+									name='Alena Holmes'
+									profession='Web Designer'
+									experience='3 Years'
+									location='Miami'
+									availability='Yes'
+									profileImageUrl=''
+									linkedIn='https://linkedin.com/alena-holmes'
+								/>
+
+								<CandidateCardPartial
+									name='Alena Holmes'
+									profession='Web Designer'
+									experience='3 Years'
+									location='Miami'
+									availability='Yes'
+									profileImageUrl=''
+									linkedIn='https://linkedin.com/alena-holmes'
+									gitHub='https://github.com/alena-holmes'
+								/>
+								<CandidateCardPartial
+									name='Alena Holmes'
+									profession='Web Designer'
+									experience='3 Years'
+									location='Miami'
+									availability='Yes'
+									profileImageUrl=''
+									linkedIn='https://linkedin.com/alena-holmes'
+								/>
+							</div>
 						</CardBody>
-						<CardFooter>
-							<CardFooterChild>
-								<Button variant='outline'>Cancel</Button>
-								<Button variant='solid'>Save and update the job</Button>
-							</CardFooterChild>
-						</CardFooter>
 					</Card>
 				</Container>
 			</PageWrapper>

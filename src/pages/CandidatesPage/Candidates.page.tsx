@@ -103,9 +103,15 @@ const CandidatesPage = () => {
 				<Subheader>
 					<SubheaderLeft>
 						<SearchPartial />
-						<Button borderWidth='border-2' color='zinc' variant='outline' rounded='rounded-full' icon='HeroBarsArrowDown'>Filter</Button>
+						<Button
+							borderWidth='border-2'
+							color='zinc'
+							variant='outline'
+							rounded='rounded-full'
+							icon='HeroBarFilter'>
+							Filter
+						</Button>
 					</SubheaderLeft>
-					
 				</Subheader>
 				<Container>
 					<div className='grid grid-cols-12 gap-4'>

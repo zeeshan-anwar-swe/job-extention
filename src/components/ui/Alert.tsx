@@ -15,7 +15,7 @@ export type TAlertVariants = 'solid' | 'outline' | 'default';
 
 interface IAlertProps extends HTMLAttributes<HTMLDivElement> {
 	borderWidth?: TBorderWidth;
-	children: ReactNode;
+	children?: ReactNode;
 	className?: string;
 	color?: TColors;
 	colorIntensity?: TColorIntensity;
@@ -85,7 +85,7 @@ const Alert: FC<IAlertProps> = (props) => {
 				)}
 				<div className='w-full grow self-center'>
 					{title && <div className='text-lg font-semibold'>{title}</div>}
-					<div>{children}</div>
+					{children && <div>{children}</div>}
 				</div>
 				{isClosable && (
 					<div className='flex h-full grow items-start'>

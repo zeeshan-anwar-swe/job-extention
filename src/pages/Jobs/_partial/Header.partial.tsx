@@ -7,34 +7,12 @@ import AssignJobModalPartial from './AssignJob.partial';
 const HeaderPartial = () => {
 	const [modal, setModal] = useState<boolean>(false);
 	return (
-		<Card className='flex'>
-			<div className='flex items-center justify-between px-4 py-2'>
-				<TableDataProfilePartial title='Dalia Benz' subTitle='dali@hotmail.com' />
-				<div className='flex justify-end gap-x-4'>
-					<Button onClick={()=> setModal(true)} className='h-fit' variant='solid'>
-						Assign to a job
-					</Button>
-					<Button rightIcon='HeroPaperAirplane' className='h-fit' variant='solid'>
-						Send To ATS
-					</Button>
-					<Button
-						rightIcon='HeroPencilSquare'
-						className='h-fit'
-						variant='outline'
-						color='zinc'>
-						Edit CV
-					</Button>
-					<Button
-						rightIcon='HeroArrowDown'
-						className='h-fit'
-						variant='outline'
-						color='zinc'>
-						Download
-					</Button>
-				</div>
-			</div>
+		<>
+			<Button onClick={() => setModal(true)} variant='solid' rightIcon='HeroPlus'>
+				Create a new job
+			</Button>
 			<AssignJobModalPartial setModal={setModal} modal={modal} />
-		</Card>
+		</>
 	);
 };
 

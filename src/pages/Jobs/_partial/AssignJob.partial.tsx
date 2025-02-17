@@ -11,7 +11,7 @@ import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>Assign Job</ModalHeader>
+			<ModalHeader>Assign Job “Product Designer” to a Client</ModalHeader>
 			<div className='p-4'>
 				<SearchPartial />
 			</div>
@@ -22,13 +22,23 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 					<AssignJobModalListItemPartial />
 					<AssignJobModalListItemPartial />
 					<AssignJobModalListItemPartial />
-					
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<ModalFooterChild className='w-full pt-4'>
-					<Button onClick={() => setModal(false)} className='w-full' variant='outline' color='zinc'>Cancel</Button>
-					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>Done</Button>
+				<ModalFooterChild className='w-full pt-4 max-md:!flex-col'>
+					<Button
+						onClick={() => setModal(false)}
+						className='w-full'
+						variant='outline'
+						color='zinc'>
+						Cancel
+					</Button>
+					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+						Done
+					</Button>
+					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+						Invite As Client
+					</Button>
 				</ModalFooterChild>
 			</ModalFooter>
 		</Modal>
