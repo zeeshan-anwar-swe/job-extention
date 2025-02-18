@@ -9,6 +9,7 @@ import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/Candida
 import JobsPage from '../pages/Jobs/Jobs.page';
 import JobsViewCandidatesPage from '../pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
 import JobsCreateNewJobPage from '../pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page';
+import ClientsPage from '../pages/ClientsPage/Clients.page';
 /**
  * SALES
  */
@@ -106,6 +107,29 @@ const contentRoutes: RouteProps[] = [
 
 	/**
 	 * Jobs::END
+	 */
+
+	/**
+	 * Clients::BEGIN
+	 */
+
+	{
+		path: appPages.cientsAppPages.to,
+		element: <ClientsPage />,
+	},
+
+	{
+		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}/:id`,
+		element: <JobsViewCandidatesPage />,
+	},
+
+	{
+		path: appPages.jobsAppPages.subPages.createJobsAppPages.to,
+		element: <JobsCreateNewJobPage />,
+	},
+
+	/**
+	 * Clients::END
 	 */
 
 	/**

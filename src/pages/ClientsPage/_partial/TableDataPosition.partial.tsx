@@ -1,4 +1,4 @@
-import { textValidationCheck } from '../../../../utils/validationCheck';
+import { textValidationCheck } from '../../../utils/validationCheck';
 
 const TableDataPositionPartial = ({ title, subTitle }: { title?: string; subTitle?: string }) => {
 	return (

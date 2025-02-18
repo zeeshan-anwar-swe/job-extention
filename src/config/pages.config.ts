@@ -69,6 +69,7 @@ export const appPages = {
 			},
 		},
 	},
+
 	cientsAppPages: {
 		id: 'clientsApp',
 		to: '/clients',

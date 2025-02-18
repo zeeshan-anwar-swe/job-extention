@@ -1,5 +1,5 @@
-import Badge from '../../../components/ui/Badge';
-import { textValidationCheck } from '../../../utils/validationCheck';
+import Badge from '../../../../components/ui/Badge';
+import { textValidationCheck } from '../../../../utils/validationCheck';
 
 const TableDataFeedbackPartial = ({ title }: { title?: string }) => {
 	const badgeColor = (() => {
