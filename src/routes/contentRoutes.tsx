@@ -10,6 +10,7 @@ import JobsPage from '../pages/Jobs/Jobs.page';
 import JobsViewCandidatesPage from '../pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
 import JobsCreateNewJobPage from '../pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page';
 import ClientsPage from '../pages/ClientsPage/Clients.page';
+import ClientProfilePage from '../pages/ClientsPage/ClientProfile/ClientProfile.page';
 /**
  * SALES
  */
@@ -114,18 +115,18 @@ const contentRoutes: RouteProps[] = [
 	 */
 
 	{
-		path: appPages.cientsAppPages.to,
+		path: appPages.clientsAppPages.to,
 		element: <ClientsPage />,
 	},
 
 	{
-		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}/:id`,
-		element: <JobsViewCandidatesPage />,
+		path: `${appPages.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+		element: <ClientProfilePage />,
 	},
 
 	{
-		path: appPages.jobsAppPages.subPages.createJobsAppPages.to,
-		element: <JobsCreateNewJobPage />,
+		path: appPages.clientsAppPages.subPages.clientProfileAppPages.to,
+		element: <ClientProfilePage />,
 	},
 
 	/**

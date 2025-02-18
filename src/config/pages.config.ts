@@ -70,11 +70,19 @@ export const appPages = {
 		},
 	},
 
-	cientsAppPages: {
+	clientsAppPages: {
 		id: 'clientsApp',
 		to: '/clients',
 		text: 'Clients',
 		icon: 'HeroBriefcase',
+		subPages: {
+			clientProfileAppPages: {
+				id: 'clientProfileApp',
+				to: '/clients/profile',
+				text: 'Client Profile',
+				icon: 'HeroIdentification',
+			},
+		},
 	},
 
 	taskBoardAppPages: {

@@ -20,7 +20,7 @@ const headerRoutes: RouteProps[] = [
 		element: null,
 	},
 	{
-		path: `${appPages.cientsAppPages.to}/*`,
+		path: `${appPages.clientsAppPages.to}/*`,
 		element: null,
 	},
 	{

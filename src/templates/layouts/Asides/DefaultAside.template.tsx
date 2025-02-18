@@ -29,7 +29,7 @@ const DefaultAsideTemplate = () => {
 					<NavItem {...appPages.dashboardAppPages} />
 					<NavItem {...appPages.candidatesAppPages} />
 					<NavItem {...appPages.jobsAppPages} />
-					<NavItem {...appPages.cientsAppPages} />
+					<NavItem {...appPages.clientsAppPages} />
 					<NavItem {...appPages.taskBoardAppPages} />
 					<NavItem {...appPages.reportAndAnalyticsAppPages} />
 
@@ -44,7 +44,6 @@ const DefaultAsideTemplate = () => {
 					</NavItem>
 					<NavItem {...appPages.KoalaByteAssistantAppPages} />
 
-					
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>
 					<NavUser
