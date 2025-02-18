@@ -25,13 +25,20 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<ModalFooterChild className='w-full pt-4'>
+				<ModalFooterChild className='w-full pt-4  max-md:flex-col'>
 					<Button
 						onClick={() => setModal(false)}
 						className='w-full'
 						variant='outline'
 						color='zinc'>
 						Cancel
+					</Button>
+					<Button
+						rightIcon='HeroPlus'
+						onClick={() => setModal(false)}
+						className='w-full'
+						variant='solid'>
+						Create a New Job
 					</Button>
 					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
 						Done

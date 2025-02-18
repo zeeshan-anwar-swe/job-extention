@@ -15,9 +15,11 @@ import Dropdown, {
 	DropdownToggle,
 } from '../../../components/ui/Dropdown';
 import { useState } from 'react';
+import AssignJobModalPartial from './AssignJob.partial';
 
 const TablePartial = () => {
 	const [sortBy, setSortBy] = useState<string>('Default');
+	const [modal, setModal] = useState<boolean>(false);
 	return (
 		<>
 			<CardHeader>
@@ -48,9 +50,13 @@ const TablePartial = () => {
 					</div>
 				</CardHeaderChild>
 				<CardHeaderChild>
-					<Button variant='solid' rightIcon='HeroPaperAirplane'>
+					<Button
+						onClick={() => setModal(true)}
+						variant='solid'
+						rightIcon='HeroPaperAirplane'>
 						Invite a Client
 					</Button>
+					<AssignJobModalPartial setModal={setModal} modal={modal} />
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='overflow-auto'>

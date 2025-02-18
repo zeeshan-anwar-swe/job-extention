@@ -9,6 +9,7 @@ import Button from '../../components/ui/Button';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
 import Card from '../../components/ui/Card';
 import SearchPartial from './_partial/Search.partial';
+import HeaderPartial from './_partial/Header.partial';
 
 const ClientsPage = () => {
 	return (
@@ -35,13 +36,11 @@ const ClientsPage = () => {
 						</Button>
 					</SubheaderLeft>
 				</Subheader>
-				<Container>
-					<div className='grid grid-cols-12 gap-4'>
-						<div className='col-span-12 '>
-							<Card className='h-full'>
-								<TablePartial />
-							</Card>
-						</div>
+				<Container className='!grid !grid-cols-12 !gap-4'>
+					<div className='col-span-12 '>
+						<Card className='h-full'>
+							<TablePartial />
+						</Card>
 					</div>
 				</Container>
 			</PageWrapper>
