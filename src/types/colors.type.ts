@@ -17,8 +17,8 @@ export type TColors =
 	| 'sky'
 	| 'blue'
 	// | 'indigo'
-	| 'violet';
-// | 'purple'
+	| 'violet'
+	| 'purple';
 // | 'fuchsia'
 // | 'pink'
 // | 'rose';
@@ -35,6 +35,7 @@ export const arrColors: TColors[] = [
 	'sky',
 	'blue',
 	'violet',
+	'purple',
 ];
 
 export const arrAllColors: TAllColors[] = [...arrColorFlat, ...arrColors];

@@ -20,7 +20,7 @@ const Chart: FC<IChartProps> = (props) => {
 		colors: [
 			colors.blue['500'],
 			colors.emerald['500'],
-			colors.amber['500'],
+			colors.violet['500'],
 			colors.rose['500'],
 			colors.purple['500'],
 		],
@@ -56,7 +56,7 @@ const Chart: FC<IChartProps> = (props) => {
 		},
 		plotOptions: {
 			bar: {
-				borderRadius: 4,
+				borderRadius: 12,
 			},
 			candlestick: {
 				colors: {

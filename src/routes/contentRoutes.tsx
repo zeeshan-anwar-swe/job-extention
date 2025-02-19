@@ -11,6 +11,9 @@ import JobsViewCandidatesPage from '../pages/Jobs/JobsViewCadidates/JobsViewCand
 import JobsCreateNewJobPage from '../pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page';
 import ClientsPage from '../pages/ClientsPage/Clients.page';
 import ClientProfilePage from '../pages/ClientsPage/ClientProfile/ClientProfile.page';
+import TaskboardPage from '../pages/TaskboardPages/Taskboard.page';
+import KoolabyteAssistantPage from '../pages/KoolabyteAssistantPage/KoolabyteAssistant.page';
+import ReportAndAnalyticsPage from '../pages/ReportAndAnalyticsPage/ReportAndAnalytics.page';
 /**
  * SALES
  */
@@ -131,6 +134,45 @@ const contentRoutes: RouteProps[] = [
 
 	/**
 	 * Clients::END
+	 */
+
+	/**
+	 * Taskboard::BEGIN
+	 */
+
+	{
+		path: appPages.taskBoardAppPages.to,
+		element: <TaskboardPage />,
+	},
+
+	/**
+	 * Taskboard::END
+	 */
+
+	/**
+	 * ReportAndAnalytics::BEGIN
+	 */
+
+	{
+		path: appPages.reportAndAnalyticsAppPages.to,
+		element: <ReportAndAnalyticsPage />,
+	},
+
+	/**
+	 * ReportAndAnalytics::END
+	 */
+
+	/**
+	 * KoolabyteAssistan::BEGIN
+	 */
+
+	{
+		path: appPages.KoalaByteAssistantAppPages.to,
+		element: <KoolabyteAssistantPage />,
+	},
+
+	/**
+	 * KoolabyteAssistan::END
 	 */
 
 	/**
