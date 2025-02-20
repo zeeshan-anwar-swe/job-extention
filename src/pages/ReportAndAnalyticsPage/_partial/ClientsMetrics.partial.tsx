@@ -57,8 +57,8 @@ const CommentPartial = () => {
 			<CardHeader>
 				<CardHeaderChild>
 					<div>
-						<CardTitle>Team Performance</CardTitle>
-						<p>Jobs percentage closed by team.</p>
+						<CardTitle>Clients Metrics</CardTitle>
+						<p>Review your Clients hiring rate.</p>
 					</div>
 				</CardHeaderChild>
 			</CardHeader>

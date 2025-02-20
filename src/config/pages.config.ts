@@ -126,6 +126,12 @@ export const appPages = {
 				text: 'Teammate Profile',
 				icon: 'HeroUserGroup',
 			},
+			chatAppPage: {
+				id: 'chatApp',
+				to: '/manage-team/chat',
+				text: 'Chat Page',
+				icon: 'HeroChatBubbleLeftEllipsis',
+			},
 		},
 	},
 

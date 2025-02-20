@@ -67,7 +67,7 @@ CardHeader.defaultProps = {
 };
 
 interface ICardBodyProps extends HTMLAttributes<HTMLDivElement> {
-	children: ReactNode;
+	children?: ReactNode;
 	className?: string;
 }
 export const CardBody: FC<ICardBodyProps> = (props) => {

@@ -53,6 +53,7 @@ export type TUser = {
 		productUpdates: boolean;
 	};
 	bio?: string;
+	progress: number; // Added progress property
 };
 
 export const usersDbList = {
@@ -80,6 +81,7 @@ export const usersDbList = {
 			promotionalEmails: false,
 			productUpdates: true,
 		},
+		progress: Math.floor(Math.random() * 101),
 	},
 	johnDoe: {
 		id: '2',
@@ -97,6 +99,7 @@ export const usersDbList = {
 			apple: false,
 		},
 		twoFactorAuth: false,
+		progress: Math.floor(Math.random() * 101),
 	},
 	aulistiainen: {
 		id: '3',
@@ -114,6 +117,7 @@ export const usersDbList = {
 			apple: true,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 	juliusmolesen: {
 		id: '4',
@@ -131,6 +135,7 @@ export const usersDbList = {
 			apple: true,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 	jakecorbin: {
 		id: '5',
@@ -148,6 +153,7 @@ export const usersDbList = {
 			apple: true,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 	scottnewton: {
 		id: '6',
@@ -179,6 +185,7 @@ export const usersDbList = {
 			github: 'scottnewton',
 		},
 		bio: '[{"type":"paragraph","children":[{"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam "},{"text":"malesuada nisl","bold":true,"underline":true,"italic":true},{"text":" sed metus maximus imperdiet. Aenean tortor mi, pretium et faucibus elementum, pulvinar ultricies ex. Vivamus pharetra dui interdum, semper diam eget, blandit urna. "}]},{"type":"bulleted-list","children":[{"type":"list-item","children":[{"text":"Etiam eu tristique leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "}]},{"type":"list-item","children":[{"text":"In eros mi, vehicula sed ex sed, accumsan posuere leo. "}]},{"type":"list-item","children":[{"text":"Vestibulum auctor aliquam elit, ut maximus felis gravida in."}]}]},{"type":"paragraph","children":[{"text":" Donec feugiat sit amet est egestas porttitor. "},{"text":"Suspendisse","code":true},{"text":" egestas nisi nec urna consequat, quis lobortis elit interdum. "}]},{"type":"block-quote","children":[{"text":"Pellentesque purus nibh, dignissim porta tincidunt id, convallis id lectus. "}]},{"type":"paragraph","children":[{"text":"In varius ipsum non turpis suscipit, ac ultrices nisi congue. "}]},{"type":"heading-one","children":[{"text":"Phasellus eget lectus eget dui."}]},{"type":"heading-two","children":[{"text":"Sodales sollicitudin ut a nisi."}]},{"type":"numbered-list","children":[{"type":"list-item","children":[{"text":"Etiam eu tristique leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "}]},{"type":"list-item","children":[{"text":"In eros mi, vehicula sed ex sed, accumsan posuere leo. "}]},{"type":"list-item","children":[{"text":"Vestibulum auctor aliquam elit, ut maximus felis gravida in."}]}]}]',
+		progress: Math.floor(Math.random() * 101),
 	},
 	erinslater: {
 		id: '7',
@@ -196,6 +203,7 @@ export const usersDbList = {
 			apple: false,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 	jeanetteneufville: {
 		id: '8',
@@ -213,6 +221,7 @@ export const usersDbList = {
 			apple: false,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 	semihraifgurel: {
 		id: '9',
@@ -229,6 +238,7 @@ export const usersDbList = {
 			apple: true,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 	patriciadionne: {
 		id: '10',
@@ -246,6 +256,7 @@ export const usersDbList = {
 			apple: false,
 		},
 		twoFactorAuth: true,
+		progress: Math.floor(Math.random() * 101),
 	},
 };
 

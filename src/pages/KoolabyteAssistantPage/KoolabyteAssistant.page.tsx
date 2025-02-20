@@ -111,43 +111,6 @@ const KoolabyteAssistantPage = () => {
 					<SubheaderLeft>
 						<PeriodButtonsPartial activeTab={activeTab} setActiveTab={setActiveTab} />
 					</SubheaderLeft>
-					<SubheaderRight>
-						<Dropdown>
-							<DropdownToggle>
-								<Button icon='HeroCalendarDays'>
-									{activeTab === PERIOD.DAY &&
-										dayjs().locale(i18n.language).format('LL')}
-									{activeTab === PERIOD.WEEK &&
-										`${dayjs()
-											.startOf('week')
-											.locale(i18n.language)
-											.format('MMMM D')} - ${dayjs()
-											.endOf('week')
-											.locale(i18n.language)
-											.format('MMMM D, YYYY')}`}
-									{activeTab === PERIOD.MONTH &&
-										dayjs()
-											.startOf('month')
-											.locale(i18n.language)
-											.format('MMMM, YYYY')}
-								</Button>
-							</DropdownToggle>
-							<DropdownMenu className='!p-0'>
-								<DateRangePicker
-									onChange={(item) => setSelectedDate([item.selection])}
-									moveRangeOnFirstSelection={false}
-									months={2}
-									ranges={selectedDate}
-									direction='horizontal'
-									rangeColors={[
-										colors[themeConfig.themeColor][themeConfig.themeColorShade],
-										colors.emerald[themeConfig.themeColorShade],
-										colors.amber[themeConfig.themeColorShade],
-									]}
-								/>
-							</DropdownMenu>
-						</Dropdown>
-					</SubheaderRight>
 				</Subheader>
 				<Container>
 					<div className='grid grid-cols-12 gap-4'>
@@ -171,14 +134,14 @@ const KoolabyteAssistantPage = () => {
 							<CommentPartial />
 						</div>
 
-						<div className='col-span-12 2xl:col-span-8'>
+						{/* <div className='col-span-12 2xl:col-span-8'>
 							<Card className='h-full'>
 								<TablePartial />
 							</Card>
 						</div>
 						<div className='col-span-12 2xl:col-span-4'>
 							<TimelinePartial />
-						</div>
+						</div> */}
 					</div>
 				</Container>
 			</PageWrapper>

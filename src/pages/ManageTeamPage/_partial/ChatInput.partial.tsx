@@ -3,16 +3,16 @@ import FieldWrap from '../../../components/form/FieldWrap';
 import Icon from '../../../components/icon/Icon';
 import Input from '../../../components/form/Input';
 
-const SearchPartial = () => {
+const ChatInputPartial = () => {
 	const [searchValue, setSearchValue] = useState<string>('');
 	return (
 		<FieldWrap
-			className='rounded-full border'
-			firstSuffix={<Icon className='mx-2 rounded-full' icon='HeroMagnifyingGlass' />}
+			className='w-full '
 			lastSuffix={
 				searchValue !== '' && (
 					<Icon
 						icon='HeroXMark'
+						size='text-xl'
 						color='red'
 						className='mx-2 cursor-pointer'
 						onClick={() => {
@@ -24,13 +24,14 @@ const SearchPartial = () => {
 			<Input
 				id='example'
 				name='example'
-				placeholder='Search Chat'
+				placeholder='Enter the text here'
 				value={searchValue}
-				className='!rounded-ful max-sm:!py-0'
+				borderWidth='border-0'
+				className=' !rounded-full'
 				onChange={(e) => setSearchValue(e.target.value)}
 			/>
 		</FieldWrap>
 	);
 };
 
-export default SearchPartial;
+export default ChatInputPartial;

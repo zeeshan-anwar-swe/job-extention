@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Chart from '../../../../components/Chart';
 import Card, {
 	CardBody,
 	CardHeader,
 	CardHeaderChild,
 	CardTitle,
 } from '../../../../components/ui/Card';
-import Chart from '../../../../components/Chart';
 import { IChartOptions } from '../../../../interface/chart.interface';
 
 const ChartPartial = () => {
-	const [state] = useState<IChartOptions>({
+	const chartContainerRef = useRef<HTMLDivElement | null>(null);
+	const [chartDimensions, setChartDimensions] = useState<{
+		width: number;
+		height: number;
+	} | null>(null);
+
+	const [chartState] = useState<IChartOptions>({
 		series: [
 			{
 				name: 'Net Profit',
-				data: [61, 58, 63, 60, 66, 87],
+				data: [61, 58, 63, 60, 66],
 			},
 			{
 				name: 'Revenue',
-				data: [87, 105, 91, 114, 94, 105],
+				data: [87, 105, 91, 114, 94],
 			},
 			{
 				name: 'Free Cash Flow',
-				data: [45, 48, 52, 53, 41, 65],
+				data: [45, 48, 52, 53, 41],
 			},
 		],
 		options: {
@@ -41,7 +47,7 @@ const ChartPartial = () => {
 				colors: ['transparent'],
 			},
 			xaxis: {
-				categories: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+				categories: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
 			},
 			yaxis: {
 				title: {
@@ -60,6 +66,26 @@ const ChartPartial = () => {
 			},
 		},
 	});
+
+	// Observe container dimensions
+	useEffect(() => {
+		if (!chartContainerRef.current) return;
+
+		const updateDimensions = () => {
+			const rect = chartContainerRef.current?.getBoundingClientRect();
+			if (rect) {
+				setChartDimensions({ width: rect.width, height: rect.height });
+			}
+		};
+
+		updateDimensions(); // Set initial dimensions
+
+		const observer = new ResizeObserver(() => updateDimensions());
+		observer.observe(chartContainerRef.current);
+
+		return () => observer.disconnect(); // Cleanup observer on unmount
+	}, []);
+
 	return (
 		<Card className='h-full'>
 			<CardHeader>
@@ -68,7 +94,17 @@ const ChartPartial = () => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody>
-				<Chart series={state.series} options={state.options} type='bar' height={400} />
+				<div ref={chartContainerRef} className='h-96 w-full'>
+					{chartDimensions && (
+						<Chart
+							series={chartState.series}
+							options={chartState.options}
+							type='bar'
+							width={chartDimensions.width}
+							height={chartDimensions.height}
+						/>
+					)}
+				</div>
 			</CardBody>
 		</Card>
 	);

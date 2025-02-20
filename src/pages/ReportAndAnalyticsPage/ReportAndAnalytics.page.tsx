@@ -171,15 +171,6 @@ const ReportAndAnalyticsPage = () => {
 							<ChartPartial />
 						</div>
 						<div className='col-span-12 2xl:col-span-4'>
-							<CommentPartial />
-						</div>
-
-						<div className='col-span-12 2xl:col-span-8'>
-							<Card className='h-full'>
-								<TablePartial />
-							</Card>
-						</div>
-						<div className='col-span-12 2xl:col-span-4'>
 							<TimelinePartial />
 						</div>
 					</div>

@@ -16,6 +16,7 @@ import KoolabyteAssistantPage from '../pages/KoolabyteAssistantPage/KoolabyteAss
 import ReportAndAnalyticsPage from '../pages/ReportAndAnalyticsPage/ReportAndAnalytics.page';
 import ManageTeamPage from '../pages/ManageTeamPage/ManageTeam.page';
 import TeammateProfilePage from '../pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page';
+import ChatPage from '../pages/ManageTeamPage/ChatPage/Chat.page';
 /**
  * SALES
  */
@@ -193,6 +194,14 @@ const contentRoutes: RouteProps[] = [
 	{
 		path: `${appPages.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
 		element: <TeammateProfilePage />,
+	},
+	// {
+	// 	path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}/:id`,
+	// 	element: <ChatPage />,
+	// },
+	{
+		path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}`,
+		element: <ChatPage />,
 	},
 
 	/**

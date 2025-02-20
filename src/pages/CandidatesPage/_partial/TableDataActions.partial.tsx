@@ -6,7 +6,9 @@ import { textValidationCheck } from '../../../utils/validationCheck';
 const TableDataActionsPartial = () => {
 	return (
 		<div className='flex justify-center'>
-			<Button>Edit CV</Button>
+			<Link to='/candidates/cv-edit/12'>
+				<Button>Edit CV</Button>
+			</Link>
 			<Link to='/candidates/profile/12'>
 				<Button>View CV</Button>
 			</Link>

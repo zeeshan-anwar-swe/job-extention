@@ -8,6 +8,8 @@ import Card, {
 import usersDb from '../../../mocks/db/users.db';
 import productsDb from '../../../mocks/db/products.db';
 import getFirstLetter from '../../../utils/getFirstLetter';
+import Alert from '../../../components/ui/Alert';
+import Icon from '../../../components/icon/Icon';
 
 interface ICommentItemProps {
 	image?: string;
@@ -38,7 +40,9 @@ const CommentItem: FC<ICommentItemProps> = (props) => {
 				</div>
 				<div>{comment}</div>
 			</div>
-			<div className='flex-shrink-0'>{time}</div>
+			<div className='flex-shrink-0'>
+				<Icon icon='HeroCheck' color='blue' />
+			</div>
 		</div>
 	);
 };
@@ -53,30 +57,6 @@ const CommentPartial = () => {
 				<CardHeaderChild>
 					<CardTitle>Client Feedback</CardTitle>
 				</CardHeaderChild>
-				{/* <CardHeaderChild>
-					<div className='flex -space-x-2 overflow-hidden'>
-						<img
-							src={usersDb[0].image?.thumb}
-							alt='User 1'
-							className='inline-block h-12 w-12 rounded-full ring-2 ring-white dark:ring-zinc-900'
-						/>
-						<img
-							src={usersDb[1].image?.thumb}
-							alt='User 1'
-							className='inline-block h-12 w-12 rounded-full ring-2 ring-white dark:ring-zinc-900'
-						/>
-						<img
-							src={usersDb[2].image?.thumb}
-							alt='User 1'
-							className='inline-block h-12 w-12 rounded-full ring-2 ring-white dark:ring-zinc-900'
-						/>
-						<img
-							src={usersDb[3].image?.thumb}
-							alt='User 1'
-							className='inline-block h-12 w-12 rounded-full ring-2 ring-white dark:ring-zinc-900'
-						/>
-					</div>
-				</CardHeaderChild> */}
 			</CardHeader>
 			<CardBody>
 				<div className='flex flex-col gap-4'>
