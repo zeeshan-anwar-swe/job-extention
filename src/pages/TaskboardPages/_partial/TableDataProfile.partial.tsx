@@ -8,12 +8,10 @@ const TableDataProfilePartial = ({
 	imageUrl,
 	title,
 	subTitle,
-	className,
 }: {
 	imageUrl?: string;
 	title?: string;
 	subTitle?: string;
-	className?: string;
 }) => {
 	return (
 		<div>
