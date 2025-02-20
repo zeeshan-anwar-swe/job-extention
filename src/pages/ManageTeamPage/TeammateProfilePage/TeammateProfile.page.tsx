@@ -10,19 +10,23 @@ import Card, {
 	CardFooter,
 	CardFooterChild,
 	CardHeader,
+	CardHeaderChild,
 } from '../../../components/ui/Card';
 import { Link } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
+
 import HeaderPartial from './_partial/Header.partial';
 import LabelTitleTextAreapartial from './_partial/LabelTitleTextArea.partial';
 import ClientProfilePageCardPartial from './_partial/ClientProfilePageCard.partial';
+import SortDropdownPartial from './_partial/SortDropdown.partial';
+import Badge from '../../../components/ui/Badge';
 
-const ClientProfilePage = () => {
+const TeammateProfilePage = () => {
 	return (
 		<>
 			<Header>
 				<HeaderLeft>
-					<Breadcrumb path='Pages / Clients' currentPage='Clients Profile' />
+					<Breadcrumb path='Pages / Manage Team' currentPage='Teammate Profile' />
 				</HeaderLeft>
 				<HeaderRight>
 					<DefaultHeaderRightCommon />
@@ -31,9 +35,9 @@ const ClientProfilePage = () => {
 			<PageWrapper name='Candidates'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/clients'>
+						<Link to='/manage-team'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
-								Back To Clients
+								Back To Manage Team
 							</Button>
 						</Link>
 					</SubheaderLeft>
@@ -41,10 +45,63 @@ const ClientProfilePage = () => {
 				<Container className='!grid !grid-cols-12  !gap-4'>
 					<HeaderPartial />
 					<Card className='col-span-8 flex flex-col gap-2 max-lg:col-span-12'>
-						<CardHeader className='!flex-col !items-start gap-2'>
-							<h1>Client Details</h1>
-							<p className='font-light'>Get an overview of the Client profile.</p>
+						<CardHeader>
+							<CardHeaderChild className='!flex w-full !items-center !justify-between'>
+								<div className='flex flex-col gap-2'>
+									<h1>Performance Metrics</h1>
+									<p className='font-light'>
+										Get an overview of the Teammate Performance.
+									</p>
+								</div>
+								<Button
+									rounded='rounded-full'
+									borderWidth='border'
+									className='!px-2 !py-1'
+									icon='HeroArrowsUpDown'
+									variant='outline'
+									color='zinc'>
+									<SortDropdownPartial />
+								</Button>
+							</CardHeaderChild>
+							<CardHeaderChild className='flex w-full flex-wrap items-center gap-2'>
+								<Badge
+									variant='solid'
+									color='zinc'
+									colorIntensity='300'
+									className='!flex-grow p-2 !text-zinc-950'>
+									Total Jobs:&nbsp; <b>53</b>
+								</Badge>
+								<Badge
+									variant='solid'
+									color='emerald'
+									colorIntensity='300'
+									className='!flex-grow p-2 !text-emerald-950'>
+									Successful Jobs::&nbsp; <b>43</b>
+								</Badge>
+								<Badge
+									variant='solid'
+									color='red'
+									colorIntensity='300'
+									className='!flex-grow p-2 !text-red-950'>
+									Rejected Jobs:&nbsp; <b>53</b>
+								</Badge>
+								<Badge
+									variant='solid'
+									color='blue'
+									colorIntensity='300'
+									className='!flex-grow p-2 !text-blue-950'>
+									Active Jobs:&nbsp; <b>1</b>
+								</Badge>
+								<Badge
+									variant='solid'
+									color='amber'
+									colorIntensity='300'
+									className='!flex-grow p-2 !text-amber-950'>
+									Backlog:&nbsp; <b>5</b>
+								</Badge>
+							</CardHeaderChild>
 						</CardHeader>
+
 						<CardBody className='flex flex-col gap-4'>
 							<div className='flex items-center gap-4 '>
 								<LabelTitleTextAreapartial
@@ -58,7 +115,7 @@ const ClientProfilePage = () => {
 								<LabelTitlepartial label='Company' detail='KoalaByte AI' />
 							</div>
 							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial label='Designation' detail='CFO / Co Founder' />
+								<LabelTitlepartial inputType='date' label='DOB' />
 								<LabelTitlepartial
 									label='Industry Sector'
 									detail='Tech / Finance'
@@ -67,9 +124,10 @@ const ClientProfilePage = () => {
 						</CardBody>
 						<CardFooter>
 							<label className='font-light'>Social Media</label>
-							<CardFooterChild className='w-full'>
+							<CardFooterChild className='w-full	'>
 								<Button
-									className='gap-2'
+									size='xl'
+									className='!flex-grow gap-2'
 									icon='HeroLinkedIn'
 									rightIcon='HeroArrowUpRight'
 									variant='outline'
@@ -77,7 +135,8 @@ const ClientProfilePage = () => {
 									LinkedIn
 								</Button>
 								<Button
-									className='gap-2'
+									size='xl'
+									className='!flex-grow gap-2'
 									icon='HeroGitHub'
 									rightIcon='HeroArrowUpRight'
 									variant='outline'
@@ -85,20 +144,13 @@ const ClientProfilePage = () => {
 									GitHub
 								</Button>
 								<Button
-									className='gap-2'
+									size='xl'
+									className='!flex-grow gap-2'
 									icon='HeroTwitterX'
 									rightIcon='HeroArrowUpRight'
 									variant='outline'
 									color='zinc'>
 									Twitter
-								</Button>
-								<Button
-									className='gap-2'
-									icon='HeroGlobeAlt'
-									rightIcon='HeroArrowUpRight'
-									variant='outline'
-									color='zinc'>
-									koalabyte.ai
 								</Button>
 							</CardFooterChild>
 						</CardFooter>
@@ -120,4 +172,4 @@ const ClientProfilePage = () => {
 	);
 };
 
-export default ClientProfilePage;
+export default TeammateProfilePage;

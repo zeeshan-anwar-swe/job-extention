@@ -113,6 +113,22 @@ export const appPages = {
 		icon: 'HeroChatBubbleLeftRight',
 	},
 
+	manageTeamAppPages: {
+		id: 'manageTeamApp',
+		to: '/manage-team',
+		text: 'Manage Team',
+		icon: 'HeroUsers',
+		rightIcon: 'HeroArrowUpRight',
+		subPages: {
+			teammateProfileAppPages: {
+				id: 'teammateProfileApp',
+				to: '/manage-team/profile',
+				text: 'Teammate Profile',
+				icon: 'HeroUserGroup',
+			},
+		},
+	},
+
 	aiAppPages: {
 		id: 'aiApp',
 		to: '/ai',

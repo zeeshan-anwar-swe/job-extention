@@ -10,6 +10,7 @@ import themeConfig from '../../../config/theme.config';
 import Tooltip from '../../ui/Tooltip';
 import Avatar from '../../Avatar';
 import { TColors } from '../../../types/colors.type';
+import { right } from '@popperjs/core';
 
 const navItemClasses = {
 	default: classNames(
@@ -174,10 +175,11 @@ interface INavItemProps extends HTMLAttributes<HTMLLIElement> {
 	icon?: TIcons;
 	text: string;
 	to?: string;
+	rightIcon?: TIcons;
 	className?: string;
 }
 export const NavItem: FC<INavItemProps> = (props) => {
-	const { children, icon, text, to, className, ...rest } = props;
+	const { children, icon, rightIcon, text, to, className, ...rest } = props;
 
 	const { t } = useTranslation('menu');
 
@@ -185,7 +187,15 @@ export const NavItem: FC<INavItemProps> = (props) => {
 
 	const isChildrenNavButton = navItemChildCheck(children);
 
-	const CONTENT = (
+	const CONTENT = rightIcon ? (
+		<>
+			<NavItemContent>
+				<NavItemText>{t(text)}</NavItemText>
+				{children && !isChildrenNavButton && <div>{children as ReactNode}</div>}
+			</NavItemContent>
+			<NavIcon icon={rightIcon} />
+		</>
+	) : (
 		<>
 			<NavIcon icon={icon} />
 			<NavItemContent>

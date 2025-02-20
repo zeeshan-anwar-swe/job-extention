@@ -14,6 +14,8 @@ import ClientProfilePage from '../pages/ClientsPage/ClientProfile/ClientProfile.
 import TaskboardPage from '../pages/TaskboardPages/Taskboard.page';
 import KoolabyteAssistantPage from '../pages/KoolabyteAssistantPage/KoolabyteAssistant.page';
 import ReportAndAnalyticsPage from '../pages/ReportAndAnalyticsPage/ReportAndAnalytics.page';
+import ManageTeamPage from '../pages/ManageTeamPage/ManageTeam.page';
+import TeammateProfilePage from '../pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page';
 /**
  * SALES
  */
@@ -173,6 +175,28 @@ const contentRoutes: RouteProps[] = [
 
 	/**
 	 * KoolabyteAssistan::END
+	 */
+
+	/**
+	 * ManageTeamPage::BEGIN
+	 */
+
+	{
+		path: appPages.manageTeamAppPages.to,
+		element: <ManageTeamPage />,
+	},
+
+	{
+		path: `${appPages.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+		element: <TeammateProfilePage />,
+	},
+	{
+		path: `${appPages.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+		element: <TeammateProfilePage />,
+	},
+
+	/**
+	 * ManageTeamPage::END
 	 */
 
 	/**

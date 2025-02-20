@@ -36,6 +36,10 @@ const headerRoutes: RouteProps[] = [
 		element: null,
 	},
 	{
+		path: `${appPages.manageTeamAppPages.to}/*`,
+		element: null,
+	},
+	{
 		path: `${appPages.KoalaByteAssistantAppPages.to}/*`,
 		element: null,
 	},

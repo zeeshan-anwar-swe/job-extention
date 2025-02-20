@@ -15,6 +15,7 @@ import Nav, {
 import Badge from '../../../components/ui/Badge';
 import UserTemplate from '../User/User.template';
 import usersDb from '../../../mocks/db/users.db';
+import Alert from '../../../components/ui/Alert';
 
 const DefaultAsideTemplate = () => {
 	const navigate = useNavigate();
@@ -46,6 +47,8 @@ const DefaultAsideTemplate = () => {
 
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>
+					<NavItem {...appPages.manageTeamAppPages} />
+
 					<NavUser
 						text={`${usersDb[0].firstName} ${usersDb[0].lastName}`}
 						image={usersDb[0].image?.thumb}
