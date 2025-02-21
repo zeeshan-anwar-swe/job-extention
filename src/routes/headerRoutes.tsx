@@ -16,6 +16,10 @@ const headerRoutes: RouteProps[] = [
 		element: null,
 	},
 	{
+		path: `${appPages.settingAppPages.to}`,
+		element: null,
+	},
+	{
 		path: `${appPages.jobsAppPages.to}/*`,
 		element: null,
 	},

@@ -29,6 +29,13 @@ export const appPages = {
 		icon: 'HeroSquares2X2',
 	},
 
+	settingAppPages: {
+		id: 'SettingApp',
+		to: '/setting',
+		text: 'Setting',
+		icon: 'HeroCog6Tooth',
+	},
+
 	candidatesAppPages: {
 		id: 'candidatesApp',
 		to: '/candidates',

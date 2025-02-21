@@ -18,6 +18,7 @@ import ManageTeamPage from '../pages/ManageTeamPage/ManageTeam.page';
 import TeammateProfilePage from '../pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page';
 import ChatPage from '../pages/ManageTeamPage/ChatPage/Chat.page';
 import ApexChartsPage from '../pages/ApexChartsPage/ApexCharts.page';
+import SettingPage from '../pages/SettingPage/Setting.page';
 /**
  * SALES
  */
@@ -130,6 +131,19 @@ const contentRoutes: RouteProps[] = [
 
 	/**
 	 * Taskboard::END
+	 */
+
+	/**
+	 * SettingPage::BEGIN
+	 */
+
+	{
+		path: appPages.settingAppPages.to,
+		element: <SettingPage />,
+	},
+
+	/**
+	 * SettingPage::END
 	 */
 
 	/**

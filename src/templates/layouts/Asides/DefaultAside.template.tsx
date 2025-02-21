@@ -44,6 +44,7 @@ const DefaultAsideTemplate = () => {
 						</Badge>
 					</NavItem>
 					<NavItem {...appPages.KoalaByteAssistantAppPages} />
+					<NavItem {...appPages.settingAppPages} />
 
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>
