@@ -7,6 +7,7 @@ import Subheader, { SubheaderLeft } from '../../components/layouts/Subheader/Sub
 import Button from '../../components/ui/Button';
 import Container from '../../components/layouts/Container/Container';
 import Card from '../../components/ui/Card';
+import SettingAside from './partial/Asides/DefaultAside.template';
 
 const SettingPage = () => {
 	return (
@@ -20,8 +21,9 @@ const SettingPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Candidates'>
-				<Container className='!grid !grid-cols-12 !gap-4'>
-					<Card className='h-full'>
+				<Container className='!grid flex-1 !grid-cols-12 !gap-4 bg-red-600'>
+					<Card className=' col-span-12'>
+						<SettingAside />
 						<h1>Setting</h1>
 					</Card>
 				</Container>
