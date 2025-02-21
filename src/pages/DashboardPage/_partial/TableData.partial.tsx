@@ -1,4 +1,4 @@
-import Badge from '../../../../components/ui/Badge';
+import Badge from '../../../components/ui/Badge';
 
 const TableDataPartial = ({
 	imageUrl,
@@ -23,7 +23,11 @@ const TableDataPartial = ({
 			<div>
 				{title && <h5>{title}</h5>}
 				{subTitle && <p>{subTitle}</p>}
-				{status && <Badge variant='solid' color='amber' colorIntensity='100'  >{status}</Badge>}
+				{status && (
+					<Badge variant='solid' color='amber' colorIntensity='100'>
+						{status}
+					</Badge>
+				)}
 			</div>
 		</div>
 	);

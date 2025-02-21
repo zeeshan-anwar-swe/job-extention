@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { DateRangePicker, Range } from 'react-date-range';
 import colors from 'tailwindcss/colors';
-import Container from '../../../components/layouts/Container/Container';
-import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
+import Container from '../../components/layouts/Container/Container';
+import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
 import ChartPartial from './_partial/Chart.partial';
 import TablePartial from './_partial/Table.partial';
 import Balance1Partial from './_partial/Balance1.partial';
@@ -15,19 +15,19 @@ import TimelinePartial from './_partial/Timeline.partial';
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
-} from '../../../components/layouts/Subheader/Subheader';
+} from '../../components/layouts/Subheader/Subheader';
 import CommentPartial from './_partial/Comment.partial';
 import PeriodButtonsPartial from './_partial/PeriodButtons.partial';
-import PERIOD, { TPeriod } from '../../../constants/periods.constant';
-import Header, { HeaderLeft, HeaderRight } from '../../../components/layouts/Header/Header';
-import DefaultHeaderRightCommon from '../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import Dropdown, { DropdownMenu, DropdownToggle } from '../../../components/ui/Dropdown';
-import Button from '../../../components/ui/Button';
-import themeConfig from '../../../config/theme.config';
-import Breadcrumb from '../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card from '../../../components/ui/Card';
+import PERIOD, { TPeriod } from '../../constants/periods.constant';
+import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header/Header';
+import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
+import Dropdown, { DropdownMenu, DropdownToggle } from '../../components/ui/Dropdown';
+import Button from '../../components/ui/Button';
+import themeConfig from '../../config/theme.config';
+import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
+import Card from '../../components/ui/Card';
 
-const SalesDashboardPage = () => {
+const DashboardPage = () => {
 	const { i18n } = useTranslation();
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -186,4 +186,4 @@ const SalesDashboardPage = () => {
 	);
 };
 
-export default SalesDashboardPage;
+export default DashboardPage;

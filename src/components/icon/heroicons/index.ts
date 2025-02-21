@@ -3,7 +3,7 @@ export { default as HeroLinkedIn } from './LinkedIn';
 export { default as HeroTwitterX } from './TwitterX';
 export { default as HeroPdf } from './Pdf';
 export { default as HeroGitHub } from './GitHub';
-export { default as DoubleCheck } from './DoubleCheck';
+export { default as HeroTwiceCheck } from './TwiceCheck';
 export { default as HeroAdjustmentsHorizontal } from './AdjustmentsHorizontal';
 export { default as HeroAdjustmentsVertical } from './AdjustmentsVertical';
 export { default as HeroArchiveBoxArrowDown } from './ArchiveBoxArrowDown';

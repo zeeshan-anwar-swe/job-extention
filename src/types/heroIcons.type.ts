@@ -9,7 +9,7 @@ export type THeroIcons =
 	| 'HeroTwitterX'
 	| 'HeroPdf'
 	| 'HeroGitHub'
-	| 'DoubleCheck'
+	| 'HeroTwiceCheck'
 	| 'HeroArrowDownCircle'
 	| 'HeroArrowDownLeft'
 	| 'HeroArrowDownOnSquareStack'

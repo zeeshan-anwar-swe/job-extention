@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import FieldWrap from '../../../../components/form/FieldWrap';
-import Icon from '../../../../components/icon/Icon';
-import Input from '../../../../components/form/Input';
+import FieldWrap from '../../../components/form/FieldWrap';
+import Icon from '../../../components/icon/Icon';
+import Input from '../../../components/form/Input';
 
 const SearchPartial = () => {
-    const [searchValue, setSearchValue] = useState<string>('');
+	const [searchValue, setSearchValue] = useState<string>('');
 	return (
 		<FieldWrap
 			firstSuffix={<Icon className='mx-2' icon='HeroMagnifyingGlass' />}
@@ -13,7 +13,9 @@ const SearchPartial = () => {
 					icon='HeroXMark'
 					color='red'
 					className='mx-2 cursor-pointer'
-					onClick={() => {setSearchValue('')}}
+					onClick={() => {
+						setSearchValue('');
+					}}
 				/>
 			}>
 			<Input

@@ -26,6 +26,7 @@ import Button from '../../components/ui/Button';
 import themeConfig from '../../config/theme.config';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
 import Card from '../../components/ui/Card';
+import ApexLineChartPartial from './_partial/ApexLineChart.partial';
 
 const KoolabyteAssistantPage = () => {
 	const { i18n } = useTranslation();
@@ -128,7 +129,7 @@ const KoolabyteAssistantPage = () => {
 						</div>
 
 						<div className='col-span-12 2xl:col-span-8'>
-							<ChartPartial />
+							<ApexLineChartPartial />
 						</div>
 						<div className='col-span-12 2xl:col-span-4'>
 							<CommentPartial />

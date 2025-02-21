@@ -17,23 +17,13 @@ import ReportAndAnalyticsPage from '../pages/ReportAndAnalyticsPage/ReportAndAna
 import ManageTeamPage from '../pages/ManageTeamPage/ManageTeam.page';
 import TeammateProfilePage from '../pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page';
 import ChatPage from '../pages/ManageTeamPage/ChatPage/Chat.page';
+import ApexChartsPage from '../pages/ApexChartsPage/ApexCharts.page';
 /**
  * SALES
  */
-const SalesDashboardPage = lazy(
-	() => import('../pages/sales/SalesDashboardPage/SalesDashboard.page'),
-);
+const DashboardPage = lazy(() => import('../pages/DashboardPage/Dashboard.page'));
 
 const CandidatesPage = lazy(() => import('../pages/CandidatesPage/Candidates.page'));
-
-const ProductListPage = lazy(
-	() => import('../pages/sales/products/ProductListPage/ProductList.page'),
-);
-const ProductPage = lazy(() => import('../pages/sales/products/ProductPage/Product.page'));
-const CategoryListPage = lazy(
-	() => import('../pages/sales/categories/CategoryListPage/CategoryList.page'),
-);
-const CategoryPage = lazy(() => import('../pages/sales/categories/CategoryPage/Category.page'));
 
 /**
  * Project
@@ -45,30 +35,15 @@ const ProjectBoardPage = lazy(() => import('../pages/project/ProjectBoardPage/Pr
 
 const contentRoutes: RouteProps[] = [
 	/**
-	 * SALES::BEGIN
+	 * Dashboard::BEGIN
 	 */
 	{
 		path: appPages.salesAppPages.subPages.salesDashboardPage.to,
-		element: <SalesDashboardPage />,
+		element: <DashboardPage />,
 	},
-	{
-		path: appPages.salesAppPages.subPages.productPage.subPages.listPage.to,
-		element: <ProductListPage />,
-	},
-	{
-		path: `${appPages.salesAppPages.subPages.productPage.subPages.editPageLink.to}/:id`,
-		element: <ProductPage />,
-	},
-	{
-		path: appPages.salesAppPages.subPages.categoryPage.subPages.listPage.to,
-		element: <CategoryListPage />,
-	},
-	{
-		path: `${appPages.salesAppPages.subPages.categoryPage.subPages.editPageLink.to}/:id`,
-		element: <CategoryPage />,
-	},
+
 	/**
-	 * SALES::END
+	 * Dashboard::END
 	 */
 
 	/**
@@ -82,6 +57,11 @@ const contentRoutes: RouteProps[] = [
 	{
 		path: `${appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to}/:id`,
 		element: <CandidatesProfilePage />,
+	},
+
+	{
+		path: `charts`,
+		element: <ApexChartsPage />,
 	},
 
 	{

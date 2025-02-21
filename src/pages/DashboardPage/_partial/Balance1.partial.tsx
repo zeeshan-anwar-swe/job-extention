@@ -1,7 +1,7 @@
-import Card, { CardBody } from '../../../../components/ui/Card';
-import Icon from '../../../../components/icon/Icon';
-import Tooltip from '../../../../components/ui/Tooltip';
-import Balance from '../../../../components/Balance';
+import Card, { CardBody } from '../../../components/ui/Card';
+import Icon from '../../../components/icon/Icon';
+import Tooltip from '../../../components/ui/Tooltip';
+import Balance from '../../../components/Balance';
 
 const Balance1Partial = () => {
 	return (
@@ -13,7 +13,7 @@ const Balance1Partial = () => {
 					</div>
 					<div className='space-x-1 text-zinc-500 rtl:space-x-reverse'>
 						<span className='font-semibold'>New Jobs</span>
-						<Tooltip  text='Total number of new jobs.' />
+						<Tooltip text='Total number of new jobs.' />
 					</div>
 					<div className='text-4xl font-semibold'>238K</div>
 					<div className='flex'>

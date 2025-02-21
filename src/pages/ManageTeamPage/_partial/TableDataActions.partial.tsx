@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Badge from '../../../components/ui/Badge';
 import Button from '../../../components/ui/Button';
 import { useState } from 'react';
 import AssignJobModalPartial from './AssignJob.partial';

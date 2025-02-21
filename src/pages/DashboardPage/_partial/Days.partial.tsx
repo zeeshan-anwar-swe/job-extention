@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
+import PERIOD, { TPeriod } from '../../../constants/periods.constant';
 
 interface IDaysPartialProps {
 	activeTab: TPeriod;

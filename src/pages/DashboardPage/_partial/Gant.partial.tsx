@@ -6,9 +6,9 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 	CardTitle,
-} from '../../../../components/ui/Card';
-import Chart from '../../../../components/Chart';
-import { IChartOptions } from '../../../../interface/chart.interface';
+} from '../../../components/ui/Card';
+import Chart from '../../../components/Chart';
+import { IChartOptions } from '../../../interface/chart.interface';
 
 const GantPartial = () => {
 	const [state] = useState<IChartOptions>({

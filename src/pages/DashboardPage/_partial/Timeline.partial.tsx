@@ -4,12 +4,12 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 	CardTitle,
-} from '../../../../components/ui/Card';
-import Timeline, { TimelineItem } from '../../../../components/Timeline';
-import { Image1Thumb, Image3Thumb, Image5Thumb } from '../../../../assets/images';
-import Alert from '../../../../components/ui/Alert';
-import priceFormat from '../../../../utils/priceFormat.util';
-import Icon from '../../../../components/icon/Icon';
+} from '../../../components/ui/Card';
+import Timeline, { TimelineItem } from '../../../components/Timeline';
+import { Image1Thumb, Image3Thumb, Image5Thumb } from '../../../assets/images';
+import Alert from '../../../components/ui/Alert';
+import priceFormat from '../../../utils/priceFormat.util';
+import Icon from '../../../components/icon/Icon';
 
 const TimelinePartial = () => {
 	return (

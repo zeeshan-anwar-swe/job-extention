@@ -8,8 +8,7 @@ import Card, {
 import usersDb from '../../../mocks/db/users.db';
 import productsDb from '../../../mocks/db/products.db';
 import getFirstLetter from '../../../utils/getFirstLetter';
-import Alert from '../../../components/ui/Alert';
-import Icon from '../../../components/icon/Icon';
+import SvgTwiceCheck from '../../../components/icon/heroicons/TwiceCheck';
 
 interface ICommentItemProps {
 	image?: string;
@@ -41,7 +40,7 @@ const CommentItem: FC<ICommentItemProps> = (props) => {
 				<div>{comment}</div>
 			</div>
 			<div className='flex-shrink-0'>
-				<Icon icon='HeroCheck' color='blue' />
+				<SvgTwiceCheck color='blue' />
 			</div>
 		</div>
 	);

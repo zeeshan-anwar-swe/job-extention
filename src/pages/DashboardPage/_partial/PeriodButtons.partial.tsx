@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import Button, { IButtonProps } from '../../../../components/ui/Button';
-import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
+import Button, { IButtonProps } from '../../../components/ui/Button';
+import PERIOD, { TPeriod } from '../../../constants/periods.constant';
 
 interface IPeriodButtonsPartialProps {
 	activeTab: TPeriod;

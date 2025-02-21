@@ -1,7 +1,7 @@
-import Card, { CardBody } from '../../../../components/ui/Card';
-import Tooltip from '../../../../components/ui/Tooltip';
-import Balance from '../../../../components/Balance';
-import Icon from '../../../../components/icon/Icon';
+import Card, { CardBody } from '../../../components/ui/Card';
+import Tooltip from '../../../components/ui/Tooltip';
+import Balance from '../../../components/Balance';
+import Icon from '../../../components/icon/Icon';
 
 const Balance2Partial = () => {
 	return (

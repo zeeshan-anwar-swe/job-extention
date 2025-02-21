@@ -4,10 +4,13 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 	CardTitle,
-} from '../../../../components/ui/Card';
-import usersDb from '../../../../mocks/db/users.db';
-import productsDb from '../../../../mocks/db/products.db';
-import getFirstLetter from '../../../../utils/getFirstLetter';
+} from '../../../components/ui/Card';
+import usersDb from '../../../mocks/db/users.db';
+import productsDb from '../../../mocks/db/products.db';
+import getFirstLetter from '../../../utils/getFirstLetter';
+import SvgTwiceCheck from '../../../components/icon/heroicons/TwiceCheck';
+import Icon from '../../../components/icon/Icon';
+import Badge from '../../../components/ui/Badge';
 
 interface ICommentItemProps {
 	image?: string;
@@ -20,7 +23,7 @@ interface ICommentItemProps {
 const CommentItem: FC<ICommentItemProps> = (props) => {
 	const { image, firstName, username, productName, comment, time } = props;
 	return (
-		<div className='flex w-full gap-4'>
+		<div className='flex w-full gap-4 rounded-xl bg-zinc-100 p-2'>
 			<div className='flex-shrink-0'>
 				{image && <img src={image} alt={firstName} className='h-16 w-16 rounded-full' />}
 				{!image && (
@@ -34,11 +37,20 @@ const CommentItem: FC<ICommentItemProps> = (props) => {
 					<b>{firstName}</b> <span className='text-gray-500'>@{username}</span>
 				</div>
 				<div className='mb-2'>
-					<span className='text-gray-500'>On</span> <b>{productName}</b>
+					<span className='text-gray-500'>On</span> <b>{productName} | Web Developer</b>
 				</div>
+				<Badge
+					variant='solid'
+					color='amber'
+					colorIntensity='100'
+					className='!text-amber-800'>
+					Fair
+				</Badge>
 				<div>{comment}</div>
 			</div>
-			<div className='flex-shrink-0'>{time}</div>
+			<div className='flex-shrink-0'>
+				<Icon icon='HeroTwiceCheck' color='blue' size='text-3xl' />
+			</div>
 		</div>
 	);
 };
