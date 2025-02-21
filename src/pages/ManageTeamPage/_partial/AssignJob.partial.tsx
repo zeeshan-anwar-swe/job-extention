@@ -7,43 +7,25 @@ import Modal, {
 } from '../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
 import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
-import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import FieldWrap from '../../../components/form/FieldWrap';
-import Input from '../../../components/form/Input';
-import Label from '../../../components/form/Label';
 
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>Invite a Team Member</ModalHeader>
-			<NavSeparator />
+			<ModalHeader>Assign Job “Product Designer” to a Client</ModalHeader>
+			<div className='p-4'>
+				<SearchPartial />
+			</div>
 
-			<ModalBody className='!flex !w-full !flex-col gap-4'>
-				<div>
-					<Label htmlFor='clientName'>Team Member Name*</Label>
-					<FieldWrap>
-						<Input
-							id='clientName'
-							name='clientName'
-							placeholder='Enter your team member name'
-							className='rounded-full'
-						/>
-					</FieldWrap>
-				</div>
-				<div>
-					<Label htmlFor='clientEmail'>Team Member's Email*</Label>
-					<FieldWrap>
-						<Input
-							id='clientEmail'
-							name='clientEmail'
-							placeholder='Enter your team member email'
-							className='rounded-full'
-						/>
-					</FieldWrap>
+			<ModalBody>
+				<div className='flex w-full flex-col gap-4'>
+					<AssignJobModalListItemPartial />
+					<AssignJobModalListItemPartial />
+					<AssignJobModalListItemPartial />
+					<AssignJobModalListItemPartial />
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<ModalFooterChild className='w-full pt-4'>
+				<ModalFooterChild className='w-full pt-4 max-md:!flex-col'>
 					<Button
 						onClick={() => setModal(false)}
 						className='w-full'
@@ -51,13 +33,11 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 						color='zinc'>
 						Cancel
 					</Button>
-
-					<Button
-						rightIcon='HeroPaperAirplane'
-						onClick={() => setModal(false)}
-						className='w-full'
-						variant='solid'>
-						Send Invitation
+					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+						Done
+					</Button>
+					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+						Invite As Client
 					</Button>
 				</ModalFooterChild>
 			</ModalFooter>

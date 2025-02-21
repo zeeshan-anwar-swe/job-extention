@@ -1,21 +1,13 @@
 import Button from '../../../components/ui/Button';
 import Table, { TBody, Td, TFoot, Th, THead, Tr } from '../../../components/ui/Table';
 import { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../../components/ui/Card';
-import SearchPartial from './Search.partial';
-import TableDataPartial from './TableDataProfile.partial';
 import TableDataProfilePartial from './TableDataProfile.partial';
-import TableDataPositionPartial from './TableDataPosition.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
 import TableDataSourcePartial from './TableDataSource.partial';
-import { Link } from 'react-router-dom';
-import Dropdown, {
-	DropdownItem,
-	DropdownMenu,
-	DropdownToggle,
-} from '../../../components/ui/Dropdown';
+
 import { useState } from 'react';
-import AssignJobModalPartial from './AssignJob.partial';
+import InviteModalPartial from './InviteModal.partial';
 import TableDataBacklogPartial from './TableDataBacklog.partial';
 
 const TablePartial = () => {
@@ -34,7 +26,7 @@ const TablePartial = () => {
 					<Button onClick={() => setModal(true)} variant='solid' rightIcon='HeroPlus'>
 						Add a Team Member
 					</Button>
-					<AssignJobModalPartial setModal={setModal} modal={modal} />
+					<InviteModalPartial setModal={setModal} modal={modal} />
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='overflow-auto'>
