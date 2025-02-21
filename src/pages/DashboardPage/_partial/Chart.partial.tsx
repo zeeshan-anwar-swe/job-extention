@@ -15,58 +15,6 @@ const ChartPartial = () => {
 		height: number;
 	} | null>(null);
 
-	// const [state] = useState<IChartOptions>({
-	// 	series: [
-	// 		{
-	// 			name: 'Net Profit',
-	// 			data: [61, 58, 63, 60, 66],
-	// 		},
-	// 		{
-	// 			name: 'Revenue',
-	// 			data: [87, 105, 91, 114, 94],
-	// 		},
-	// 		{
-	// 			name: 'Free Cash Flow',
-	// 			data: [45, 48, 52, 53, 41],
-	// 		},
-	// 	],
-	// 	options: {
-	// 		plotOptions: {
-	// 			bar: {
-	// 				horizontal: false,
-	// 				columnWidth: '55%',
-	// 				borderRadiusWhenStacked: 'all',
-	// 			},
-	// 		},
-	// 		dataLabels: {
-	// 			enabled: false,
-	// 		},
-	// 		stroke: {
-	// 			show: true,
-	// 			width: 2,
-	// 			colors: ['transparent'],
-	// 		},
-	// 		xaxis: {
-	// 			categories: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-	// 		},
-	// 		yaxis: {
-	// 			title: {
-	// 				text: '$ (thousands)',
-	// 			},
-	// 		},
-	// 		fill: {
-	// 			opacity: 1,
-	// 		},
-	// 		tooltip: {
-	// 			y: {
-	// 				formatter(val) {
-	// 					return `$ ${val} thousands`;
-	// 				},
-	// 			},
-	// 		},
-	// 	},
-	// });
-
 	const [state] = useState<IChartOptions>({
 		series: [
 			{
@@ -143,7 +91,7 @@ const ChartPartial = () => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody>
-				<div ref={chartContainerRef} className='h-96 w-full'>
+				<div ref={chartContainerRef} className=' w-full'>
 					{chartDimensions && (
 						<Chart
 							series={state.series}

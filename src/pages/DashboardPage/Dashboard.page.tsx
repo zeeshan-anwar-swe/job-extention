@@ -164,10 +164,10 @@ const DashboardPage = () => {
 							<Balance4Partial />
 						</div>
 
-						<div className='col-span-12 2xl:col-span-8'>
+						<div className='col-span-12 xl:h-[500px] 2xl:col-span-8'>
 							<ChartPartial />
 						</div>
-						<div className='col-span-12 2xl:col-span-4'>
+						<div className='scroll-mt-offset col-span-12 overflow-y-scroll xl:h-[500px] 2xl:col-span-4'>
 							<CommentPartial />
 						</div>
 
