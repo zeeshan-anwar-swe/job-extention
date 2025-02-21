@@ -4,10 +4,10 @@ import Aside, {
 	AsideBody,
 	AsideFooter,
 	AsideHead,
-} from '../../../../components/layouts/Aside/Aside';
+} from '../../../../../components/layouts/Aside/Aside';
 import LogoAndAsideTogglePart from './_parts/LogoAndAsideToggle.part';
 import DarkModeSwitcherPart from './_parts/DarkModeSwitcher.part';
-import { appPages, componentsPages } from '../../../../config/pages.config';
+import { appPages, componentsPages } from '../../../../../config/pages.config';
 import Nav, {
 	NavButton,
 	NavCollapse,
@@ -15,9 +15,9 @@ import Nav, {
 	NavSeparator,
 	NavTitle,
 	NavUser,
-} from '../../../../components/layouts/Navigation/Nav';
-import Badge from '../../../../components/ui/Badge';
-import usersDb from '../../../../mocks/db/users.db';
+} from '../../../../../components/layouts/Navigation/Nav';
+import Badge from '../../../../../components/ui/Badge';
+import usersDb from '../../../../../mocks/db/users.db';
 
 const SettingAside = () => {
 	return (

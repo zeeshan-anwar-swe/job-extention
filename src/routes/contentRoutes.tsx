@@ -2,7 +2,7 @@ import React, { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
 import LoginPage from '../pages/Login.page';
 import SignupPage from '../pages/Signup.page';
-// import NotFoundPage from '../pages/NotFound.page';
+import NotFoundPage from '../pages/NotFound.page';
 import { appPages, authPages } from '../config/pages.config';
 import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
@@ -19,6 +19,8 @@ import TeammateProfilePage from '../pages/ManageTeamPage/TeammateProfilePage/Tea
 import ChatPage from '../pages/ManageTeamPage/ChatPage/Chat.page';
 import ApexChartsPage from '../pages/ApexChartsPage/ApexCharts.page';
 import SettingPage from '../pages/SettingPage/Setting.page';
+import ConnectCRMPage from '../pages/SettingPage/ConnectCRMPage/ConnectCRM.page';
+import SubcriptionPage from '../pages/SettingPage/SubcriptionPage/Subcription.page';
 /**
  * SALES
  */
@@ -142,6 +144,14 @@ const contentRoutes: RouteProps[] = [
 		element: <SettingPage />,
 	},
 
+	{
+		path: appPages.settingAppPages.subPages.connectCRMAppPages.to,
+		element: <ConnectCRMPage />,
+	},
+	{
+		path: appPages.settingAppPages.subPages.subcriptionAppPages.to,
+		element: <SubcriptionPage />,
+	},
 	/**
 	 * SettingPage::END
 	 */
@@ -189,10 +199,7 @@ const contentRoutes: RouteProps[] = [
 		path: `${appPages.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
 		element: <TeammateProfilePage />,
 	},
-	// {
-	// 	path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}/:id`,
-	// 	element: <ChatPage />,
-	// },
+
 	{
 		path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}`,
 		element: <ChatPage />,
@@ -219,6 +226,8 @@ const contentRoutes: RouteProps[] = [
 
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
 	{ path: authPages.signupPage.to, element: <SignupPage /> },
+
+	{ path: '*', element: <NotFoundPage /> },
 ];
 
 export default contentRoutes;

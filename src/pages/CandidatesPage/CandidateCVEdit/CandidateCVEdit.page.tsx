@@ -13,10 +13,8 @@ import Card, {
 } from '../../../components/ui/Card';
 import { Link } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
-import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
-import Alert from '../../../components/ui/Alert';
-import HeaderPartial from './_partial/Header.partial';
+
 import RichTextPartial from './_partial/RichText.partial';
 
 const CandidateCVEditPage = () => {

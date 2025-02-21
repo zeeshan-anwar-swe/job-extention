@@ -63,7 +63,7 @@ const headerRoutes: RouteProps[] = [
 		path: '',
 		element: null,
 	},
-	{ path: '*', element: <DefaultHeaderTemplate /> },
+	{ path: '*', element: null },
 ];
 
 export default headerRoutes;

@@ -26,7 +26,7 @@ const navItemClasses = {
 		themeConfig.transition,
 	),
 	inactive: 'border-transparent',
-	active: 'border-zinc-300 text-zinc-950 dark:border-zinc-800 dark:text-zinc-100',
+	active: 'border-zinc-300 bg-zinc-100 text-zinc-950 dark:bg-zinc-800 dark:border-zinc-600 dark:text-zinc-100',
 	here: 'text-zinc-950 dark:text-zinc-100 border-transparent',
 };
 

@@ -34,6 +34,26 @@ export const appPages = {
 		to: '/setting',
 		text: 'Setting',
 		icon: 'HeroCog6Tooth',
+		subPages: {
+			editProfileAppPages: {
+				id: 'editProfileApp',
+				to: '/setting',
+				text: 'Edit Profile',
+				icon: 'HeroUser',
+			},
+			connectCRMAppPages: {
+				id: 'connectCRMApp',
+				to: '/setting/connect-crm',
+				text: 'Connect CRM',
+				icon: 'HeroComputerDesktop',
+			},
+			subcriptionAppPages: {
+				id: 'subcriptionApp',
+				to: '/setting/subcription',
+				text: 'Subscription',
+				icon: 'HeroCreditCard',
+			},
+		},
 	},
 
 	candidatesAppPages: {
