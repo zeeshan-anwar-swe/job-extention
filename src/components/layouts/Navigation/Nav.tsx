@@ -557,13 +557,14 @@ NavSeparator.displayName = 'NavSeparator';
 interface INavProps extends HTMLAttributes<HTMLDivElement> {
 	children: ReactNode;
 	className?: string;
+	ulClassName?: string;
 }
 const Nav: FC<INavProps> = (props) => {
-	const { children, className, ...rest } = props;
+	const { children, className, ulClassName, ...rest } = props;
 
 	return (
 		<nav data-component-name='Nav' className={classNames(className)} {...rest}>
-			<ul>{children}</ul>
+			<ul className={ulClassName || ''}>{children}</ul>
 		</nav>
 	);
 };

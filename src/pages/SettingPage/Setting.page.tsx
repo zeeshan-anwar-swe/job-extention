@@ -29,9 +29,9 @@ const SettingPage = () => {
 				<Container className='!grid flex-1 !grid-cols-12 !gap-4'>
 					<Card className='col-span-12 !grid flex-1 !grid-cols-10 gap-4 overflow-hidden p-4'>
 						<SettingAside />
-						<Card className='col-span-8  !bg-zinc-100 dark:!bg-zinc-950 '>
-							<CardBody className='!flex gap-4'>
-								<div className='group relative h-fit w-fit'>
+						<Card className='col-span-8 !bg-zinc-100  dark:!bg-zinc-950 max-md:col-span-12 '>
+							<CardBody className='!flex gap-4 max-md:!flex-col'>
+								<div className='group relative h-fit w-fit max-md:mx-auto'>
 									<img
 										className=' aspect-square w-52 rounded-full'
 										src={profileImageUrlValidationCheck('')}
@@ -46,27 +46,46 @@ const SettingPage = () => {
 									/>
 								</div>
 								<div className='flex flex-1 flex-col gap-4'>
-									<div className='flex items-center gap-4 '>
-										<LabelTitlepartial label='First Name' detail='Mishal ' />
-										<LabelTitlepartial label='Last Name' detail='Olive' />
-									</div>
-									<div className='flex items-center gap-4 '>
+									<div className='flex items-center gap-4 max-md:flex-col'>
 										<LabelTitlepartial
+											className='max-md:w-full'
+											label='First Name'
+											detail='Mishal '
+										/>
+										<LabelTitlepartial
+											className='max-md:w-full'
+											label='Last Name'
+											detail='Olive'
+										/>
+									</div>
+									<div className='flex items-center gap-4 max-md:flex-col '>
+										<LabelTitlepartial
+											className='max-md:w-full'
 											type='email'
 											label='Email Address'
 											detail='olivia@vaionex.com'
 										/>
-										<LabelTitlepartial label='Industry' detail='IT / Finance' />
+										<LabelTitlepartial
+											className='max-md:w-full'
+											label='Industry'
+											detail='IT / Finance'
+										/>
 									</div>
-									<div className='flex items-center gap-4 '>
+									<div className='flex items-center gap-4  max-md:flex-col'>
 										<LabelTitleTextAreapartial
+											className='w-full max-md:!p-0'
 											label='About'
 											detail='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
 										/>
 									</div>
-									<div className='flex items-center gap-4 '>
-										<LabelTitlepartial type='password' label='New password' />
+									<div className='flex items-center gap-4 max-md:flex-col '>
 										<LabelTitlepartial
+											className='max-md:w-full'
+											type='password'
+											label='New password'
+										/>
+										<LabelTitlepartial
+											className='max-md:w-full'
 											type='password'
 											label='Confirm Password'
 										/>
@@ -74,9 +93,10 @@ const SettingPage = () => {
 								</div>
 							</CardBody>
 							<NavSeparator />
-							<CardFooter>
-								<CardFooterChild>
+							<CardFooter className='max-md:flex-col-reverse'>
+								<CardFooterChild className=' max-md:w-full'>
 									<Button
+										className='max-md:!w-full'
 										variant='outline'
 										color='zinc'
 										borderWidth='border'
@@ -84,11 +104,17 @@ const SettingPage = () => {
 										Log Out
 									</Button>
 								</CardFooterChild>
-								<CardFooterChild>
-									<Button variant='outline' color='zinc' borderWidth='border'>
+								<CardFooterChild className='max-md:w-full max-md:!flex-col'>
+									<Button
+										className='max-md:w-full'
+										variant='outline'
+										color='zinc'
+										borderWidth='border'>
 										Cancel
 									</Button>
-									<Button variant='solid'>Save changes</Button>
+									<Button className='max-md:w-full' variant='solid'>
+										Save changes
+									</Button>
 								</CardFooterChild>
 							</CardFooter>
 						</Card>

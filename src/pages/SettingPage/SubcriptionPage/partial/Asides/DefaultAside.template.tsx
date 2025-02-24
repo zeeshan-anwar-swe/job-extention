@@ -21,7 +21,7 @@ import usersDb from '../../../../../mocks/db/users.db';
 
 const SettingAside = () => {
 	return (
-		<aside className='col-span-2 rounded-xl'>
+		<aside className='col-span-2 rounded-xl  max-md:col-span-12'>
 			<Nav>
 				<NavItem {...appPages.settingAppPages.subPages.editProfileAppPages} />
 				<NavItem {...appPages.settingAppPages.subPages.connectCRMAppPages} />

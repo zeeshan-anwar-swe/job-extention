@@ -12,12 +12,11 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 } from '../../../components/ui/Card';
-import SettingAside from './partial/Asides/DefaultAside.template';
-import LabelTitlepartial from './partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import Badge from '../../../components/ui/Badge';
 import TablePartial from './partial/Table.partial';
 import SubscriptionModalPartial from './partial/SubscriptionModal.partial';
+import SettingAside from '../partial/Asides/DefaultAside.template';
 
 const SubcriptionPage = () => {
 	return (
@@ -34,7 +33,7 @@ const SubcriptionPage = () => {
 				<Container className='!grid flex-1 !grid-cols-12 !gap-4'>
 					<Card className='col-span-12 !grid flex-1 !grid-cols-10 gap-4 overflow-hidden p-4'>
 						<SettingAside />
-						<Card className='col-span-8 gap-4 !bg-zinc-100 p-4 dark:!bg-zinc-950 '>
+						<Card className='col-span-8 gap-4 !bg-zinc-100 p-4 dark:!bg-zinc-950 max-md:col-span-12 '>
 							<Card>
 								<CardHeader className='rounded-t-xl bg-white dark:!bg-zinc-900'>
 									<CardHeaderChild>
@@ -67,15 +66,22 @@ const SubcriptionPage = () => {
 									<NavSeparator />
 								</div>
 								<CardFooter>
-									<CardFooterChild>
-										<Button variant='outline' color='zinc' borderWidth='border'>
+									<CardFooterChild className='max-md:w-full'>
+										<Button
+											className='max-md:!w-full'
+											variant='outline'
+											color='zinc'
+											borderWidth='border'>
 											Manage Plan
 										</Button>
-										<Button rightIcon='HeroArrowUpRight' variant='solid'>
+										<Button
+											className='max-md:!w-full'
+											rightIcon='HeroArrowUpRight'
+											variant='solid'>
 											Upgrade Plan
 										</Button>
 									</CardFooterChild>
-									<CardFooterChild>
+									<CardFooterChild className='max-md:w-full'>
 										<SubscriptionModalPartial />
 									</CardFooterChild>
 								</CardFooter>
@@ -96,7 +102,7 @@ const SubcriptionPage = () => {
 										</Button>
 									</CardHeaderChild>
 								</CardHeader>
-								<CardBody className=' rounded-xl bg-white py-4 dark:bg-zinc-900'>
+								<CardBody className=' overflow-x-scroll rounded-xl bg-white py-4 dark:bg-zinc-900'>
 									<TablePartial />
 								</CardBody>
 							</Card>

@@ -16,6 +16,7 @@ const SubscriptionModalPartial = () => {
 	return (
 		<>
 			<Button
+				className='max-md:w-full'
 				onClick={() => setModal(true)}
 				rightIcon='HeroExclamationCircle'
 				variant='outline'
