@@ -56,6 +56,13 @@ export const appPages = {
 		},
 	},
 
+	pamentAppPages: {
+		id: 'pamentApp',
+		to: '/payment',
+		text: 'Payment',
+		icon: 'HeroCreditCard',
+	},
+
 	candidatesAppPages: {
 		id: 'candidatesApp',
 		to: '/candidates',

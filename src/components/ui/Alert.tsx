@@ -10,6 +10,7 @@ import useColorIntensity from '../../hooks/useColorIntensity';
 import { TRounded } from '../../types/rounded.type';
 import { TBorderWidth } from '../../types/borderWidth.type';
 import CloseButton from './CloseButton';
+import { right } from '@popperjs/core';
 
 export type TAlertVariants = 'solid' | 'outline' | 'default';
 
@@ -20,6 +21,7 @@ interface IAlertProps extends HTMLAttributes<HTMLDivElement> {
 	color?: TColors;
 	colorIntensity?: TColorIntensity;
 	icon?: TIcons;
+	rightIcon?: TIcons;
 	iconSize?: TFontSizes;
 	isClosable?: boolean;
 	rounded?: TRounded;
@@ -34,6 +36,7 @@ const Alert: FC<IAlertProps> = (props) => {
 		color,
 		colorIntensity,
 		icon,
+		rightIcon,
 		iconSize,
 		isClosable,
 		rounded,
@@ -76,7 +79,7 @@ const Alert: FC<IAlertProps> = (props) => {
 	if (status)
 		return (
 			<div data-component-name='Alert' className={classes} {...rest}>
-				{icon && (
+				{!rightIcon && icon && (
 					<Icon
 						icon={icon}
 						className='shrink-0 self-center ltr:mr-0 rtl:ml-0'
@@ -87,6 +90,15 @@ const Alert: FC<IAlertProps> = (props) => {
 					{title && <div className='text-lg font-semibold'>{title}</div>}
 					{children && <div>{children}</div>}
 				</div>
+
+				{rightIcon && (
+					<Icon
+						icon={rightIcon}
+						className='shrink-0 self-center ltr:mr-0 rtl:ml-0'
+						size={iconSize}
+					/>
+				)}
+
 				{isClosable && (
 					<div className='flex h-full grow items-start'>
 						<CloseButton setIsOpen={setStatus} />

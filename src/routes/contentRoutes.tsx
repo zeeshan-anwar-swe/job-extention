@@ -21,6 +21,7 @@ import ApexChartsPage from '../pages/ApexChartsPage/ApexCharts.page';
 import SettingPage from '../pages/SettingPage/Setting.page';
 import ConnectCRMPage from '../pages/SettingPage/ConnectCRMPage/ConnectCRM.page';
 import SubcriptionPage from '../pages/SettingPage/SubcriptionPage/Subcription.page';
+import PaymentPage from '../pages/PaymentPage/Payment.page';
 /**
  * SALES
  */
@@ -47,6 +48,18 @@ const contentRoutes: RouteProps[] = [
 
 	/**
 	 * Dashboard::END
+	 */
+
+	/**
+	 * PaymentPage::BEGIN
+	 */
+	{
+		path: appPages.pamentAppPages.to,
+		element: <PaymentPage />,
+	},
+
+	/**
+	 * PaymentPage::END
 	 */
 
 	/**

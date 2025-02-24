@@ -52,12 +52,13 @@ interface IModalHeaderClonedProps {
 interface IModalHeaderProps extends HTMLAttributes<HTMLDivElement>, IModalHeaderClonedProps {
 	children: ReactNode;
 	className?: string;
+	noCloseButton?: boolean;
 }
 export const ModalHeader: FC<IModalHeaderProps> = (props) => {
-	const { children, className, titleId, setIsOpen, ...rest } = props;
+	const { children, noCloseButton, className, titleId, setIsOpen, ...rest } = props;
 
 	const classes = classNames(
-		'flex items-center justify-between px-4 pb-4 text-2xl font-semibold [&:first-child]:pt-4',
+		`flex items-center ${noCloseButton ? 'justify-center' : ' justify-between'} px-4 pb-4 text-2xl  font-semibold [&:first-child]:pt-4`,
 	);
 
 	return (
@@ -65,12 +66,14 @@ export const ModalHeader: FC<IModalHeaderProps> = (props) => {
 			data-component-name='Modal/ModalHeader'
 			className={classNames(classes, className)}
 			{...rest}>
-			<div id={titleId} className='flex items-center'>
+			<div id={titleId} className='flex items-center '>
 				{children}
 			</div>
-			<div className='flex items-center'>
-				<CloseButton setIsOpen={() => (setIsOpen ? setIsOpen(false) : undefined)} />
-			</div>
+			{!noCloseButton && (
+				<div className='flex items-center'>
+					<CloseButton setIsOpen={() => (setIsOpen ? setIsOpen(false) : undefined)} />
+				</div>
+			)}
 		</div>
 	);
 };

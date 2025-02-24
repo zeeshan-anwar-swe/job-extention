@@ -16,6 +16,8 @@ import SettingAside from './partial/Asides/DefaultAside.template';
 import LabelTitlepartial from './partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import Badge from '../../../components/ui/Badge';
+import TablePartial from './partial/Table.partial';
+import SubscriptionModalPartial from './partial/SubscriptionModal.partial';
 
 const SubcriptionPage = () => {
 	return (
@@ -34,7 +36,7 @@ const SubcriptionPage = () => {
 						<SettingAside />
 						<Card className='col-span-8 gap-4 !bg-zinc-100 p-4 dark:!bg-zinc-950 '>
 							<Card>
-								<CardHeader className='rounded-xl bg-white dark:!bg-zinc-800'>
+								<CardHeader className='rounded-t-xl bg-white dark:!bg-zinc-900'>
 									<CardHeaderChild>
 										<div>
 											<div className='mb-2 flex items-center gap-2'>
@@ -55,13 +57,13 @@ const SubcriptionPage = () => {
 										</h1>
 									</CardHeaderChild>
 								</CardHeader>
-								<CardBody className=' bg-white py-4 dark:bg-zinc-800'>
-									<div className='my-4 w-fit rounded-xl bg-zinc-100 p-4 dark:bg-zinc-900'>
+								<CardBody className=' bg-white py-4 dark:bg-zinc-900'>
+									<div className='my-4 w-fit rounded-xl bg-zinc-100 p-4 dark:bg-zinc-950'>
 										<h4>Next Payment</h4>
 										<h2>November 30, 2025</h2>
 									</div>
 								</CardBody>
-								<div className='px-2 pb-2'>
+								<div className='pb-2'>
 									<NavSeparator />
 								</div>
 								<CardFooter>
@@ -74,18 +76,13 @@ const SubcriptionPage = () => {
 										</Button>
 									</CardFooterChild>
 									<CardFooterChild>
-										<Button
-											rightIcon='HeroExclamationCircle'
-											variant='outline'
-											color='red'
-											borderWidth='border'>
-											Cancel membership
-										</Button>
+										<SubscriptionModalPartial />
 									</CardFooterChild>
 								</CardFooter>
 							</Card>
-							<Card>
-								<CardHeader className='rounded-xl bg-white dark:!bg-zinc-800'>
+
+							<Card className='!bg-transparent'>
+								<CardHeader>
 									<CardHeaderChild>
 										<h3>Billing and invoicing</h3>
 									</CardHeaderChild>
@@ -99,11 +96,8 @@ const SubcriptionPage = () => {
 										</Button>
 									</CardHeaderChild>
 								</CardHeader>
-								<CardBody className=' bg-white py-4 dark:bg-zinc-800'>
-									<div className='my-4 w-fit rounded-xl bg-zinc-100 p-4 dark:bg-zinc-900'>
-										<h4>Next Payment</h4>
-										<h2>November 30, 2025</h2>
-									</div>
+								<CardBody className=' rounded-xl bg-white py-4 dark:bg-zinc-900'>
+									<TablePartial />
 								</CardBody>
 							</Card>
 						</Card>

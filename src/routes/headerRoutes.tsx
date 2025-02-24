@@ -64,6 +64,7 @@ const headerRoutes: RouteProps[] = [
 		element: null,
 	},
 	{ path: '*', element: null },
+	{ path: appPages.pamentAppPages.to, element: null },
 ];
 
 export default headerRoutes;
