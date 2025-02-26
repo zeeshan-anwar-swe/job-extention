@@ -2,7 +2,7 @@ import Card from '../../../components/ui/Card';
 import Button from '../../../components/ui/Button';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import { useState } from 'react';
-import AssignJobModalPartial from './AssignJob.partial';
+import AssignJobModalPartial from './InviteModal.partial';
 import Badge from '../../../components/ui/Badge';
 
 const HeaderPartial = () => {

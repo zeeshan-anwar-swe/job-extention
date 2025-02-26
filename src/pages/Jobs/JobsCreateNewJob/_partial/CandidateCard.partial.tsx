@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card, {
 	CardBody,
 	CardFooter,
@@ -12,6 +12,7 @@ import {
 import Button from '../../../../components/ui/Button';
 import Alert from '../../../../components/ui/Alert';
 import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
+import AssignJobModalPartial from './AssignJob.partial';
 
 const CandidateCardPartial = ({
 	name,
@@ -32,6 +33,8 @@ const CandidateCardPartial = ({
 	availability?: string;
 	profileImageUrl: string;
 }) => {
+	const [modal, setModal] = useState<boolean>(false);
+
 	return (
 		<Card className='bg-zinc-100'>
 			<CardHeader className=' gap-4'>
@@ -63,10 +66,13 @@ const CandidateCardPartial = ({
 			</CardBody>
 			<NavSeparator className='!mx-4 !mb-4' />
 			<CardFooter className='!justify-start max-md:!justify-center'>
-				<Button variant='solid'>Assign</Button>
+				<Button variant='solid' onClick={() => setModal(true)}>
+					Assign
+				</Button>
 				<Button variant='outline' color='zinc'>
 					View Profile
 				</Button>
+				<AssignJobModalPartial setModal={setModal} modal={modal} />
 			</CardFooter>
 		</Card>
 	);

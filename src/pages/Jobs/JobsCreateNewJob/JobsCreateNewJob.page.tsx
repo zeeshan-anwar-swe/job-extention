@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '../../../components/layouts/Container/Container';
 import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
 import Subheader, { SubheaderLeft } from '../../../components/layouts/Subheader/Subheader';
@@ -20,8 +20,11 @@ import TablePartial from './_partial/Table.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 import SearchPartial from './_partial/Search.partial';
 import CandidateCardPartial from './_partial/CandidateCard.partial';
+import AssignJobModalPartial from '../_partial/AssignJob.partial';
 
 const JobsCreateNewJobPage = () => {
+	const [modal, setModal] = useState<boolean>(false);
+
 	return (
 		<>
 			<Header>
@@ -84,7 +87,10 @@ const JobsCreateNewJobPage = () => {
 							<CardFooterChild className='ml-auto'>
 								<Button variant='outline'>Cancel</Button>
 								<Button variant='solid'>Save Job</Button>
-								<Button variant='solid'>Assign To client</Button>
+								<Button variant='solid' onClick={() => setModal(true)}>
+									Assign To client
+								</Button>
+								<AssignJobModalPartial setModal={setModal} modal={modal} />
 							</CardFooterChild>
 						</CardFooter>
 					</Card>

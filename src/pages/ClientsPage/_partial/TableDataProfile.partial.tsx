@@ -1,5 +1,9 @@
+import { Link } from 'react-router-dom';
 import Badge from '../../../components/ui/Badge';
-import { profileImageUrlValidationCheck, textValidationCheck } from '../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../utils/validationCheck';
 
 const TableDataProfilePartial = ({
 	imageUrl,
@@ -11,7 +15,7 @@ const TableDataProfilePartial = ({
 	subTitle?: string;
 }) => {
 	return (
-		<div className='flex items-center justify-center gap-x-6'>
+		<Link to='/clients/profile' className='flex items-center justify-center gap-x-6'>
 			<img
 				className='aspect-square w-14 rounded-full'
 				src={profileImageUrlValidationCheck(imageUrl)}
@@ -21,7 +25,7 @@ const TableDataProfilePartial = ({
 				<h5>{textValidationCheck(title)}</h5>
 				<p>{textValidationCheck(subTitle)}</p>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

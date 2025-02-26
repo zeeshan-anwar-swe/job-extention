@@ -13,12 +13,13 @@ import { Link } from 'react-router-dom';
 
 const ClientProfilePageCardPartial = () => {
 	return (
-		<Card className='col-span-4 flex flex-col gap-2 border-2 border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
+		<Card className='col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
 			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
 					<h4 className='max-md:text-sm'>Web Developer</h4>
 					<Button
+						borderWidth='border'
 						rounded='rounded-full'
 						variant='outline'
 						color='zinc'

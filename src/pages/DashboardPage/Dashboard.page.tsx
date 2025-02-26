@@ -11,7 +11,7 @@ import Balance1Partial from './_partial/Balance1.partial';
 import Balance2Partial from './_partial/Balance2.partial';
 import Balance3Partial from './_partial/Balance3.partial';
 import Balance4Partial from './_partial/Balance4.partial';
-import TimelinePartial from './_partial/Timeline.partial';
+import MessagePartial from './_partial/Timeline.partial';
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
@@ -167,7 +167,7 @@ const DashboardPage = () => {
 						<div className='col-span-12 xl:h-[500px] 2xl:col-span-8'>
 							<ChartPartial />
 						</div>
-						<div className='scroll-mt-offset col-span-12 overflow-y-scroll xl:h-[500px] 2xl:col-span-4'>
+						<div className=' col-span-12 2xl:col-span-4'>
 							<CommentPartial />
 						</div>
 
@@ -177,7 +177,7 @@ const DashboardPage = () => {
 							</Card>
 						</div>
 						<div className='col-span-12 2xl:col-span-4'>
-							<TimelinePartial />
+							<MessagePartial />
 						</div>
 					</div>
 				</Container>

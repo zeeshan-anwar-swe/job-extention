@@ -25,11 +25,7 @@ const HeaderPartial = () => {
 					<Button onClick={() => setModal(true)} className='h-fit' variant='solid'>
 						Assign a job
 					</Button>
-					<Button
-						onClick={() => setModal(true)}
-						className='h-fit'
-						color='red'
-						variant='solid'>
+					<Button className='h-fit' color='red' variant='solid'>
 						Remove Member
 					</Button>
 				</div>

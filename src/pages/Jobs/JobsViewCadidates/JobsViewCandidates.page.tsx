@@ -27,8 +27,10 @@ import Badge from '../../../components/ui/Badge';
 import TableDataFeedbackPartial from './_partial/TableDataFeedback.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 import SearchPartial from '../_partial/Search.partial';
+import AssignJobModalPartial from '../_partial/AssignJob.partial';
 
 const JobsViewCandidatesPage = () => {
+	const [modal, setModal] = useState<boolean>(false);
 	return (
 		<>
 			<Header>
@@ -60,11 +62,14 @@ const JobsViewCandidatesPage = () => {
 								<Button size='xl' variant='solid' rightIcon='HeroEnvelope'>
 									Email
 								</Button>
-								<Link to='/jobs/create-job'>
-									<Button size='xl' variant='solid' rightIcon='HeroPlus'>
-										Assign to Candidate
-									</Button>
-								</Link>
+								<Button
+									onClick={() => setModal(true)}
+									size='xl'
+									variant='solid'
+									rightIcon='HeroPlus'>
+									Assign to Candidate
+								</Button>
+								<AssignJobModalPartial modal={modal} setModal={setModal} />
 							</CardHeaderChild>
 						</CardHeader>
 						<CardBody className=' overflow-scroll'>
