@@ -1,6 +1,5 @@
 import Container from '../../../components/layouts/Container/Container';
 import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
-import Subheader, { SubheaderLeft } from '../../../components/layouts/Subheader/Subheader';
 import Button from '../../../components/ui/Button';
 import Card, {
 	CardBody,
@@ -9,14 +8,7 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 } from '../../../components/ui/Card';
-import { Link } from 'react-router-dom';
-import LabelTitlepartial from './_partial/LabelTitle.partial';
 
-import HeaderPartial from './_partial/Header.partial';
-import LabelTitleTextAreapartial from './_partial/LabelTitleTextArea.partial';
-import ClientProfilePageCardPartial from './_partial/ClientProfilePageCard.partial';
-import SortDropdownPartial from './_partial/SortDropdown.partial';
-import Badge from '../../../components/ui/Badge';
 import SearchPartial from '../_partial/Search.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import ChatInputPartial from '../_partial/ChatInput.partial';

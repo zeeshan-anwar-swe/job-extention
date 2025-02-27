@@ -53,7 +53,7 @@ const CandidateCardPartial = ({
 				</CardHeaderChild>
 			</CardHeader>
 
-			<CardBody className='!flex !gap-4 max-md:flex-col'>
+			<CardBody className='!flex flex-wrap !gap-4 max-md:flex-col'>
 				<Button className='!p-1' variant='outline' color='zinc'>
 					Experience: <b>{textValidationCheck(experience)}</b>
 				</Button>

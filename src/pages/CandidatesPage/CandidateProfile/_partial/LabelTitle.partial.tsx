@@ -13,7 +13,7 @@ const LabelTitlepartial = ({ label, detail }: { label?: string; detail?: string 
 				{textValidationCheck(label)}
 			</Label>
 
-			<FieldWrap firstSuffix={<Icon icon='HeroUser' className='mx-2' />}>
+			<FieldWrap>
 				<Input
 					dimension='lg'
 					id='name'
