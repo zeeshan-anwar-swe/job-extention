@@ -16,7 +16,6 @@ import Card, {
 import { Link } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import TablePartial from './_partial/Table.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 import SearchPartial from './_partial/Search.partial';
 import CandidateCardPartial from './_partial/CandidateCard.partial';

@@ -35,6 +35,12 @@ export const appPages = {
 		text: 'Setting',
 		icon: 'HeroCog6Tooth',
 		subPages: {
+			settingPage: {
+				id: 'SettingApp',
+				to: '/setting',
+				text: 'Setting',
+				icon: 'HeroCog6Tooth',
+			},
 			editProfileAppPages: {
 				id: 'editProfileApp',
 				to: '/setting',
@@ -69,6 +75,12 @@ export const appPages = {
 		text: 'Candidates',
 		icon: 'HeroUsers',
 		subPages: {
+			candidatesPage: {
+				id: 'candidatesPage',
+				to: '/candidates',
+				text: 'Candidates',
+				icon: 'HeroUsers',
+			},
 			cadidateProfileAppPage: {
 				id: 'cadidateProfileApp',
 				to: 'candidates/profile',
@@ -89,6 +101,12 @@ export const appPages = {
 		text: 'Jobs',
 		icon: 'HeroDocumentText',
 		subPages: {
+			jobsPage: {
+				id: 'jobsApp',
+				to: '/jobs',
+				text: 'Jobs',
+				icon: 'HeroDocumentText',
+			},
 			viewCadidatesAppPages: {
 				id: 'jobsViewCadidatesApp',
 				to: '/jobs/view-cadidates',
@@ -110,6 +128,12 @@ export const appPages = {
 		text: 'Clients',
 		icon: 'HeroBriefcase',
 		subPages: {
+			clientsPage: {
+				id: 'clientsApp',
+				to: '/clients',
+				text: 'Clients',
+				icon: 'HeroBriefcase',
+			},
 			clientProfileAppPages: {
 				id: 'clientProfileApp',
 				to: '/clients/profile',
@@ -154,6 +178,13 @@ export const appPages = {
 		icon: 'HeroUsers',
 		rightIcon: 'HeroArrowUpRight',
 		subPages: {
+			manageTeamPage: {
+				id: 'manageTeamApp',
+				to: '/manage-team',
+				text: 'Manage Team',
+				icon: 'HeroUsers',
+				rightIcon: 'HeroArrowUpRight',
+			},
 			teammateProfileAppPages: {
 				id: 'teammateProfileApp',
 				to: '/manage-team/profile',

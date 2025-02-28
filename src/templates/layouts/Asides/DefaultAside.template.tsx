@@ -28,9 +28,9 @@ const DefaultAsideTemplate = () => {
 			<AsideBody>
 				<Nav>
 					<NavItem {...appPages.dashboardAppPages} />
-					<NavItem {...appPages.candidatesAppPages} />
-					<NavItem {...appPages.jobsAppPages} />
-					<NavItem {...appPages.clientsAppPages} />
+					<NavItem {...appPages.candidatesAppPages.subPages.candidatesPage} />
+					<NavItem {...appPages.jobsAppPages.subPages.jobsPage} />
+					<NavItem {...appPages.clientsAppPages.subPages.clientsPage} />
 					<NavItem {...appPages.taskBoardAppPages} />
 					<NavItem {...appPages.reportAndAnalyticsAppPages} />
 
@@ -44,11 +44,11 @@ const DefaultAsideTemplate = () => {
 						</Badge>
 					</NavItem>
 					<NavItem {...appPages.KoalaByteAssistantAppPages} />
-					<NavItem {...appPages.settingAppPages} />
+					<NavItem {...appPages.settingAppPages.subPages.settingPage} />
 
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>
-					<NavItem {...appPages.manageTeamAppPages} />
+					<NavItem {...appPages.manageTeamAppPages.subPages.manageTeamPage} />
 
 					<NavUser
 						text={`${usersDb[0].firstName} ${usersDb[0].lastName}`}
