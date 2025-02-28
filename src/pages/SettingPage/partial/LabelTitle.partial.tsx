@@ -3,19 +3,18 @@ import { textValidationCheck } from '../../../utils/validationCheck';
 import Label from '../../../components/form/Label';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Input from '../../../components/form/Input';
+import { TInputTypes } from '../../../types/input.type';
 
 const LabelTitlepartial = ({
 	label,
-	type,
 	detail,
+	inputType,
 	className = '',
-	inputClassName = '',
 }: {
-	type?: string;
 	label?: string;
 	detail?: string;
 	className?: string;
-	inputClassName?: string;
+	inputType?: TInputTypes;
 }) => {
 	const [detailText, setDetailText] = useState<string | null | undefined>(detail || '');
 	return (
@@ -26,6 +25,7 @@ const LabelTitlepartial = ({
 
 			<FieldWrap>
 				<Input
+					type={inputType || 'text'}
 					dimension='lg'
 					id='name'
 					autoComplete='name'

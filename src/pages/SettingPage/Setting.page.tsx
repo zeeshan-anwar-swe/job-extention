@@ -61,7 +61,7 @@ const SettingPage = () => {
 									<div className='flex items-center gap-4 max-md:flex-col '>
 										<LabelTitlepartial
 											className='max-md:w-full'
-											type='email'
+											inputType='email'
 											label='Email Address'
 											detail='olivia@vaionex.com'
 										/>
@@ -81,12 +81,12 @@ const SettingPage = () => {
 									<div className='flex items-center gap-4 max-md:flex-col '>
 										<LabelTitlepartial
 											className='max-md:w-full'
-											type='password'
+											inputType='password'
 											label='New password'
 										/>
 										<LabelTitlepartial
 											className='max-md:w-full'
-											type='password'
+											inputType='password'
 											label='Confirm Password'
 										/>
 									</div>

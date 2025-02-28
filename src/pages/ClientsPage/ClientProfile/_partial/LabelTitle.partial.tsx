@@ -4,17 +4,7 @@ import Label from '../../../../components/form/Label';
 import FieldWrap from '../../../../components/form/FieldWrap';
 import Input from '../../../../components/form/Input';
 
-const LabelTitlepartial = ({
-	label,
-	detail,
-	className = '',
-	inputClassName = '',
-}: {
-	label?: string;
-	detail?: string;
-	className?: string;
-	inputClassName?: string;
-}) => {
+const LabelTitlepartial = ({ label, detail }: { label?: string; detail?: string }) => {
 	const [detailText, setDetailText] = useState<string | null | undefined>(detail || '');
 	return (
 		<div className='flex-1'>

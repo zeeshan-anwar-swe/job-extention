@@ -66,7 +66,7 @@ const CommentPartial = () => {
 					<CardTitle>Client Feedback</CardTitle>
 				</CardHeaderChild>
 			</CardHeader>
-			<CardBody className='flex h-96 flex-col gap-4 overflow-y-scroll '>
+			<CardBody className='scrollbar flex h-96 flex-col gap-4 overflow-y-scroll '>
 				<CommentItem
 					image={usersDb[0].image?.thumb}
 					firstName={usersDb[0].firstName}

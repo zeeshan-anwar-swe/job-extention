@@ -6,10 +6,8 @@ import Input from '../../../../components/form/Input';
 
 const LabelTitlepartial = ({
 	label,
-	type,
 	detail,
 	className = '',
-	inputClassName = '',
 }: {
 	type?: string;
 	label?: string;

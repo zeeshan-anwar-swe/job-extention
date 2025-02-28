@@ -6,16 +6,12 @@ import Input from '../../../../components/form/Input';
 
 const LabelTitlepartial = ({
 	label,
-	type,
 	detail,
 	className = '',
-	inputClassName = '',
 }: {
-	type?: string;
 	label?: string;
 	detail?: string;
 	className?: string;
-	inputClassName?: string;
 }) => {
 	const [detailText, setDetailText] = useState<string | null | undefined>(detail || '');
 	return (
