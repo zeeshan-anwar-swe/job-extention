@@ -17,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import colors from 'tailwindcss/colors';
 import themeConfig from '../../config/theme.config';
-import HeaderPartial from './_partial/Header.partial';
 import TaskSectionCardPartial from './_partial/TaskSectionCard.partial';
 
 const TaskboardPage = () => {
@@ -173,7 +172,7 @@ const TaskboardPage = () => {
 					</SubheaderRight>
 				</Subheader>
 				<Container className='grid grid-cols-4 gap-4 '>
-					<Card className='col-span-4 grid grid-cols-4 gap-4 !bg-white p-4 '>
+					<Card className='col-span-4 grid grid-cols-4 gap-4  p-4 '>
 						<Card className='col-span-4 '>
 							<CardHeader className='w-full'>
 								<CardHeaderChild className='!flex-col !items-start !gap-2'>
@@ -184,11 +183,27 @@ const TaskboardPage = () => {
 								</CardHeaderChild>
 							</CardHeader>
 						</Card>
-						<TaskSectionCardPartial color='amber' cardType='Backlog' taskCount={1} />
-						<TaskSectionCardPartial color='blue' cardType='In progress' taskCount={1} />
-						<TaskSectionCardPartial color='violet' cardType='In review' taskCount={1} />
+						<TaskSectionCardPartial
+							color='amber'
+							lineColor='!border-amber-500'
+							cardType='Backlog'
+							taskCount={1}
+						/>
+						<TaskSectionCardPartial
+							color='blue'
+							lineColor='!border-blue-500'
+							cardType='In progress'
+							taskCount={1}
+						/>
+						<TaskSectionCardPartial
+							color='violet'
+							lineColor='!border-violet-500'
+							cardType='In review'
+							taskCount={1}
+						/>
 						<TaskSectionCardPartial
 							color='emerald'
+							lineColor='!border-emerald-500'
 							cardType='Completed'
 							taskCount={1}
 						/>

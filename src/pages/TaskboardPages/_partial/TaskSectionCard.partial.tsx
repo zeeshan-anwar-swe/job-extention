@@ -16,8 +16,10 @@ const TaskSectionCardPartial = ({
 	cardType,
 	taskCount,
 	color = 'blue',
+	lineColor = `!border-blue-500`,
 }: {
 	cardType: string;
+	lineColor?: string;
 	color: TColors;
 	taskCount: number;
 }) => {
@@ -45,7 +47,7 @@ const TaskSectionCardPartial = ({
 					</Alert>
 				</CardHeaderChild>
 			</CardHeader>
-			<NavSeparator className={`!mx-4 !border-b-2 !border-${color}-500`} />
+			<NavSeparator className={`!mx-4 !border-b-2 ${lineColor}`} />
 			<Button
 				className='mx-4 mt-2 max-w-full border-dotted'
 				color='zinc'

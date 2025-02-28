@@ -20,7 +20,7 @@ const TableDataProfilePartial = ({
 				<Button icon='HeroEllipsisHorizontal'></Button>
 			</div>
 
-			<div className='flex w-fit items-center gap-2 rounded-full border-2 border-zinc-300 pr-4'>
+			<div className='flex w-fit items-center gap-2 rounded-full border border-zinc-300 pl-1 pr-4 dark:border-zinc-600'>
 				<img
 					className='aspect-square w-8 rounded-full'
 					src={profileImageUrlValidationCheck(imageUrl)}

@@ -58,7 +58,7 @@ const LoginPage = () => {
 			isProtectedRoute={false}
 			className='grid grid-cols-2 gap-x-32 bg-white dark:bg-inherit'
 			name='Sign In'>
-			<div className='py-16'>
+			<div className='py-16 max-md:hidden'>
 				<div className="relative ml-auto h-full w-8/12 rounded-2xl bg-[url('/images/sin-sup-side-bg.png')] bg-cover bg-center px-8">
 					<div className='absolute bottom-4 left-1/2 w-11/12 -translate-x-1/2  rounded-2xl border-2 border-white p-4 backdrop-blur-md'>
 						<p className='text-white'>
@@ -70,7 +70,7 @@ const LoginPage = () => {
 					</div>
 				</div>
 			</div>
-			<div className='container  flex h-full items-center justify-center'>
+			<div className='flex h-full items-center justify-center max-md:col-span-2 max-md:mx-auto'>
 				<div className='mr-auto flex max-w-sm flex-col gap-8'>
 					<div>
 						<LogoTemplate className='h-12' />
