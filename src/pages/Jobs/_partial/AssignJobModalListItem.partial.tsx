@@ -4,7 +4,7 @@ import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 const AssignJobModalListItemPartial = () => {
 	return (
 		<div className='flex items-center justify-between gap-4 rounded-xl  pr-2'>
-			<div className='flex items-center gap-4 rounded-xl bg-zinc-100 p-2'>
+			<div className='flex w-full items-center gap-4 rounded-xl bg-zinc-100 p-2 dark:bg-zinc-800'>
 				<img
 					className='aspect-square w-10 rounded-full object-cover'
 					src={profileImageUrlValidationCheck('')}

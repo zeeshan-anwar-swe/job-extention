@@ -29,6 +29,27 @@ export const appPages = {
 		icon: 'HeroSquares2X2',
 	},
 
+	customCVAppPages: {
+		id: 'customCVApp',
+		to: '/custom-cv',
+		text: 'Custom CV',
+		icon: 'HeroDocumentText',
+	},
+
+	testForCadidateAppPages: {
+		id: 'testForCadidateApp',
+		to: '/test-for-cadidate',
+		text: 'Test For Cadidate',
+		icon: 'HeroClipboardDocumentList',
+	},
+
+	integrationsAppPages: {
+		id: 'integrationsApp',
+		to: '/integrations',
+		text: 'Integrations',
+		icon: 'HeroPaperClip',
+	},
+
 	settingAppPages: {
 		id: 'SettingApp',
 		to: '/setting',
@@ -161,7 +182,7 @@ export const appPages = {
 		id: 'aiInterviewApp',
 		to: '/ai-interview',
 		text: 'AI Interview',
-		icon: 'HeroChatBubbleLeftRight',
+		icon: 'HeroBot',
 	},
 
 	KoalaByteAssistantAppPages: {

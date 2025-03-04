@@ -13,6 +13,7 @@ import Button from '../../../../components/ui/Button';
 import Alert from '../../../../components/ui/Alert';
 import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import AssignJobModalPartial from './AssignJob.partial';
+import { Link } from 'react-router-dom';
 
 const CandidateCardPartial = ({
 	name,
@@ -36,10 +37,10 @@ const CandidateCardPartial = ({
 	const [modal, setModal] = useState<boolean>(false);
 
 	return (
-		<Card className='bg-zinc-100'>
-			<CardHeader className=' gap-4'>
+		<Card className='bg-zinc-100 dark:bg-zinc-950'>
+			<CardHeader className='gap-4'>
 				<img
-					className='aspect-square w-14 rounded-xl border-2'
+					className='aspect-square w-14 rounded-xl border'
 					src={profileImageUrlValidationCheck(profileImageUrl)}
 					alt='profile-image'
 				/>
@@ -54,13 +55,13 @@ const CandidateCardPartial = ({
 			</CardHeader>
 
 			<CardBody className='!flex flex-wrap !gap-4 max-md:flex-col'>
-				<Button className='!p-1' variant='outline' color='zinc'>
+				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
 					Experience: <b>{textValidationCheck(experience)}</b>
 				</Button>
-				<Button className='!p-1' variant='outline' color='zinc'>
+				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
 					location: <b>{textValidationCheck(location)}</b>
 				</Button>
-				<Button className='!p-1' variant='outline' color='zinc'>
+				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
 					Availability: <b>{textValidationCheck(availability)}</b>
 				</Button>
 			</CardBody>
@@ -69,9 +70,11 @@ const CandidateCardPartial = ({
 				<Button variant='solid' onClick={() => setModal(true)}>
 					Assign
 				</Button>
-				<Button variant='outline' color='zinc'>
-					View Profile
-				</Button>
+				<Link to={'/candidates/profile/10'}>
+					<Button variant='outline' borderWidth='border' color='zinc'>
+						View Profile
+					</Button>
+				</Link>
 				<AssignJobModalPartial setModal={setModal} modal={modal} />
 			</CardFooter>
 		</Card>

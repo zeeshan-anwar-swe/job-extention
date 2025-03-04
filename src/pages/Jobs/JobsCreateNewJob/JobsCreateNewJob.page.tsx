@@ -84,7 +84,9 @@ const JobsCreateNewJobPage = () => {
 								</div>
 							</CardFooterChild>
 							<CardFooterChild className='ml-auto'>
-								<Button variant='outline'>Cancel</Button>
+								<Button variant='outline' color='zinc' borderWidth='border'>
+									Cancel
+								</Button>
 								<Button variant='solid'>Save Job</Button>
 								<Button variant='solid' onClick={() => setModal(true)}>
 									Assign To client

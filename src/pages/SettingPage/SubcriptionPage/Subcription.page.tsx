@@ -17,6 +17,7 @@ import Badge from '../../../components/ui/Badge';
 import TablePartial from './partial/Table.partial';
 import SubscriptionModalPartial from './partial/SubscriptionModal.partial';
 import SettingAside from '../partial/Asides/DefaultAside.template';
+import { Link } from 'react-router-dom';
 
 const SubcriptionPage = () => {
 	return (
@@ -74,12 +75,14 @@ const SubcriptionPage = () => {
 											borderWidth='border'>
 											Manage Plan
 										</Button>
-										<Button
-											className='max-md:!w-full'
-											rightIcon='HeroArrowUpRight'
-											variant='solid'>
-											Upgrade Plan
-										</Button>
+										<Link to='/payment'>
+											<Button
+												className='max-md:!w-full'
+												rightIcon='HeroArrowUpRight'
+												variant='solid'>
+												Upgrade Plan
+											</Button>
+										</Link>
 									</CardFooterChild>
 									<CardFooterChild className='max-md:w-full'>
 										<SubscriptionModalPartial />

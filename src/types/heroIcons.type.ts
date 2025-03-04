@@ -39,6 +39,7 @@ export type THeroIcons =
 	| 'HeroArrowUpCircle'
 	| 'HeroArrowUpLeft'
 	| 'HeroArrowUpOnSquareStack'
+	| 'HeroBot'
 	| 'HeroArrowUpOnSquare'
 	| 'HeroArrowUpRight'
 	| 'HeroArrowUpTray'
