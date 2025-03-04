@@ -11,15 +11,18 @@ const HeaderPartial = () => {
 		<Card className='!col-span-12 flex'>
 			<div className='flex items-center justify-between px-4 py-2 max-md:flex-col max-md:items-start'>
 				<TableDataProfilePartial title='Dalia Benz' subTitle='dali@hotmail.com' />
-				<div className='flex justify-end gap-x-4 max-md:flex-col max-md:gap-2'>
+				<div className='flex flex-wrap justify-end gap-x-4 max-md:gap-2 max-sm:w-full'>
 					<Badge
 						variant='solid'
 						color='amber'
 						colorIntensity='300'
-						className='!text-amber-950  max-md:p-2'>
+						className='!text-amber-950 max-md:p-2  max-sm:w-full'>
 						53% Hiring Percentage
 					</Badge>
-					<Button onClick={() => setModal(true)} className='h-fit' variant='solid'>
+					<Button
+						onClick={() => setModal(true)}
+						className='h-fit max-sm:w-full'
+						variant='solid'>
 						Assign a job
 					</Button>
 				</div>

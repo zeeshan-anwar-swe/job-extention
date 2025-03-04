@@ -45,7 +45,7 @@ const themeConfig: TThemeConfigs = {
 	themeColor: 'blue',
 	themeColorShade: '500',
 	rounded: 'rounded-lg',
-	borderWidth: 'border-2',
+	borderWidth: 'border',
 	transition: 'transition-all duration-300 ease-in-out',
 	fontSize: 13,
 };

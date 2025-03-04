@@ -27,7 +27,6 @@ const LabelTitlepartial = ({
 				<Input
 					type={inputType || 'text'}
 					dimension='lg'
-					id='name'
 					autoComplete='name'
 					name='name'
 					value={detailText || ''}

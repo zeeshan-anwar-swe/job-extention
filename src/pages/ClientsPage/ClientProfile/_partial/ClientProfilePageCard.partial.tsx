@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 const ClientProfilePageCardPartial = () => {
 	return (
 		<Card className='col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
-			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
+			<CardHeader className='gap-4 '>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
 					<h4 className='max-md:text-sm'>Web Developer</h4>
@@ -32,16 +32,16 @@ const ClientProfilePageCardPartial = () => {
 						<h5 className='max-md:text-sm'>Alex Hales</h5>
 					</Button>
 				</div>
-				<div className='h-full max-md:flex-1'>
+				<div className='h-full '>
 					<CardDropdownPartial />
 				</div>
 			</CardHeader>
 			<CardBody className='flex flex-col gap-4'>
-				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
+				<div className='flex flex-wrap items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='No. of Positions:' value='4' />
 					<CardBodyTagPartial title='Experience:' value='1-4 Years' />
 				</div>
-				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
+				<div className='flex flex-wrap items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='Location:' value='Miami' />
 					<CardBodyTagPartial title='Job Type:' value='Full Time, On Site' />
 				</div>
@@ -72,11 +72,7 @@ const ClientProfilePageCardPartial = () => {
 							className='-mr-6 aspect-square w-10 object-cover'
 							src={profileImageUrlValidationCheck('')}
 						/>
-						<Button
-							variant='outline'
-							rounded='rounded-full'
-							className='!bg-white'
-							icon='HeroPlus'></Button>
+						<Button variant='solid' rounded='rounded-full' icon='HeroPlus'></Button>
 					</div>
 				</CardFooterChild>
 			</CardFooter>

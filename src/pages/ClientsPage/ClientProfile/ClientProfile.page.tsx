@@ -53,11 +53,11 @@ const ClientProfilePage = () => {
 								/>
 							</div>
 
-							<div className='flex items-center gap-4 '>
+							<div className='flex items-center gap-4 max-md:flex-col '>
 								<LabelTitlepartial label='Location' detail='Miami, USA' />
 								<LabelTitlepartial label='Company' detail='KoalaByte AI' />
 							</div>
-							<div className='flex items-center gap-4 '>
+							<div className='flex items-center gap-4 max-md:flex-col '>
 								<LabelTitlepartial label='Designation' detail='CFO / Co Founder' />
 								<LabelTitlepartial
 									label='Industry Sector'

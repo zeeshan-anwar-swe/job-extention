@@ -18,7 +18,10 @@ const LabelTitleTextAreapartial = ({
 			<label className='font-light'>{textValidationCheck(label)}</label>
 
 			<textarea
-				className={'w-full rounded-xl bg-zinc-100 p-4 font-medium ' + inputClassName}
+				className={
+					'w-full rounded-xl bg-zinc-100 p-4 font-medium dark:bg-zinc-800 ' +
+					inputClassName
+				}
 				name=''
 				id=''
 				onChange={(e) => setDetailText(e.target.value)}

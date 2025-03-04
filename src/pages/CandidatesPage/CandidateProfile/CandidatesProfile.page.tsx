@@ -63,21 +63,21 @@ const CandidatesProfilePage = () => {
 								/>
 							</div>
 
-							<div className='flex items-center gap-4 '>
+							<div className='flex items-center gap-4 max-md:flex-col'>
 								<LabelTitlepartial
 									label='Roles'
 									detail='Product Designer, UI/UX Designer'
 								/>
 								<LabelTitlepartial label='Location' detail='Miami, USA' />
 							</div>
-							<div className='flex items-center gap-4 '>
+							<div className='flex items-center gap-4 max-md:flex-col'>
 								<LabelTitlepartial label='Experience' detail='3 Years' />
 								<LabelTitlepartial
 									label='Education'
 									detail='BS in Product Design'
 								/>
 							</div>
-							<div className='flex items-center gap-4 '>
+							<div className='flex items-center gap-4 max-md:flex-col'>
 								<LabelTitlepartial
 									label='Availability'
 									detail='Open to New Opportunities'
@@ -87,7 +87,7 @@ const CandidatesProfilePage = () => {
 									detail='BS in Product Design'
 								/>
 							</div>
-							<div className='flex items-center gap-4 '>
+							<div className='flex items-center gap-4'>
 								<LabelTitlepartial
 									label='Top Skills'
 									detail='Figma, Photoshop, Illustrator, Product Design, User Testing'

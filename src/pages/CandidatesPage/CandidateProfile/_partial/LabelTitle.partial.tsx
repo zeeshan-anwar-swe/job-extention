@@ -8,7 +8,7 @@ import Icon from '../../../../components/icon/Icon';
 const LabelTitlepartial = ({ label, detail }: { label?: string; detail?: string }) => {
 	const [detailText, setDetailText] = useState<string | null | undefined>(detail || '');
 	return (
-		<div className='flex-1'>
+		<div className='w-full'>
 			<Label htmlFor='title' className='font-light'>
 				{textValidationCheck(label)}
 			</Label>
