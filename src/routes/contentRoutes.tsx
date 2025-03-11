@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
-import LoginPage from '../pages/Login.page';
+import LoginPage from '../pages/LoginPage/Login.page';
 import SignupPage from '../pages/Signup.page';
 import NotFoundPage from '../pages/NotFound.page';
 import { appPages, authPages } from '../config/pages.config';

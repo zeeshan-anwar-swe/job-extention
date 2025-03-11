@@ -7,7 +7,7 @@ import Wrapper from '../components/layouts/Wrapper/Wrapper';
 import HeaderRouter from '../components/router/HeaderRouter';
 import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
-
+import { Toaster } from 'react-hot-toast';
 const App = () => {
 	getOS();
 
@@ -24,6 +24,23 @@ const App = () => {
 					<ContentRouter />
 					<FooterRouter />
 				</Wrapper>
+				<Toaster
+					position='top-right'
+					toastOptions={{
+						success: {
+							iconTheme: {
+								primary: '#10b981',
+								secondary: 'white',
+							},
+						},
+						error: {
+							iconTheme: {
+								primary: '#ef4444',
+								secondary: 'white',
+							},
+						},
+					}}
+				/>
 			</div>
 		</>
 	);

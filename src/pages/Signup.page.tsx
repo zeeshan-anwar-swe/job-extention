@@ -13,18 +13,20 @@ import Validation from '../components/form/Validation';
 
 type TValues = {
 	email: string;
-	name: string;
+	firstName: string;
+	lastName: string;
 	password: string;
 };
 
 const SignupPage = () => {
-	const { onLogin } = useAuth();
+	const { onLogin, onSignUp } = useAuth();
 
 	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
 
 	const formik = useFormik({
 		initialValues: {
-			name: '',
+			firstName: '',
+			lastName: '',
 			email: '',
 			password: '',
 		},
@@ -32,8 +34,12 @@ const SignupPage = () => {
 		validate: (values: TValues) => {
 			const errors: Partial<TValues> = {};
 
-			if (!values.name) {
-				errors.name = 'Required';
+			if (!values.firstName) {
+				errors.firstName = 'Required';
+			}
+
+			if (!values.lastName) {
+				errors.lastName = 'Required';
 			}
 
 			if (!values.email) {
@@ -50,7 +56,7 @@ const SignupPage = () => {
 			return errors;
 		},
 		onSubmit: (values: TValues, { setFieldError }) => {
-			onLogin(values.email, values.password)
+			onSignUp(values.firstName, values.lastName, values.email, values.password)
 				.then(() => {})
 				.catch((e: Error) => {
 					if (e.cause === 'username') {
@@ -102,17 +108,40 @@ const SignupPage = () => {
 							})}>
 							<Validation
 								isValid={formik.isValid}
-								isTouched={formik.touched.name}
-								invalidFeedback={formik.errors.name}
+								isTouched={formik.touched.firstName}
+								invalidFeedback={formik.errors.firstName}
 								validFeedback='Good'>
 								<FieldWrap firstSuffix={<Icon icon='HeroUser' className='mx-2' />}>
 									<Input
 										dimension='lg'
-										id='name'
-										autoComplete='name'
-										name='name'
-										placeholder='Enter your name'
-										value={formik.values.name}
+										id='firstName'
+										autoComplete='firstName'
+										name='firstName'
+										placeholder='First Name'
+										value={formik.values.firstName}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FieldWrap>
+							</Validation>
+						</div>
+						<div
+							className={classNames({
+								'mb-2': !formik.isValid,
+							})}>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.lastName}
+								invalidFeedback={formik.errors.lastName}
+								validFeedback='Good'>
+								<FieldWrap firstSuffix={<Icon icon='HeroUser' className='mx-2' />}>
+									<Input
+										dimension='lg'
+										id='lastName'
+										autoComplete='lastName'
+										name='lastName'
+										placeholder='Last Name'
+										value={formik.values.lastName}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>

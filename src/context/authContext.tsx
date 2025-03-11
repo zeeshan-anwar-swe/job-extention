@@ -4,13 +4,19 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { authPages } from '../config/pages.config';
 import useFakeUserAPI from '../mocks/hooks/useFakeUserAPI';
 import { TUser } from '../mocks/db/users.db';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export interface IAuthContextProps {
-	usernameStorage: string | ((newValue: string | null) => void) | null;
+	userTokenStorage: string | ((newValue: string | null) => void) | null;
 	onLogin: (username: string, password: string) => Promise<void>;
+	onSignUp: (
+		firstName: string,
+		lastName: string,
+		email: string,
+		password: string,
+	) => Promise<void>;
 	onLogout: () => void;
-	userData: TUser;
-	isLoading: boolean;
 }
 const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);
 
@@ -19,36 +25,75 @@ interface IAuthProviderProps {
 }
 export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	const [usernameStorage, setUserName] = useLocalStorage('user', null);
-
-	const { response, isLoading, getCheckUser } = useFakeUserAPI(usernameStorage as string);
-	const userData = response as TUser;
+	const [userTokenStorage, setUserToken] = useLocalStorage('token', null);
+	const [userIdStorage, setUserId] = useLocalStorage('userId', null);
 
 	const navigate = useNavigate();
 
+	const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
 	// call this function when you want to authenticate the user
 	const onLogin = async (username: string, password: string) => {
-		await getCheckUser(username, password).then(async () => {
-			if (typeof setUserName === 'function')
-				await setUserName(username).then(() => navigate('/'));
-		});
+		await axios
+			.post(apiBaseUrl + 'user/login', {
+				email: username,
+				password,
+			})
+			.then(async (response) => {
+				if (typeof setUserToken === 'function') {
+					if (response.data.success) {
+						await setUserToken(response.data.data.token).then(() => navigate('/'));
+					}
+				}
+			})
+			.catch((e) => {
+				if (e.response.status === 500) {
+					toast.error(e.response.data.message);
+				}
+			});
 	};
 
+	const onSignUp = async (
+		firstName: string,
+		lastName: string,
+		email: string,
+		password: string,
+	) => {
+		await axios
+			.post(apiBaseUrl + 'user/register', {
+				firstName,
+				lastName,
+				email,
+				password,
+			})
+			.then(async (response) => {
+				if (typeof setUserToken === 'function') {
+					if (response.data.success) {
+						await setUserToken(response.data.data.token).then(() => navigate('/'));
+					}
+				}
+			})
+			.catch((e) => {
+				if (e.response.status === 500) {
+					toast.error(e.response.data.message);
+				}
+			});
+	};
 	// call this function to sign out logged-in user
 	const onLogout = async () => {
-		if (typeof setUserName === 'function') await setUserName(null);
 		navigate(`../${authPages.loginPage.to}`, { replace: true });
+		if (typeof setUserToken === 'function') await setUserToken(null);
 	};
 
 	const value: IAuthContextProps = useMemo(
 		() => ({
-			usernameStorage,
+			userTokenStorage,
+			onSignUp,
 			onLogin,
 			onLogout,
-			userData,
-			isLoading,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[usernameStorage, userData],
+		[userTokenStorage],
 	);
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

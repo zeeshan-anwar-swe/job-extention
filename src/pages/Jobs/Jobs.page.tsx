@@ -20,9 +20,17 @@ import dayjs from 'dayjs';
 import colors from 'tailwindcss/colors';
 import themeConfig from '../../config/theme.config';
 import HeaderPartial from './_partial/Header.partial';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { getJobsList } from '../../store/slices/Jobs.slice';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
+
+	const dispatch: AppDispatch = useDispatch();
+
+	const { pageLoading, error, jobsList } = useSelector((state: RootState) => state.jobsSlice);
+	console.log(jobsList);
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 
@@ -89,6 +97,11 @@ const JobsPage = () => {
 		}
 		return () => {};
 	}, [selectedDate]);
+
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(getJobsList());
+	}, []);
 	return (
 		<>
 			<Header>
@@ -166,10 +179,9 @@ const JobsPage = () => {
 							</CardHeaderChild>
 						</CardHeader>
 						<CardBody className='col-span-12 grid grid-cols-12 gap-4'>
-							<JobsPageCardPartial />
-							<JobsPageCardPartial />
-							<JobsPageCardPartial />
-							<JobsPageCardPartial />
+							{jobsList.map((item: any) => (
+								<JobsPageCardPartial item={item} key={item.id} />
+							))}
 						</CardBody>
 					</Card>
 				</Container>

@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../../context/authContext';
 import { authPages } from '../../../config/pages.config';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
+import toast from 'react-hot-toast';
 
 interface IPageWrapperProps {
 	children: ReactNode;
@@ -17,9 +18,10 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 
 	useDocumentTitle({ title, name });
 
-	const { usernameStorage } = useAuth();
-	if (isProtectedRoute && !usernameStorage) {
+	const { userTokenStorage } = useAuth();
+	if (isProtectedRoute && !userTokenStorage) {
 		// user is not authenticated
+		toast.error('You are not authenticated please login.');
 		return <Navigate to={authPages.loginPage.to} />;
 	}
 	return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosHeaders, Method, RawAxiosRequestHeaders } from 'axios';
 
-const BASE_URL = '';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const axiosInstanceDefault = axios.create({
 	baseURL: BASE_URL,
