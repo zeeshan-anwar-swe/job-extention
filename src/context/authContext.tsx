@@ -50,6 +50,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 				if (e.response.status === 500) {
 					toast.error(e.response.data.message);
 				}
+				console.error(e);
 			});
 	};
 

@@ -1,9 +1,7 @@
-import { useState, RefObject, ChangeEvent } from 'react';
 import { textValidationCheck } from '../../../../utils/validationCheck';
 import Label from '../../../../components/form/Label';
 import FieldWrap from '../../../../components/form/FieldWrap';
-import Input from '../../../../components/form/Input';
-import { TInputTypes } from '../../../../types/input.type';
+import SelectReact from '../../../../components/form/SelectReact';
 
 interface FormData {
 	title: string;
@@ -24,27 +22,27 @@ type AllowedId =
 	| 'positions'
 	| 'skills';
 
-const LabelTitlepartial = ({
+const LabelSelectPartial = ({
 	label,
 	id,
 	formData,
 	setFormData,
-	inputType,
 }: {
 	label?: string;
 	id: AllowedId;
 	detail?: string;
 	formData: FormData;
 	setFormData: any;
-	inputType?: TInputTypes;
 }) => {
-	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const { name, value } = e.target;
+	const handleChange = (options: { label: string; value: string }) => {
+		const { value } = options;
 		setFormData({
 			...formData,
-			[name]: inputType === 'number' ? +value : value,
+			[id]: value,
 		});
 	};
+	console.log(formData);
+
 	return (
 		<div className='w-full'>
 			<Label htmlFor={id ?? ''} className='font-light'>
@@ -52,21 +50,19 @@ const LabelTitlepartial = ({
 			</Label>
 
 			<FieldWrap>
-				<Input
-					defaultValue={1}
-					type={inputType ?? 'text'}
-					dimension='lg'
-					id={id}
-					min={1}
-					autoComplete='name'
-					name={id}
-					value={formData[id]}
-					placeholder={label ?? ''}
+				<SelectReact
 					onChange={handleChange}
+					className='w-full'
+					name='type'
+					options={[
+						{ value: 'REMOTE', label: 'Remote' },
+						{ value: 'ON_SITE', label: 'On Site' },
+						{ value: 'HYBIRD', label: 'Hybird' },
+					]}
 				/>
 			</FieldWrap>
 		</div>
 	);
 };
 
-export default LabelTitlepartial;
+export default LabelSelectPartial;
