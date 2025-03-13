@@ -69,7 +69,7 @@ const ResetPasswordFormPartial = () => {
 								autoComplete='current-password'
 								id='password'
 								name='password'
-								placeholder='Enter your password'
+								placeholder='Enter new password'
 								value={formik.values.password}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
