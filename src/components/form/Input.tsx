@@ -8,7 +8,7 @@ import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { IValidationBaseProps } from './Validation';
 
-export type TInputVariants = 'solid';
+export type TInputVariants = 'solid' | 'outilned';
 export type TInputDimension = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement>, Partial<IValidationBaseProps> {
@@ -17,6 +17,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement>, Partial<IVa
 	color?: TColors;
 	colorIntensity?: TColorIntensity;
 	name: string;
+	isActive?: boolean;
 	rounded?: TRounded;
 	dimension?: TInputDimension;
 	type?: TInputTypes;
@@ -30,6 +31,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 		color,
 		colorIntensity,
 		name,
+		isActive,
 		rounded,
 		dimension,
 		variant,
@@ -52,6 +54,30 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 				// Focus
 				'focus:border-zinc-300 dark:focus:border-zinc-800',
 				'focus:bg-transparent dark:focus:bg-transparent',
+			),
+			validation: classNames({
+				'!border-red-500 ring-4 ring-red-500/30': !isValid && isTouched && invalidFeedback,
+				'!border-green-500 focus:ring-4 focus:ring-green-500/30':
+					!isValid && isTouched && !invalidFeedback,
+			}),
+		},
+		outilned: {
+			general: classNames(
+				// Default
+				'bg-transparent',
+				[`${borderWidth as TBorderWidth}`],
+				{
+					[`border-${color as TColors}-${colorIntensity as TColorIntensity}/50`]:
+						!isActive,
+				},
+				'text-black dark:text-white',
+				// Hover
+				[`hover:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
+				// Active
+				[`active:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
+				{
+					[`border-${color as TColors}-${colorIntensity as TColorIntensity}`]: isActive,
+				},
 			),
 			validation: classNames({
 				'!border-red-500 ring-4 ring-red-500/30': !isValid && isTouched && invalidFeedback,

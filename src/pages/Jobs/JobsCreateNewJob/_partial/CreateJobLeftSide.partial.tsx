@@ -18,9 +18,11 @@ import LabelSelectPartial from './LabelSelect.partial';
 import LabelSkillSelectPartial from './LabelSkillSelect.partial';
 import LabelTitleTextareaPartial from './LabelTitleTextarea.partial';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const CreateJobLeftSidePartial = () => {
 	const [modal, setModal] = useState<boolean>(false);
+	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 	const [formData, setFormData] = useState({
 		title: '',
@@ -36,12 +38,21 @@ const CreateJobLeftSidePartial = () => {
 		if (formData.positions === '' || +formData.positions < 1) {
 			toast.error('Position shoud empty or less than 1');
 			return;
-		} else if (Array.isArray(formData.skills)) {
+		} else if (formData.skills.length < 1) {
 			toast.error('Enter at least one skill');
 			return;
 		}
 		// @ts-ignore
 		await dispatch(createJobs(formData));
+		setFormData({
+			title: '',
+			description: '',
+			experience: '',
+			location: '',
+			type: '',
+			positions: '',
+			skills: [],
+		});
 	};
 
 	return (
@@ -114,7 +125,11 @@ const CreateJobLeftSidePartial = () => {
 					</div>
 				</CardFooterChild>
 				<CardFooterChild className='ml-auto'>
-					<Button variant='outline' color='zinc' borderWidth='border'>
+					<Button
+						onClick={() => navigate('/jobs')}
+						variant='outline'
+						color='zinc'
+						borderWidth='border'>
 						Cancel
 					</Button>
 					<Button onClick={dispatchCreateJob} variant='solid'>

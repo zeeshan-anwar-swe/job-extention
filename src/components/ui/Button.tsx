@@ -17,6 +17,7 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	children?: ReactNode;
 	className?: string;
 	color?: TColors;
+	type?: string;
 	colorIntensity?: TColorIntensity;
 	icon?: TIcons;
 	isActive?: boolean;
@@ -40,6 +41,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		isLoading,
 		rightIcon,
 		rounded,
+		type,
 		size,
 		variant,
 		...rest

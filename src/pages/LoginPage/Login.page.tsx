@@ -7,11 +7,12 @@ import LogoTemplate from '../../templates/layouts/Logo/Logo.template';
 import LoginFormPartial from './partial/LoginForm.partial';
 import ForgotPasswordFormPartial from './partial/ForgotPasswordForm.partial';
 import OTPVerifyFormPartial from './partial/OTPVerifyForm.partial';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import ResetPasswordFormPartial from './partial/ResetPassword';
 
 const LoginPage = () => {
-	const [formType, setFormType] = useState<string>('login');
-
-	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
+	const { formType } = useSelector((state: RootState) => state.forgotPasswordSlice);
 
 	return (
 		<PageWrapper
@@ -38,22 +39,31 @@ const LoginPage = () => {
 								<LogoTemplate className='h-12' />
 							</div>
 							<div>
-								<span className='text-4xl font-semibold'>Sign in</span>
+								<span className='text-4xl font-semibold'>
+									{' '}
+									{formType === 'forgot' ? 'Forgot Password' : 'Sign In'}
+								</span>
 							</div>
 							<div>
-								<span>Welcome back please enter the details.</span>
+								<span>
+									{formType === 'forgot'
+										? 'Please enter the email.'
+										: 'Welcome back please enter the details.'}
+								</span>
 							</div>
 						</>
 					)}
 					{formType === 'login' ? (
-						<LoginFormPartial setFormType={setFormType} />
+						<LoginFormPartial />
 					) : formType === 'forgot' ? (
-						<ForgotPasswordFormPartial setFormType={setFormType} />
+						<ForgotPasswordFormPartial />
+					) : formType === 'reset' ? (
+						<ResetPasswordFormPartial />
 					) : (
-						<OTPVerifyFormPartial setFormType={setFormType} />
+						<OTPVerifyFormPartial />
 					)}
 
-					{formType !== 'otp' && (
+					{formType === 'login' && (
 						<>
 							<div className='grid grid-cols-12 gap-4'>
 								<div className='col-span-12'>

@@ -2,39 +2,31 @@ import { useState } from 'react';
 import Validation from '../../../components/form/Validation';
 import { useAuth } from '../../../context/authContext';
 import { useFormik } from 'formik';
+import toast from 'react-hot-toast';
 import classNames from 'classnames';
 import Icon from '../../../components/icon/Icon';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Input from '../../../components/form/Input';
 import Button from '../../../components/ui/Button';
 import { setFormType } from '../../../store/slices/ForgotPassword.slice';
-import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store';
+import { useDispatch } from 'react-redux';
 
 type TValues = {
-	username: string;
 	password: string;
 };
-
-const LoginFormPartial = () => {
+const ResetPasswordFormPartial = () => {
+	const { onResetPassword } = useAuth();
 	const dispatch: AppDispatch = useDispatch();
-	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
 
-	const { onLogin } = useAuth();
+	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
 
 	const formik = useFormik({
 		initialValues: {
-			username: '',
 			password: '',
 		},
 		validate: (values: TValues) => {
 			const errors: Partial<TValues> = {};
-
-			if (!values.username) {
-				errors.username = 'Required';
-			} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
-				errors.username = 'Invalid email address';
-			}
 
 			if (!values.password) {
 				errors.password = 'Required';
@@ -44,37 +36,13 @@ const LoginFormPartial = () => {
 
 			return errors;
 		},
-		onSubmit: (values: TValues) => {
-			onLogin(values.username, values.password);
+		onSubmit: (value: TValues) => {
+			onResetPassword(value.password);
 		},
 	});
 	return (
 		<>
-			<form className='flex flex-col gap-4'>
-				<div
-					className={classNames({
-						'mb-2': !formik.isValid,
-					})}>
-					<Validation
-						isValid={formik.isValid}
-						isTouched={formik.touched.username}
-						invalidFeedback={formik.errors.username}
-						validFeedback='Good'>
-						<FieldWrap firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
-							<Input
-								type='email'
-								dimension='lg'
-								id='username'
-								autoComplete='username'
-								name='username'
-								placeholder='Enter your email'
-								value={formik.values.username}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FieldWrap>
-					</Validation>
-				</div>
+			<form className='flex flex-col gap-4' noValidate>
 				<div
 					className={classNames({
 						'mb-2': !formik.isValid,
@@ -109,28 +77,29 @@ const LoginFormPartial = () => {
 						</FieldWrap>
 					</Validation>
 				</div>
+
 				<div>
 					<Button
 						size='lg'
 						variant='solid'
 						className='w-full font-semibold'
 						onClick={() => formik.handleSubmit()}>
-						Sign in
+						Reset Password
 					</Button>
 				</div>
 			</form>
 			<div>
-				<span className='mr-2 text-zinc-600 dark:text-zinc-100'>Don’t know password!</span>
+				<span className='mr-2 text-zinc-600 dark:text-zinc-100'>Want to login!</span>
 				<Button
-					onClick={() => dispatch(setFormType('forgot'))}
+					onClick={() => dispatch(setFormType('login'))}
 					color='zinc'
 					colorIntensity='800'
 					className='!p-0 font-semibold hover:text-inherit'>
-					Forgot
+					Log In
 				</Button>
 			</div>
 		</>
 	);
 };
 
-export default LoginFormPartial;
+export default ResetPasswordFormPartial;

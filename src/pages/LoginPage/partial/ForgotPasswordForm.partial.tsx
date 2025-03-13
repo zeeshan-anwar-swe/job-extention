@@ -8,39 +8,34 @@ import Icon from '../../../components/icon/Icon';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Input from '../../../components/form/Input';
 import Button from '../../../components/ui/Button';
+import { setFormType } from '../../../store/slices/ForgotPassword.slice';
+import { AppDispatch } from '../../../store';
+import { useDispatch } from 'react-redux';
 
 type TValues = {
-	username: string;
+	email: string;
 };
-const ForgotPasswordFormPartial = ({ setFormType }: { setFormType: (value: string) => void }) => {
+const ForgotPasswordFormPartial = () => {
+	const { onForgot } = useAuth();
+	const dispatch: AppDispatch = useDispatch();
+
 	const formik = useFormik({
 		initialValues: {
-			username: '',
+			email: '',
 		},
 		validate: (values: TValues) => {
 			const errors: Partial<TValues> = {};
 
-			if (!values.username) {
-				errors.username = 'Required';
-			} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
-				errors.username = 'Invalid email address';
+			if (!values.email) {
+				errors.email = 'Required';
+			} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+				errors.email = 'Invalid email address';
 			}
 
 			return errors;
 		},
-		onSubmit: (values: TValues, { setFieldError }) => {
-			// onLogin(values.username, values.password)
-			// 	.then(() => {})
-			// 	.catch((e: Error) => {
-			// 		if (e.cause === 'username') {
-			// 			setFieldError('username', e.message);
-			// 			setFieldError('password', e.message);
-			// 			toast.error(e.message);
-			// 		} else if (e.cause === 'password') {
-			// 			setFieldError('password', e.message);
-			// 			toast.error(e.message);
-			// 		}
-			// 	});
+		onSubmit: (email: TValues) => {
+			onForgot({ email: email.email });
 		},
 	});
 	return (
@@ -52,18 +47,18 @@ const ForgotPasswordFormPartial = ({ setFormType }: { setFormType: (value: strin
 					})}>
 					<Validation
 						isValid={formik.isValid}
-						isTouched={formik.touched.username}
-						invalidFeedback={formik.errors.username}
+						isTouched={formik.touched.email}
+						invalidFeedback={formik.errors.email}
 						validFeedback='Good'>
 						<FieldWrap firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
 							<Input
 								type='email'
 								dimension='lg'
-								id='username'
-								autoComplete='username'
-								name='username'
+								id='email'
+								autoComplete='email'
+								name='email'
 								placeholder='Enter your email'
-								value={formik.values.username}
+								value={formik.values.email}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 							/>
@@ -84,7 +79,7 @@ const ForgotPasswordFormPartial = ({ setFormType }: { setFormType: (value: strin
 			<div>
 				<span className='mr-2 text-zinc-600 dark:text-zinc-100'>Want to login!</span>
 				<Button
-					onClick={() => setFormType('otp')}
+					onClick={() => dispatch(setFormType('login'))}
 					color='zinc'
 					colorIntensity='800'
 					className='!p-0 font-semibold hover:text-inherit'>

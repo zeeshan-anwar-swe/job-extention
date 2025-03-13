@@ -51,10 +51,13 @@ const LabelSelectPartial = ({
 
 			<FieldWrap>
 				<SelectReact
+					// @ts-ignore
+
 					onChange={handleChange}
 					className='w-full'
 					name='type'
 					options={[
+						{ value: '', label: '' },
 						{ value: 'REMOTE', label: 'Remote' },
 						{ value: 'ON_SITE', label: 'On Site' },
 						{ value: 'HYBIRD', label: 'Hybird' },

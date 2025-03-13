@@ -18,15 +18,15 @@ import { Provider } from 'react-redux';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
-		<ThemeContextProvider>
-			<BrowserRouter>
-				<AuthProvider>
-					<Provider store={store}>
+		<Provider store={store}>
+			<ThemeContextProvider>
+				<BrowserRouter>
+					<AuthProvider>
 						<App />
-					</Provider>
-				</AuthProvider>
-			</BrowserRouter>
-		</ThemeContextProvider>
+					</AuthProvider>
+				</BrowserRouter>
+			</ThemeContextProvider>
+		</Provider>
 	</React.StrictMode>,
 );
 

@@ -6,20 +6,8 @@ import Header, { HeaderLeft, HeaderRight } from '../../../components/layouts/Hea
 import DefaultHeaderRightCommon from '../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../components/ui/Button';
 import Breadcrumb from '../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card, {
-	CardBody,
-	CardFooter,
-	CardFooterChild,
-	CardHeader,
-	CardHeaderChild,
-} from '../../../components/ui/Card';
+
 import { Link } from 'react-router-dom';
-import LabelTitlepartial from './_partial/LabelTitle.partial';
-import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import ResultUserDataPartial from './_partial/ResultUserData.partial';
-import SearchPartial from './_partial/Search.partial';
-import CandidateCardPartial from './_partial/CandidateCard.partial';
-import AssignJobModalPartial from '../_partial/AssignJob.partial';
 import CreateJobLeftSidePartial from './_partial/CreateJobLeftSide.partial';
 import CreateJobRightSidePartial from './_partial/CreateJobRightSide.partial';
 
