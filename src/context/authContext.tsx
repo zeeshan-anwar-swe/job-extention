@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useContext, useMemo, useRef } from 'react';
+import { createContext, FC, ReactNode, useContext, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { authPages } from '../config/pages.config';
@@ -9,7 +9,16 @@ import { AppDispatch } from '../store';
 import { useDispatch } from 'react-redux';
 
 export interface IAuthContextProps {
-	userTokenStorage: string | ((newValue: string | null) => void) | null;
+	userTokenStorage: string | null;
+	userStorage: {
+		firstName: string;
+		email: string;
+		about?: string;
+		lastName: string;
+		industry?: string;
+		role: string;
+		image?: string;
+	};
 	onLogin: (username: string, password: string) => Promise<void>;
 	onOTPVerify: (otpCode: string) => void;
 	onResetPassword: (newPassword: string) => void;
@@ -36,6 +45,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	const resetToken = useRef('');
 
 	const [userTokenStorage, setUserToken] = useLocalStorage('token', null);
+	const [userStorage, setUser] = useLocalStorage('user', null);
 	const navigate = useNavigate();
 
 	const onLogin = async (username: string, password: string) => {
@@ -46,6 +56,9 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			})
 
 			.then(async (response) => {
+				if (typeof setUser === 'function') {
+					await setUser(response.data.data.user);
+				}
 				if (typeof setUserToken === 'function') {
 					if (response.data.success) {
 						await setUserToken(response.data.data.token).then(() => navigate('/'));
@@ -149,6 +162,15 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 
 	const value: IAuthContextProps = useMemo(
 		() => ({
+			userStorage: userStorage || {
+				firstName: '',
+				industry: '',
+				lastName: '',
+				role: '',
+				image: '',
+				about: '',
+				email: '',
+			},
 			userTokenStorage,
 			onResetPassword,
 			onSignUp,
@@ -157,8 +179,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			onOTPVerify,
 			onForgot,
 		}),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[userTokenStorage],
+		[userStorage, userTokenStorage],
 	);
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

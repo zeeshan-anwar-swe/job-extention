@@ -7,22 +7,22 @@ import User from '../../../components/layouts/User/User';
 import { useAuth } from '../../../context/authContext';
 
 const UserTemplate = () => {
-	const { isLoading, userData, onLogout } = useAuth();
+	const { userStorage, onLogout } = useAuth();
 
 	return (
 		<User
-			isLoading={isLoading}
-			name={userData?.firstName}
-			nameSuffix={userData?.isVerified && <Icon icon='HeroCheckBadge' color='blue' />}
-			position={userData?.position}
-			src={userData?.image?.thumb}
+			name={userStorage?.firstName}
+			nameSuffix={userStorage?.isVerified && <Icon icon='HeroCheckBadge' color='blue' />}
+			position={userStorage?.role}
+			src={userStorage?.image}
 			suffix={
 				<Badge color='amber' variant='solid' className='text-xs font-bold'>
 					PRO
 				</Badge>
 			}>
 			<NavSeparator />
-			<NavItem {...authPages.profilePage} />
+			<NavItem {...appPages.settingAppPages.subPages.settingPage} />
+
 			<NavItem {...appPages.mailAppPages.subPages.inboxPages}>
 				<Badge variant='solid' className='leading-none'>
 					3

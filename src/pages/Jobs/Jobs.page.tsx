@@ -1,5 +1,5 @@
 import Container from '../../components/layouts/Container/Container';
-import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
+import PageWrapper from '../../components/layouts/PAGEWRAPPER/PageWrapper';
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
@@ -23,6 +23,7 @@ import HeaderPartial from './_partial/Header.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getJobsList } from '../../store/slices/Jobs.slice';
+import ShimmerEffectPageLoader from '../../components/layouts/PageLoader/ShimmerEffectPageLoader';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
@@ -30,7 +31,6 @@ const JobsPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 
 	const { pageLoading, error, jobsList } = useSelector((state: RootState) => state.jobsSlice);
-	console.log(jobsList);
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 
@@ -102,7 +102,9 @@ const JobsPage = () => {
 		// @ts-ignore
 		dispatch(getJobsList());
 	}, []);
-	return (
+	return pageLoading ? (
+		<ShimmerEffectPageLoader />
+	) : (
 		<>
 			<Header>
 				<HeaderLeft>
@@ -163,9 +165,9 @@ const JobsPage = () => {
 						</Dropdown>
 					</SubheaderRight>
 				</Subheader>
-				<Container className='grid grid-cols-12 gap-4'>
-					<Card className=' col-span-12 grid grid-cols-12 gap-4 p-4'>
-						<CardHeader className='col-span-12'>
+				<Container className='h-full'>
+					<Card className='grid !flex-grow grid-cols-12 gap-4 '>
+						<CardHeader className='col-span-12 '>
 							<CardHeaderChild>
 								<div>
 									<h1>Jobs</h1>
@@ -178,7 +180,7 @@ const JobsPage = () => {
 								<HeaderPartial />
 							</CardHeaderChild>
 						</CardHeader>
-						<CardBody className='col-span-12 grid grid-cols-12 gap-4'>
+						<CardBody className='col-span-12 grid  grid-cols-12 gap-4'>
 							{jobsList.map((item: any) => (
 								<JobsPageCardPartial item={item} key={item.id} />
 							))}

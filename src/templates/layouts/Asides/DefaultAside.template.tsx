@@ -15,7 +15,6 @@ import Nav, {
 import Badge from '../../../components/ui/Badge';
 import UserTemplate from '../User/User.template';
 import usersDb from '../../../mocks/db/users.db';
-import Alert from '../../../components/ui/Alert';
 
 const DefaultAsideTemplate = () => {
 	const navigate = useNavigate();
@@ -47,7 +46,6 @@ const DefaultAsideTemplate = () => {
 					<NavItem {...appPages.customCVAppPages} />
 					<NavItem {...appPages.testForCadidateAppPages} />
 					<NavItem {...appPages.integrationsAppPages} />
-					<NavItem {...appPages.settingAppPages.subPages.settingPage} />
 
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>

@@ -5,9 +5,7 @@ import {
 	TextValidationCheckType,
 } from '../types/validationCheck.type';
 
-
 import DummyProfileImage from '../assets/svg-images/dummy-profile.png';
-
 
 export const textValidationCheck: TextValidationCheckType = (value) => {
 	if (value === null || value === undefined || value === '') {
@@ -30,17 +28,20 @@ export const arrayValidationCheck: ArrayValidationCheckType = (value) => {
 	return value;
 };
 
-
-export const profileImageUrlValidationCheck:profileImageUrlValidationCheckType = (url) =>{
-	if (url === null || url === undefined || typeof url !== 'string' || url === ""){
-		return DummyProfileImage
-	}else{
-		if(url.startsWith("http") || url.startsWith("https")){
-			return url
-		}
-		else{
-			return url
+export const profileImageUrlValidationCheck: profileImageUrlValidationCheckType = (url) => {
+	if (
+		url === null ||
+		url === undefined ||
+		typeof url !== 'string' ||
+		url === '' ||
+		typeof url !== 'string'
+	) {
+		return DummyProfileImage;
+	} else {
+		if (url.startsWith('http') || url.startsWith('https')) {
+			return url;
+		} else {
+			return url;
 		}
 	}
-
-}
+};

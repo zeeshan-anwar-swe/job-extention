@@ -25,7 +25,7 @@ const Validation: FC<IValidationProps> = (props) => {
 					{invalidFeedback && (
 						<div
 							data-component-name='Validation'
-							className='mt-2 text-xs text-red-500/70'>
+							className=' mt-2 text-base text-red-500/70'>
 							{invalidFeedback
 								.split('.')
 								.filter((i) => i !== '')
@@ -37,7 +37,7 @@ const Validation: FC<IValidationProps> = (props) => {
 					{!invalidFeedback && validFeedback && (
 						<div
 							data-component-name='Validation'
-							className='mt-2 text-xs text-green-500/70'>
+							className='mt-2 text-base text-blue-500/70'>
 							{validFeedback
 								.split('.')
 								.filter((i) => i !== '')

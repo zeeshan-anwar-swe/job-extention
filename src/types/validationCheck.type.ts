@@ -3,5 +3,4 @@
 export type TextValidationCheckType = (value: null | undefined | string) => string;
 export type NumberValidationCheckType = (value: null | undefined | number) => number;
 export type ArrayValidationCheckType = (value: null | undefined | Array<any>) => Array<any>;
-
-export type profileImageUrlValidationCheckType = (url: null | undefined | string ) => string;
+export type profileImageUrlValidationCheckType = (url: null | undefined | string) => string;

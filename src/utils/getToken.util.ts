@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 
 export const getToken = async () => {
 	try {
-		const token = localStorage.getItem('token');
+		const token = await localStorage.getItem('token');
 		if (!token) {
 			toast.error('No token found. Please log in.');
 			return null;

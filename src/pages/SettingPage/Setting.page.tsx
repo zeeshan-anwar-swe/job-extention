@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header/Header';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
@@ -13,8 +13,96 @@ import Icon from '../../components/icon/Icon';
 import LabelTitleTextAreapartial from './partial/LabelTitleTextArea.partial';
 import LabelTitlepartial from './partial/LabelTitle.partial';
 import { NavSeparator } from '../../components/layouts/Navigation/Nav';
+import ProfileFormPartial from './partial/ProfileForm.partial';
+import { useAuth } from '../../context/authContext';
+import { useFormik } from 'formik';
+import Textarea from '../../components/form/Textarea';
+import Validation from '../../components/form/Validation';
+import Label from '../../components/form/Label';
+import FieldWrap from '../../components/form/FieldWrap';
+import Input from '../../components/form/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { updateUserProfile } from '../../store/slices/User.slice';
+import toast from 'react-hot-toast';
+
+export type UserProfileDataType = {
+	firstName: string;
+	lastName: string;
+	email: string;
+	industry: string;
+	about: string;
+	image: File | null;
+};
 
 const SettingPage = () => {
+	const { userProfile } = useSelector((state: RootState) => state.user);
+	console.log({ userProfile });
+
+	const { onLogout, userStorage } = useAuth();
+	const [selectedImage, setSelectedImage] = useState<File | null>(null);
+	const [imageURL, setImageURL] = useState<string | null>(null);
+
+	const dispatch: AppDispatch = useDispatch();
+
+	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		if (file) {
+			setSelectedImage(file);
+			formik.values.image = file;
+			const reader = new FileReader();
+			reader.onload = () => {
+				setImageURL(reader.result as string);
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	const formik = useFormik({
+		initialValues: {
+			firstName: userStorage.firstName,
+			email: userStorage.email,
+			lastName: userStorage.lastName,
+			industry: userStorage.industry ?? '',
+			about: userStorage.about ?? '',
+			image: null,
+		},
+		validate: (values: UserProfileDataType) => {
+			const errors: Partial<UserProfileDataType> = {};
+
+			if (!values.firstName) {
+				errors.firstName = 'required';
+			}
+			if (values.firstName.length < 2) {
+				errors.firstName = 'Name must be at least 2 characters long';
+			}
+
+			return errors;
+		},
+		onSubmit: (values: UserProfileDataType) => {
+			const formData = new FormData();
+
+			if (values.firstName) {
+				formData.append('firstName', values.firstName);
+			}
+			if (values.lastName) {
+				formData.append('lastName', values.lastName);
+			}
+			if (values.industry) {
+				formData.append('industry', values.industry);
+			}
+			if (values.about) {
+				formData.append('about', values.about);
+			}
+
+			if (selectedImage) {
+				formData.append('file', selectedImage);
+			}
+
+			// @ts-ignore
+			dispatch(updateUserProfile(formData));
+		},
+	});
 	return (
 		<>
 			<Header>
@@ -31,71 +119,161 @@ const SettingPage = () => {
 						<SettingAside />
 						<Card className='col-span-8 !bg-zinc-100  dark:!bg-zinc-950 max-md:col-span-12 '>
 							<CardBody className='!flex gap-4 max-md:!flex-col'>
-								<div className='group relative h-fit w-fit max-md:mx-auto'>
-									<img
-										className=' aspect-square w-52 rounded-full'
-										src={profileImageUrlValidationCheck('')}
-										alt='profile'
-									/>
+								<form className='flex w-full gap-4'>
+									<div className='group relative h-fit w-fit max-md:mx-auto'>
+										<img
+											className='aspect-square w-52 rounded-full object-cover'
+											src={profileImageUrlValidationCheck(imageURL)}
+											alt='profile'
+										/>
+										<Label htmlFor='setting-page-profile'>
+											<Icon
+												color='zinc'
+												size='text-5xl'
+												className='absolute left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-zinc-100/50 p-2  opacity-0 transition-all duration-300 ease-in-out group-hover:-translate-y-1/2 group-hover:opacity-100'
+												icon='HeroCamera'
+											/>
+										</Label>
+										<input
+											onChange={handleImageChange}
+											id='setting-page-profile'
+											className='hidden'
+											type='file'
+											accept='image/*'
+										/>
+									</div>
+									<div className='flex w-full flex-1 flex-col gap-4 '>
+										<div className='flex  gap-4 max-md:flex-col'>
+											<div className='w-full'>
+												<Label htmlFor='title'>First Name*</Label>
+												<Validation
+													isValid={formik.isValid}
+													isTouched={formik.touched.firstName}
+													invalidFeedback={formik.errors.firstName}>
+													<FieldWrap>
+														<Input
+															className='!bg-white dark:!bg-zinc-800'
+															dimension='lg'
+															autoComplete='firstName'
+															name='firstName'
+															value={formik.values.firstName}
+															placeholder='Enter your firstr name'
+															onChange={formik.handleChange}
+															onBlur={formik.handleBlur}
+														/>
+													</FieldWrap>
+												</Validation>
+											</div>
+											<div className='w-full'>
+												<Label htmlFor='title'>Last Name</Label>
+												<Validation
+													isValid={formik.isValid}
+													isTouched={formik.touched.lastName}
+													invalidFeedback={formik.errors.lastName}>
+													<FieldWrap>
+														<Input
+															className='!bg-white dark:!bg-zinc-800'
+															dimension='lg'
+															autoComplete='lastName'
+															name='lastName'
+															value={formik.values.lastName}
+															placeholder='Enter your last name'
+															onChange={formik.handleChange}
+															onBlur={formik.handleBlur}
+														/>
+													</FieldWrap>
+												</Validation>
+											</div>
+										</div>
+										<div className='flex  gap-4 max-md:flex-col '>
+											<div className='w-full'>
+												<Label htmlFor='title'>Email</Label>
+												<Validation
+													isValid={formik.isValid}
+													isTouched={formik.touched.email}
+													invalidFeedback={formik.errors.email}
+													validFeedback=''>
+													<FieldWrap
+														firstSuffix={
+															<Icon
+																size='text-2xl'
+																icon='HeroEnvelope'
+																className='mx-2'
+															/>
+														}>
+														<Input
+															className='!bg-white dark:!bg-zinc-800'
+															type='email'
+															dimension='lg'
+															autoComplete='email'
+															name='email'
+															value={formik.values.email}
+															placeholder='Enter your email'
+															onBlur={formik.handleBlur}
+														/>
+													</FieldWrap>
+												</Validation>
+											</div>
 
-									<Icon
-										color='zinc'
-										size='text-5xl'
-										className='absolute left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-zinc-100/50 p-2  opacity-0 transition-all duration-300 ease-in-out group-hover:-translate-y-1/2 group-hover:opacity-100'
-										icon='HeroCamera'
-									/>
-								</div>
-								<div className='flex flex-1 flex-col gap-4'>
-									<div className='flex items-center gap-4 max-md:flex-col'>
-										<LabelTitlepartial
-											className='max-md:w-full'
-											label='First Name'
-											detail='Mishal '
-										/>
-										<LabelTitlepartial
-											className='max-md:w-full'
-											label='Last Name'
-											detail='Olive'
-										/>
+											<div className='w-full'>
+												<Label htmlFor='title'>Industry</Label>
+												<Validation
+													isValid={formik.isValid}
+													isTouched={formik.touched.industry}
+													invalidFeedback={formik.errors.industry}
+													validFeedback=''>
+													<FieldWrap
+														firstSuffix={
+															<Icon
+																size='text-2xl'
+																icon='HeroBuildingOffice2'
+																className='mx-2'
+															/>
+														}>
+														<Input
+															className='!bg-white dark:!bg-zinc-800'
+															dimension='lg'
+															autoComplete='industry'
+															name='industry'
+															value={formik.values.industry}
+															placeholder='Enter your Industry'
+															onChange={formik.handleChange}
+															onBlur={formik.handleBlur}
+														/>
+													</FieldWrap>
+												</Validation>
+											</div>
+										</div>
+										<div className=''>
+											<Label htmlFor='about'>About</Label>
+											<Validation
+												isValid={formik.isValid}
+												isTouched={formik.touched.about}
+												invalidFeedback={formik.errors.about}
+												validFeedback='Good'>
+												<FieldWrap>
+													<Textarea
+														className='!bg-white dark:!bg-zinc-800'
+														rows={4}
+														dimension='lg'
+														autoComplete='about'
+														name='about'
+														value={formik.values.about}
+														placeholder='Enter your about'
+														onChange={formik.handleChange}
+														onBlur={formik.handleBlur}
+													/>
+												</FieldWrap>
+											</Validation>
+										</div>
 									</div>
-									<div className='flex items-center gap-4 max-md:flex-col '>
-										<LabelTitlepartial
-											className='max-md:w-full'
-											inputType='email'
-											label='Email Address'
-											detail='olivia@vaionex.com'
-										/>
-										<LabelTitlepartial
-											className='max-md:w-full'
-											label='Industry'
-											detail='IT / Finance'
-										/>
-									</div>
-									<div className='flex items-center gap-4  max-md:flex-col'>
-										<LabelTitleTextAreapartial
-											className='w-full max-md:!p-0'
-											label='About'
-											detail='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-										/>
-									</div>
-									<div className='flex items-center gap-4 max-md:flex-col '>
-										<LabelTitlepartial
-											className='max-md:w-full'
-											inputType='password'
-											label='New password'
-										/>
-										<LabelTitlepartial
-											className='max-md:w-full'
-											inputType='password'
-											label='Confirm Password'
-										/>
-									</div>
-								</div>
+								</form>
 							</CardBody>
 							<NavSeparator />
 							<CardFooter className='max-md:flex-col-reverse'>
 								<CardFooterChild className=' max-md:w-full'>
 									<Button
+										onClick={onLogout}
 										className='max-md:!w-full'
 										variant='outline'
 										color='zinc'
@@ -112,7 +290,10 @@ const SettingPage = () => {
 										borderWidth='border'>
 										Cancel
 									</Button>
-									<Button className='max-md:w-full' variant='solid'>
+									<Button
+										onClick={() => formik.handleSubmit()}
+										className='max-md:w-full'
+										variant='solid'>
 										Save changes
 									</Button>
 								</CardFooterChild>
