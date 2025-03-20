@@ -56,7 +56,8 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 				'focus:bg-transparent dark:focus:bg-transparent',
 			),
 			validation: classNames({
-				'!border-red-500 ring-4 ring-red-500/30': !isValid && isTouched && invalidFeedback,
+				'!border-red-500 ring-4 ring-red-500/30 animate-shake':
+					!isValid && isTouched && invalidFeedback,
 				'!border-blue-500 focus:ring-4 focus:ring-blue-500/30':
 					!isValid && isTouched && !invalidFeedback,
 			}),

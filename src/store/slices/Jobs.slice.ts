@@ -1,10 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { getToken } from '../../utils/getToken.util';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import toast from 'react-hot-toast';
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL + '/job';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import axiosInstance from '../../utils/axiosInstance';
 
 interface InitialStateType {
 	jobsList: any[];
@@ -18,19 +14,26 @@ const initialState: InitialStateType = {
 	error: null,
 };
 
-export const getJobsList = createAsyncThunk('jobs/getJobsList', async () => {
-	const token: any | null = await getToken();
-	if (!token) return null;
-	const response = await axios.get(apiBaseUrl + '/recruiter/list', token);
-	return response.data;
+export const getJobsList = createAsyncThunk('jobs/getJobsList', async (_, { rejectWithValue }) => {
+	try {
+		const response = await axiosInstance.get('/job/recruiter/list');
+		return response.data.data;
+	} catch (error: any) {
+		return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+	}
 });
 
-export const createJobs = createAsyncThunk('jobs/create', async (payload: PayloadAction) => {
-	const token: any | null = await getToken();
-	if (!token) return null;
-	const response = await axios.post(apiBaseUrl, payload, token);
-	return response.data;
-});
+export const createJobs = createAsyncThunk(
+	'jobs/create',
+	async (payload: PayloadAction, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/job', payload);
+			return response.data.data;
+		} catch (error: any) {
+			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+		}
+	},
+);
 
 export const jobsSlice = createSlice({
 	name: 'jobs',
@@ -44,7 +47,7 @@ export const jobsSlice = createSlice({
 			})
 			.addCase(getJobsList.fulfilled, (state, action) => {
 				state.pageLoading = false;
-				state.jobsList = action.payload.data;
+				state.jobsList = action.payload;
 			})
 			.addCase(getJobsList.rejected, (state, action) => {
 				state.pageLoading = false;
@@ -58,7 +61,7 @@ export const jobsSlice = createSlice({
 			})
 			.addCase(createJobs.fulfilled, (state, action) => {
 				state.pageLoading = false;
-				state.jobsList = [...state.jobsList, action.payload.data];
+				state.jobsList = [...state.jobsList, action.payload];
 				toast.success('Job Created');
 			})
 			.addCase(createJobs.rejected, (state, action) => {

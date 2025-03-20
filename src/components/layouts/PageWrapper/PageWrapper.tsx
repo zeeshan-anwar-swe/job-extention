@@ -21,7 +21,6 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 	const { userTokenStorage } = useAuth();
 	if (isProtectedRoute && !userTokenStorage) {
 		// user is not authenticated
-		toast.error('You are not authenticated please login.');
 		return <Navigate to={authPages.loginPage.to} />;
 	}
 	return (

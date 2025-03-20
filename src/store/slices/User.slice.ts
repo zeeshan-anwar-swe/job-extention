@@ -1,34 +1,62 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { UserProfileDataType } from '../../pages/SettingPage/Setting.page';
-import { getToken } from '../../utils/getToken.util';
 import toast from 'react-hot-toast';
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL + '/user';
+import axiosInstance from '../../utils/axiosInstance';
 
 interface InitialStateType {
 	data: any;
 	loading: boolean;
+	passwordChangeLoading: boolean;
+	passwordError: string | null;
 	error: string | null;
-	userProfile: UserProfileDataType | null;
+	userProfile: {
+		firstName: string;
+		email: string;
+		about?: string;
+		lastName: string;
+		industry?: string;
+		role: string;
+		image?: string;
+	};
 }
 
 const initialState: InitialStateType = {
 	data: null,
+	passwordError: null,
+	passwordChangeLoading: false,
 	loading: false,
 	error: null,
-	userProfile: null,
+	userProfile: {
+		firstName: '',
+		email: '',
+		about: '',
+		lastName: '',
+		industry: '',
+		role: '',
+		image: '',
+	},
 };
 
 export const updateUserProfile = createAsyncThunk(
 	'user/updateUserProfile',
 	async (profileData: any) => {
 		try {
-			const token: any = await getToken();
-			const response = await axios.put(apiBaseUrl + '/update-profile', profileData, token);
+			const response = await axiosInstance.put('/user/update-profile', profileData);
 			return response.data.data;
 		} catch (error: any) {
-			return;
+			toast.error(error.response?.data?.message || 'Failed to update profile');
+			throw error;
+		}
+	},
+);
+
+export const changeUserPassword = createAsyncThunk(
+	'user/changeUserPassword',
+	async (passwordData: { currentPassword: string; newPassword: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/user/change-password', passwordData);
+			return response.data.data;
+		} catch (error: any) {
+			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
 		}
 	},
 );
@@ -36,7 +64,14 @@ export const updateUserProfile = createAsyncThunk(
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {},
+	reducers: {
+		setPasswordError: (state, action) => {
+			state.passwordError = action.payload;
+		},
+		setUserProfileData: (state, action) => {
+			state.userProfile = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(updateUserProfile.pending, (state) => {
@@ -45,15 +80,34 @@ const userSlice = createSlice({
 			})
 			.addCase(updateUserProfile.fulfilled, (state, action) => {
 				state.loading = false;
+				localStorage.setItem(
+					'user',
+					JSON.stringify({ ...action.payload, role: 'Agency Admin' }),
+				);
+				state.userProfile = { ...action.payload, role: 'Agency Admin' };
 				toast.success('Profile updated successfully');
-				state.userProfile = action.payload;
-				localStorage.setItem('user', JSON.stringify(action.payload));
 			})
 			.addCase(updateUserProfile.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload as string; // Handle the error
+			})
+
+			.addCase(changeUserPassword.pending, (state) => {
+				state.passwordChangeLoading = true;
+				state.passwordError = null;
+			})
+			.addCase(changeUserPassword.fulfilled, (state) => {
+				state.passwordChangeLoading = false;
+				toast.success('Password updated successfully');
+			})
+			.addCase(changeUserPassword.rejected, (state, action) => {
+				state.passwordError = action.payload as string;
+				state.passwordChangeLoading = false;
+				toast.error(action.payload as string);
 			});
 	},
 });
+
+export const { setPasswordError, setUserProfileData } = userSlice.actions;
 
 export default userSlice.reducer;

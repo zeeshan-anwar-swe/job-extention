@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { updateUserProfile } from '../../store/slices/User.slice';
 import toast from 'react-hot-toast';
+import ChangePasswordFormPartial from './partial/ChangePasswordForm.partial';
 
 export type UserProfileDataType = {
 	firstName: string;
@@ -36,12 +37,13 @@ export type UserProfileDataType = {
 };
 
 const SettingPage = () => {
-	const { userProfile } = useSelector((state: RootState) => state.user);
-	console.log({ userProfile });
+	const { userProfile, loading } = useSelector((state: RootState) => state.user);
 
 	const { onLogout, userStorage } = useAuth();
 	const [selectedImage, setSelectedImage] = useState<File | null>(null);
-	const [imageURL, setImageURL] = useState<string | null>(null);
+	const [imageURL, setImageURL] = useState<string | null>(
+		userStorage.image ? profileImageUrlValidationCheck(userStorage.image) : null,
+	);
 
 	const dispatch: AppDispatch = useDispatch();
 
@@ -266,6 +268,8 @@ const SettingPage = () => {
 												</FieldWrap>
 											</Validation>
 										</div>
+										<NavSeparator className='mt-4' />
+										<ChangePasswordFormPartial />
 									</div>
 								</form>
 							</CardBody>
@@ -291,6 +295,7 @@ const SettingPage = () => {
 										Cancel
 									</Button>
 									<Button
+										isLoading={loading}
 										onClick={() => formik.handleSubmit()}
 										className='max-md:w-full'
 										variant='solid'>

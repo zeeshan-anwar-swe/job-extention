@@ -19,7 +19,7 @@ type TValues = {
 };
 
 const SignupPage = () => {
-	const { onLogin, onSignUp } = useAuth();
+	const { onSignUp } = useAuth();
 
 	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
 

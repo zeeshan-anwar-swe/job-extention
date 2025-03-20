@@ -60,7 +60,7 @@ const User: FC<IUserProps> = (props) => {
 						<img
 							src={src}
 							alt='Avatar'
-							className={classNames('h-12 w-12 object-cover', [
+							className={classNames(' aspect-square w-12 object-cover ', [
 								`${roundedCustom(-2)}`,
 							])}
 						/>

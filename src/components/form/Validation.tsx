@@ -2,7 +2,7 @@ import React, { cloneElement, FC, ReactElement } from 'react';
 
 export interface IValidationBaseProps {
 	isValidMessage?: boolean;
-	isValid: boolean;
+	isValid: boolean | undefined;
 	isTouched: boolean | undefined;
 	invalidFeedback: string | undefined;
 	validFeedback?: string;

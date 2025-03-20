@@ -134,18 +134,20 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		email: string,
 		password: string,
 	) => {
-		await axios
-			.post(apiBaseUrl + 'user/register', {
+		axios
+			.post(apiBaseUrl + '/user/register', {
 				firstName,
 				lastName,
 				email,
 				password,
 			})
-			.then(async (response) => {
-				if (typeof setUserToken === 'function') {
-					if (response.data.success) {
-						await setUserToken(response.data.data.token).then(() => navigate('/'));
+			.then((response) => {
+				if (response.data.success) {
+					if (typeof setUserToken === 'function' && typeof setUser === 'function') {
+						setUserToken(response.data.data.token);
+						setUser(response.data.data.user);
 					}
+					navigate('/');
 				}
 			})
 			.catch((e) => {

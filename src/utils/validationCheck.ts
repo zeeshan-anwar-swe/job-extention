@@ -6,6 +6,7 @@ import {
 } from '../types/validationCheck.type';
 
 import DummyProfileImage from '../assets/svg-images/dummy-profile.png';
+const serverUrl = import.meta.env.VITE_SERVER_PREFIX_URL;
 
 export const textValidationCheck: TextValidationCheckType = (value) => {
 	if (value === null || value === undefined || value === '') {
@@ -41,7 +42,7 @@ export const profileImageUrlValidationCheck: profileImageUrlValidationCheckType 
 		if (url.startsWith('http') || url.startsWith('https')) {
 			return url;
 		} else {
-			return url;
+			return serverUrl + url;
 		}
 	}
 };
