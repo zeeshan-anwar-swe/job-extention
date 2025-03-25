@@ -9,18 +9,35 @@ import Card, {
 	CardBody,
 	CardHeader,
 	CardHeaderChild,
+	CardSubTitle,
 	CardTitle,
 } from '../../../components/ui/Card';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../utils/validationCheck';
 import Alert from '../../../components/ui/Alert';
 import HeaderPartial from './_partial/Header.partial';
 import Label from '../../../components/form/Label';
 import Badge from '../../../components/ui/Badge';
+import LabelTextareaPartial from './_partial/LabelTextarea.partial';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../store';
+import { useEffect } from 'react';
+import { set } from 'lodash';
+import { setCandidateProfile } from '../../../store/slices/Candiates.slice';
 
 const CandidatesProfilePage = () => {
+	const { id } = useParams();
+	const dispatch: AppDispatch = useDispatch();
+	const { cadidateProfile } = useSelector((state: RootState) => state.candidates);
+
+	useEffect(() => {
+		id && dispatch(setCandidateProfile(id));
+	}, [id]);
 	return (
 		<>
 			<Header>
@@ -44,55 +61,58 @@ const CandidatesProfilePage = () => {
 				<Container>
 					<HeaderPartial />
 					<div className='mt-4 grid grid-cols-12 gap-4'>
-						<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
-							<div>
-								<h1>Primary Details</h1>
-								<p className='font-light'>
+						<Card className='col-span-8 flex flex-col gap-2 max-lg:col-span-12'>
+							<CardHeader className='!block'>
+								<CardTitle>Primary Details</CardTitle>
+								<CardSubTitle className='font-light'>
 									Get an overview of the candidate's key details.
-								</p>
-							</div>
+								</CardSubTitle>
+							</CardHeader>
+							<CardBody>
+								<div className='flex items-center gap-4 '>
+									<LabelTextareaPartial
+										label='About'
+										detail={textValidationCheck(cadidateProfile?.about)}
+									/>
+								</div>
 
-							<div className='flex items-center gap-4 '>
-								<LabelTitlepartial
-									label='About'
-									detail='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-									enim ad minim veniam, quis nostrud exercitation ullamco laboris
-									nisi ut aliquip ex ea commodo consequat. Ut enim ad minim
-									veniam, quis nostrud exercitation ullamco laboris nisi ut
-									aliquip ex ea commodo consequat.'
-								/>
-							</div>
-
-							<div className='flex items-center gap-4 max-md:flex-col'>
-								<LabelTitlepartial
-									label='Roles'
-									detail='Product Designer, UI/UX Designer'
-								/>
-								<LabelTitlepartial label='Location' detail='Miami, USA' />
-							</div>
-							<div className='flex items-center gap-4 max-md:flex-col'>
-								<LabelTitlepartial label='Experience' detail='3 Years' />
-								<LabelTitlepartial
-									label='Education'
-									detail='BS in Product Design'
-								/>
-							</div>
-							<div className='flex items-center gap-4 max-md:flex-col'>
-								<LabelTitlepartial
-									label='Availability'
-									detail='Open to New Opportunities'
-								/>
-								<LabelTitlepartial
-									label='Education'
-									detail='BS in Product Design'
-								/>
-							</div>
-							<div className='flex items-center gap-4'>
-								<LabelTitlepartial
-									label='Top Skills'
-									detail='Figma, Photoshop, Illustrator, Product Design, User Testing'
-								/>
-							</div>
+								<div className='flex items-center gap-4 max-md:flex-col'>
+									<LabelTitlepartial
+										label='Roles'
+										detail='Product Designer, UI/UX Designer'
+									/>
+									<LabelTitlepartial
+										label='Location'
+										detail={cadidateProfile?.location}
+									/>
+								</div>
+								<div className='flex items-center gap-4 max-md:flex-col'>
+									<LabelTitlepartial
+										label='Experience'
+										detail={cadidateProfile?.experience}
+									/>
+									<LabelTitlepartial
+										label='Education'
+										detail={cadidateProfile?.education}
+									/>
+								</div>
+								<div className='flex items-center gap-4 max-md:flex-col'>
+									<LabelTitlepartial
+										label='Availability'
+										detail='Open to New Opportunities'
+									/>
+									<LabelTitlepartial
+										label='Education'
+										detail='BS in Product Design'
+									/>
+								</div>
+								<div className='flex items-center gap-4'>
+									<LabelTitlepartial
+										label='Top Skills'
+										detail={cadidateProfile?.skills?.join(', ')}
+									/>
+								</div>
+							</CardBody>
 						</Card>
 
 						<div className='col-span-4 flex flex-col gap-4  max-lg:col-span-12'>

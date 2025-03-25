@@ -25,7 +25,7 @@ const SearchPartial = () => {
 				name='example'
 				placeholder='Product Designer, UI/UX Designer'
 				value={searchValue}
-				className='rounded-full'
+				rounded='rounded-full'
 				onChange={(e) => setSearchValue(e.target.value)}
 			/>
 		</FieldWrap>

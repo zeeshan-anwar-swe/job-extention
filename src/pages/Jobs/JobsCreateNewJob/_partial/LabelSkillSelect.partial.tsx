@@ -26,7 +26,7 @@ const LabelSkillSelectPartial = ({
 	label?: string;
 	id: AllowedId;
 	detail?: string;
-	formData: FormData;
+	formData: any;
 	setFormData: any;
 }) => {
 	const [inputValue, setInputValue] = useState<string>('');
@@ -56,9 +56,11 @@ const LabelSkillSelectPartial = ({
 
 	return (
 		<div className='w-full'>
-			<Label htmlFor={id ?? ''} className='font-light'>
-				{textValidationCheck(label)}
-			</Label>
+			{label && (
+				<Label htmlFor={id ?? ''} className='font-light'>
+					{textValidationCheck(label)}
+				</Label>
+			)}
 
 			<SelectReact
 				components={{

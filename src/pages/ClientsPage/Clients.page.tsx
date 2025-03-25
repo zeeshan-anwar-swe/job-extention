@@ -2,16 +2,22 @@ import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
 import TablePartial from './_partial/Table.partial';
 import Subheader, { SubheaderLeft } from '../../components/layouts/Subheader/Subheader';
-import PERIOD, { TPeriod } from '../../constants/periods.constant';
 import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../components/ui/Button';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
 import Card from '../../components/ui/Card';
 import SearchPartial from './_partial/Search.partial';
-import HeaderPartial from './_partial/Header.partial';
+import { useEffect } from 'react';
+import { AppDispatch } from '../../store';
+import { useDispatch } from 'react-redux';
+import { getClientsList } from '../../store/slices/Agency/Client.slice';
 
 const ClientsPage = () => {
+	const dispatch: AppDispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getClientsList());
+	}, []);
 	return (
 		<>
 			<Header>

@@ -57,7 +57,8 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		solid: classNames(
 			// Default
 			{
-				[`bg-${color as TColors}-${colorIntensity as TColorIntensity}`]: !isActive,
+				[` dark:text-zinc-800 bg-${color as TColors}-${colorIntensity as TColorIntensity}`]:
+					!isActive,
 			},
 			[
 				`${borderWidth as TBorderWidth} border-${color as TColors}-${
@@ -73,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 			[`active:border-${color as TColors}-${shadeColorIntensity as TColorIntensity}`],
 			{
 				[`bg-${color as TColors}-${shadeColorIntensity as TColorIntensity}`]: isActive,
-				[`border-${color as TColors}-${shadeColorIntensity as TColorIntensity}`]: isActive,
+				[` border-${color as TColors}-${shadeColorIntensity as TColorIntensity}`]: isActive,
 			},
 		),
 		outline: classNames(

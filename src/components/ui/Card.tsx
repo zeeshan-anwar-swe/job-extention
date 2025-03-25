@@ -20,6 +20,18 @@ export const CardTitle: FC<ICardTitleProps> = (props) => {
 		</div>
 	);
 };
+
+export const CardSubTitle: FC<ICardTitleProps> = (props) => {
+	const { children, className, ...rest } = props;
+
+	const classes = classNames('flex items-center text-base ', className);
+
+	return (
+		<div data-component-name='Card/CardTitle' className={classes} {...rest}>
+			{children}
+		</div>
+	);
+};
 CardTitle.defaultProps = {
 	className: undefined,
 };

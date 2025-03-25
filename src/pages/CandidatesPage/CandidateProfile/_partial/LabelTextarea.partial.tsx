@@ -2,28 +2,28 @@ import { useState } from 'react';
 import { textValidationCheck } from '../../../../utils/validationCheck';
 import Label from '../../../../components/form/Label';
 import FieldWrap from '../../../../components/form/FieldWrap';
-import Input from '../../../../components/form/Input';
-import Icon from '../../../../components/icon/Icon';
+import Textarea from '../../../../components/form/Textarea';
 
-const LabelTitlepartial = ({ label, detail }: { label: string; detail: string }) => {
+const LabelTextareaPartial = ({ label, detail }: { label?: string; detail?: string }) => {
 	return (
 		<div className='w-full'>
 			<Label htmlFor='title' className='font-light'>
-				{label}
+				{textValidationCheck(label)}
 			</Label>
 
 			<FieldWrap>
-				<Input
+				<Textarea
+					rows={4}
 					dimension='lg'
-					id={label}
-					autoComplete={label}
-					name={label}
-					value={textValidationCheck(detail)}
-					readOnly
+					id='name'
+					autoComplete='name'
+					name='name'
+					value={detail}
+					placeholder='Enter your name'
 				/>
 			</FieldWrap>
 		</div>
 	);
 };
 
-export default LabelTitlepartial;
+export default LabelTextareaPartial;
