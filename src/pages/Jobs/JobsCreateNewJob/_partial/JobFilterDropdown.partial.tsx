@@ -6,6 +6,9 @@ import LabelSkillSelectPartial from './LabelSkillSelect.partial';
 import FieldWrap from '../../../../components/form/FieldWrap';
 import Input from '../../../../components/form/Input';
 import Icon from '../../../../components/icon/Icon';
+import { AppDispatch } from '../../../../store';
+import { useDispatch } from 'react-redux';
+import { getFilteredCandidates } from '../../../../store/slices/Candiates.slice';
 
 interface ExperienceItem {
 	title: string;
@@ -19,6 +22,7 @@ interface FormData {
 }
 
 const JobFilterDropdownPartial = () => {
+	const dispatch: AppDispatch = useDispatch();
 	const [formData, setFormData] = useState<FormData>({
 		location: '',
 		experiences: [],
@@ -68,10 +72,9 @@ const JobFilterDropdownPartial = () => {
 	};
 
 	const applyFilter = () => {
-		console.log({ formData });
-		// Here you would typically implement the logic to apply the filter
-		// based on the formData. This could involve making an API call,
-		// updating a state in a parent component, etc.
+		const { location, experiences, skills } = formData;
+		dispatch(getFilteredCandidates({ location, experiences, skills }));
+		setDropdownOpen(false);
 	};
 
 	return (
@@ -86,6 +89,7 @@ const JobFilterDropdownPartial = () => {
 						Filter
 					</Button>
 				</DropdownToggle>
+
 				<DropdownMenu placement='bottom-end'>
 					<Card>
 						<CardHeader>
@@ -120,6 +124,8 @@ const JobFilterDropdownPartial = () => {
 									<Icon className='mx-2 rounded-full' icon='HeroMapPin' />
 								}>
 								<Input
+									id='location'
+									autoComplete='new-loaction'
 									rounded='rounded-full'
 									name='location'
 									placeholder='Location'
@@ -142,7 +148,6 @@ const JobFilterDropdownPartial = () => {
 							/>
 						</CardBody>
 					</Card>
-
 					<Card>
 						<CardFooter>
 							<Button
@@ -150,7 +155,11 @@ const JobFilterDropdownPartial = () => {
 								variant='outline'
 								color='zinc'
 								onClick={() =>
-									setFormData({ location: '', experiences: [], skills: [] })
+									setFormData({
+										location: '',
+										experiences: [],
+										skills: [],
+									})
 								}>
 								Clear All
 							</Button>

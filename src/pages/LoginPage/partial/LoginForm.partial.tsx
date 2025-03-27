@@ -19,6 +19,7 @@ type TValues = {
 const LoginFormPartial = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
+	const [apiErrors, setApiErrors] = useState<{ username?: string; password?: string }>({});
 
 	const { onLogin } = useAuth();
 
@@ -44,21 +45,36 @@ const LoginFormPartial = () => {
 
 			return errors;
 		},
-		onSubmit: (values: TValues) => {
-			onLogin(values.username, values.password);
+		onSubmit: async (values: TValues) => {
+			setApiErrors({}); // Clear previous API errors
+			try {
+				await onLogin(values.username, values.password);
+			} catch (error: any) {
+				if (error.response?.status === 401) {
+					// Set field errors based on API response
+					setApiErrors({
+						username: error.response?.data?.message || 'Invalid credentials',
+						password: error.response?.data?.message || 'Invalid credentials',
+					});
+				}
+			}
 		},
 	});
+
+	// Combine formik errors and API errors
+	const errors = {
+		...formik.errors,
+		...apiErrors,
+	};
+
 	return (
 		<>
 			<form className='flex flex-col gap-4'>
-				<div
-					className={classNames({
-						'mb-2': !formik.isValid,
-					})}>
+				<div className={classNames({ 'mb-2': !formik.isValid })}>
 					<Validation
-						isValid={formik.isValid}
+						isValid={!errors.username && formik.touched.username}
 						isTouched={formik.touched.username}
-						invalidFeedback={formik.errors.username}
+						invalidFeedback={errors.username}
 						validFeedback='Good'>
 						<FieldWrap firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
 							<Input
@@ -75,14 +91,11 @@ const LoginFormPartial = () => {
 						</FieldWrap>
 					</Validation>
 				</div>
-				<div
-					className={classNames({
-						'mb-2': !formik.isValid,
-					})}>
+				<div className={classNames({ 'mb-2': !formik.isValid })}>
 					<Validation
-						isValid={formik.isValid}
+						isValid={!errors.password && formik.touched.password}
 						isTouched={formik.touched.password}
-						invalidFeedback={formik.errors.password}
+						invalidFeedback={errors.password}
 						validFeedback='Good'>
 						<FieldWrap
 							firstSuffix={<Icon icon='HeroKey' className='mx-2' />}
@@ -119,6 +132,7 @@ const LoginFormPartial = () => {
 					</Button>
 				</div>
 			</form>
+
 			<div>
 				<span className='mr-2 text-zinc-600 dark:text-zinc-100'>Don’t know password!</span>
 				<Button

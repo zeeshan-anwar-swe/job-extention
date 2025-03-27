@@ -1,7 +1,6 @@
-import toast from 'react-hot-toast';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
-import { set } from 'lodash';
+import toast from 'react-hot-toast';
 
 interface InitialStateType {
 	candidatesList: any[];
@@ -25,6 +24,47 @@ export const getCandidatesList = createAsyncThunk(
 			return response.data.data;
 		} catch (error: any) {
 			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+		}
+	},
+);
+
+export const getFilteredCandidates = createAsyncThunk(
+	'candidates/getFilteredCandidates',
+	async (
+		{
+			location = '',
+			experiences = [],
+			skills = [],
+		}: { location?: string; experiences?: number[]; skills?: string[] },
+		{ rejectWithValue },
+	) => {
+		try {
+			const url = `/candidate/list?location=${location}&experiences=[${experiences}]&skills=${JSON.stringify(skills)}`;
+			const response = await axiosInstance.get(url);
+			if (response.data.data.length < 1) {
+				toast.error('No candidates found');
+				return [];
+			} else {
+				return response.data.data;
+			}
+		} catch (error: any) {
+			return rejectWithValue(
+				error.response?.data?.message || 'Failed to get filtered candidates',
+			);
+		}
+	},
+);
+
+export const getAllCandidatesList = createAsyncThunk(
+	'candidates/getAllCandidatesList',
+	async (_, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(`/candidate/list`);
+			return response.data.data;
+		} catch (error: any) {
+			return rejectWithValue(
+				error.response?.data?.message || 'Failed to get filtered candidates',
+			);
 		}
 	},
 );
@@ -64,6 +104,32 @@ export const candidatesSlice = createSlice({
 				state.candidatesList = action.payload;
 			})
 			.addCase(getCandidatesList.rejected, (state, action) => {
+				state.pageLoading = false;
+				state.error = action.error.message || 'Failed to fetch jobs.';
+			})
+
+			.addCase(getFilteredCandidates.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getFilteredCandidates.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.candidatesList = action.payload;
+			})
+			.addCase(getFilteredCandidates.rejected, (state, action) => {
+				state.pageLoading = false;
+				state.error = action.error.message || 'Failed to fetch jobs.';
+			})
+
+			.addCase(getAllCandidatesList.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getAllCandidatesList.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.candidatesList = action.payload;
+			})
+			.addCase(getAllCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
 				state.error = action.error.message || 'Failed to fetch jobs.';
 			});

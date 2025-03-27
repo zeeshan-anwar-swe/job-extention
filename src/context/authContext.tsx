@@ -49,29 +49,34 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	const navigate = useNavigate();
 
 	const onLogin = async (username: string, password: string) => {
-		const response = await axios
-			.post(apiBaseUrl + '/user/login', {
+		try {
+			const response = await axios.post(apiBaseUrl + '/user/login', {
 				email: username,
 				password,
-			})
+			});
 
-			.then(async (response) => {
+			if (response.data.success) {
 				if (typeof setUser === 'function') {
 					await setUser(response.data.data.user);
 				}
 				if (typeof setUserToken === 'function') {
-					if (response.data.success) {
-						await setUserToken(response.data.data.token).then(() => navigate('/'));
-						toast.success('Login Successfully');
-					}
+					await setUserToken(response.data.data.token);
+					toast.success('Login Successfully');
+					navigate('/');
 				}
-			})
-			.catch((e) => {
-				if (e.response.status === 500) {
-					toast.error(e.response.data.message);
-				}
-				console.error(e);
-			});
+			}
+		} catch (e: any) {
+			if (e.response?.status === 401) {
+				toast.error(e?.response?.data?.message || 'Invalid credentials');
+				throw e; // Throw the error to be caught in the component
+			}
+
+			if (e.response?.status === 500) {
+				toast.error(e.response.data.message);
+			}
+			console.error(e);
+			throw e; // Throw the error to be caught in the component
+		}
 	};
 
 	const onForgot = ({ email }: { email: string }) => {

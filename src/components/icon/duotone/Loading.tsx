@@ -8,7 +8,7 @@ const SvgLoading = (props: SVGProps<SVGSVGElement>) => {
 				<path
 					d='M12 4v2a6 6 0 11-5.24 3.075L5.014 8.1A8 8 0 1012 4z'
 					fill='currentColor'
-					opacity={0.3}
+					// opacity={0.3}
 				/>
 			</g>
 		</svg>
