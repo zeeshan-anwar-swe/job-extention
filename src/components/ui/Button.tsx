@@ -17,7 +17,6 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	children?: ReactNode;
 	className?: string;
 	color?: TColors;
-	type?: string;
 	colorIntensity?: TColorIntensity;
 	icon?: TIcons;
 	isActive?: boolean;
@@ -27,6 +26,7 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	rounded?: TRounded;
 	size?: TButtonSize;
 	variant?: TButtonVariants;
+	type?: 'button' | 'submit' | 'reset'; // Add this line
 }
 const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 	const {
@@ -41,7 +41,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		isLoading,
 		rightIcon,
 		rounded,
-		type,
+
 		size,
 		variant,
 		...rest
@@ -57,8 +57,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		solid: classNames(
 			// Default
 			{
-				[` dark:text-zinc-800 bg-${color as TColors}-${colorIntensity as TColorIntensity}`]:
-					!isActive,
+				[` bg-${color as TColors}-${colorIntensity as TColorIntensity}`]: !isActive,
 			},
 			[
 				`${borderWidth as TBorderWidth} border-${color as TColors}-${
@@ -227,6 +226,7 @@ Button.defaultProps = {
 	rounded: themeConfig.rounded,
 	size: 'default',
 	variant: 'default',
+	type: 'button',
 };
 Button.displayName = 'Button';
 

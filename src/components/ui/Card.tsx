@@ -32,6 +32,11 @@ export const CardSubTitle: FC<ICardTitleProps> = (props) => {
 		</div>
 	);
 };
+
+CardSubTitle.defaultProps = {
+	className: undefined,
+};
+
 CardTitle.defaultProps = {
 	className: undefined,
 };

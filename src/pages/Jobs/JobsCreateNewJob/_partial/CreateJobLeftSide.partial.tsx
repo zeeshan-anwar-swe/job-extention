@@ -5,14 +5,16 @@ import Card, {
 	CardFooterChild,
 	CardHeader,
 	CardHeaderChild,
+	CardSubTitle,
+	CardTitle,
 } from '../../../../components/ui/Card';
 import LabelTitlepartial from './LabelTitle.partial';
 import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import ResultUserDataPartial from './ResultUserData.partial';
 import Button from '../../../../components/ui/Button';
-import AssignJobModalPartial from './AssignJob.partial';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../store';
+import AssignClientModalPartial from './AssignJob.partial';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../store';
 import { createJobs } from '../../../../store/slices/Jobs.slice';
 import LabelSelectPartial from './LabelSelect.partial';
 import LabelSkillSelectPartial from './LabelSkillSelect.partial';
@@ -21,6 +23,10 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const CreateJobLeftSidePartial = () => {
+	const { assignedCandidatesWhileCreatingJob } = useSelector(
+		(state: RootState) => state.jobsSlice,
+	);
+
 	const [modal, setModal] = useState<boolean>(false);
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
@@ -35,6 +41,7 @@ const CreateJobLeftSidePartial = () => {
 	});
 
 	const dispatchCreateJob = async () => {
+		const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
 		if (formData.positions === '' || +formData.positions < 1) {
 			toast.error('Position shoud empty or less than 1');
 			return;
@@ -42,9 +49,10 @@ const CreateJobLeftSidePartial = () => {
 			toast.error('Enter at least one skill');
 			return;
 		}
+
 		// @ts-ignore
-		await dispatch(createJobs(formData));
-		setFormData({
+		await dispatch(createJobs( isAssigned ? {...formData,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
+		await setFormData({
 			title: '',
 			description: '',
 			experience: '',
@@ -53,14 +61,18 @@ const CreateJobLeftSidePartial = () => {
 			positions: '',
 			skills: [],
 		});
+
+		navigate('/jobs');
 	};
 
 	return (
 		<Card className='col-span-8 flex flex-col gap-2 max-lg:col-span-12'>
 			<CardHeader>
-				<CardHeaderChild className='!flex-col !items-start '>
-					<h1>Create a New Job</h1>
-					<p>Effortlessly create jobs, assign candidates, send to a client.</p>
+				<CardHeaderChild className='!block'>
+					<CardTitle>Create a New Job</CardTitle>
+					<CardSubTitle>
+						Effortlessly create jobs, assign candidates, send to a client.
+					</CardSubTitle>
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='flex flex-col gap-y-4'>
@@ -116,12 +128,14 @@ const CreateJobLeftSidePartial = () => {
 			</CardBody>
 			<CardFooter className='!flex-col !items-start'>
 				<CardFooterChild>
-					<h1>Assigned Candidates</h1>
+					{assignedCandidatesWhileCreatingJob.length > 0 && (
+						<CardTitle>Assigned Candidates</CardTitle>
+					)}
 
-					<div className='flex w-full items-center gap-4 max-md:flex-col max-md:items-start'>
-						<ResultUserDataPartial />
-						<ResultUserDataPartial />
-						<ResultUserDataPartial />
+					<div className='flex w-full flex-wrap items-center gap-4 max-md:flex-col max-md:items-start'>
+						{assignedCandidatesWhileCreatingJob.map((candidate: any) => (
+							<ResultUserDataPartial candidate={candidate} key={candidate.id} />
+						))}
 					</div>
 				</CardFooterChild>
 				<CardFooterChild className='ml-auto'>
@@ -138,7 +152,7 @@ const CreateJobLeftSidePartial = () => {
 					<Button variant='solid' onClick={() => setModal(true)}>
 						Assign To client
 					</Button>
-					<AssignJobModalPartial setModal={setModal} modal={modal} />
+					<AssignClientModalPartial setModal={setModal} modal={modal} />
 				</CardFooterChild>
 			</CardFooter>
 		</Card>

@@ -41,7 +41,6 @@ const LabelSelectPartial = ({
 			[id]: value,
 		});
 	};
-	console.log(formData);
 
 	return (
 		<div className='w-full'>

@@ -1,57 +1,65 @@
-import Button from '../../../components/ui/Button';
-import Modal, {
-	ModalBody,
-	ModalFooter,
-	ModalFooterChild,
-	ModalHeader,
-} from '../../../components/ui/Modal';
+import { useEffect } from 'react';
+import Modal, { ModalBody, ModalHeader } from '../../../components/ui/Modal';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import FieldWrap from '../../../components/form/FieldWrap';
-import Input from '../../../components/form/Input';
-import Label from '../../../components/form/Label';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../store';
 import { useFormik } from 'formik';
-import { inviteTeamMember } from '../../../store/slices/Team.slice';
+import Button from '../../../components/ui/Button';
+import Input from '../../../components/form/Input';
+import Icon from '../../../components/icon/Icon';
+import FieldWrap from '../../../components/form/FieldWrap';
 import Validation from '../../../components/form/Validation';
+import Label from '../../../components/form/Label';
+import { inviteClient } from '../../../store/slices/Agency/Client.slice';
 
-type TValues = {
-	name: string;
-	email: string;
-};
+interface TValues {
+	clientName: string;
+	clientEmail: string;
+}
 
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
 	const dispatch: AppDispatch = useDispatch();
+	const { modalLoading, error } = useSelector((state: RootState) => state.clients);
 
 	const formik = useFormik({
 		initialValues: {
-			name: '',
-			email: '',
+			clientName: '',
+			clientEmail: '',
 		},
 		validate: (values: TValues) => {
 			const errors: Partial<TValues> = {};
 
-			if (!values.name) {
-				errors.name = 'Required';
+			if (!values.clientName) {
+				errors.clientName = 'Required';
+			} else if (values.clientName.length < 2) {
+				errors.clientName = 'Too Short';
+			} else if (values.clientName.length > 50) {
+				errors.clientName = 'Too Long';
 			}
 
-			if (!values.email) {
-				errors.email = 'Required';
+			if (!values.clientEmail) {
+				errors.clientEmail = 'Required';
+			} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.clientEmail)) {
+				errors.clientEmail = 'Invalid email format';
 			}
 
 			return errors;
 		},
 		onSubmit: (values: TValues) => {
-			const { email, name } = values;
-			dispatch(inviteTeamMember({ email, name })).then(() => {
-				formik.resetForm();
-			});
+			dispatch(inviteClient({ name: values.clientName, email: values.clientEmail }));
 		},
 	});
 
-	const handleCloseAndCanncle = () => {
-		formik.resetForm();
-		setModal(false);
+	useEffect(() => {
+		if (!modalLoading && !error) {
+			formik.resetForm();
+			setModal(false);
+		}
+	}, [modalLoading, error]);
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault(); // Prevent default form submission
+		formik.handleSubmit(); // Call Formik's submit handler
 	};
 
 	return (
@@ -60,63 +68,78 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 			<NavSeparator />
 
 			<ModalBody className='!flex !w-full !flex-col gap-4'>
-				<div>
-					<Label htmlFor='clientName'>Client Name*</Label>
-					<Validation
-						isValid={formik.isValid}
-						isTouched={formik.touched.name}
-						invalidFeedback={formik.errors.name}
-						validFeedback=''>
-						<FieldWrap>
-							<Input
-								id='name'
-								name='name'
-								placeholder='Enter Client’s name'
-								className='rounded-full'
-								value={formik.values.name}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FieldWrap>
-					</Validation>
-				</div>
-				<div>
-					<Label htmlFor='clientEmail'>Client Email*</Label>
-					<Validation
-						isValid={formik.isValid}
-						isTouched={formik.touched.email}
-						invalidFeedback={formik.errors.email}
-						validFeedback=''>
-						<FieldWrap>
-							<Input
-								type='email'
-								id='email'
-								name='email'
-								placeholder='Enter Client’s email'
-								className='rounded-full'
-								value={formik.values.email}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FieldWrap>
-					</Validation>
-				</div>
-			</ModalBody>
-			<ModalFooter>
-				<ModalFooterChild className='w-full pt-4'>
-					<Button className='w-full' variant='outline' color='zinc'>
-						Cancel
-					</Button>
+				<form onSubmit={handleSubmit} className='flex flex-col gap-4 py-4'>
+					<div>
+						<Label htmlFor='clientName'>Client Name</Label>
+						<Validation
+							isValid={!formik.errors.clientName && formik.touched.clientName}
+							isTouched={formik.touched.clientName}
+							invalidFeedback={formik.errors.clientName}
+							validFeedback=''>
+							<FieldWrap firstSuffix={<Icon icon='HeroUser' className='mx-2' />}>
+								<Input
+									dimension='lg'
+									id='clientName'
+									name='clientName'
+									placeholder='Enter client name'
+									value={formik.values.clientName}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</FieldWrap>
+						</Validation>
+					</div>
+					<div>
+						<Label htmlFor='clientEmail'>Client Email</Label>
+						<Validation
+							isValid={!formik.errors.clientEmail && formik.touched.clientEmail}
+							isTouched={formik.touched.clientEmail}
+							invalidFeedback={formik.errors.clientEmail}
+							validFeedback=''>
+							<FieldWrap firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
+								<Input
+									dimension='lg'
+									type='email'
+									id='clientEmail'
+									name='clientEmail'
+									placeholder='Enter client email'
+									value={formik.values.clientEmail}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</FieldWrap>
+						</Validation>
 
-					<Button
-						rightIcon='HeroPaperAirplane'
-						onClick={() => setModal(false)}
-						className='w-full'
-						variant='solid'>
-						Send Invitation
-					</Button>
-				</ModalFooterChild>
-			</ModalFooter>
+						{error && !formik.errors.clientEmail && (
+							<div className='mt-1 text-sm text-red-500'>
+								{typeof error === 'string' ? error : error.message}
+							</div>
+						)}
+					</div>
+					<div className='flex items-center gap-4'>
+						<Button
+							onClick={() => {
+								formik.resetForm();
+								setModal(false);
+							}}
+							variant='outline'
+							color='zinc'
+							type='button' // Changed to type='button' to prevent form submission
+							className='w-full font-semibold'>
+							Cancel
+						</Button>
+						<Button
+							isDisable={!formik.isValid || modalLoading}
+							isLoading={modalLoading}
+							variant='solid'
+							rightIcon='HeroPaperAirplane'
+							type='submit'
+							className='w-full font-semibold'>
+							Invite Client
+						</Button>
+					</div>
+				</form>
+			</ModalBody>
 		</Modal>
 	);
 };

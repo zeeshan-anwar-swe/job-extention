@@ -8,13 +8,13 @@ import Card, {
 import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import SearchPartial from './Search.partial';
 import CandidateCardPartial from './CandidateCard.partial';
-
 import JobFilterDropdownPartial from './JobFilterDropdown.partial';
 import { AppDispatch, RootState } from '../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllCandidatesList } from '../../../../store/slices/Candiates.slice';
-import Loader from '../../../../components/ui/Loader';
+import MainLoader from '../../../../templates/layouts/main/MainLoader';
+import { getClientsList } from '../../../../store/slices/Agency/Client.slice';
 
 const CreateJobRightSidePartial = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -23,6 +23,7 @@ const CreateJobRightSidePartial = () => {
 	);
 
 	useEffect(() => {
+		dispatch(getClientsList());
 		dispatch(getAllCandidatesList());
 	}, []);
 	return (
@@ -40,20 +41,12 @@ const CreateJobRightSidePartial = () => {
 
 			<NavSeparator className='!mx-4 mb-4' />
 			<CardBody className='flex max-h-[600px] flex-col gap-4 overflow-y-scroll'>
-				{pageLoading && <Loader size='text-5xl' colorIntensity='500' />}
-				{!pageLoading &&
-					candidatesList.map((candidate) => (
-						<CandidateCardPartial
-							key={candidate.id}
-							name='Alena Holmes'
-							profession='Web Designer'
-							experience='3 Years'
-							location='Miami'
-							availability='Yes'
-							profileImageUrl=''
-							linkedIn='https://linkedin.com/alena-holmes'
-						/>
-					))}
+				<MainLoader loading={pageLoading} error={error} data={candidatesList}>
+					{!pageLoading &&
+						candidatesList.map((candidate) => (
+							<CandidateCardPartial key={candidate.id} candidate={candidate} />
+						))}
+				</MainLoader>
 			</CardBody>
 		</Card>
 	);

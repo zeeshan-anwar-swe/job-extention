@@ -1,27 +1,31 @@
-import React from 'react';
 import Button from '../../../../components/ui/Button';
+import Card, {
+	CardHeader,
+	CardHeaderChild,
+	CardSubTitle,
+	CardTitle,
+} from '../../../../components/ui/Card';
+import { profileImageUrlValidationCheck } from '../../../../utils/validationCheck';
 
 const AssignJobModalListItemPartial = () => {
 	return (
-		<div className='flex items-center justify-between gap-4 rounded-xl border-2 pr-2'>
-			<div className='flex gap-4'>
-				<Button icon='HeroFolder' className='h-fit'></Button>
-				<div className=''>
-					<div className='flex items-center gap-2'>
-						<h5 className='m-0 p-0'>Web Designer </h5>
-						<span>|</span>
-						<span>3Year Experience </span>
-						<span>|</span>
-						<span>Miami</span>
-					</div>
-					<p>June 13, 2024</p>
-				</div>
-			</div>
-
-			<Button className='h-fit' variant='solid'>
-				Assign
-			</Button>
-		</div>
+		<Card className='!bg-zinc-100 dark:!bg-zinc-800'>
+			<CardHeader className=''>
+				<CardHeaderChild>
+					<img
+						className='h-12 w-12 rounded-full object-cover'
+						src={profileImageUrlValidationCheck('')}
+						alt='profile-image'
+					/>
+					<CardSubTitle className='!font-medium text-[#5E687A]'>Xavier Quin</CardSubTitle>
+				</CardHeaderChild>
+				<CardHeaderChild>
+					<Button className='h-fit' variant='solid'>
+						Assign
+					</Button>
+				</CardHeaderChild>
+			</CardHeader>
+		</Card>
 	);
 };
 

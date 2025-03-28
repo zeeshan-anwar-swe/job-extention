@@ -1,6 +1,5 @@
-import Card from '../../../../components/ui/Card';
+import { CardHeader } from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
-import TableDataProfilePartial from './TableDataProfile.partial';
 import Modal, {
 	ModalBody,
 	ModalFooter,
@@ -8,13 +7,14 @@ import Modal, {
 	ModalHeader,
 } from '../../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
-import Alert from '../../../../components/ui/Alert';
 import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
 
-const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
+const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>Assign Job</ModalHeader>
+			<ModalHeader>
+				<CardHeader>Assign a client</CardHeader>
+			</ModalHeader>
 			<div className='p-4'>
 				<SearchPartial />
 			</div>
@@ -37,8 +37,16 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 						color='zinc'>
 						Cancel
 					</Button>
+
 					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
 						Done
+					</Button>
+					<Button
+						rightIcon='HeroPaperAirplane'
+						onClick={() => setModal(false)}
+						className='w-full'
+						variant='solid'>
+						Invite as client
 					</Button>
 				</ModalFooterChild>
 			</ModalFooter>
@@ -46,4 +54,4 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 	);
 };
 
-export default AssignJobModalPartial;
+export default AssignClientModalPartial;

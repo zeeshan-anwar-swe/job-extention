@@ -1,15 +1,18 @@
 import toast from 'react-hot-toast';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
+import { addOrRemoveObject } from '../../utils/helper';
 
 interface InitialStateType {
 	jobsList: any[];
 	pageLoading: boolean;
 	error: null | any;
+	assignedCandidatesWhileCreatingJob: any[];
 }
 
 const initialState: InitialStateType = {
 	jobsList: [],
+	assignedCandidatesWhileCreatingJob: [],
 	pageLoading: false,
 	error: null,
 };
@@ -25,7 +28,7 @@ export const getJobsList = createAsyncThunk('jobs/getJobsList', async (_, { reje
 
 export const createJobs = createAsyncThunk(
 	'jobs/create',
-	async (payload: PayloadAction, { rejectWithValue }) => {
+	async (payload: { type: string; payload: void }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/job', payload);
 			return response.data.data;
@@ -38,7 +41,18 @@ export const createJobs = createAsyncThunk(
 export const jobsSlice = createSlice({
 	name: 'jobs',
 	initialState,
-	reducers: {},
+	reducers: {
+		setAssignedCandidatesWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
+			state.assignedCandidatesWhileCreatingJob = action.payload;
+		},
+
+		assignCandidateWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
+			state.assignedCandidatesWhileCreatingJob = addOrRemoveObject(
+				state.assignedCandidatesWhileCreatingJob,
+				action.payload,
+			);
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getJobsList.pending, (state) => {
@@ -73,4 +87,6 @@ export const jobsSlice = createSlice({
 	},
 });
 
+export const { setAssignedCandidatesWhileCreatingJob, assignCandidateWhileCreatingJob } =
+	jobsSlice.actions;
 export default jobsSlice.reducer;

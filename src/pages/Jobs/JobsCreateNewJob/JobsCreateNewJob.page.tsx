@@ -1,4 +1,3 @@
-import React, { useRef, useState } from 'react';
 import Container from '../../../components/layouts/Container/Container';
 import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
 import Subheader, { SubheaderLeft } from '../../../components/layouts/Subheader/Subheader';
@@ -6,12 +5,21 @@ import Header, { HeaderLeft, HeaderRight } from '../../../components/layouts/Hea
 import DefaultHeaderRightCommon from '../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../components/ui/Button';
 import Breadcrumb from '../../../components/layouts/Breadcrumb/Breadcrumb';
-
 import { Link } from 'react-router-dom';
 import CreateJobLeftSidePartial from './_partial/CreateJobLeftSide.partial';
 import CreateJobRightSidePartial from './_partial/CreateJobRightSide.partial';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../store';
+import { setAssignedCandidatesWhileCreatingJob } from '../../../store/slices/Jobs.slice';
 
 const JobsCreateNewJobPage = () => {
+	const dispatch: AppDispatch = useDispatch();
+	useEffect(() => {
+		return () => {
+			dispatch(setAssignedCandidatesWhileCreatingJob([]));
+		};
+	}, []);
 	return (
 		<>
 			<Header>

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 interface InitialStateType {
 	candidatesList: any[];
 	pageLoading: boolean;
-	error: null | any;
+	error: null | Error | any;
 	cadidateProfile: any | null;
 }
 
@@ -39,8 +39,12 @@ export const getFilteredCandidates = createAsyncThunk(
 		{ rejectWithValue },
 	) => {
 		try {
-			const url = `/candidate/list?location=${location}&experiences=[${experiences}]&skills=${JSON.stringify(skills)}`;
-			const response = await axiosInstance.get(url);
+			const url = '/candidate/list';
+			const response = await axiosInstance.post('/candidate/list', {
+				location,
+				experiences,
+				skills,
+			});
 			if (response.data.data.length < 1) {
 				toast.error('No candidates found');
 				return [];
@@ -59,7 +63,7 @@ export const getAllCandidatesList = createAsyncThunk(
 	'candidates/getAllCandidatesList',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get(`/candidate/list`);
+			const response = await axiosInstance.post(`/candidate/list`);
 			return response.data.data;
 		} catch (error: any) {
 			return rejectWithValue(
@@ -105,7 +109,7 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+				state.error = new Error(action.error.message);
 			})
 
 			.addCase(getFilteredCandidates.pending, (state) => {
@@ -118,7 +122,7 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getFilteredCandidates.rejected, (state, action) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+				state.error = new Error(action.error.message);
 			})
 
 			.addCase(getAllCandidatesList.pending, (state) => {
@@ -131,7 +135,7 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getAllCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+				state.error = action.error;
 			});
 	},
 });
