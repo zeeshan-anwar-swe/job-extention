@@ -6,11 +6,25 @@ import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../components/ui/Button';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
-import Card from '../../components/ui/Card';
-import SearchPartial from './_partial/Search.partial';
+import Card, { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../components/ui/Card';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { getTeamlist } from '../../store/slices/Team.slice';
+import ShimmerEffectPageLoader from '../../components/layouts/PageLoader/ShimmerEffectPageLoader';
+import InviteModalPartial from './_partial/InviteModal.partial';
 
 const ManageTeamPage = () => {
-	return (
+	const { pageLoading } = useSelector((state: RootState) => state.team);
+	const [modal, setModal] = useState<boolean>(false);
+	const dispatch: AppDispatch = useDispatch();
+
+	useEffect(() => {
+		if (!modal) dispatch(getTeamlist());
+	}, [modal]);
+	return pageLoading ? (
+		<ShimmerEffectPageLoader />
+	) : (
 		<>
 			<Header>
 				<HeaderLeft>
@@ -44,7 +58,28 @@ const ManageTeamPage = () => {
 				<Container className='!grid !grid-cols-12 !gap-4'>
 					<div className='col-span-12 '>
 						<Card className='h-full'>
-							<TablePartial />
+							<>
+								<CardHeader>
+									<CardHeaderChild className=''>
+										<div>
+											<CardTitle>Your Team</CardTitle>
+											<p>Add, Remove, Assign Jobs to team members.</p>
+										</div>
+									</CardHeaderChild>
+									<CardHeaderChild>
+										<Button
+											onClick={() => setModal(true)}
+											variant='solid'
+											rightIcon='HeroPlus'>
+											Add a Team Member
+										</Button>
+										<InviteModalPartial setModal={setModal} modal={modal} />
+									</CardHeaderChild>
+								</CardHeader>
+								<CardBody className='overflow-auto'>
+									<TablePartial />
+								</CardBody>
+							</>
 						</Card>
 					</div>
 				</Container>

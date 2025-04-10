@@ -9,7 +9,7 @@ import DropdownSearchPartial from './DropdownSearch.partial';
 import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 import DropDownITemUserMetaPartial from './DropDownITemUserMeta.partial';
 
-const CardDropdownPartial = () => {
+const CardDropdownPartial = ({ item }: { item: any }) => {
 	const [dropdown, setDropdown] = useState<boolean>(false);
 
 	return (
@@ -20,21 +20,41 @@ const CardDropdownPartial = () => {
 			<DropdownMenu placement='bottom-end'>
 				<div className='px-4 text-sm font-bold'>Mark As</div>
 				<DropdownItem className='gap-2'>
-					<Button className='!py-1' rounded='rounded-full' variant='outline' color='zinc'>
+					<Button
+						className='!py-1'
+						rounded='rounded-full'
+						variant={item.status === 'BACKLOG' ? 'solid' : 'outline'}
+						color={item.status === 'BACKLOG' ? 'blue' : 'zinc'}>
 						Backlog
 					</Button>
-					<Button className='!py-1' rounded='rounded-full' variant='outline' color='zinc'>
+					<Button
+						className='!py-1'
+						rounded='rounded-full'
+						variant={item.status === 'IN_PROGRESS' ? 'solid' : 'outline'}
+						color={item.status === 'IN_PROGRESS' ? 'blue' : 'zinc'}>
 						In Progress
 					</Button>
-					<Button className='!py-1' rounded='rounded-full' variant='outline' color='zinc'>
+					<Button
+						className='!py-1'
+						rounded='rounded-full'
+						variant={'outline'}
+						color={'zinc'}>
 						To Do
 					</Button>
 				</DropdownItem>
 				<DropdownItem className='gap-2'>
-					<Button className='!py-1' rounded='rounded-full' variant='outline' color='zinc'>
+					<Button
+						className='!py-1'
+						rounded='rounded-full'
+						variant={item.status === 'IN_REVIEW' ? 'solid' : 'outline'}
+						color={item.status === 'IN_REVIEW' ? 'blue' : 'zinc'}>
 						In Review
 					</Button>
-					<Button className='!py-1' rounded='rounded-full' variant='outline' color='zinc'>
+					<Button
+						className='!py-1'
+						rounded='rounded-full'
+						variant={item.status === 'COMPLETED' ? 'solid' : 'outline'}
+						color={item.status === 'COMPLETED' ? 'blue' : 'zinc'}>
 						Completed
 					</Button>
 				</DropdownItem>

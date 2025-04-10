@@ -59,7 +59,7 @@ const LabelSelectPartial = ({
 						{ value: '', label: '' },
 						{ value: 'REMOTE', label: 'Remote' },
 						{ value: 'ON_SITE', label: 'On Site' },
-						{ value: 'HYBIRD', label: 'Hybird' },
+						{ value: 'HYBRID', label: 'Hybrid' },
 					]}
 				/>
 			</FieldWrap>

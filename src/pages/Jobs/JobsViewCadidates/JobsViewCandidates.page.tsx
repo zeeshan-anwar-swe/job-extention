@@ -16,7 +16,7 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 } from '../../../components/ui/Card';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
@@ -28,9 +28,24 @@ import TableDataFeedbackPartial from './_partial/TableDataFeedback.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 import SearchPartial from '../_partial/Search.partial';
 import AssignJobModalPartial from '../_partial/AssignJob.partial';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../store';
+import { getJobDetails, setJobDetailsById } from '../../../store/slices/Jobs.slice';
 
 const JobsViewCandidatesPage = () => {
 	const [modal, setModal] = useState<boolean>(false);
+	const { id } = useParams<{ id: string }>();
+
+	const { jobDetails } = useSelector((state: RootState) => state.jobsSlice);
+
+	console.log({ jobDetails });
+
+	const dispatch: AppDispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getJobDetails(id ?? ''));
+	}, []);
+
 	return (
 		<>
 			<Header>

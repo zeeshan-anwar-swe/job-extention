@@ -2,8 +2,11 @@ import Card, { CardBody } from '../../../components/ui/Card';
 import Icon from '../../../components/icon/Icon';
 import Tooltip from '../../../components/ui/Tooltip';
 import Balance from '../../../components/Balance';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const Balance1Partial = () => {
+	const { agencyStatistics } = useSelector((state: RootState) => state.agencyStatics);
 	return (
 		<Card>
 			<CardBody>
@@ -15,7 +18,7 @@ const Balance1Partial = () => {
 						<span className='font-semibold'>New Jobs</span>
 						<Tooltip text='Total number of new jobs.' />
 					</div>
-					<div className='text-4xl font-semibold'>238K</div>
+					<div className='text-4xl font-semibold'>{agencyStatistics.jobs}</div>
 					<div className='flex'>
 						<Balance status='positive' value='32%'>
 							Balance

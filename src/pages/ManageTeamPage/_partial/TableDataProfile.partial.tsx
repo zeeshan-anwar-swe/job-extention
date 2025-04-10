@@ -23,7 +23,7 @@ const TableDataProfilePartial = ({
 			/>
 			<div>
 				<h5>{textValidationCheck(title)}</h5>
-				<p>{textValidationCheck(subTitle)}</p>
+				<p className='break-all'>{textValidationCheck(subTitle)}</p>
 			</div>
 		</Link>
 	);

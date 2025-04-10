@@ -214,7 +214,7 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{
-		path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}`,
+		path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}/*`,
 		element: <ChatPage />,
 	},
 

@@ -22,6 +22,8 @@ const CreateJobRightSidePartial = () => {
 		(state: RootState) => state.candidates,
 	);
 
+	console.log({ candidatesList });
+
 	useEffect(() => {
 		dispatch(getClientsList());
 		dispatch(getAllCandidatesList());

@@ -16,7 +16,9 @@ import { Link } from 'react-router-dom';
 
 const JobsPageCardPartial = ({ item }: any) => {
 	return (
-		<Card className='col-span-4 flex flex-col gap-2 border border-zinc-300 hover:cursor-pointer max-2xl:col-span-6 max-lg:col-span-12'>
+		<Card
+			key={item.id}
+			className='col-span-4 flex flex-col gap-2 border border-zinc-300 hover:cursor-pointer max-2xl:col-span-6 max-lg:col-span-12'>
 			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
@@ -28,15 +30,15 @@ const JobsPageCardPartial = ({ item }: any) => {
 						className={`gap-2 !px-2 !py-1 ${!item.client && 'hidden'}`}
 						rightIcon='Hero'>
 						<img
-							className='aspect-square w-6 '
-							src={profileImageUrlValidationCheck('')}
+							className='aspect-square w-6 rounded-full object-cover '
+							src={profileImageUrlValidationCheck(item?.client?.image)}
 							alt='profile-image'
 						/>
-						<h5 className='max-md:text-sm'>Alex Hales</h5>
+						<h5 className='max-md:text-sm'>{item?.client?.name}</h5>
 					</Button>
 				</div>
 				<div className='h-full max-md:flex-1'>
-					<CardDropdownPartial />
+					<CardDropdownPartial item={item} />
 				</div>
 			</CardHeader>
 			<CardBody className='flex flex-col gap-4'>
@@ -51,7 +53,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 			</CardBody>
 			<CardFooter className='border-t-2 !py-2'>
 				<CardFooterChild>
-					<Link to='/jobs/view-cadidates/web-developer'>
+					<Link to={`/jobs/view-cadidates/${item?.id}`}>
 						<Button
 							size='lg'
 							className='!px-0 !text-xl !font-bold'
@@ -62,26 +64,17 @@ const JobsPageCardPartial = ({ item }: any) => {
 				</CardFooterChild>
 				<CardFooterChild>
 					<div className='flex items-center'>
-						<img
-							className='-mr-6 aspect-square w-10 object-cover'
-							src={profileImageUrlValidationCheck('')}
-						/>
-						<img
-							className='-mr-6 aspect-square w-10 object-cover'
-							src={profileImageUrlValidationCheck('')}
-						/>
-						<img
-							className='-mr-6 aspect-square w-10 object-cover'
-							src={profileImageUrlValidationCheck('')}
-						/>
-						<img
-							className='-mr-6 aspect-square w-10 object-cover'
-							src={profileImageUrlValidationCheck('')}
-						/>
+						{item?.appliedCandidates.map(() => (
+							<img
+								className='-mr-6 aspect-square w-10 object-cover'
+								src={profileImageUrlValidationCheck('')}
+							/>
+						))}
+
 						<Button
-							variant='outline'
+							variant='solid'
 							rounded='rounded-full'
-							className='!bg-white'
+							// className='!bg-white dark:!bg-zinc-800 dark:text-white'
 							icon='HeroPlus'></Button>
 					</div>
 				</CardFooterChild>

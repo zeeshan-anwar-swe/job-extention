@@ -26,11 +26,17 @@ import Button from '../../components/ui/Button';
 import themeConfig from '../../config/theme.config';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
 import Card from '../../components/ui/Card';
+import { formatDateStringToYYYYMMDD } from '../../utils/helper';
+import { AppDispatch } from '../../store';
+import { useDispatch } from 'react-redux';
+import { getAgencyStatics } from '../../store/slices/Agency/Statics.slice';
 
 const DashboardPage = () => {
 	const { i18n } = useTranslation();
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
+
+	const dispatch: AppDispatch = useDispatch();
 
 	const [selectedDate, setSelectedDate] = useState<Range[]>([
 		{
@@ -96,6 +102,15 @@ const DashboardPage = () => {
 		return () => {};
 	}, [selectedDate]);
 
+	useEffect(() => {
+		dispatch(
+			getAgencyStatics({
+				startDate: formatDateStringToYYYYMMDD(selectedDate[0].startDate),
+				endDate: formatDateStringToYYYYMMDD(selectedDate[0].endDate),
+				period: activeTab.text.toLowerCase(),
+			}),
+		);
+	}, [activeTab, selectedDate]);
 	return (
 		<>
 			<Header>

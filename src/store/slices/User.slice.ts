@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 import axiosInstance from '../../utils/axiosInstance';
+import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 
 interface InitialStateType {
 	data: any;
@@ -35,6 +36,19 @@ const initialState: InitialStateType = {
 		image: '',
 	},
 };
+
+export const getMyProfile = createAsyncThunk(
+	'user/getMyProfile',
+	async (_, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('user/me');
+			return response.data.data;
+		} catch (error: any) {
+			toast.error(error.response?.data?.message || 'Failed to update profile');
+			withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
 
 export const updateUserProfile = createAsyncThunk(
 	'user/updateUserProfile',
@@ -74,6 +88,20 @@ const userSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
+
+			.addCase(getMyProfile.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(getMyProfile.fulfilled, (state, action) => {
+				state.userProfile = action.payload;
+				state.loading = false;
+			})
+			.addCase(getMyProfile.rejected, (state) => {
+				state.loading = false;
+				state.error = null;
+			})
+
 			.addCase(updateUserProfile.pending, (state) => {
 				state.loading = true;
 				state.error = null;

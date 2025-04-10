@@ -49,11 +49,6 @@ const InviteClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 		},
 	});
 
-	const handleCloseAndCanncle = () => {
-		formik.resetForm();
-		setModal(false);
-	};
-
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>Invite Client</ModalHeader>

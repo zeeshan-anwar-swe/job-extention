@@ -20,8 +20,8 @@ export const getCandidatesList = createAsyncThunk(
 	'candidates/getCandidatesList',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get('/candidate/list');
-			return response.data.data;
+			const response = await axiosInstance.post('/candidate/list');
+			return response.data.data.rows;
 		} catch (error: any) {
 			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
 		}
@@ -45,7 +45,7 @@ export const getFilteredCandidates = createAsyncThunk(
 				experiences,
 				skills,
 			});
-			if (response.data.data.length < 1) {
+			if (response.data.data.rows.length < 1) {
 				toast.error('No candidates found');
 				return [];
 			} else {
@@ -64,7 +64,7 @@ export const getAllCandidatesList = createAsyncThunk(
 	async (_, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post(`/candidate/list`);
-			return response.data.data;
+			return response.data.data.rows;
 		} catch (error: any) {
 			return rejectWithValue(
 				error.response?.data?.message || 'Failed to get filtered candidates',

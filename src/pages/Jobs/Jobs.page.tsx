@@ -102,6 +102,9 @@ const JobsPage = () => {
 		// @ts-ignore
 		dispatch(getJobsList());
 	}, []);
+
+	console.log('JobsList', { jobsList });
+
 	return pageLoading ? (
 		<ShimmerEffectPageLoader />
 	) : (

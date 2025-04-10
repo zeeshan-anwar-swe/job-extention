@@ -11,13 +11,17 @@ import CreateJobRightSidePartial from './_partial/CreateJobRightSide.partial';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store';
-import { setAssignedCandidatesWhileCreatingJob } from '../../../store/slices/Jobs.slice';
+import {
+	setAssignedCandidatesWhileCreatingJob,
+	setClientWhileCreatingJob,
+} from '../../../store/slices/Jobs.slice';
 
 const JobsCreateNewJobPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	useEffect(() => {
 		return () => {
 			dispatch(setAssignedCandidatesWhileCreatingJob([]));
+			dispatch(setClientWhileCreatingJob(null));
 		};
 	}, []);
 	return (

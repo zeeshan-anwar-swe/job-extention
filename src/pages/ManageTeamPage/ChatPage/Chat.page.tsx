@@ -7,20 +7,61 @@ import Card, {
 	CardFooterChild,
 	CardHeader,
 	CardHeaderChild,
+	CardTitle,
 } from '../../../components/ui/Card';
 
 import SearchPartial from '../_partial/Search.partial';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import ChatInputPartial from '../_partial/ChatInput.partial';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { textValidationCheck } from '../../../utils/validationCheck';
+import { io } from 'socket.io-client';
+import { useAuth } from '../../../context/authContext';
 
 const ChatPage = () => {
+	const navigateTo = useNavigate();
+	const location = useLocation();
+	const { state } = location;
+
+	const [chat, setChat] = useState<any>([]);
+
+	console.log({ chat });
+
+	const { userTokenStorage: token, userStorage } = useAuth();
+
+	const socket = io('http://localhost:3000', {
+		auth: {
+			token: token || '',
+		},
+	});
+
+	useEffect(() => {
+		if (!state) {
+			navigateTo('/manage-team');
+		} else {
+			socket.on('receive_message', (message) => {
+				if (
+					(message.senderId === state.user.id && message.receiverId === userStorage.id) ||
+					(message.senderId === userStorage.id && message.receiverId === state.user.id)
+				) {
+					setChat((prev: any[]) => [...prev, message]);
+				}
+			});
+
+			return () => {
+				socket.off('receive_message');
+			};
+		}
+	}, [state?.user.id, userStorage.id]);
+
 	return (
 		<PageWrapper name='Chat'>
 			<Container className='!grid h-full !grid-cols-12 !gap-4 '>
 				<Card className='col-span-12 flex flex-col gap-2'>
 					<CardHeader>
 						<CardHeaderChild className='!flex w-full !items-center !justify-between'>
-							<h1>Kai Ashworth</h1>
+							<CardTitle>{textValidationCheck(state?.user.name)}</CardTitle>
 							<div className='flex items-center gap-2'>
 								<SearchPartial />
 								<Button

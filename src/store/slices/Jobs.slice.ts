@@ -1,18 +1,22 @@
 import toast from 'react-hot-toast';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
-import { addOrRemoveObject } from '../../utils/helper';
+import { addOrRemoveObject, findObjectById } from '../../utils/helper';
 
 interface InitialStateType {
 	jobsList: any[];
 	pageLoading: boolean;
 	error: null | any;
 	assignedCandidatesWhileCreatingJob: any[];
+	assignedClientWhileCreatingJob: any | null;
+	jobDetails: any | null;
 }
 
 const initialState: InitialStateType = {
 	jobsList: [],
 	assignedCandidatesWhileCreatingJob: [],
+	assignedClientWhileCreatingJob: null,
+	jobDetails: null,
 	pageLoading: false,
 	error: null,
 };
@@ -20,11 +24,23 @@ const initialState: InitialStateType = {
 export const getJobsList = createAsyncThunk('jobs/getJobsList', async (_, { rejectWithValue }) => {
 	try {
 		const response = await axiosInstance.get('/job/recruiter/list');
-		return response.data.data;
+		return response.data.data.rows;
 	} catch (error: any) {
 		return rejectWithValue(error.response?.data?.message || 'Failed to change password');
 	}
 });
+
+export const getJobDetails = createAsyncThunk(
+	'jobs/getJobDetails',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('/job/detail/' + id);
+			return response.data.data;
+		} catch (error: any) {
+			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+		}
+	},
+);
 
 export const createJobs = createAsyncThunk(
 	'jobs/create',
@@ -46,11 +62,23 @@ export const jobsSlice = createSlice({
 			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
 
+		setClientWhileCreatingJob: (state, action: PayloadAction<any>) => {
+			state.assignedClientWhileCreatingJob = action.payload;
+		},
+
 		assignCandidateWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
 			state.assignedCandidatesWhileCreatingJob = addOrRemoveObject(
 				state.assignedCandidatesWhileCreatingJob,
 				action.payload,
 			);
+		},
+
+		setJobDetailsById: (state, action: PayloadAction<string>) => {
+			state.jobDetails = findObjectById(state.jobsList, action.payload);
+		},
+
+		setJobDetails: (state, action: PayloadAction<any>) => {
+			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -69,24 +97,41 @@ export const jobsSlice = createSlice({
 			});
 
 		builder
+			.addCase(getJobDetails.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getJobDetails.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.jobDetails = action.payload;
+			})
+			.addCase(getJobDetails.rejected, (state, action) => {
+				state.pageLoading = false;
+				state.error = action.error.message || 'Failed to fetch jobs.';
+			});
+
+		builder
 			.addCase(createJobs.pending, (state) => {
 				state.pageLoading = true;
 				state.error = null;
 			})
-			.addCase(createJobs.fulfilled, (state, action) => {
+			.addCase(createJobs.fulfilled, (state) => {
 				state.pageLoading = false;
-				state.jobsList = [...state.jobsList, action.payload];
 				toast.success('Job Created');
 			})
 			.addCase(createJobs.rejected, (state, action) => {
 				state.pageLoading = false;
 				state.error = action.error.message || 'Failed to fetch jobs.';
 				toast.error(action.error.message as string);
-				console.error(action.error);
 			});
 	},
 });
 
-export const { setAssignedCandidatesWhileCreatingJob, assignCandidateWhileCreatingJob } =
-	jobsSlice.actions;
+export const {
+	setAssignedCandidatesWhileCreatingJob,
+	assignCandidateWhileCreatingJob,
+	setClientWhileCreatingJob,
+	setJobDetailsById,
+	setJobDetails,
+} = jobsSlice.actions;
 export default jobsSlice.reducer;

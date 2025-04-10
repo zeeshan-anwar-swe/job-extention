@@ -37,6 +37,13 @@ const SignupPage = () => {
 			if (!values.firstName) {
 				errors.firstName = 'Required';
 			}
+			if (values.firstName.length < 3) {
+				errors.firstName = 'First Name must be at least 3 characters long';
+			}
+
+			if (values.lastName.length < 3) {
+				errors.firstName = 'Last Name must be at least 3 characters long';
+			}
 
 			if (!values.lastName) {
 				errors.lastName = 'Required';

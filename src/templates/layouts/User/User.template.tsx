@@ -8,19 +8,18 @@ import { useAuth } from '../../../context/authContext';
 import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store';
-import { setUserProfileData } from '../../../store/slices/User.slice';
+import { getMyProfile, setUserProfileData } from '../../../store/slices/User.slice';
 
 const UserTemplate = () => {
+	const { onLogout } = useAuth();
 	const dispatch: AppDispatch = useDispatch();
-	const { userProfile } = useSelector((state: RootState) => state.user);
-
-	const { userStorage, onLogout } = useAuth();
+	const { userProfile, loading } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
-		if (userStorage) {
-			dispatch(setUserProfileData(userStorage));
+		if (userProfile.email === '') {
+			dispatch(getMyProfile());
 		}
-	}, [userStorage]);
+	}, []);
 
 	return (
 		<User

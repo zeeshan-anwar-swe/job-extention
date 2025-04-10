@@ -8,8 +8,12 @@ import Modal, {
 } from '../../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
 import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store';
 
 const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
+	const { clientsList } = useSelector((state: RootState) => state.clients);
+
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>
@@ -21,10 +25,9 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 
 			<ModalBody>
 				<div className='flex w-full flex-col gap-4'>
-					<AssignJobModalListItemPartial />
-					<AssignJobModalListItemPartial />
-					<AssignJobModalListItemPartial />
-					<AssignJobModalListItemPartial />
+					{clientsList.map((client: any) => (
+						<AssignJobModalListItemPartial client={client} key={client.id} />
+					))}
 				</div>
 			</ModalBody>
 			<ModalFooter>

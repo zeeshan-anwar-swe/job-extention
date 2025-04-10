@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header/Header';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
@@ -23,7 +23,7 @@ import FieldWrap from '../../components/form/FieldWrap';
 import Input from '../../components/form/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { updateUserProfile } from '../../store/slices/User.slice';
+import { getMyProfile, updateUserProfile } from '../../store/slices/User.slice';
 import toast from 'react-hot-toast';
 import ChangePasswordFormPartial from './partial/ChangePasswordForm.partial';
 
@@ -105,6 +105,13 @@ const SettingPage = () => {
 			dispatch(updateUserProfile(formData));
 		},
 	});
+
+	useEffect(() => {
+		if (userProfile.email === '') {
+			dispatch(getMyProfile());
+		}
+	}, []);
+
 	return (
 		<>
 			<Header>

@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 export interface IAuthContextProps {
 	userTokenStorage: string | null;
 	userStorage: {
+		id: string;
 		firstName: string;
 		email: string;
 		about?: string;
@@ -177,6 +178,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 				image: '',
 				about: '',
 				email: '',
+				id: '',
 			},
 			userTokenStorage,
 			onResetPassword,

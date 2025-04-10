@@ -23,7 +23,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const CreateJobLeftSidePartial = () => {
-	const { assignedCandidatesWhileCreatingJob } = useSelector(
+	const { assignedCandidatesWhileCreatingJob, assignedClientWhileCreatingJob } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
 
@@ -51,16 +51,8 @@ const CreateJobLeftSidePartial = () => {
 		}
 
 		// @ts-ignore
-		await dispatch(createJobs( isAssigned ? {...formData,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
-		await setFormData({
-			title: '',
-			description: '',
-			experience: '',
-			location: '',
-			type: '',
-			positions: '',
-			skills: [],
-		});
+		// prettier-ignore
+		await dispatch(createJobs( isAssigned ? {...formData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
 
 		navigate('/jobs');
 	};
