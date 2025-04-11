@@ -8,6 +8,7 @@ import {
 	updateJobTeam,
 } from '../../utils/helper';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
+import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
 
 interface InitialStateType {
 	jobsList: any[];
@@ -84,6 +85,18 @@ export const assignTeamMemberToJob = createAsyncThunk(
 	async ({ jobId, teamId }: { jobId: string; teamId: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/job/assign-team', { jobId, teamId });
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const changeJobStatus = createAsyncThunk(
+	'jobs/changeJobStatus',
+	async ({ jobId, status }: { jobId: string; status: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.put('/job/status/' + jobId, { status });
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -210,6 +223,21 @@ export const jobsSlice = createSlice({
 				};
 				toast.error(action.payload.message);
 				state.componentLoading = false;
+			});
+
+		builder
+			.addCase(changeJobStatus.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(changeJobStatus.fulfilled, (state, action) => {
+				state.jobsList = updateJobStatusByResponse(state.jobsList, action.payload);
+				toast.success('JobStatus is updated to ' + action.payload.status);
+			})
+			.addCase(changeJobStatus.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
 			});
 	},
 });
