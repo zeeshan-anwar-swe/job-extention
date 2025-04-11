@@ -1,12 +1,22 @@
 import toast from 'react-hot-toast';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
-import { addOrRemoveObject, findObjectById } from '../../utils/helper';
+import {
+	addOrRemoveObject,
+	filterTeamMemberByName,
+	findObjectById,
+	updateJobTeam,
+} from '../../utils/helper';
+import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 
 interface InitialStateType {
 	jobsList: any[];
+	componentLoading: boolean;
 	pageLoading: boolean;
-	error: null | any;
+	error: null | string | any;
+	searchedTeamListForJob: any[];
+	teamListForJob: [];
+
 	assignedCandidatesWhileCreatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
 	jobDetails: any | null;
@@ -14,10 +24,13 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	jobsList: [],
+	teamListForJob: [],
+	searchedTeamListForJob: [],
 	assignedCandidatesWhileCreatingJob: [],
 	assignedClientWhileCreatingJob: null,
 	jobDetails: null,
 	pageLoading: false,
+	componentLoading: false,
 	error: null,
 };
 
@@ -26,7 +39,7 @@ export const getJobsList = createAsyncThunk('jobs/getJobsList', async (_, { reje
 		const response = await axiosInstance.get('/job/recruiter/list');
 		return response.data.data.rows;
 	} catch (error: any) {
-		return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+		return await withAsyncThunkErrorHandler(error, rejectWithValue);
 	}
 });
 
@@ -37,7 +50,7 @@ export const getJobDetails = createAsyncThunk(
 			const response = await axiosInstance.get('/job/detail/' + id);
 			return response.data.data;
 		} catch (error: any) {
-			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -49,7 +62,31 @@ export const createJobs = createAsyncThunk(
 			const response = await axiosInstance.post('/job', payload);
 			return response.data.data;
 		} catch (error: any) {
-			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getTeamlistForJobs = createAsyncThunk(
+	'team/getTeamlist',
+	async (_, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('/team/list');
+			return response.data.data.rows;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const assignTeamMemberToJob = createAsyncThunk(
+	'jobs/assignTeamMemberToJob',
+	async ({ jobId, teamId }: { jobId: string; teamId: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/job/assign-team', { jobId, teamId });
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -58,6 +95,12 @@ export const jobsSlice = createSlice({
 	name: 'jobs',
 	initialState,
 	reducers: {
+		setSearchedTeamListForJob: (state, action: PayloadAction<string>) => {
+			state.searchedTeamListForJob = filterTeamMemberByName(
+				state.teamListForJob,
+				action.payload,
+			);
+		},
 		setAssignedCandidatesWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
 			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
@@ -91,9 +134,12 @@ export const jobsSlice = createSlice({
 				state.pageLoading = false;
 				state.jobsList = action.payload;
 			})
-			.addCase(getJobsList.rejected, (state, action) => {
+			.addCase(getJobsList.rejected, (state, action: any) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
 			});
 
 		builder
@@ -105,9 +151,12 @@ export const jobsSlice = createSlice({
 				state.pageLoading = false;
 				state.jobDetails = action.payload;
 			})
-			.addCase(getJobDetails.rejected, (state, action) => {
+			.addCase(getJobDetails.rejected, (state, action: any) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
 			});
 
 		builder
@@ -119,10 +168,48 @@ export const jobsSlice = createSlice({
 				state.pageLoading = false;
 				toast.success('Job Created');
 			})
-			.addCase(createJobs.rejected, (state, action) => {
+			.addCase(createJobs.rejected, (state, action: any) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
-				toast.error(action.error.message as string);
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+			});
+
+		builder
+			.addCase(getTeamlistForJobs.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(getTeamlistForJobs.fulfilled, (state, action) => {
+				state.teamListForJob = action.payload;
+			})
+			.addCase(getTeamlistForJobs.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+			});
+
+		builder
+			.addCase(assignTeamMemberToJob.pending, (state) => {
+				state.componentLoading = true;
+				state.error = null;
+			})
+			.addCase(assignTeamMemberToJob.fulfilled, (state, action) => {
+				toast.success('Team Member Assigned Successfully');
+				state.jobsList = updateJobTeam(
+					state.teamListForJob,
+					state.jobsList,
+					action.payload,
+				);
+				state.componentLoading = false;
+			})
+			.addCase(assignTeamMemberToJob.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+				state.componentLoading = false;
 			});
 	},
 });
@@ -131,6 +218,7 @@ export const {
 	setAssignedCandidatesWhileCreatingJob,
 	assignCandidateWhileCreatingJob,
 	setClientWhileCreatingJob,
+	setSearchedTeamListForJob,
 	setJobDetailsById,
 	setJobDetails,
 } = jobsSlice.actions;

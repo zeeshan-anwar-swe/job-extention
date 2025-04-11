@@ -1,10 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 
 interface InitialStateType {
 	teamList: any[];
+	componentLoading: boolean;
 	pageLoading: boolean;
 	modalLoading: boolean;
 	error: null | string | any;
@@ -14,6 +15,7 @@ interface InitialStateType {
 const initialState: InitialStateType = {
 	teamMemberProfile: null,
 	pageLoading: true,
+	componentLoading: false,
 	modalLoading: false,
 	teamList: [],
 	error: null,
@@ -39,6 +41,7 @@ export const inviteTeamMember = createAsyncThunk(
 		}
 	},
 );
+
 export const teamSlice = createSlice({
 	name: 'team',
 	initialState,
@@ -53,9 +56,12 @@ export const teamSlice = createSlice({
 				state.teamList = action.payload;
 				state.pageLoading = false;
 			})
-			.addCase(getTeamlist.rejected, (state, action) => {
+			.addCase(getTeamlist.rejected, (state, action: any) => {
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
 			})
 			.addCase(inviteTeamMember.pending, (state) => {
 				state.modalLoading = true;

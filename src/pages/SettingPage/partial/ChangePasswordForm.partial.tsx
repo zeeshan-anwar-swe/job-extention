@@ -5,7 +5,7 @@ import Input from '../../../components/form/Input';
 import { useFormik } from 'formik';
 import Label from '../../../components/form/Label';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '../../../components/ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store';

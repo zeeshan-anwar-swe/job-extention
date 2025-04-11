@@ -4,7 +4,7 @@ const TableDataPositionPartial = ({ title, subTitle }: { title?: string; subTitl
 	return (
 		<div>
 			<h5>{textValidationCheck(title)}</h5>
-			<p>{textValidationCheck(subTitle)}</p>
+			<p>{`Client: ${textValidationCheck(subTitle)}`}</p>
 		</div>
 	);
 };

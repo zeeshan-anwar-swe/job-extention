@@ -27,3 +27,41 @@ export function formatDateStringToYYYYMMDD(dateString: string | undefined): stri
 	const day = String(date.getDate()).padStart(2, '0');
 	return `${year}-${month}-${day}`;
 }
+
+export function filterTeamMemberByName(teamList: any[], name: string): any[] {
+	return teamList.filter((teamMember) =>
+		teamMember.user.name.toLowerCase().includes(name.toLowerCase()),
+	);
+}
+
+// function takes stored of teamlist, joblist and response of assign job to a team member and update the joblist with newly assigned team member
+export function updateJobTeam(teamList: any[], jobList: any[], data: any): any[] {
+	// Find the team in teamList that matches the teamId from data
+	const foundTeam = teamList.find((team) => team.id === data.teamId);
+
+	if (!foundTeam) {
+		console.warn(`Team with id ${data.teamId} not found in teamList`);
+		return jobList;
+	}
+
+	// Convert the team object to the required format
+	const convertedTeam: any = {
+		teamId: foundTeam.id,
+		userId: foundTeam.user.id,
+		email: foundTeam.user.email,
+		role: foundTeam.user.role,
+		image: foundTeam.user.image,
+		name: foundTeam.user.name,
+	};
+
+	// Update the job in jobList where id matches data.id
+	return jobList.map((job) => {
+		if (job.id === data.id) {
+			return {
+				...job,
+				team: convertedTeam,
+			};
+		}
+		return job;
+	});
+}

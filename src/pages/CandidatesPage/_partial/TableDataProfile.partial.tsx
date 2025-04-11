@@ -1,5 +1,8 @@
 import Badge from '../../../components/ui/Badge';
-import { profileImageUrlValidationCheck, textValidationCheck } from '../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../utils/validationCheck';
 
 const TableDataProfilePartial = ({
 	imageUrl,
@@ -18,8 +21,8 @@ const TableDataProfilePartial = ({
 				alt='cadidate-image'
 			/>
 			<div>
-				<h5>{textValidationCheck(title)}</h5>
-				<p>{textValidationCheck(subTitle)}</p>
+				<h5 className='break-all'>{textValidationCheck(title)}</h5>
+				<p className='break-all'>{textValidationCheck(subTitle)}</p>
 			</div>
 		</div>
 	);

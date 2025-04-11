@@ -24,7 +24,6 @@ import Input from '../../components/form/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getMyProfile, updateUserProfile } from '../../store/slices/User.slice';
-import toast from 'react-hot-toast';
 import ChangePasswordFormPartial from './partial/ChangePasswordForm.partial';
 
 export type UserProfileDataType = {

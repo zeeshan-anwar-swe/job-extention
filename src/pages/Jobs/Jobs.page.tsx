@@ -1,5 +1,4 @@
 import Container from '../../components/layouts/Container/Container';
-import PageWrapper from '../../components/layouts/PAGEWRAPPER/PageWrapper';
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
@@ -22,8 +21,9 @@ import themeConfig from '../../config/theme.config';
 import HeaderPartial from './_partial/Header.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { getJobsList } from '../../store/slices/Jobs.slice';
+import { getJobsList, getTeamlistForJobs } from '../../store/slices/Jobs.slice';
 import ShimmerEffectPageLoader from '../../components/layouts/PageLoader/ShimmerEffectPageLoader';
+import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
@@ -101,9 +101,8 @@ const JobsPage = () => {
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(getJobsList());
+		dispatch(getTeamlistForJobs());
 	}, []);
-
-	console.log('JobsList', { jobsList });
 
 	return pageLoading ? (
 		<ShimmerEffectPageLoader />

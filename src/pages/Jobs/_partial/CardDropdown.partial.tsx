@@ -6,11 +6,18 @@ import Dropdown, {
 } from '../../../components/ui/Dropdown';
 import Button from '../../../components/ui/Button';
 import DropdownSearchPartial from './DropdownSearch.partial';
-import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
 import DropDownITemUserMetaPartial from './DropDownITemUserMeta.partial';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const CardDropdownPartial = ({ item }: { item: any }) => {
 	const [dropdown, setDropdown] = useState<boolean>(false);
+
+	const { searchedTeamListForJob, teamListForJob } = useSelector(
+		(state: RootState) => state.jobsSlice,
+	);
+
+	console.log({ searchedTeamListForJob });
 
 	return (
 		<Dropdown>
@@ -64,10 +71,15 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 				<DropdownItem>
 					<DropdownSearchPartial />
 				</DropdownItem>
-				<DropDownITemUserMetaPartial title='James Hilton' />
-				<DropDownITemUserMetaPartial title='Harley Mathew' />
-				<DropDownITemUserMetaPartial title='Jack Stark' />
-				<DropDownITemUserMetaPartial title='Tommy Bell' />
+				<div className='max-h-[300px] overflow-y-scroll'>
+					{searchedTeamListForJob.map((teamMember: any) => (
+						<DropDownITemUserMetaPartial
+							job={item}
+							teamMamber={teamMember}
+							key={teamMember.id}
+						/>
+					))}
+				</div>
 			</DropdownMenu>
 		</Dropdown>
 	);

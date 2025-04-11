@@ -20,7 +20,7 @@ export const getCandidatesList = createAsyncThunk(
 	'candidates/getCandidatesList',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.post('/candidate/list');
+			const response = await axiosInstance.get('/agency/candidates');
 			return response.data.data.rows;
 		} catch (error: any) {
 			return rejectWithValue(error.response?.data?.message || 'Failed to change password');

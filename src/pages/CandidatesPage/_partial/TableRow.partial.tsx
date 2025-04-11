@@ -10,12 +10,15 @@ const TableRowPartial = ({ candidate }: { candidate: any }) => {
 	return (
 		<Tr>
 			<Td>
-				<TableDataProfilePartial title='Alina Jourge' subTitle='alina@gmail.com' />
+				<TableDataProfilePartial
+					title={candidate.candidate.name}
+					subTitle={candidate.candidate.email}
+				/>
 			</Td>
 			<Td>
 				<TableDataPositionPartial
-					title='Software Engineer'
-					subTitle='client: Phonix Baker'
+					title={candidate.role}
+					subTitle={candidate?.client?.firstName ?? ''}
 				/>
 			</Td>
 
