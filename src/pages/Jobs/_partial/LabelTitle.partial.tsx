@@ -1,26 +1,68 @@
-import { useState } from 'react';
+import { useState, RefObject, ChangeEvent } from 'react';
 import { textValidationCheck } from '../../../utils/validationCheck';
 import Label from '../../../components/form/Label';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Input from '../../../components/form/Input';
+import { TInputTypes } from '../../../types/input.type';
 
-const LabelTitlepartial = ({ label, detail }: { label?: string; detail?: string }) => {
-	const [detailText, setDetailText] = useState<string | null | undefined>(detail);
+interface FormData {
+	title: string;
+	description: string;
+	experience: string;
+	type: string;
+	location: string;
+	positions: string;
+	skills: string[];
+}
+
+type AllowedId =
+	| 'title'
+	| 'description'
+	| 'type'
+	| 'experience'
+	| 'location'
+	| 'positions'
+	| 'skills';
+
+const LabelTitlepartial = ({
+	label,
+	id,
+	formData,
+	setFormData,
+	inputType,
+}: {
+	label?: string;
+	id: AllowedId;
+	detail?: string;
+	formData: FormData;
+	setFormData: any;
+	inputType?: TInputTypes;
+}) => {
+	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: inputType === 'number' ? +value : value,
+		});
+	};
 	return (
-		<div className='flex-1'>
-			<Label htmlFor='title' className='font-light'>
+		<div className='w-full'>
+			<Label htmlFor={id ?? ''} className='font-light'>
 				{textValidationCheck(label)}
 			</Label>
 
 			<FieldWrap>
 				<Input
+					defaultValue={1}
+					type={inputType ?? 'text'}
 					dimension='lg'
-					id='name'
+					id={id}
+					min={1}
 					autoComplete='name'
-					name='name'
-					value={detailText || ''}
-					placeholder='Enter your name'
-					onChange={(e) => setDetailText(e.target.value)}
+					name={id}
+					value={formData[id]}
+					placeholder={label ?? ''}
+					onChange={handleChange}
 				/>
 			</FieldWrap>
 		</div>

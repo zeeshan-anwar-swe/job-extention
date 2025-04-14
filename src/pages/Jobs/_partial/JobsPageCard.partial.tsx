@@ -12,9 +12,10 @@ import Card, {
 	CardFooterChild,
 	CardHeader,
 } from '../../../components/ui/Card';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const JobsPageCardPartial = ({ item }: any) => {
+	const navigateTo = useNavigate();
 	return (
 		<Card
 			key={item.id}
@@ -53,14 +54,15 @@ const JobsPageCardPartial = ({ item }: any) => {
 			</CardBody>
 			<CardFooter className='border-t-2 !py-2'>
 				<CardFooterChild>
-					<Link to={`/jobs/view-cadidates/${item?.id}`}>
-						<Button
-							size='lg'
-							className='!px-0 !text-xl !font-bold'
-							rightIcon='HeroArrowUpRight'>
-							View Cadidates
-						</Button>
-					</Link>
+					<Button
+						onClick={() => {
+							navigateTo(`/jobs/view-job-details`, { state: item });
+						}}
+						size='lg'
+						className='!px-0 !text-xl !font-bold'
+						rightIcon='HeroArrowUpRight'>
+						View Cadidates
+					</Button>
 				</CardFooterChild>
 				<CardFooterChild>
 					<div className='flex items-center'>

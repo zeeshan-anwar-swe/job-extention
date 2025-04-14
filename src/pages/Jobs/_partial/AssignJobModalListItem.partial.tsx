@@ -1,7 +1,10 @@
 import Button from '../../../components/ui/Button';
-import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../utils/validationCheck';
 
-const AssignJobModalListItemPartial = () => {
+const AssignJobModalListItemPartial = ({ candidate }: any) => {
 	return (
 		<div className='flex items-center justify-between gap-4 rounded-xl  pr-2'>
 			<div className='flex w-full items-center gap-4 rounded-xl bg-zinc-100 p-2 dark:bg-zinc-800'>
@@ -10,7 +13,7 @@ const AssignJobModalListItemPartial = () => {
 					src={profileImageUrlValidationCheck('')}
 					alt='profile-image'
 				/>
-				<h5>Olivia Oggy</h5>
+				<h5>{textValidationCheck(candidate?.candidate?.name)}</h5>
 			</div>
 			<Button
 				className='h-fit bg-white !text-blue-500 hover:!text-white'

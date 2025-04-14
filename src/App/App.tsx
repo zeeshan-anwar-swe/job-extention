@@ -8,11 +8,22 @@ import HeaderRouter from '../components/router/HeaderRouter';
 import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
 import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
+import { getAllCandidatesList } from '../store/slices/Candiates.slice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
+import { getClientsList } from '../store/slices/Agency/Client.slice';
 const App = () => {
+	const dispatch: AppDispatch = useDispatch();
 	getOS();
 
 	const { fontSize } = useFontSize();
 	dayjs.extend(localizedFormat);
+
+	useEffect(() => {
+		dispatch(getAllCandidatesList());
+		dispatch(getClientsList());
+	}, []);
 
 	return (
 		<>

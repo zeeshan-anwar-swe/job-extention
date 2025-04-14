@@ -1,27 +1,39 @@
-import Button from '../../../components/ui/Button';
+import Button from '../../../../components/ui/Button';
 import Modal, {
 	ModalBody,
 	ModalFooter,
 	ModalFooterChild,
 	ModalHeader,
-} from '../../../components/ui/Modal';
+} from '../../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
-import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
-import { RootState } from '../../../store';
+import { RootState } from '../../../../store';
 import { useSelector } from 'react-redux';
+import AssignCandidatesModalListItemPartial from './AssignCandidatesModalList';
 
-const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
+const AssignCandidatesModalPartial = ({
+	modal,
+	setModal,
+	jobTitle,
+}: {
+	modal: boolean;
+	setModal: any;
+	jobTitle?: string;
+}) => {
 	const { candidatesList } = useSelector((state: RootState) => state.candidates);
+
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>Assign Job “Product Designer” to a Client</ModalHeader>
+			<ModalHeader>Assign candidates to “{jobTitle ?? ''}” job</ModalHeader>
 			<div className='p-4'>
 				<SearchPartial />
 			</div>
 
-			<ModalBody className='!flex !w-full !flex-col !gap-4'>
+			<ModalBody className='!flex max-h-72 !w-full !flex-col !gap-4'>
 				{candidatesList.map((candidate) => (
-					<AssignJobModalListItemPartial candidate={candidate} key={candidate.id} />
+					<AssignCandidatesModalListItemPartial
+						candidate={candidate}
+						key={candidate.id}
+					/>
 				))}
 			</ModalBody>
 			<ModalFooter>
@@ -36,13 +48,10 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
 						Done
 					</Button>
-					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
-						Invite As Client
-					</Button>
 				</ModalFooterChild>
 			</ModalFooter>
 		</Modal>
 	);
 };
 
-export default AssignJobModalPartial;
+export default AssignCandidatesModalPartial;

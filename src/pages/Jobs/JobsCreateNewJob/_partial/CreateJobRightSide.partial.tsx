@@ -22,11 +22,8 @@ const CreateJobRightSidePartial = () => {
 		(state: RootState) => state.candidates,
 	);
 
-	console.log({ candidatesList });
-
 	useEffect(() => {
 		dispatch(getClientsList());
-		dispatch(getAllCandidatesList());
 	}, []);
 	return (
 		<Card className='relative col-span-4 flex flex-col gap-2 max-lg:col-span-12'>

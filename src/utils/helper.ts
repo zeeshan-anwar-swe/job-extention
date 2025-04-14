@@ -1,3 +1,5 @@
+import { TColors } from '../types/colors.type';
+
 export function addOrRemoveObject<T extends Record<string, any>>(array: T[], newObject: T): T[] {
 	const existingIndex = array.findIndex((item) => item.id === newObject.id);
 	return existingIndex === -1
@@ -64,4 +66,21 @@ export function updateJobTeam(teamList: any[], jobList: any[], data: any): any[]
 		}
 		return job;
 	});
+}
+
+export function getStatusColor(status: string): TColors {
+	switch (status) {
+		case 'BACKLOG':
+			return 'amber';
+		case 'IN_PROGRESS':
+			return 'blue';
+		case 'TODO':
+			return 'zinc';
+		case 'IN_REVIEW':
+			return 'violet';
+		case 'COMPLETED':
+			return 'emerald';
+		default:
+			return 'zinc'; // Default color if status is unknown
+	}
 }

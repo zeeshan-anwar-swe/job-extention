@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/Login.page';
 import SignupPage from '../pages/Signup.page';
@@ -99,7 +99,7 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{
-		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}/:id`,
+		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
 		element: <JobsViewCandidatesPage />,
 	},
 

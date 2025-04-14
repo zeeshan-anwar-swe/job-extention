@@ -9,6 +9,8 @@ import {
 } from '../../utils/helper';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
+import { stat } from 'fs';
+import { JobDetailsType } from '../../types/slices.type/jobs.slice.type';
 
 interface InitialStateType {
 	jobsList: any[];
@@ -20,7 +22,7 @@ interface InitialStateType {
 
 	assignedCandidatesWhileCreatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
-	jobDetails: any | null;
+	jobDetails: JobDetailsType | null;
 }
 
 const initialState: InitialStateType = {
@@ -210,6 +212,8 @@ export const jobsSlice = createSlice({
 			})
 			.addCase(assignTeamMemberToJob.fulfilled, (state, action) => {
 				toast.success('Team Member Assigned Successfully');
+				const someVariable = action.payload.id;
+				state.jobDetails && (state.jobDetails.team.id = someVariable);
 				state.jobsList = updateJobTeam(
 					state.teamListForJob,
 					state.jobsList,
@@ -230,6 +234,7 @@ export const jobsSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(changeJobStatus.fulfilled, (state, action) => {
+				state.jobDetails && (state.jobDetails.status = action.payload.status);
 				state.jobsList = updateJobStatusByResponse(state.jobsList, action.payload);
 				toast.success('JobStatus is updated to ' + action.payload.status);
 			})

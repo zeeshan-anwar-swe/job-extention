@@ -60,7 +60,7 @@ const CandidateCardPartial = ({ candidate }: { candidate: any }) => {
 			<NavSeparator className='!mx-4 !mb-4' />
 			<CardFooter className='!justify-start max-md:!justify-center'>
 				<Button
-					rightIcon={isAssigned ? 'HeroCheck' : undefined}
+					rightIcon={isAssigned ? 'HeroTwiceCheck' : undefined}
 					color={isAssigned ? 'emerald' : 'blue'}
 					variant='solid'
 					onClick={() => {

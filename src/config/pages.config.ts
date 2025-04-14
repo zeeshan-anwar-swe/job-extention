@@ -130,7 +130,7 @@ export const appPages = {
 			},
 			viewCadidatesAppPages: {
 				id: 'jobsViewCadidatesApp',
-				to: '/jobs/view-cadidates',
+				to: '/jobs/view-job-details',
 				text: 'View Cadidates',
 				icon: 'HeroUser',
 			},

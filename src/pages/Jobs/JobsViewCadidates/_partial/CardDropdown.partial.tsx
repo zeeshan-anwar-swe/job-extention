@@ -3,13 +3,13 @@ import Dropdown, {
 	DropdownItem,
 	DropdownMenu,
 	DropdownToggle,
-} from '../../../components/ui/Dropdown';
-import Button from '../../../components/ui/Button';
+} from '../../../../components/ui/Dropdown';
+import Button from '../../../../components/ui/Button';
 import DropdownSearchPartial from './DropdownSearch.partial';
 import DropDownITemUserMetaPartial from './DropDownITemUserMeta.partial';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../store';
-import { changeJobStatus } from '../../../store/slices/Jobs.slice';
+import { AppDispatch, RootState } from '../../../../store';
+import { changeJobStatus } from '../../../../store/slices/Jobs.slice';
 
 const CardDropdownPartial = ({ item }: { item: any }) => {
 	const [dropdown, setDropdown] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						Completed
 					</Button>
 				</DropdownItem>
-				<div className='border-t-2 border-zinc-500/25 px-4 py-2 text-sm font-bold dark:border-zinc-500/50'>
+				{/* <div className='border-t-2 border-zinc-500/25 px-4 py-2 text-sm font-bold dark:border-zinc-500/50'>
 					Asign to a team member
 				</div>
 				<DropdownItem>
@@ -89,7 +89,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 							key={teamMember.id}
 						/>
 					))}
-				</div>
+				</div> */}
 			</DropdownMenu>
 		</Dropdown>
 	);
