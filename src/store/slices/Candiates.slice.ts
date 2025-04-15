@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
+import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 
 interface InitialStateType {
 	candidatesList: any[];
+	allCadidateList: any[];
 	pageLoading: boolean;
 	error: null | Error | any;
 	cadidateProfile: any | null;
@@ -11,6 +13,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	cadidateProfile: null,
+	allCadidateList: [],
 	pageLoading: false,
 	candidatesList: [],
 	error: null,
@@ -23,7 +26,7 @@ export const getCandidatesList = createAsyncThunk(
 			const response = await axiosInstance.get('/agency/candidates');
 			return response.data.data.rows;
 		} catch (error: any) {
-			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -52,9 +55,7 @@ export const getFilteredCandidates = createAsyncThunk(
 				return response.data.data;
 			}
 		} catch (error: any) {
-			return rejectWithValue(
-				error.response?.data?.message || 'Failed to get filtered candidates',
-			);
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -66,9 +67,7 @@ export const getAllCandidatesList = createAsyncThunk(
 			const response = await axiosInstance.post(`/candidate/list`);
 			return response.data.data.rows;
 		} catch (error: any) {
-			return rejectWithValue(
-				error.response?.data?.message || 'Failed to get filtered candidates',
-			);
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -80,7 +79,7 @@ export const getCandidateProfile = createAsyncThunk(
 			const response = await axiosInstance.get('/agency/candidates');
 			return response.data.data;
 		} catch (error: any) {
-			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -109,7 +108,9 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
-				state.error = new Error(action.error.message);
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
 			})
 
 			.addCase(getFilteredCandidates.pending, (state) => {
@@ -122,7 +123,9 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getFilteredCandidates.rejected, (state, action) => {
 				state.pageLoading = false;
-				state.error = new Error(action.error.message);
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
 			})
 
 			.addCase(getAllCandidatesList.pending, (state) => {
@@ -131,11 +134,13 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getAllCandidatesList.fulfilled, (state, action) => {
 				state.pageLoading = false;
-				state.candidatesList = action.payload;
+				state.allCadidateList = action.payload;
 			})
 			.addCase(getAllCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
-				state.error = action.error;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
 			});
 	},
 });

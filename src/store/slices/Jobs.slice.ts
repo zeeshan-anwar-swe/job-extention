@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import {
 	addOrRemoveObject,
+	addOrRemoveObjectId,
 	filterTeamMemberByName,
 	findObjectById,
 	updateJobTeam,
@@ -19,8 +20,8 @@ interface InitialStateType {
 	error: null | string | any;
 	searchedTeamListForJob: any[];
 	teamListForJob: [];
-
 	assignedCandidatesWhileCreatingJob: any[];
+	assignedCandidatesWhileUpdatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
 	jobDetails: JobDetailsType | null;
 }
@@ -30,6 +31,7 @@ const initialState: InitialStateType = {
 	teamListForJob: [],
 	searchedTeamListForJob: [],
 	assignedCandidatesWhileCreatingJob: [],
+	assignedCandidatesWhileUpdatingJob: [],
 	assignedClientWhileCreatingJob: null,
 	jobDetails: null,
 	pageLoading: false,
@@ -94,6 +96,24 @@ export const assignTeamMemberToJob = createAsyncThunk(
 	},
 );
 
+export const assignManyCandidatesToJob = createAsyncThunk(
+	'jobs/assignManyCandidatesToJob',
+	async (
+		{ candidateIds, jobId }: { candidateIds: string[]; jobId?: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.post('/job/assign-job-candidates', {
+				jobId,
+				candidateIds,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const changeJobStatus = createAsyncThunk(
 	'jobs/changeJobStatus',
 	async ({ jobId, status }: { jobId: string; status: string }, { rejectWithValue }) => {
@@ -120,6 +140,10 @@ export const jobsSlice = createSlice({
 			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
 
+		setAssignedCandidatesWhileUpdatingJob: (state, action: PayloadAction<any[]>) => {
+			state.assignedCandidatesWhileUpdatingJob = action.payload;
+		},
+
 		setClientWhileCreatingJob: (state, action: PayloadAction<any>) => {
 			state.assignedClientWhileCreatingJob = action.payload;
 		},
@@ -127,6 +151,13 @@ export const jobsSlice = createSlice({
 		assignCandidateWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
 			state.assignedCandidatesWhileCreatingJob = addOrRemoveObject(
 				state.assignedCandidatesWhileCreatingJob,
+				action.payload,
+			);
+		},
+
+		assignCandidateWhileUpdatingJob: (state, action: PayloadAction<any[]>) => {
+			state.assignedCandidatesWhileUpdatingJob = addOrRemoveObjectId(
+				state.assignedCandidatesWhileUpdatingJob,
 				action.payload,
 			);
 		},
@@ -230,6 +261,24 @@ export const jobsSlice = createSlice({
 			});
 
 		builder
+			.addCase(assignManyCandidatesToJob.pending, (state) => {
+				state.componentLoading = true;
+				state.error = null;
+			})
+			.addCase(assignManyCandidatesToJob.fulfilled, (state) => {
+				toast.success('New candidate assigned Successfully');
+
+				state.componentLoading = false;
+			})
+			.addCase(assignManyCandidatesToJob.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+				state.componentLoading = false;
+			});
+
+		builder
 			.addCase(changeJobStatus.pending, (state) => {
 				state.error = null;
 			})
@@ -249,6 +298,8 @@ export const jobsSlice = createSlice({
 
 export const {
 	setAssignedCandidatesWhileCreatingJob,
+	setAssignedCandidatesWhileUpdatingJob,
+	assignCandidateWhileUpdatingJob,
 	assignCandidateWhileCreatingJob,
 	setClientWhileCreatingJob,
 	setSearchedTeamListForJob,

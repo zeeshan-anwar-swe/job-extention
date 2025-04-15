@@ -13,17 +13,22 @@ import { getAllCandidatesList } from '../store/slices/Candiates.slice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { getClientsList } from '../store/slices/Agency/Client.slice';
+import { useAuth } from '../context/authContext';
 const App = () => {
 	const dispatch: AppDispatch = useDispatch();
 	getOS();
+
+	const { userTokenStorage } = useAuth();
 
 	const { fontSize } = useFontSize();
 	dayjs.extend(localizedFormat);
 
 	useEffect(() => {
-		dispatch(getAllCandidatesList());
-		dispatch(getClientsList());
-	}, []);
+		if (userTokenStorage) {
+			dispatch(getAllCandidatesList());
+			dispatch(getClientsList());
+		}
+	}, [userTokenStorage]);
 
 	return (
 		<>

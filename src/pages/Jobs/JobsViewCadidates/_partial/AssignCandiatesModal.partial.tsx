@@ -6,9 +6,14 @@ import Modal, {
 	ModalHeader,
 } from '../../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
-import { RootState } from '../../../../store';
-import { useSelector } from 'react-redux';
-import AssignCandidatesModalListItemPartial from './AssignCandidatesModalList';
+import { AppDispatch, RootState } from '../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AssignCandidatesModalListItemPartial } from './AssignCandidatesModalList';
+import {
+	assignManyCandidatesToJob,
+	getJobDetails,
+	setAssignedCandidatesWhileUpdatingJob,
+} from '../../../../store/slices/Jobs.slice';
 
 const AssignCandidatesModalPartial = ({
 	modal,
@@ -19,7 +24,26 @@ const AssignCandidatesModalPartial = ({
 	setModal: any;
 	jobTitle?: string;
 }) => {
-	const { candidatesList } = useSelector((state: RootState) => state.candidates);
+	const { allCadidateList } = useSelector((state: RootState) => state.candidates);
+	const dispatch: AppDispatch = useDispatch();
+
+	const { assignedCandidatesWhileUpdatingJob, jobDetails } = useSelector(
+		(state: RootState) => state.jobsSlice,
+	);
+
+	const assignManyCandidates = async () => {
+		if (assignedCandidatesWhileUpdatingJob.length > 0) {
+			await dispatch(
+				assignManyCandidatesToJob({
+					candidateIds: assignedCandidatesWhileUpdatingJob,
+					jobId: jobDetails?.id,
+				}),
+			);
+			await dispatch(getJobDetails(jobDetails?.id ?? ''));
+		}
+		setModal(false);
+		await dispatch(setAssignedCandidatesWhileUpdatingJob([]));
+	};
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
@@ -29,7 +53,7 @@ const AssignCandidatesModalPartial = ({
 			</div>
 
 			<ModalBody className='!flex max-h-72 !w-full !flex-col !gap-4'>
-				{candidatesList.map((candidate) => (
+				{allCadidateList.map((candidate) => (
 					<AssignCandidatesModalListItemPartial
 						candidate={candidate}
 						key={candidate.id}
@@ -45,7 +69,10 @@ const AssignCandidatesModalPartial = ({
 						color='zinc'>
 						Cancel
 					</Button>
-					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+					<Button
+						onClick={() => assignManyCandidates()}
+						className='w-full'
+						variant='solid'>
 						Done
 					</Button>
 				</ModalFooterChild>

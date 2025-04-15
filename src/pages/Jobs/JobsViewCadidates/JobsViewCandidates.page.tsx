@@ -18,13 +18,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { NavSeparator } from '../../../components/layouts/Navigation/Nav';
 import TablePartial from './_partial/Table.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
-import AssignJobModalPartial from '../_partial/AssignJob.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store';
 import { getJobDetails } from '../../../store/slices/Jobs.slice';
 import PageLoader from '../../../templates/layouts/main/PageLoader';
 import JobFormPartial from './_partial/JobForm.partial';
 import AssignCandidatesModalPartial from './_partial/AssignCandiatesModal.partial';
+import { filterAndExtract } from '../../../utils/helper';
 
 const JobsViewCandidatesPage = () => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -32,10 +32,16 @@ const JobsViewCandidatesPage = () => {
 	const { state } = params;
 
 	const { jobDetails, pageLoading, error } = useSelector((state: RootState) => state.jobsSlice);
+	const hiredCandidates = filterAndExtract({
+		list: jobDetails?.candidateJobProfiles,
+		numberOfReturnedItem: 2,
+		key: 'status',
+		valueForMatch: 'hired',
+	});
+
+	console.log({ hiredCandidates });
 
 	const dispatch: AppDispatch = useDispatch();
-
-	console.log({ jobDetails });
 
 	useEffect(() => {
 		dispatch(getJobDetails(state?.id ?? ''));
@@ -94,8 +100,12 @@ const JobsViewCandidatesPage = () => {
 								<NavSeparator className='mt-8' />
 							</CardBody>
 							<CardFooter>
-								<ResultUserDataPartial />
-								<ResultUserDataPartial />
+								{hiredCandidates.map((candidate) => (
+									<ResultUserDataPartial
+										candidate={candidate}
+										key={candidate.id}
+									/>
+								))}
 							</CardFooter>
 						</Card>
 						<JobFormPartial jobDetails={jobDetails} />

@@ -59,10 +59,12 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 			{
 				[` bg-${color as TColors}-${colorIntensity as TColorIntensity}`]: !isActive,
 			},
+			'dark:bg-white',
 			[
 				`${borderWidth as TBorderWidth} border-${color as TColors}-${
 					colorIntensity as TColorIntensity
 				}`,
+				'dark:text-zinc-950 dark:border-0',
 			],
 			[`${textColor}`],
 			// Hover
@@ -83,7 +85,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 			{
 				[`border-${color as TColors}-${colorIntensity as TColorIntensity}/50`]: !isActive,
 			},
-			'text-black dark:text-white',
+			'text-black dark:text-white dark:border-white',
 			// Hover
 			[`hover:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
 			// Active

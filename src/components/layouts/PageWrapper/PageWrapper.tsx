@@ -23,6 +23,7 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 		// user is not authenticated
 		return <Navigate to={authPages.loginPage.to} />;
 	}
+
 	return (
 		<main
 			data-component-name='PageWrapper'

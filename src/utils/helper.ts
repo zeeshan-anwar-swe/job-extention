@@ -7,6 +7,13 @@ export function addOrRemoveObject<T extends Record<string, any>>(array: T[], new
 		: array.filter((_, index) => index !== existingIndex);
 }
 
+export function addOrRemoveObjectId<T extends { id: any }>(array: T[], newObjectId: T['id']): T[] {
+	const existingIndex = array.findIndex((item) => item === newObjectId.id);
+	return existingIndex === -1
+		? [...array, newObjectId.id as T] // Add a new object with only the ID
+		: array.filter((_, index) => index !== existingIndex);
+}
+
 export function objectExistsInArray<T extends Record<string, any>>(
 	array: T[],
 	objectToCheck: T,
@@ -84,3 +91,22 @@ export function getStatusColor(status: string): TColors {
 			return 'zinc'; // Default color if status is unknown
 	}
 }
+
+export const filterAndExtract = ({
+	list,
+	key,
+	valueForMatch,
+	numberOfReturnedItem,
+}: {
+	list: any[] | undefined | null;
+	key: string;
+	valueForMatch: string;
+	numberOfReturnedItem: number;
+}) => {
+	if (!list) return [];
+	const results: any[] = [];
+	for (const item of list) {
+		if (item[key] === valueForMatch && results.push(item) >= numberOfReturnedItem) break;
+	}
+	return results;
+};

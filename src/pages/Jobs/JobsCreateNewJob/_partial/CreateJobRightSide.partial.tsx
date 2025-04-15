@@ -18,7 +18,7 @@ import { getClientsList } from '../../../../store/slices/Agency/Client.slice';
 
 const CreateJobRightSidePartial = () => {
 	const dispatch: AppDispatch = useDispatch();
-	const { candidatesList, pageLoading, error } = useSelector(
+	const { allCadidateList, pageLoading, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
@@ -40,9 +40,9 @@ const CreateJobRightSidePartial = () => {
 
 			<NavSeparator className='!mx-4 mb-4' />
 			<CardBody className='flex max-h-[600px] flex-col gap-4 overflow-y-scroll'>
-				<MainLoader loading={pageLoading} error={error} data={candidatesList}>
+				<MainLoader loading={pageLoading} error={error} data={allCadidateList}>
 					{!pageLoading &&
-						candidatesList.map((candidate) => (
+						allCadidateList.map((candidate) => (
 							<CandidateCardPartial key={candidate.id} candidate={candidate} />
 						))}
 				</MainLoader>

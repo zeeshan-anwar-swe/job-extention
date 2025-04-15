@@ -11,13 +11,13 @@ const TableRowPartial = ({ candidate }: { candidate: any }) => {
 		<Tr>
 			<Td>
 				<TableDataProfilePartial
-					title={candidate.candidate.name}
-					subTitle={candidate.candidate.email}
+					title={candidate?.candidate?.name}
+					subTitle={candidate?.candidate?.email}
 				/>
 			</Td>
 			<Td>
 				<TableDataPositionPartial
-					title={candidate.role}
+					title={candidate?.title}
 					subTitle={candidate?.client?.firstName ?? ''}
 				/>
 			</Td>
