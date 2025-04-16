@@ -15,6 +15,13 @@ export const textValidationCheck: TextValidationCheckType = (value) => {
 	return value;
 };
 
+export const urlValidationCheck: TextValidationCheckType = (value) => {
+	if (value === null || value === undefined || value === '' || typeof value !== 'string') {
+		return '#';
+	}
+	return value;
+};
+
 export const numberValidationCheck: NumberValidationCheckType = (value) => {
 	if (value === null || value === undefined) {
 		return 0;

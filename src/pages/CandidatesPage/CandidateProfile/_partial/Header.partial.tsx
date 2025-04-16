@@ -6,15 +6,21 @@ import TableDataProfilePartial from './TableDataProfile.partial';
 
 import AssignJobModalPartial from './AssignJob.partial';
 import AssignJobToClientModalPartial from './AssignJobToClientModal.partial';
+import { AssignClientToCandidateModalPartial } from '../../_partial/AssignJobToClientModal.partial';
 
-const HeaderPartial = () => {
+const HeaderPartial = ({ state }: any) => {
+	console.log({ state });
+
 	const [modal, setModal] = useState<boolean>(false);
 	const [clientModal, setClientModal] = useState<boolean>(false);
 	const navgiateTo = useNavigate();
 	return (
 		<Card className='flex'>
 			<div className='flex items-center justify-between !gap-2 px-4 py-2 max-xl:flex-col max-xl:items-start'>
-				<TableDataProfilePartial title='Dalia Benz' subTitle='dali@hotmail.com' />
+				<TableDataProfilePartial
+					title={state?.candidate?.name}
+					subTitle={state?.candidate?.email}
+				/>
 				<div className='flex flex-wrap justify-end gap-x-4 max-xl:justify-start max-xl:gap-2'>
 					<Button
 						onClick={() => setClientModal(true)}
@@ -52,7 +58,7 @@ const HeaderPartial = () => {
 				</div>
 			</div>
 			<AssignJobModalPartial setModal={setModal} modal={modal} />
-			<AssignJobToClientModalPartial modal={clientModal} setModal={setClientModal} />
+			<AssignClientToCandidateModalPartial modal={clientModal} setModal={setClientModal} />
 		</Card>
 	);
 };

@@ -2,10 +2,12 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
+import { searchObjectsByKeyAndValue } from '../../../utils/helper';
 
 interface InitialStateType {
 	error: null | any;
 	clientsList: any[];
+	locallySearchedClients: any[];
 	pageLoading: boolean;
 	modalLoading: boolean;
 	assignedClientWhileCreatingJob: any | null;
@@ -16,6 +18,7 @@ const initialState: InitialStateType = {
 	clientsList: [],
 	pageLoading: false,
 	modalLoading: false,
+	locallySearchedClients: [],
 	assignedClientWhileCreatingJob: null,
 };
 
@@ -55,6 +58,13 @@ export const clientsSlice = createSlice({
 		assignClientWhileCreatingJob: (state, action: PayloadAction<any>) => {
 			state.assignedClientWhileCreatingJob = action.payload;
 		},
+		searchStoredClients: (state, action: PayloadAction<string>) => {
+			state.locallySearchedClients = searchObjectsByKeyAndValue({
+				list: state.clientsList,
+				key: 'name',
+				value: action.payload,
+			});
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -90,5 +100,5 @@ export const clientsSlice = createSlice({
 	},
 });
 
-export const { assignClientWhileCreatingJob } = clientsSlice.actions;
+export const { assignClientWhileCreatingJob, searchStoredClients } = clientsSlice.actions;
 export default clientsSlice.reducer;

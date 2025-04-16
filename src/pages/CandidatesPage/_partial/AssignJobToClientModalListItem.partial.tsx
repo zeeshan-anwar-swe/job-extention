@@ -1,7 +1,10 @@
 import Button from '../../../components/ui/Button';
-import { profileImageUrlValidationCheck } from '../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../utils/validationCheck';
 
-const AssignJobToClientModalListItemPartial = () => {
+export const AssignClientToCandidateModalListItemPartial = ({ client }: any) => {
 	return (
 		<div className='flex items-center justify-between gap-4 rounded-xl bg-zinc-100 p-2 pr-2 dark:bg-zinc-800'>
 			<div className='flex w-full items-center gap-4 rounded-xl '>
@@ -10,17 +13,11 @@ const AssignJobToClientModalListItemPartial = () => {
 					src={profileImageUrlValidationCheck('')}
 					alt='profile-image'
 				/>
-				<h5>Olivia Oggy</h5>
+				<h5>{textValidationCheck(client?.name)}</h5>
 			</div>
-			<Button
-				className='h-fit bg-white !text-blue-500 hover:!text-white'
-				rounded='rounded-full'
-				color='blue'
-				variant='solid'>
+			<Button rounded='rounded-full' color='blue' variant='solid'>
 				Assign
 			</Button>
 		</div>
 	);
 };
-
-export default AssignJobToClientModalListItemPartial;

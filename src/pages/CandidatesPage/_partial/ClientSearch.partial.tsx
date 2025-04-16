@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import FieldWrap from '../../../../components/form/FieldWrap';
-import Icon from '../../../../components/icon/Icon';
-import Input from '../../../../components/form/Input';
-import { searchStoredJobs } from '../../../../store/slices/Jobs.slice';
-import { AppDispatch } from '../../../../store';
+import FieldWrap from '../../../components/form/FieldWrap';
+import Icon from '../../../components/icon/Icon';
+import Input from '../../../components/form/Input';
+import { AppDispatch } from '../../../store';
 import { useDispatch } from 'react-redux';
+import { searchStoredClients } from '../../../store/slices/Agency/Client.slice';
 
-const SearchPartial = () => {
-	const dispatch: AppDispatch = useDispatch();
+export const ClientSearchPartial = () => {
 	const [searchValue, setSearchValue] = useState<string>('');
+	const dispatch: AppDispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(searchStoredJobs(searchValue));
+		dispatch(searchStoredClients(searchValue));
 	}, [searchValue]);
 	return (
 		<FieldWrap
@@ -29,9 +29,10 @@ const SearchPartial = () => {
 				)
 			}>
 			<Input
+				rounded='rounded-full'
 				id='example'
 				name='example'
-				placeholder='Search...'
+				placeholder='Search clients...'
 				value={searchValue}
 				className='rounded-full'
 				onChange={(e) => setSearchValue(e.target.value)}
@@ -39,5 +40,3 @@ const SearchPartial = () => {
 		</FieldWrap>
 	);
 };
-
-export default SearchPartial;

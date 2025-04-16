@@ -71,7 +71,7 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{
-		path: `${appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to}/:id`,
+		path: `${appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
 		element: <CandidatesProfilePage />,
 	},
 
@@ -81,7 +81,7 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{
-		path: `${appPages.candidatesAppPages.subPages.candidateCVEditAppPage.to}/:id`,
+		path: appPages.candidatesAppPages.subPages.candidateCVEditAppPage.to,
 		element: <CandidateCVEditPage />,
 	},
 

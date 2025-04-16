@@ -7,6 +7,8 @@ import TableDataSourcePartial from './TableDataSource.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
 
 const TableRowPartial = ({ candidate }: { candidate: any }) => {
+	console.log('candidate TableRowPartial', candidate);
+
 	return (
 		<Tr>
 			<Td>

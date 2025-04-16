@@ -6,6 +6,7 @@ import {
 	addOrRemoveObjectId,
 	filterTeamMemberByName,
 	findObjectById,
+	searchObjectsByKeyAndValue,
 	updateJobTeam,
 } from '../../utils/helper';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
@@ -20,6 +21,7 @@ interface InitialStateType {
 	error: null | string | any;
 	searchedTeamListForJob: any[];
 	teamListForJob: [];
+	locallySearchedJobs: any[];
 	assignedCandidatesWhileCreatingJob: any[];
 	assignedCandidatesWhileUpdatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
@@ -30,6 +32,7 @@ const initialState: InitialStateType = {
 	jobsList: [],
 	teamListForJob: [],
 	searchedTeamListForJob: [],
+	locallySearchedJobs: [],
 	assignedCandidatesWhileCreatingJob: [],
 	assignedCandidatesWhileUpdatingJob: [],
 	assignedClientWhileCreatingJob: null,
@@ -169,6 +172,14 @@ export const jobsSlice = createSlice({
 		setJobDetails: (state, action: PayloadAction<any>) => {
 			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
+
+		searchStoredJobs: (state, action: PayloadAction<string>) => {
+			state.locallySearchedJobs = searchObjectsByKeyAndValue({
+				list: state.jobsList,
+				key: 'title',
+				value: action.payload,
+			});
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -304,6 +315,7 @@ export const {
 	setClientWhileCreatingJob,
 	setSearchedTeamListForJob,
 	setJobDetailsById,
+	searchStoredJobs,
 	setJobDetails,
 } = jobsSlice.actions;
 export default jobsSlice.reducer;

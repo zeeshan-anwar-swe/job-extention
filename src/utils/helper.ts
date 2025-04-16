@@ -43,6 +43,18 @@ export function filterTeamMemberByName(teamList: any[], name: string): any[] {
 	);
 }
 
+export function searchObjectsByKeyAndValue({
+	list,
+	key,
+	value,
+}: {
+	list: any[];
+	key: string;
+	value: string;
+}): any[] {
+	return list.filter((listItem) => listItem[key].toLowerCase().includes(value.toLowerCase()));
+}
+
 // function takes stored of teamlist, joblist and response of assign job to a team member and update the joblist with newly assigned team member
 export function updateJobTeam(teamList: any[], jobList: any[], data: any): any[] {
 	// Find the team in teamList that matches the teamId from data

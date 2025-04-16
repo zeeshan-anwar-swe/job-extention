@@ -8,13 +8,15 @@ interface InitialStateType {
 	allCadidateList: any[];
 	pageLoading: boolean;
 	error: null | Error | any;
-	cadidateProfile: any | null;
+	componentLoading: boolean;
+	cadnidateProfile: any | null;
 }
 
 const initialState: InitialStateType = {
-	cadidateProfile: null,
 	allCadidateList: [],
 	pageLoading: false,
+	componentLoading: false,
+	cadnidateProfile: null,
 	candidatesList: [],
 	error: null,
 };
@@ -72,11 +74,43 @@ export const getAllCandidatesList = createAsyncThunk(
 	},
 );
 
+// export const getCandidateProfile = createAsyncThunk(
+// 	'candidates/getCandidatesList',
+// 	async (_, { rejectWithValue }) => {
+// 		try {
+// 			const response = await axiosInstance.get('/agency/candidates');
+// 			return response.data.data;
+// 		} catch (error: any) {
+// 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+// 		}
+// 	},
+// );
+
 export const getCandidateProfile = createAsyncThunk(
-	'candidates/getCandidatesList',
-	async (_, { rejectWithValue }) => {
+	'candidates/getCandidateProfile',
+	async ({ candidateId, id }: { candidateId: string; id: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get('/agency/candidates');
+			const response = await axiosInstance.get(
+				`candidate/profile?id=${id}&candidateId=${candidateId}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const updateCandidateProfile = createAsyncThunk(
+	'candidates/updateCandidateProfile',
+	async (
+		{ candidateId, payload }: { candidateId: string; payload: any },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.put(
+				'candidate/profile/edit/' + candidateId,
+				payload,
+			);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -88,12 +122,8 @@ export const candidatesSlice = createSlice({
 	name: 'candidates',
 	initialState,
 	reducers: {
-		setCandidateProfile: (state, action: PayloadAction<string>) => {
-			if (state.candidatesList.length > 0) {
-				state.cadidateProfile = state.candidatesList.find(
-					(item) => item.id === action.payload,
-				);
-			}
+		setCandidateProfile: (state, action: PayloadAction<any>) => {
+			state.cadnidateProfile = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -138,6 +168,36 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getAllCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+			})
+
+			.addCase(getCandidateProfile.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getCandidateProfile.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.cadnidateProfile = action.payload;
+			})
+			.addCase(getCandidateProfile.rejected, (state, action) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+			})
+
+			.addCase(updateCandidateProfile.pending, (state) => {
+				state.componentLoading = true;
+				state.error = null;
+			})
+			.addCase(updateCandidateProfile.fulfilled, (state) => {
+				state.componentLoading = false;
+				toast.success('Profile updated successfully');
+			})
+			.addCase(updateCandidateProfile.rejected, (state, action) => {
+				state.componentLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};

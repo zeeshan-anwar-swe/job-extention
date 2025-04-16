@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { getClientsList } from '../store/slices/Agency/Client.slice';
 import { useAuth } from '../context/authContext';
+import { getJobsList } from '../store/slices/Jobs.slice';
 const App = () => {
 	const dispatch: AppDispatch = useDispatch();
 	getOS();
@@ -27,6 +28,7 @@ const App = () => {
 		if (userTokenStorage) {
 			dispatch(getAllCandidatesList());
 			dispatch(getClientsList());
+			dispatch(getJobsList());
 		}
 	}, [userTokenStorage]);
 
