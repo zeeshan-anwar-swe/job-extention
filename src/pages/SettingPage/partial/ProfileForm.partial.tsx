@@ -38,7 +38,7 @@ const ProfileFormPartial = () => {
 			return errors;
 		},
 		onSubmit: (values: TValues) => {
-			// onLogin(values.username, values.password);
+			console.log({ values });
 		},
 	});
 	return (

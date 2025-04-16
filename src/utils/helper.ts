@@ -28,7 +28,7 @@ export function findObjectById<T extends { id: string | number }>(
 	return array.find((item) => item.id === id);
 }
 
-export function formatDateStringToYYYYMMDD(dateString: string | undefined): string {
+export function formatDateStringToYYYYMMDD(dateString: string | Date | undefined): string {
 	if (!dateString) return '';
 	const date = new Date(dateString);
 	const year = date.getFullYear();

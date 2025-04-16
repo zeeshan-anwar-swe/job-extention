@@ -83,7 +83,7 @@ const LabelSkillSelectPartial = ({
 					setSelectInputValue(value); // Update local input state
 				}}
 				onKeyDown={handleKeyDown}
-				value={formData.skills.map((skill) => ({ value: skill, label: skill }))}
+				value={formData.skills.map((skill: any) => ({ value: skill, label: skill }))}
 				onChange={handleChange}
 				inputValue={selectInputValue} // Pass the local input value
 			/>

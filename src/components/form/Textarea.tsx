@@ -16,6 +16,7 @@ interface ITextareaProps
 		Partial<IValidationBaseProps> {
 	borderWidth?: TBorderWidth;
 	className?: string;
+	isActive?: boolean;
 	color?: TColors;
 	colorIntensity?: TColorIntensity;
 	rounded?: TRounded;
@@ -31,6 +32,7 @@ const Textarea: FC<ITextareaProps> = (props) => {
 		colorIntensity,
 		rounded,
 		dimension,
+		isActive,
 		isValid,
 		isTouched,
 		invalidFeedback,
@@ -55,6 +57,30 @@ const Textarea: FC<ITextareaProps> = (props) => {
 			validation: classNames({
 				'!border-red-500 ring-4 ring-red-500/30': !isValid && isTouched && invalidFeedback,
 				'!border-green-500 focus:ring-4 focus:ring-green-500/30':
+					!isValid && isTouched && !invalidFeedback,
+			}),
+		},
+		outilned: {
+			general: classNames(
+				// Default
+				'bg-transparent',
+				[`${borderWidth as TBorderWidth}`],
+				{
+					[`border-${color as TColors}-${colorIntensity as TColorIntensity}/50`]:
+						!isActive,
+				},
+				'text-black dark:text-white',
+				// Hover
+				[`hover:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
+				// Active
+				[`active:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
+				{
+					[`border-${color as TColors}-${colorIntensity as TColorIntensity}`]: isActive,
+				},
+			),
+			validation: classNames({
+				'!border-red-500 ring-4 ring-red-500/30': !isValid && isTouched && invalidFeedback,
+				'!border-blue-500 focus:ring-4 focus:ring-blue-500/30':
 					!isValid && isTouched && !invalidFeedback,
 			}),
 		},
