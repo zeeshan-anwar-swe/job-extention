@@ -8,6 +8,7 @@ import useColorIntensity from '../../hooks/useColorIntensity';
 import { TIcons } from '../../types/icons.type';
 import Icon from '../icon/Icon';
 import { TBorderWidth } from '../../types/borderWidth.type';
+import { TFontSizes } from '../../types/fontSizes.type';
 
 export type TButtonVariants = 'solid' | 'outline' | 'default';
 export type TButtonSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
@@ -25,6 +26,7 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	rightIcon?: TIcons;
 	rounded?: TRounded;
 	size?: TButtonSize;
+	iconSize?: TFontSizes;
 	variant?: TButtonVariants;
 	type?: 'button' | 'submit' | 'reset'; // Add this line
 }
@@ -41,7 +43,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		isLoading,
 		rightIcon,
 		rounded,
-
+		iconSize,
 		size,
 		variant,
 		...rest
@@ -205,12 +207,19 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		<button ref={ref} data-component-name='Button' type='button' className={classes} {...rest}>
 			{(!!icon || isLoading) && (
 				<Icon
+					size={iconSize}
 					icon={isLoading ? 'DuoLoading' : (icon as TIcons)}
 					className={classNames({ 'animate-spin': isLoading }, btnIconClasses)}
 				/>
 			)}
 			{children}
-			{!!rightIcon && <Icon icon={rightIcon} className={classNames(btnRightIconClasses)} />}
+			{!!rightIcon && (
+				<Icon
+					size={iconSize}
+					icon={rightIcon}
+					className={classNames(btnRightIconClasses)}
+				/>
+			)}
 		</button>
 	);
 });

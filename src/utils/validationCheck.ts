@@ -1,5 +1,6 @@
 import {
 	ArrayValidationCheckType,
+	ImageUrlValidationCheckType,
 	NumberValidationCheckType,
 	profileImageUrlValidationCheckType,
 	TextValidationCheckType,
@@ -37,13 +38,7 @@ export const arrayValidationCheck: ArrayValidationCheckType = (value) => {
 };
 
 export const profileImageUrlValidationCheck: profileImageUrlValidationCheckType = (url) => {
-	if (
-		url === null ||
-		url === undefined ||
-		typeof url !== 'string' ||
-		url === '' ||
-		typeof url !== 'string'
-	) {
+	if (url === null || url === undefined || typeof url !== 'string' || url === '') {
 		return DummyProfileImage;
 	} else {
 		if (url.startsWith('http') || url.startsWith('https')) {
@@ -52,4 +47,42 @@ export const profileImageUrlValidationCheck: profileImageUrlValidationCheckType 
 			return serverUrl + url;
 		}
 	}
+};
+
+export const imageUrlValidationCheck: ImageUrlValidationCheckType = async (url) => {
+	// Default cases
+	if (url === null || url === undefined || typeof url !== 'string' || url === '') {
+		return DummyProfileImage;
+	}
+
+	// Construct proper URL
+	let imageUrl = url;
+	if (!url.startsWith('http') && !url.startsWith('https')) {
+		imageUrl = serverUrl + url;
+	}
+
+	// Verify if the image is actually viewable
+	try {
+		const isImageValid = await verifyImage(imageUrl);
+		return isImageValid ? imageUrl : DummyProfileImage;
+	} catch {
+		return DummyProfileImage;
+	}
+};
+
+// Helper function to verify if an image is viewable
+const verifyImage = (url: string): Promise<boolean> => {
+	return new Promise((resolve) => {
+		const img = new Image();
+		img.onload = () => resolve(true);
+		img.onerror = () => resolve(false);
+		img.src = url;
+
+		// Set timeout in case the image hangs
+		setTimeout(() => {
+			img.onload = null;
+			img.onerror = null;
+			resolve(false);
+		}, 2000); // 2 second timeout
+	});
 };

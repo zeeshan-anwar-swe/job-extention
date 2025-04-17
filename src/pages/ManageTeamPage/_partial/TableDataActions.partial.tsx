@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
 import { useState } from 'react';
-import AssignJobModalPartial from './AssignJob.partial';
+import { AssignJobToTeamMemberModalPartial } from './AssignJob.partial';
 
 const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -13,7 +13,11 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 			</Button>
 			<Button onClick={() => setModal(true)}>Assign Job</Button>
 			<Button>Remove Member</Button>
-			<AssignJobModalPartial modal={modal} setModal={setModal} />
+			<AssignJobToTeamMemberModalPartial
+				teamMember={teamMember}
+				modal={modal}
+				setModal={setModal}
+			/>
 		</div>
 	);
 };

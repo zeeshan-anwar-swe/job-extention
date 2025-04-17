@@ -14,7 +14,6 @@ const LabelTitlepartial = ({
 	detail?: string;
 	inputType?: TInputTypes;
 }) => {
-	const [detailText, setDetailText] = useState<string | null | undefined>(detail || '');
 	return (
 		<div className='flex-1'>
 			<Label htmlFor='title' className='font-light'>
@@ -28,9 +27,7 @@ const LabelTitlepartial = ({
 					id='name'
 					autoComplete='name'
 					name='name'
-					value={detailText || ''}
-					placeholder='Enter your name'
-					onChange={(e) => setDetailText(e.target.value)}
+					value={textValidationCheck(detail).slice(0, 10)}
 				/>
 			</FieldWrap>
 		</div>

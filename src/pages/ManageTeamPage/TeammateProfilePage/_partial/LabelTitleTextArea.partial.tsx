@@ -12,7 +12,6 @@ const LabelTitleTextAreapartial = ({
 	className?: string;
 	inputClassName?: string;
 }) => {
-	const [detailText, setDetailText] = useState<string | null | undefined>(detail || '');
 	return (
 		<div className={'flex-1 ' + className}>
 			<label className='font-light'>{textValidationCheck(label)}</label>
@@ -21,9 +20,8 @@ const LabelTitleTextAreapartial = ({
 				className={'w-full rounded-xl bg-zinc-100 p-4 font-medium ' + inputClassName}
 				name=''
 				id=''
-				onChange={(e) => setDetailText(e.target.value)}
 				rows={6}
-				value={detailText || ''}></textarea>
+				value={textValidationCheck(detail)}></textarea>
 		</div>
 	);
 };

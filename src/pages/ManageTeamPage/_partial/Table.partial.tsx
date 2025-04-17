@@ -20,10 +20,12 @@ const TablePartial = () => {
 				</Tr>
 			</THead>
 			<TBody>
-				{teamList.map((teamMember) => (
+				{teamList.map((teamMember: any) => (
 					<Tr key={teamMember.id}>
 						<Td>
 							<TableDataProfilePartial
+								id={teamMember.id}
+								image={teamMember.user.image}
 								title={teamMember.user.name}
 								subTitle={teamMember.user.email}
 							/>

@@ -14,8 +14,6 @@ import { JobDetailsType } from '../../../../types/slices.type/jobs.slice.type';
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
 	const { locallySearchedJobs, jobsList } = useSelector((state: RootState) => state.jobsSlice);
 
-	console.log({ jobsList });
-
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>Assign Job</ModalHeader>

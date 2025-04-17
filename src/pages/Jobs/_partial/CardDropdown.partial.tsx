@@ -19,7 +19,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 	const { searchedTeamListForJob } = useSelector((state: RootState) => state.jobsSlice);
 
 	const handleJobStatusChange = (status: string) => {
-		if (item.status !== status) {
+		if (item?.status !== status) {
 			dispatch(changeJobStatus({ jobId: item.id, status }));
 		}
 	};
@@ -36,24 +36,24 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						onClick={() => handleJobStatusChange('BACKLOG')}
 						className='!py-1'
 						rounded='rounded-full'
-						variant={item.status === 'BACKLOG' ? 'solid' : 'outline'}
-						color={item.status === 'BACKLOG' ? 'amber' : 'zinc'}>
+						variant={item?.status === 'BACKLOG' ? 'solid' : 'outline'}
+						color={item?.status === 'BACKLOG' ? 'amber' : 'zinc'}>
 						Backlog
 					</Button>
 					<Button
 						onClick={() => handleJobStatusChange('IN_PROGRESS')}
 						className='!py-1'
 						rounded='rounded-full'
-						variant={item.status === 'IN_PROGRESS' ? 'solid' : 'outline'}
-						color={item.status === 'IN_PROGRESS' ? 'blue' : 'zinc'}>
+						variant={item?.status === 'IN_PROGRESS' ? 'solid' : 'outline'}
+						color={item?.status === 'IN_PROGRESS' ? 'blue' : 'zinc'}>
 						In Progress
 					</Button>
 					<Button
 						// onClick={() => handleJobStatusChange('TODO')}
 						className='!py-1'
 						rounded='rounded-full'
-						variant={item.status === 'TODO' ? 'solid' : 'outline'}
-						color={item.status === 'TODO' ? 'zinc' : 'zinc'}>
+						variant={item?.status === 'TODO' ? 'solid' : 'outline'}
+						color={item?.status === 'TODO' ? 'zinc' : 'zinc'}>
 						To Do
 					</Button>
 				</DropdownItem>
@@ -62,16 +62,16 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						onClick={() => handleJobStatusChange('IN_REVIEW')}
 						className='!py-1'
 						rounded='rounded-full'
-						variant={item.status === 'IN_REVIEW' ? 'solid' : 'outline'}
-						color={item.status === 'IN_REVIEW' ? 'violet' : 'zinc'}>
+						variant={item?.status === 'IN_REVIEW' ? 'solid' : 'outline'}
+						color={item?.status === 'IN_REVIEW' ? 'violet' : 'zinc'}>
 						In Review
 					</Button>
 					<Button
 						onClick={() => handleJobStatusChange('COMPLETED')}
 						className='!py-1'
 						rounded='rounded-full'
-						variant={item.status === 'COMPLETED' ? 'solid' : 'outline'}
-						color={item.status === 'COMPLETED' ? 'emerald' : 'zinc'}>
+						variant={item?.status === 'COMPLETED' ? 'solid' : 'outline'}
+						color={item?.status === 'COMPLETED' ? 'emerald' : 'zinc'}>
 						Completed
 					</Button>
 				</DropdownItem>

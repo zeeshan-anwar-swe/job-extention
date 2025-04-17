@@ -30,11 +30,38 @@ export const getTeamlist = createAsyncThunk('team/getTeamlist', async (_, { reje
 	}
 });
 
+export const getTeamMemberDetails = createAsyncThunk(
+	'team/getTeamMemberDetails',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('/team/statistics/' + id);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const inviteTeamMember = createAsyncThunk(
 	'team/inviteTeamMember',
 	async (payload: { name: string; email: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/team/invite', payload);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const assignJobToTeamMember = createAsyncThunk(
+	'candidates/assignJobToTeamMember',
+	async ({ jobId, teamId }: { jobId: string; teamId: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/job/assign-team', {
+				jobId,
+				teamId,
+			});
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -77,6 +104,38 @@ export const teamSlice = createSlice({
 					message: 'Unknown error occurred while inviting client',
 				};
 				toast.error(action.payload.message);
+			})
+
+			.addCase(assignJobToTeamMember.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(assignJobToTeamMember.fulfilled, () => {
+				toast.success('Job assigned successfully');
+			})
+			.addCase(assignJobToTeamMember.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(
+					action.payload.message || 'Unknown error occurred while inviting client',
+				);
+			})
+
+			.addCase(getTeamMemberDetails.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getTeamMemberDetails.fulfilled, (state, action) => {
+				state.teamMemberProfile = action.payload;
+				state.pageLoading = false;
+			})
+			.addCase(getTeamMemberDetails.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(
+					action.payload.message || 'Unknown error occurred while inviting client',
+				);
 			});
 	},
 });
