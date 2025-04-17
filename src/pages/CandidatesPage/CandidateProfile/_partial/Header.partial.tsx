@@ -9,8 +9,6 @@ import AssignJobToClientModalPartial from './AssignJobToClientModal.partial';
 import { AssignClientToCandidateModalPartial } from '../../_partial/AssignJobToClientModal.partial';
 
 const HeaderPartial = ({ state }: any) => {
-	console.log({ state });
-
 	const [modal, setModal] = useState<boolean>(false);
 	const [clientModal, setClientModal] = useState<boolean>(false);
 	const navgiateTo = useNavigate();

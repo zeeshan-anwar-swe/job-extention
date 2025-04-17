@@ -69,13 +69,13 @@ const ProfileFormPartial = () => {
 							<FieldWrap>
 								<Input
 									className='!bg-white dark:!bg-zinc-800'
-									dimension='lg'
-									autoComplete='first-name'
-									name='first-name'
-									value={formik.values.firstName}
 									placeholder='Enter your firstr name'
+									value={formik.values.firstName}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
+									autoComplete='first-name'
+									name='first-name'
+									dimension='lg'
 								/>
 							</FieldWrap>
 						</Validation>

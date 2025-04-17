@@ -74,17 +74,20 @@ export const getAllCandidatesList = createAsyncThunk(
 	},
 );
 
-// export const getCandidateProfile = createAsyncThunk(
-// 	'candidates/getCandidatesList',
-// 	async (_, { rejectWithValue }) => {
-// 		try {
-// 			const response = await axiosInstance.get('/agency/candidates');
-// 			return response.data.data;
-// 		} catch (error: any) {
-// 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
-// 		}
-// 	},
-// );
+export const assignJobToCandidate = createAsyncThunk(
+	'candidates/assignJobToCandidate',
+	async ({ jobId, candidateId }: { jobId: string; candidateId: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/candidate/assign-job', {
+				jobId,
+				candidateId,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
 
 export const getCandidateProfile = createAsyncThunk(
 	'candidates/getCandidateProfile',
@@ -201,6 +204,22 @@ export const candidatesSlice = createSlice({
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
+			})
+
+			.addCase(assignJobToCandidate.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(assignJobToCandidate.fulfilled, () => {
+				toast.success('Job is assigned successfully');
+			})
+			.addCase(assignJobToCandidate.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(
+					(action.payload.message as string) ||
+						'Unknown error occurred while inviting client',
+				);
 			});
 	},
 });

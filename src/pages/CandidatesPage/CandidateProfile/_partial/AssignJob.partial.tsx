@@ -9,11 +9,12 @@ import SearchPartial from './Search.partial';
 import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
+import { JobDetailsType } from '../../../../types/slices.type/jobs.slice.type';
 
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
 	const { locallySearchedJobs, jobsList } = useSelector((state: RootState) => state.jobsSlice);
 
-	console.log({ locallySearchedJobs, jobsList });
+	console.log({ jobsList });
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
@@ -23,8 +24,8 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 			</div>
 
 			<ModalBody className='flex w-full flex-col gap-4'>
-				{locallySearchedJobs.map((job: any) => (
-					<AssignJobModalListItemPartial key={job.id} />
+				{locallySearchedJobs.map((job: JobDetailsType) => (
+					<AssignJobModalListItemPartial job={job} key={job.id} />
 				))}
 			</ModalBody>
 			<ModalFooter>
