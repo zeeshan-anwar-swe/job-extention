@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Icon from '../../../components/icon/Icon';
 import Input from '../../../components/form/Input';
+import { searchStoredJobs } from '../../../store/slices/Jobs.slice';
+import { AppDispatch } from '../../../store';
+import { useDispatch } from 'react-redux';
 
 const SearchPartial = () => {
+	const dispatch: AppDispatch = useDispatch();
 	const [searchValue, setSearchValue] = useState<string>('');
+
+	useEffect(() => {
+		dispatch(searchStoredJobs(searchValue));
+	}, [searchValue]);
 	return (
 		<FieldWrap
 			firstSuffix={<Icon className='mx-2 rounded-full' icon='HeroMagnifyingGlass' />}
@@ -23,7 +31,7 @@ const SearchPartial = () => {
 			<Input
 				id='example'
 				name='example'
-				placeholder='Search Clients...'
+				placeholder='Search...'
 				value={searchValue}
 				className='rounded-full'
 				onChange={(e) => setSearchValue(e.target.value)}

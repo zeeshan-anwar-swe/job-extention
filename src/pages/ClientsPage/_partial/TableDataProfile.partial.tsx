@@ -1,29 +1,26 @@
 import { Link } from 'react-router-dom';
-import Badge from '../../../components/ui/Badge';
-import {
-	profileImageUrlValidationCheck,
-	textValidationCheck,
-} from '../../../utils/validationCheck';
+import { textValidationCheck } from '../../../utils/validationCheck';
+import { ClientListItemType } from '../../../types/slices.type/clients.slice.type';
+import useImageValidation from '../../../hooks/useImageValidation';
+import ImageLoaderWraper from '../../../components/ui/ImageLoaderWraper';
 
-const TableDataProfilePartial = ({
-	imageUrl,
-	title,
-	subTitle,
-}: {
-	imageUrl?: string;
-	title?: string;
-	subTitle?: string;
-}) => {
+const TableDataProfilePartial = ({ client }: { client: ClientListItemType }) => {
+	const { loading, imageUrl } = useImageValidation(client?.image);
 	return (
-		<Link to='/clients/profile' className='flex items-center justify-center gap-x-6'>
-			<img
-				className='aspect-square w-14 rounded-full'
-				src={profileImageUrlValidationCheck(imageUrl)}
-				alt='cadidate-image'
-			/>
+		<Link
+			to='/clients/profile'
+			state={client}
+			className='flex items-center justify-start gap-x-6'>
+			<ImageLoaderWraper height='h-14' loading={loading}>
+				<img
+					className='aspect-square w-14 rounded-full object-cover'
+					src={imageUrl}
+					alt='cadidate-image'
+				/>
+			</ImageLoaderWraper>
 			<div>
-				<h5>{textValidationCheck(title)}</h5>
-				<p>{textValidationCheck(subTitle)}</p>
+				<h5>{textValidationCheck(client?.name)}</h5>
+				<p>{textValidationCheck(client?.email)}</p>
 			</div>
 		</Link>
 	);

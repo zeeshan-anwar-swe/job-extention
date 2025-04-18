@@ -12,7 +12,7 @@ import { RootState } from '../../../../store';
 import { JobDetailsType } from '../../../../types/slices.type/jobs.slice.type';
 
 const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
-	const { locallySearchedJobs, jobsList } = useSelector((state: RootState) => state.jobsSlice);
+	const { locallySearchedJobs } = useSelector((state: RootState) => state.jobsSlice);
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>

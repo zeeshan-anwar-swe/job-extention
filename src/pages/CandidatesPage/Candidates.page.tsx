@@ -12,13 +12,11 @@ import SearchPartial from './_partial/Search.partial';
 import { getCandidatesList } from '../../store/slices/Candiates.slice';
 import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
-import { getClientsList } from '../../store/slices/Agency/Client.slice';
 
 const CandidatesPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getCandidatesList());
-		dispatch(getClientsList());
 	}, []);
 
 	return (

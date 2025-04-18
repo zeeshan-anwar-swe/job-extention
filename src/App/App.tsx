@@ -12,9 +12,9 @@ import { useEffect } from 'react';
 import { getAllCandidatesList } from '../store/slices/Candiates.slice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
-import { getClientsList } from '../store/slices/Agency/Client.slice';
+import { getAgencyClientsList } from '../store/slices/Agency/Client.slice';
 import { useAuth } from '../context/authContext';
-import { getJobsList } from '../store/slices/Jobs.slice';
+import { getJobsList, getTeamlistForJobs } from '../store/slices/Jobs.slice';
 const App = () => {
 	const dispatch: AppDispatch = useDispatch();
 	getOS();
@@ -26,9 +26,10 @@ const App = () => {
 
 	useEffect(() => {
 		if (userTokenStorage) {
-			dispatch(getAllCandidatesList());
-			dispatch(getClientsList());
 			dispatch(getJobsList());
+			dispatch(getAgencyClientsList());
+			dispatch(getTeamlistForJobs());
+			dispatch(getAllCandidatesList());
 		}
 	}, [userTokenStorage]);
 

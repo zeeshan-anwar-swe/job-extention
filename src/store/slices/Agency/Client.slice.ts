@@ -3,14 +3,19 @@ import axiosInstance from '../../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
 import { searchObjectsByKeyAndValue } from '../../../utils/helper';
+import {
+	ClientDetailsType,
+	ClientListItemType,
+} from '../../../types/slices.type/clients.slice.type';
 
 interface InitialStateType {
 	error: null | any;
-	clientsList: any[];
+	clientsList: ClientListItemType[];
 	locallySearchedClients: any[];
 	pageLoading: boolean;
 	modalLoading: boolean;
 	assignedClientWhileCreatingJob: any | null;
+	clientDetails: ClientDetailsType | null;
 }
 
 const initialState: InitialStateType = {
@@ -20,16 +25,29 @@ const initialState: InitialStateType = {
 	modalLoading: false,
 	locallySearchedClients: [],
 	assignedClientWhileCreatingJob: null,
+	clientDetails: null,
 };
 
-export const getClientsList = createAsyncThunk(
-	'clients/getClientsList',
+export const getAgencyClientsList = createAsyncThunk(
+	'clients/getAgencyClientsList',
 	async (_, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get('/agency/clients');
 			return response.data.data.rows;
 		} catch (error: any) {
-			return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getClientDetails = createAsyncThunk(
+	'clients/getClientDetails',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('/client/detail/' + id);
+			return response.data.data;
+		} catch (error: any) {
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -45,6 +63,21 @@ export const inviteClient = createAsyncThunk(
 			return response.data.data;
 		} catch (error: any) {
 			toast.error(error?.response?.data?.message || 'Invitation failed');
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const assignJobToClient = createAsyncThunk(
+	'jobs/assignJobToClient',
+	async ({ clientId, jobId }: { clientId: string; jobId?: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/job/assign-client', {
+				jobId,
+				clientId,
+			});
+			return response.data.data;
+		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
@@ -68,19 +101,36 @@ export const clientsSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getClientsList.pending, (state) => {
+			.addCase(getAgencyClientsList.pending, (state) => {
 				state.pageLoading = true;
 				state.error = null;
 			})
-			.addCase(getClientsList.fulfilled, (state, action) => {
+			.addCase(getAgencyClientsList.fulfilled, (state, action) => {
 				state.pageLoading = false;
 				state.clientsList = action.payload;
 			})
-			.addCase(getClientsList.rejected, (state, action) => {
+			.addCase(getAgencyClientsList.rejected, (state, action: any) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
+				toast.error(action.payload.message || 'Unknown error');
+			})
+
+			.addCase(getClientDetails.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getClientDetails.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.clientDetails = action.payload;
+			})
+			.addCase(getClientDetails.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message || 'Unknown error');
 			})
 
 			.addCase(inviteClient.pending, (state) => {
@@ -96,6 +146,19 @@ export const clientsSlice = createSlice({
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
+			})
+
+			.addCase(assignJobToClient.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(assignJobToClient.fulfilled, () => {
+				toast.success('Job assigned successfully');
+			})
+			.addCase(assignJobToClient.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message || 'Unknown error occurred while assigning job');
 			});
 	},
 });

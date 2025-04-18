@@ -1,6 +1,8 @@
 import Badge from '../../../components/ui/Badge';
+import { ClientListItemType } from '../../../types/slices.type/clients.slice.type';
 
-const TableDataFeedbackPartial = ({ percentage }: { percentage: number }) => {
+const TableDataFeedbackPartial = ({ client }: { client: ClientListItemType }) => {
+	const percentage = +client.hiringRate;
 	const badgeColor = (() => {
 		if (percentage >= 80) {
 			return 'emerald'; // Green for 80-100%

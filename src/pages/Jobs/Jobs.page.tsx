@@ -101,7 +101,6 @@ const JobsPage = () => {
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(getJobsList());
-		dispatch(getTeamlistForJobs());
 	}, []);
 
 	return pageLoading ? (

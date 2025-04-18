@@ -9,10 +9,9 @@ import {
 	textValidationCheck,
 } from '../../../utils/validationCheck';
 import { assignTeamMemberToJob } from '../../../store/slices/Jobs.slice';
-// import { assignTeamMemberToJob } from '../../../store/slices/Team.slice';
 
 const DropDownITemUserMetaPartial = ({ teamMamber, job }: { teamMamber: any; job: any }) => {
-	const isAssigned: boolean = job?.team.teamId === teamMamber.id;
+	const isAssigned: boolean = job?.team?.teamId === teamMamber?.id;
 
 	const dispatch: AppDispatch = useDispatch();
 

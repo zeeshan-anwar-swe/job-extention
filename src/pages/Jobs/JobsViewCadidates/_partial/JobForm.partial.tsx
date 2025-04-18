@@ -19,6 +19,8 @@ import LabelSkillSelectPartial from '../../_partial/LabelSkillSelect.partial';
 import LabelSelectPartial from '../../_partial/LabelSelect.partial';
 import CardDropdownPartial from './CardDropdown.partial';
 import { getStatusColor } from '../../../../utils/helper';
+import useImageValidation from '../../../../hooks/useImageValidation';
+import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
 
 interface JobFormData {
 	title: string;
@@ -55,6 +57,8 @@ const JobFormPartial = ({ jobDetails }: any) => {
 		}
 	}, []);
 
+	const { loading, imageUrl } = useImageValidation(jobDetails?.client?.clientUser?.image);
+
 	return (
 		<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
 			<CardHeader>
@@ -71,13 +75,16 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					variant='outline'
 					color='zinc'
 					rounded='rounded-full'
-					className='!justify-start gap-2 !py-0 !pl-0 !pr-2 '>
-					<img
-						className='aspect-square w-8'
-						src={profileImageUrlValidationCheck(jobDetails.client?.clientUser?.image)}
-						alt='profile-image'
-					/>
+					className='!justify-start gap-2 !py-[2px] !pl-1 !pr-2 '>
+					<ImageLoaderWraper loading={loading} height='h-6'>
+						<img
+							className=' aspect-square w-6 rounded-full object-cover'
+							src={imageUrl}
+							alt='profile-image'
+						/>
+					</ImageLoaderWraper>
 					<span>{textValidationCheck(jobDetails.client?.clientUser?.firstName)}</span>
+					<span>{textValidationCheck(jobDetails.client?.clientUser?.lastName)}</span>
 				</Button>
 
 				<Button

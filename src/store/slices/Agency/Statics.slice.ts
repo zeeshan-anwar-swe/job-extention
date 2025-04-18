@@ -32,7 +32,7 @@ const initialState: InitialStateType = {
 };
 
 export const getAgencyStatics = createAsyncThunk(
-	'agencyStatics/getClientsList',
+	'agencyStatics/getAgencyStatics',
 	async (
 		{ startDate, endDate, period }: { startDate: string; endDate: string; period: string },
 		{ rejectWithValue },

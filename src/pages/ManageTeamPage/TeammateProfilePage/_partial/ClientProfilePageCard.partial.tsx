@@ -11,7 +11,7 @@ import Card, {
 } from '../../../../components/ui/Card';
 import { Link } from 'react-router-dom';
 
-const ClientProfilePageCardPartial = ({ job }: any) => {
+const ClientProfilePageCardPartial = () => {
 	return (
 		<Card className='col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
 			<CardHeader className='gap-4 max-md:!flex-col-reverse'>

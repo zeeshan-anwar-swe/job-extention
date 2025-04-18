@@ -11,10 +11,7 @@ import CandidateCardPartial from './CandidateCard.partial';
 import JobFilterDropdownPartial from './JobFilterDropdown.partial';
 import { AppDispatch, RootState } from '../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getAllCandidatesList } from '../../../../store/slices/Candiates.slice';
 import MainLoader from '../../../../templates/layouts/main/MainLoader';
-import { getClientsList } from '../../../../store/slices/Agency/Client.slice';
 
 const CreateJobRightSidePartial = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -22,9 +19,6 @@ const CreateJobRightSidePartial = () => {
 		(state: RootState) => state.candidates,
 	);
 
-	useEffect(() => {
-		dispatch(getClientsList());
-	}, []);
 	return (
 		<Card className='relative col-span-4 flex flex-col gap-2 max-lg:col-span-12'>
 			<CardHeader>

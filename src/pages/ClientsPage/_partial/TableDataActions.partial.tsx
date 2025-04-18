@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Button from '../../../components/ui/Button';
 import AssignJobModalPartial from './AssignJob.partial';
+import { ClientListItemType } from '../../../types/slices.type/clients.slice.type';
 
-const TableDataActionsPartial = () => {
+const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => {
 	const [modal, setModal] = useState<boolean>(false);
 	return (
 		<div className='flex justify-center'>
@@ -10,7 +11,7 @@ const TableDataActionsPartial = () => {
 			<Button onClick={() => setModal(true)}>Assign A job</Button>
 			<Button onClick={() => setModal(true)}>Assign to a Team Member</Button>
 			<Button>Remove Client</Button>
-			<AssignJobModalPartial modal={modal} setModal={setModal} />
+			<AssignJobModalPartial client={client} modal={modal} setModal={setModal} />
 		</div>
 	);
 };
