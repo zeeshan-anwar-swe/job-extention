@@ -53,15 +53,17 @@ const useImageValidation = (initialUrl: string | null | undefined): UseImageVali
 	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
-		const validateImageUrl = async () => {
-			setLoading(true);
-			const validatedUrl = await imageUrlValidationCheck(initialUrl);
-			setImageUrl(validatedUrl);
-			setLoading(false);
-		};
+		if (initialUrl) {
+			const validateImageUrl = async () => {
+				setLoading(true);
+				const validatedUrl = await imageUrlValidationCheck(initialUrl);
+				setImageUrl(validatedUrl);
+				setLoading(false);
+			};
 
-		validateImageUrl();
-	}, [initialUrl]);
+			validateImageUrl();
+		}
+	}, [initialUrl, window.location]);
 
 	return { imageUrl, loading };
 };

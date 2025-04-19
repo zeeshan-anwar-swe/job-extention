@@ -12,7 +12,7 @@ export const ProfileImagePartial = ({ formik }: { formik: FormikProps<UserProfil
 	const { userStorage } = useAuth();
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-	const { loading, imageUrl } = useImageValidation(userStorage?.image);
+	const { loading, imageUrl } = useImageValidation(userStorage.image);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
