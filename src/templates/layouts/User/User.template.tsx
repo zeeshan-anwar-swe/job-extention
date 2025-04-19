@@ -11,13 +11,15 @@ import { AppDispatch, RootState } from '../../../store';
 import { getMyProfile, setUserProfileData } from '../../../store/slices/User.slice';
 
 const UserTemplate = () => {
-	const { onLogout } = useAuth();
+	const { onLogout, userTokenStorage } = useAuth();
 	const dispatch: AppDispatch = useDispatch();
 	const { userProfile, loading } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
 		if (userProfile.email === '') {
-			dispatch(getMyProfile());
+			if (userTokenStorage) {
+				dispatch(getMyProfile());
+			}
 		}
 	}, []);
 

@@ -14,7 +14,7 @@ const ImageLoaderWraper = ({
 		<Button
 			color='zinc'
 			variant='outline'
-			className={`!aspect-square !${height}`}
+			className={`!flex !aspect-square !items-center !justify-center !${height} !w${height.slice(1)}`}
 			isLoading={loading}
 			rounded='rounded-full'></Button>
 	) : (
