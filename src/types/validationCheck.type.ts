@@ -1,8 +1,8 @@
 // arrow function type using a type alias
 
 export type TextValidationCheckType = (
-	value: null | undefined | number | string,
-) => string | number;
+	value: null | undefined | number | string | any,
+) => string | number | any;
 export type NumberValidationCheckType = (value: null | undefined | number) => number;
 export type ArrayValidationCheckType = (value: null | undefined | Array<any>) => Array<any>;
 export type profileImageUrlValidationCheckType = (url: null | undefined | string) => string;

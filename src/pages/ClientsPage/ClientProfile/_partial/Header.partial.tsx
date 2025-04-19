@@ -1,19 +1,14 @@
-import Card from '../../../../components/ui/Card';
-import Button from '../../../../components/ui/Button';
-import TableDataProfilePartial from './TableDataProfile.partial';
 import { useState } from 'react';
-import AssignJobModalPartial from './AssignJob.partial';
+import Card from '../../../../components/ui/Card';
 import Badge from '../../../../components/ui/Badge';
-import { ClientDetailsType } from '../../../../types/slices.type/clients.slice.type';
-import {
-	profileImageUrlValidationCheck,
-	textValidationCheck,
-} from '../../../../utils/validationCheck';
+import Button from '../../../../components/ui/Button';
+import AssignJobModalPartial from './AssignJob.partial';
 import useImageValidation from '../../../../hooks/useImageValidation';
+import { textValidationCheck } from '../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
+import { ClientDetailsType } from '../../../../types/slices.type/clients.slice.type';
 
 const HeaderPartial = ({ clientDetails }: { clientDetails: ClientDetailsType | null }) => {
-	console.log({ clientDetails });
 	const [modal, setModal] = useState<boolean>(false);
 	const { loading, imageUrl } = useImageValidation(clientDetails?.clientUser.image);
 
@@ -26,7 +21,6 @@ const HeaderPartial = ({ clientDetails }: { clientDetails: ClientDetailsType | n
 							alt='profile image'
 							className='aspect-square w-14 rounded-full object-cover'
 							src={imageUrl}
-							alt='cadidate-image'
 						/>
 					</ImageLoaderWraper>
 					<div>

@@ -18,7 +18,7 @@ const LabelTextareaPartial = ({ label, detail }: { label?: string; detail?: stri
 					id='name'
 					autoComplete='name'
 					name='name'
-					value={detail}
+					value={detail ?? ''}
 					placeholder='Enter your name'
 				/>
 			</FieldWrap>
