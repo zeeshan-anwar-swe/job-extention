@@ -7,7 +7,13 @@ import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../components/ui/Button';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
-import Card, { CardBody, CardHeader, CardHeaderChild } from '../../components/ui/Card';
+import Card, {
+	CardBody,
+	CardHeader,
+	CardHeaderChild,
+	CardSubTitle,
+	CardTitle,
+} from '../../components/ui/Card';
 import SearchPartial from './_partial/Search.partial';
 import JobsPageCardPartial from './_partial/JobsPageCard.partial';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../components/ui/Dropdown';
@@ -21,16 +27,19 @@ import themeConfig from '../../config/theme.config';
 import HeaderPartial from './_partial/Header.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { getJobsList, getTeamlistForJobs } from '../../store/slices/Jobs.slice';
-import ShimmerEffectPageLoader from '../../components/layouts/PageLoader/ShimmerEffectPageLoader';
+import { getJobsList } from '../../store/slices/Jobs.slice';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
+import PageLoader from '../../templates/layouts/main/PageLoader';
+import Pagination from '../../components/ui/Pagination';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
 
 	const dispatch: AppDispatch = useDispatch();
 
-	const { pageLoading, error, jobsList } = useSelector((state: RootState) => state.jobsSlice);
+	const { pageLoading, error, paginatedList, paginationCount } = useSelector(
+		(state: RootState) => state.jobsSlice,
+	);
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 
@@ -98,14 +107,7 @@ const JobsPage = () => {
 		return () => {};
 	}, [selectedDate]);
 
-	useEffect(() => {
-		// @ts-ignore
-		dispatch(getJobsList());
-	}, []);
-
-	return pageLoading ? (
-		<ShimmerEffectPageLoader />
-	) : (
+	return (
 		<>
 			<Header>
 				<HeaderLeft>
@@ -120,7 +122,6 @@ const JobsPage = () => {
 					<SubheaderLeft>
 						<SearchPartial />
 						<Button
-							borderWidth='border-2'
 							color='zinc'
 							variant='outline'
 							rounded='rounded-full'
@@ -166,28 +167,25 @@ const JobsPage = () => {
 						</Dropdown>
 					</SubheaderRight>
 				</Subheader>
-				<Container className='h-full'>
-					<Card className='grid !flex-grow grid-cols-12 gap-4 '>
-						<CardHeader className='col-span-12 '>
-							<CardHeaderChild>
-								<div>
-									<h1>Jobs</h1>
-									<p>
-										Create, Delete, and assign Candidates to jobs effectively.
-									</p>
-								</div>
-							</CardHeaderChild>
-							<CardHeaderChild>
-								<HeaderPartial />
-							</CardHeaderChild>
-						</CardHeader>
-						<CardBody className='col-span-12 grid  grid-cols-12 gap-4'>
-							{jobsList.map((item: any) => (
-								<JobsPageCardPartial item={item} key={item.id} />
-							))}
-						</CardBody>
-					</Card>
-				</Container>
+				<Subheader>
+					<SubheaderLeft>
+						<CardTitle>Jobs</CardTitle>
+						<CardSubTitle>
+							Create, Delete, and assign Candidates to jobs effectively.
+						</CardSubTitle>
+					</SubheaderLeft>
+					<SubheaderRight>
+						<HeaderPartial />
+					</SubheaderRight>
+				</Subheader>
+				<PageLoader loading={pageLoading} error={error} data={paginatedList}>
+					<Container className='grid grid-cols-12 gap-4'>
+						{paginatedList.map((item: any) => (
+							<JobsPageCardPartial item={item} key={item.id} />
+						))}
+					</Container>
+				</PageLoader>
+				<Pagination getListAction={getJobsList} count={paginationCount} limit={9} />
 			</PageWrapper>
 		</>
 	);

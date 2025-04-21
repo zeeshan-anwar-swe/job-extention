@@ -10,7 +10,7 @@ import App from './App/App';
 import './i18n';
 import './styles/index.css';
 
-import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import './styles/vendors.css';
 import { store } from './store';

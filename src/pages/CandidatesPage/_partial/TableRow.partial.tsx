@@ -1,4 +1,3 @@
-import React from 'react';
 import { Td, Tr } from '../../../components/ui/Table';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import TableDataPositionPartial from './TableDataPosition.partial';
@@ -7,12 +6,11 @@ import TableDataSourcePartial from './TableDataSource.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
 
 const TableRowPartial = ({ candidate }: { candidate: any }) => {
-	console.log('candidate TableRowPartial', candidate);
-
 	return (
 		<Tr>
 			<Td>
 				<TableDataProfilePartial
+					image={candidate?.candidate?.image}
 					title={candidate?.candidate?.name}
 					subTitle={candidate?.candidate?.email}
 				/>

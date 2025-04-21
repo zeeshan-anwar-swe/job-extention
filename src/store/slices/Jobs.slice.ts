@@ -11,16 +11,17 @@ import {
 } from '../../utils/helper';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
-import { stat } from 'fs';
 import { JobDetailsType } from '../../types/slices.type/jobs.slice.type';
 
 interface InitialStateType {
 	jobsList: any[];
+	paginatedList: any[];
 	componentLoading: boolean;
 	pageLoading: boolean;
 	error: null | string | any;
 	searchedTeamListForJob: any[];
 	teamListForJob: [];
+	paginationCount: number;
 	locallySearchedJobs: any[];
 	assignedCandidatesWhileCreatingJob: any[];
 	assignedCandidatesWhileUpdatingJob: any[];
@@ -30,6 +31,8 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	jobsList: [],
+	paginatedList: [],
+	paginationCount: 0,
 	teamListForJob: [],
 	searchedTeamListForJob: [],
 	locallySearchedJobs: [],
@@ -42,14 +45,31 @@ const initialState: InitialStateType = {
 	error: null,
 };
 
-export const getJobsList = createAsyncThunk('jobs/getJobsList', async (_, { rejectWithValue }) => {
-	try {
-		const response = await axiosInstance.get('/job/recruiter/list');
-		return response.data.data.rows;
-	} catch (error: any) {
-		return await withAsyncThunkErrorHandler(error, rejectWithValue);
-	}
-});
+export const getJobsList = createAsyncThunk(
+	'jobs/getJobsList',
+	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(
+				`/job/recruiter/list?page=${page}&limit=${limit}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getAllJobsList = createAsyncThunk(
+	'jobs/getAllJobsList',
+	async (_, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(`/job/recruiter/list`);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
 
 export const getJobDetails = createAsyncThunk(
 	'jobs/getJobDetails',
@@ -189,9 +209,27 @@ export const jobsSlice = createSlice({
 			})
 			.addCase(getJobsList.fulfilled, (state, action) => {
 				state.pageLoading = false;
-				state.jobsList = action.payload;
+				state.paginatedList = action.payload.rows;
+				state.paginationCount = action.payload.count;
 			})
 			.addCase(getJobsList.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+			});
+
+		builder
+			.addCase(getAllJobsList.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getAllJobsList.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.jobsList = action.payload.rows;
+			})
+			.addCase(getAllJobsList.rejected, (state, action: any) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

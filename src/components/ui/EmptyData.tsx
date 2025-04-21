@@ -6,7 +6,7 @@ import { CardSubTitle } from './Card';
 
 const EmptyData = ({
 	color,
-	message,
+	message = 'No data found',
 	className,
 	colorIntensity,
 	size,

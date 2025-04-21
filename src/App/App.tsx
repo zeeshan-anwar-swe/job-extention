@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { getAgencyClientsList } from '../store/slices/Agency/Client.slice';
 import { useAuth } from '../context/authContext';
-import { getJobsList, getTeamlistForJobs } from '../store/slices/Jobs.slice';
+import { getAllJobsList, getTeamlistForJobs } from '../store/slices/Jobs.slice';
 const App = () => {
 	const dispatch: AppDispatch = useDispatch();
 	getOS();
@@ -26,7 +26,7 @@ const App = () => {
 
 	useEffect(() => {
 		if (userTokenStorage) {
-			dispatch(getJobsList());
+			dispatch(getAllJobsList());
 			dispatch(getAgencyClientsList());
 			dispatch(getTeamlistForJobs());
 			dispatch(getAllCandidatesList());

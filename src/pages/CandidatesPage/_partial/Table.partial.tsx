@@ -4,11 +4,9 @@ import TableRowPartial from './TableRow.partial';
 import { RootState } from '../../../store';
 
 const TablePartial = () => {
-	const { pageLoading, candidatesList, error } = useSelector(
-		(state: RootState) => state.candidates,
-	);
+	const { candidatesList } = useSelector((state: RootState) => state.candidates);
 	return (
-		<Table className='table-fixed max-md:min-w-[70rem]'>
+		<Table>
 			<THead>
 				<Tr>
 					<Th>NAME</Th>

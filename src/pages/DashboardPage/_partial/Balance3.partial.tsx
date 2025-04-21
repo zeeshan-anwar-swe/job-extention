@@ -21,7 +21,9 @@ const Balance3Partial = () => {
 						<span className='font-semibold'>In Interview</span>
 						<Tooltip text='Number of candidate in interview.' />
 					</div>
-					<div className='text-4xl font-semibold'>{agencyStatistics.inInterview}</div>
+					<div className='text-4xl font-semibold'>
+						{agencyStatistics.inInterview.count}
+					</div>
 					<div className='flex'>
 						<Balance status='fixed' value='0%'>
 							Balance

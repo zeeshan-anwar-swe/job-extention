@@ -7,6 +7,8 @@ interface InitialStateType {
 	teamList: any[];
 	componentLoading: boolean;
 	pageLoading: boolean;
+	paginationCount: number;
+	paginatedList: any[];
 	modalLoading: boolean;
 	error: null | string | any;
 	teamMemberProfile: any | null;
@@ -14,6 +16,8 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	teamMemberProfile: null,
+	paginatedList: [],
+	paginationCount: 0,
 	pageLoading: true,
 	componentLoading: false,
 	modalLoading: false,
@@ -29,6 +33,18 @@ export const getTeamlist = createAsyncThunk('team/getTeamlist', async (_, { reje
 		return await withAsyncThunkErrorHandler(error, rejectWithValue);
 	}
 });
+
+export const getPaginatedTeamlist = createAsyncThunk(
+	'team/getPaginatedTeamlist',
+	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(`/team/list?page=${page}&limit=${limit}`);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
 
 export const getTeamMemberDetails = createAsyncThunk(
 	'team/getTeamMemberDetails',
@@ -90,6 +106,24 @@ export const teamSlice = createSlice({
 				};
 				toast.error(action.payload.message);
 			})
+
+			.addCase(getPaginatedTeamlist.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getPaginatedTeamlist.fulfilled, (state, action) => {
+				state.paginationCount = action.payload.count;
+				state.paginatedList = action.payload.rows;
+				state.pageLoading = false;
+			})
+			.addCase(getPaginatedTeamlist.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+			})
+
 			.addCase(inviteTeamMember.pending, (state) => {
 				state.modalLoading = true;
 				state.error = null;

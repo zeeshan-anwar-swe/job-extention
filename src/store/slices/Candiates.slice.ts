@@ -7,6 +7,7 @@ interface InitialStateType {
 	candidatesList: any[];
 	allCadidateList: any[];
 	pageLoading: boolean;
+	paginationCount: number;
 	error: null | Error | any;
 	componentLoading: boolean;
 	cadnidateProfile: any | null;
@@ -16,17 +17,20 @@ const initialState: InitialStateType = {
 	allCadidateList: [],
 	pageLoading: false,
 	componentLoading: false,
+	paginationCount: 0,
 	cadnidateProfile: null,
 	candidatesList: [],
 	error: null,
 };
 
-export const getCandidatesList = createAsyncThunk(
-	'candidates/getCandidatesList',
-	async (_, { rejectWithValue }) => {
+export const getAgencyCandidatesList = createAsyncThunk(
+	'candidates/getAgencyCandidatesList',
+	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get('/agency/candidates');
-			return response.data.data.rows;
+			const response = await axiosInstance.get(
+				`/agency/candidates?page=${page}&limit=${limit}`,
+			);
+			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
@@ -131,15 +135,16 @@ export const candidatesSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getCandidatesList.pending, (state) => {
+			.addCase(getAgencyCandidatesList.pending, (state) => {
 				state.pageLoading = true;
 				state.error = null;
 			})
-			.addCase(getCandidatesList.fulfilled, (state, action) => {
+			.addCase(getAgencyCandidatesList.fulfilled, (state, action) => {
 				state.pageLoading = false;
-				state.candidatesList = action.payload;
+				state.candidatesList = action.payload.rows;
+				state.paginationCount = action.payload.count;
 			})
-			.addCase(getCandidatesList.rejected, (state, action) => {
+			.addCase(getAgencyCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

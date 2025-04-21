@@ -11,7 +11,9 @@ import {
 interface InitialStateType {
 	error: null | any;
 	clientsList: ClientListItemType[];
+	paginatedClients: ClientListItemType[];
 	locallySearchedClients: any[];
+	paginationCount: number;
 	pageLoading: boolean;
 	modalLoading: boolean;
 	assignedClientWhileCreatingJob: any | null;
@@ -20,6 +22,8 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	error: null,
+	paginationCount: 0,
+	paginatedClients: [],
 	clientsList: [],
 	pageLoading: false,
 	modalLoading: false,
@@ -34,6 +38,18 @@ export const getAgencyClientsList = createAsyncThunk(
 		try {
 			const response = await axiosInstance.get('/agency/clients');
 			return response.data.data.rows;
+		} catch (error: any) {
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getPaginatedAgencyClientsList = createAsyncThunk(
+	'clients/getPaginatedAgencyClientsList',
+	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(`/agency/clients?page=${page}&limit=${limit}`);
+			return response.data.data;
 		} catch (error: any) {
 			return withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
@@ -110,6 +126,23 @@ export const clientsSlice = createSlice({
 				state.clientsList = action.payload;
 			})
 			.addCase(getAgencyClientsList.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message || 'Unknown error');
+			})
+
+			.addCase(getPaginatedAgencyClientsList.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getPaginatedAgencyClientsList.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.paginatedClients = action.payload.rows;
+				state.paginationCount = action.payload.count;
+			})
+			.addCase(getPaginatedAgencyClientsList.rejected, (state, action: any) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

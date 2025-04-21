@@ -1,30 +1,37 @@
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
 import TablePartial from './_partial/Table.partial';
-import Subheader, { SubheaderLeft } from '../../components/layouts/Subheader/Subheader';
+import Subheader, {
+	SubheaderLeft,
+	SubheaderRight,
+} from '../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../components/ui/Button';
 import Breadcrumb from '../../components/layouts/Breadcrumb/Breadcrumb';
-import Card, { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../components/ui/Card';
+import Card, {
+	CardBody,
+	CardHeader,
+	CardHeaderChild,
+	CardSubTitle,
+	CardTitle,
+} from '../../components/ui/Card';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { getTeamlist } from '../../store/slices/Team.slice';
+import { getPaginatedTeamlist, getTeamlist } from '../../store/slices/Team.slice';
 import ShimmerEffectPageLoader from '../../components/layouts/PageLoader/ShimmerEffectPageLoader';
 import InviteModalPartial from './_partial/InviteModal.partial';
+import Pagination from '../../components/ui/Pagination';
+import PageLoader from '../../templates/layouts/main/PageLoader';
 
 const ManageTeamPage = () => {
-	const { pageLoading } = useSelector((state: RootState) => state.team);
+	const { pageLoading, paginatedList, error, paginationCount } = useSelector(
+		(state: RootState) => state.team,
+	);
 	const [modal, setModal] = useState<boolean>(false);
-	const dispatch: AppDispatch = useDispatch();
 
-	useEffect(() => {
-		if (!modal) dispatch(getTeamlist());
-	}, [modal]);
-	return pageLoading ? (
-		<ShimmerEffectPageLoader />
-	) : (
+	return (
 		<>
 			<Header>
 				<HeaderLeft>
@@ -55,34 +62,30 @@ const ManageTeamPage = () => {
 						</Button>
 					</SubheaderLeft>
 				</Subheader>
-				<Container className='!grid !grid-cols-12 !gap-4'>
-					<div className='col-span-12 '>
-						<Card className='h-full'>
-							<>
-								<CardHeader>
-									<CardHeaderChild className=''>
-										<div>
-											<CardTitle>Your Team</CardTitle>
-											<p>Add, Remove, Assign Jobs to team members.</p>
-										</div>
-									</CardHeaderChild>
-									<CardHeaderChild>
-										<Button
-											onClick={() => setModal(true)}
-											variant='solid'
-											rightIcon='HeroPlus'>
-											Add a Team Member
-										</Button>
-										<InviteModalPartial setModal={setModal} modal={modal} />
-									</CardHeaderChild>
-								</CardHeader>
-								<CardBody className='overflow-auto'>
-									<TablePartial />
-								</CardBody>
-							</>
-						</Card>
-					</div>
-				</Container>
+				<Subheader>
+					<SubheaderLeft>
+						<div>
+							<CardTitle>Your Team</CardTitle>
+							<CardSubTitle>Add, Remove, Assign Jobs to team members.</CardSubTitle>
+						</div>
+					</SubheaderLeft>
+					<SubheaderRight>
+						<Button onClick={() => setModal(true)} variant='solid' rightIcon='HeroPlus'>
+							Add a Team Member
+						</Button>
+						<InviteModalPartial setModal={setModal} modal={modal} />
+					</SubheaderRight>
+				</Subheader>
+				<PageLoader loading={pageLoading} error={error} data={paginatedList}>
+					<Container>
+						<TablePartial />
+					</Container>
+				</PageLoader>
+				<Pagination
+					count={paginationCount}
+					getListAction={getPaginatedTeamlist}
+					limit={10}
+				/>
 			</PageWrapper>
 		</>
 	);

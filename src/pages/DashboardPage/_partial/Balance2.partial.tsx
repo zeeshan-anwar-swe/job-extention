@@ -20,7 +20,7 @@ const Balance2Partial = () => {
 						<Tooltip text='Number of shortlisted candidates.' />
 					</div>
 					<div className='text-4xl font-semibold'>
-						{agencyStatistics.shortListedCandidates}
+						{agencyStatistics.shortListedCandidates.count}
 					</div>
 					<div className='flex'>
 						<Balance status='negative' value='41%'>

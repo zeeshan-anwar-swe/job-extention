@@ -6,7 +6,7 @@ import { ClientListItemType } from '../../../types/slices.type/clients.slice.typ
 const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => {
 	const [modal, setModal] = useState<boolean>(false);
 	return (
-		<div className='flex justify-center'>
+		<div className='flex justify-center break-all max-lg:flex-col'>
 			<Button color='blue'>View Jobs</Button>
 			<Button onClick={() => setModal(true)}>Assign A job</Button>
 			<Button onClick={() => setModal(true)}>Assign to a Team Member</Button>

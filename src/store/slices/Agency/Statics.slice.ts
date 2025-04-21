@@ -3,11 +3,16 @@ import axiosInstance from '../../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
 
+interface AgencyCredentialType {
+	count: number;
+	change: number;
+}
+
 interface IAgencyStatistics {
-	jobs: number;
-	shortListedCandidates: number;
-	inInterview: number;
-	hiredCandidates: number;
+	jobs: AgencyCredentialType;
+	shortListedCandidates: AgencyCredentialType;
+	inInterview: AgencyCredentialType;
+	hiredCandidates: AgencyCredentialType;
 }
 
 interface InitialStateType {
@@ -21,10 +26,22 @@ interface InitialStateType {
 const initialState: InitialStateType = {
 	error: null,
 	agencyStatistics: {
-		jobs: 0,
-		shortListedCandidates: 0,
-		inInterview: 0,
-		hiredCandidates: 0,
+		jobs: {
+			count: 0,
+			change: 0,
+		},
+		shortListedCandidates: {
+			count: 0,
+			change: 0,
+		},
+		inInterview: {
+			count: 0,
+			change: 0,
+		},
+		hiredCandidates: {
+			count: 0,
+			change: 0,
+		},
 	},
 	pageLoading: false,
 	modalLoading: false,

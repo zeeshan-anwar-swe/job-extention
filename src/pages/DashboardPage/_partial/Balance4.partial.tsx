@@ -19,7 +19,9 @@ const Balance4Partial = () => {
 						<span className='font-semibold'>Hired Candiate</span>
 						<Tooltip text='Number of hired candidates.' />
 					</div>
-					<div className='text-4xl font-semibold'>{agencyStatistics.hiredCandidates}</div>
+					<div className='text-4xl font-semibold'>
+						{agencyStatistics.hiredCandidates.count}
+					</div>
 					<div className='flex'>
 						<Balance status='negative' value='41%'>
 							Balance

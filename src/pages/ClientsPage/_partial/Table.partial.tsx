@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ClientListItemType } from '../../../types/slices.type/clients.slice.type';
 
 const TablePartial = () => {
-	const { clientsList } = useSelector((state: RootState) => state.clients);
+	const { paginatedClients } = useSelector((state: RootState) => state.clients);
 	return (
 		<Table className='table-fixed max-md:min-w-[70rem]'>
 			<THead>
@@ -17,7 +17,7 @@ const TablePartial = () => {
 				</Tr>
 			</THead>
 			<TBody>
-				{clientsList.map((client: ClientListItemType) => (
+				{paginatedClients.map((client: ClientListItemType) => (
 					<TableRowPartial client={client} key={client.id} />
 				))}
 			</TBody>

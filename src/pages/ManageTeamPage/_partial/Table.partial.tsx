@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 
 const TablePartial = () => {
-	const { teamList } = useSelector((state: RootState) => state.team);
+	const { paginatedList } = useSelector((state: RootState) => state.team);
 
 	return (
 		<Table className='table-fixed max-md:min-w-[70rem]'>
@@ -20,7 +20,7 @@ const TablePartial = () => {
 				</Tr>
 			</THead>
 			<TBody>
-				{teamList.map((teamMember: any) => (
+				{paginatedList.map((teamMember: any) => (
 					<Tr key={teamMember.id}>
 						<Td>
 							<TableDataProfilePartial

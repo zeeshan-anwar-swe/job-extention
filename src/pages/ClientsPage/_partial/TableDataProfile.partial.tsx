@@ -10,7 +10,7 @@ const TableDataProfilePartial = ({ client }: { client: ClientListItemType }) => 
 		<Link
 			to='/clients/profile'
 			state={client}
-			className='flex items-center justify-start gap-x-6'>
+			className='flex items-center justify-start gap-x-6 max-lg:flex-col'>
 			<ImageLoaderWraper height='h-14' loading={loading}>
 				<img
 					className='aspect-square w-14 rounded-full object-cover'
@@ -19,8 +19,8 @@ const TableDataProfilePartial = ({ client }: { client: ClientListItemType }) => 
 				/>
 			</ImageLoaderWraper>
 			<div>
-				<h5>{textValidationCheck(client?.name)}</h5>
-				<p>{textValidationCheck(client?.email)}</p>
+				<h5 className='break-all'>{textValidationCheck(client?.name)}</h5>
+				<p className='break-all'>{textValidationCheck(client?.email)}</p>
 			</div>
 		</Link>
 	);
