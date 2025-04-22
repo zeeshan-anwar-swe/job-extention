@@ -9,7 +9,7 @@ import Button from '../components/ui/Button';
 const NotFoundPage = () => {
 	const navigate = useNavigate();
 	return (
-		<PageWrapper isProtectedRoute={false} name='404 Not Found'>
+		<PageWrapper isProtectedRoute={false} title='404' name='Not valid page'>
 			<Subheader>
 				<SubheaderLeft>
 					<Button

@@ -221,6 +221,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		}),
 		[userStorage, userTokenStorage],
 	);
+
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

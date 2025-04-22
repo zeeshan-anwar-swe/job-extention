@@ -21,17 +21,11 @@ import SettingPage from '../pages/SettingPage/Setting.page';
 import ConnectCRMPage from '../pages/SettingPage/ConnectCRMPage/ConnectCRM.page';
 import SubcriptionPage from '../pages/SettingPage/SubcriptionPage/Subcription.page';
 import PaymentPage from '../pages/PaymentPage/Payment.page';
-/**
- * SALES
- */
-const DashboardPage = lazy(() => import('../pages/DashboardPage/Dashboard.page'));
 
+const DashboardPage = lazy(() => import('../pages/DashboardPage/Dashboard.page'));
 const CandidatesPage = lazy(() => import('../pages/CandidatesPage/Candidates.page'));
 const JobsPage = lazy(() => import('../pages/Jobs/Jobs.page'));
 
-/**
- * Project
- */
 const ProjectDashboardPage = lazy(
 	() => import('../pages/project/ProjectDashboardPage/ProjectDashboard.page'),
 );

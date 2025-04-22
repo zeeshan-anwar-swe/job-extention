@@ -51,6 +51,8 @@ const SignupPage = () => {
 
 			if (!values.email) {
 				errors.email = 'Required';
+			} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+				errors.email = 'Invalid email format';
 			}
 
 			if (!values.password) {
@@ -82,7 +84,12 @@ const SignupPage = () => {
 	return (
 		<div className='grid h-screen grid-cols-2'>
 			<div className='py-16 max-md:hidden'>
-				<div className="relative ml-auto h-full w-8/12 rounded-2xl bg-[url('/images/sin-sup-side-bg.png')] bg-cover bg-center px-8">
+				<div className="relative ml-auto h-full w-8/12 overflow-visible rounded-2xl bg-[url('/images/bear-bg.png')] bg-cover bg-center px-8">
+					<img
+						className='absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 object-cover'
+						src='/images/animated-bear.gif'
+						alt=''
+					/>
 					<div className='absolute bottom-4 left-1/2 w-11/12 -translate-x-1/2  rounded-2xl border-2 border-white p-4 backdrop-blur-md'>
 						<p className='text-white'>
 							Effortlessly search, edit, and share candidate profiles, manage tasks,
@@ -218,7 +225,7 @@ const SignupPage = () => {
 										}
 										className={
 											isPasswordValidLength
-												? 'text-green-500'
+												? 'text-blue-500'
 												: 'text-gray-400'
 										}
 									/>
@@ -233,7 +240,7 @@ const SignupPage = () => {
 										}
 										className={
 											isPasswordValidSpecialChar
-												? 'text-green-500'
+												? 'text-blue-500'
 												: 'text-gray-400'
 										}
 									/>

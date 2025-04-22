@@ -15,6 +15,7 @@ import 'react-date-range/dist/theme/default.css';
 import './styles/vendors.css';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import RoleBasedRouter from './shared/RoleBasedRouter';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>

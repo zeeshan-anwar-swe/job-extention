@@ -53,7 +53,7 @@ export const ProfileImagePartial = ({ formik }: { formik: FormikProps<UserProfil
 				<Icon
 					color='zinc'
 					size='text-5xl'
-					className='absolute left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-zinc-100/50 p-2  opacity-0 transition-all duration-300 ease-in-out group-hover:-translate-y-1/2 group-hover:opacity-100'
+					className='absolute  left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-zinc-100/50 p-2  opacity-0 transition-all duration-300 ease-in-out group-hover:-translate-y-1/2 group-hover:opacity-100'
 					icon='HeroCamera'
 				/>
 			</Label>

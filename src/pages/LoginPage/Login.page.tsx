@@ -1,8 +1,5 @@
-import { useState } from 'react';
-
 import { Link } from 'react-router-dom';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
-import Button from '../../components/ui/Button';
 import LogoTemplate from '../../templates/layouts/Logo/Logo.template';
 import LoginFormPartial from './partial/LoginForm.partial';
 import ForgotPasswordFormPartial from './partial/ForgotPasswordForm.partial';
@@ -10,6 +7,8 @@ import OTPVerifyFormPartial from './partial/OTPVerifyForm.partial';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import ResetPasswordFormPartial from './partial/ResetPassword';
+import LoginWithGoogle from './partial/LoginWithGoogle';
+import LoginWitLinkedIn from './partial/LoginWithLinkedIn';
 
 const LoginPage = () => {
 	const { formType } = useSelector((state: RootState) => state.forgotPasswordSlice);
@@ -20,7 +19,12 @@ const LoginPage = () => {
 			className='grid grid-cols-2 gap-x-32 bg-white dark:bg-inherit'
 			name='Sign In'>
 			<div className='py-16 max-md:hidden'>
-				<div className="relative ml-auto h-full w-8/12 rounded-2xl bg-[url('/images/sin-sup-side-bg.png')] bg-cover bg-center px-8">
+				<div className="relative ml-auto h-full w-8/12 rounded-2xl	bg-[url('/images/bear-bg.png')] bg-cover bg-center px-8">
+					<img
+						className='absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 object-cover'
+						src='/images/animated-bear.gif'
+						alt=''
+					/>
 					<div className='absolute bottom-4 left-1/2 w-11/12 -translate-x-1/2  rounded-2xl border-2 border-white p-4 backdrop-blur-md'>
 						<p className='text-white'>
 							Effortlessly search, edit, and share candidate profiles, manage tasks,
@@ -66,26 +70,8 @@ const LoginPage = () => {
 					{formType === 'login' && (
 						<>
 							<div className='grid grid-cols-12 gap-4'>
-								<div className='col-span-12'>
-									<Button
-										icon='CustomGoogle'
-										variant='outline'
-										color='zinc'
-										size='lg'
-										className='w-full'>
-										Sign in with Google
-									</Button>
-								</div>
-								<div className='col-span-12'>
-									<Button
-										icon='CustomLinkedin'
-										variant='outline'
-										color='zinc'
-										size='lg'
-										className='w-full'>
-										Sign in with Linked In
-									</Button>
-								</div>
+								<LoginWithGoogle />
+								<LoginWitLinkedIn />
 							</div>
 
 							<div>
