@@ -23,9 +23,9 @@ const SettingAside = () => {
 	return (
 		<aside className='col-span-2 rounded-xl  max-md:col-span-12'>
 			<Nav>
-				<NavItem {...appPages.settingAppPages.subPages.editProfileAppPages} />
-				<NavItem {...appPages.settingAppPages.subPages.connectCRMAppPages} />
-				<NavItem {...appPages.settingAppPages.subPages.subcriptionAppPages} />
+				<NavItem {...appPages.AgencyAdmin.settingAppPages.subPages.editProfileAppPages} />
+				<NavItem {...appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages} />
+				<NavItem {...appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages} />
 			</Nav>
 		</aside>
 	);

@@ -42,7 +42,7 @@ const SignupPage = () => {
 			}
 
 			if (values.lastName.length < 3) {
-				errors.firstName = 'Last Name must be at least 3 characters long';
+				errors.lastName = 'Last Name must be at least 3 characters long';
 			}
 
 			if (!values.lastName) {
@@ -63,15 +63,14 @@ const SignupPage = () => {
 			return errors;
 		},
 		onSubmit: (values: TValues, { setFieldError }) => {
-			onSignUp(values.firstName, values.lastName, values.email, values.password)
-				.then(() => {})
-				.catch((e: Error) => {
-					if (e.cause === 'username') {
-						setFieldError('username', e.message);
-						setFieldError('password', e.message);
+			onSignUp(values.firstName, values.lastName, values.email, values.password).catch(
+				(e: Error) => {
+					if (e.message === 'Email is already taken') {
+						setFieldError('email', e.message);
+						return;
 					}
-					if (e.cause === 'password') setFieldError('password', e.message);
-				});
+				},
+			);
 		},
 	});
 
@@ -81,10 +80,7 @@ const SignupPage = () => {
 	);
 
 	return (
-		<PageWrapper
-			isProtectedRoute={false}
-			className='grid grid-cols-2 gap-x-32 bg-white dark:bg-inherit'
-			name='Sign Up'>
+		<div className='grid h-screen grid-cols-2'>
 			<div className='py-16 max-md:hidden'>
 				<div className="relative ml-auto h-full w-8/12 rounded-2xl bg-[url('/images/sin-sup-side-bg.png')] bg-cover bg-center px-8">
 					<div className='absolute bottom-4 left-1/2 w-11/12 -translate-x-1/2  rounded-2xl border-2 border-white p-4 backdrop-blur-md'>
@@ -108,10 +104,10 @@ const SignupPage = () => {
 					<div>
 						<span>Get started for effortless recruitment</span>
 					</div>
-					<form className='flex flex-col gap-4' noValidate>
+					<form className='flex w-96 flex-col gap-4' noValidate>
 						<div
 							className={classNames({
-								'mb-2': !formik.isValid,
+								'mb-2 w-full': !formik.isValid,
 							})}>
 							<Validation
 								isValid={formik.isValid}
@@ -289,7 +285,7 @@ const SignupPage = () => {
 					</div>
 				</div>
 			</div>
-		</PageWrapper>
+		</div>
 	);
 };
 

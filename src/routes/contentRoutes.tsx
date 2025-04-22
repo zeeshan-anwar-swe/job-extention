@@ -6,7 +6,6 @@ import NotFoundPage from '../pages/NotFound.page';
 import { appPages, authPages } from '../config/pages.config';
 import CandidatesProfilePage from '../pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import CandidateCVEditPage from '../pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
-import JobsPage from '../pages/Jobs/Jobs.page';
 import JobsViewCandidatesPage from '../pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
 import JobsCreateNewJobPage from '../pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page';
 import ClientsPage from '../pages/ClientsPage/Clients.page';
@@ -28,6 +27,7 @@ import PaymentPage from '../pages/PaymentPage/Payment.page';
 const DashboardPage = lazy(() => import('../pages/DashboardPage/Dashboard.page'));
 
 const CandidatesPage = lazy(() => import('../pages/CandidatesPage/Candidates.page'));
+const JobsPage = lazy(() => import('../pages/Jobs/Jobs.page'));
 
 /**
  * Project
@@ -38,40 +38,23 @@ const ProjectDashboardPage = lazy(
 const ProjectBoardPage = lazy(() => import('../pages/project/ProjectBoardPage/ProjectBoard.page'));
 
 const contentRoutes: RouteProps[] = [
-	/**
-	 * Dashboard::BEGIN
-	 */
 	{
-		path: appPages.salesAppPages.subPages.salesDashboardPage.to,
+		path: appPages.AgencyAdmin.dashboardAppPages.to,
 		element: <DashboardPage />,
 	},
 
-	/**
-	 * Dashboard::END
-	 */
-
-	/**
-	 * PaymentPage::BEGIN
-	 */
 	{
-		path: appPages.pamentAppPages.to,
+		path: appPages.AgencyAdmin.pamentAppPages.to,
 		element: <PaymentPage />,
 	},
 
-	/**
-	 * PaymentPage::END
-	 */
-
-	/**
-	 * Candidates::BEGIN
-	 */
 	{
-		path: appPages.candidatesAppPages.to,
+		path: appPages.AgencyAdmin.candidatesAppPages.to,
 		element: <CandidatesPage />,
 	},
 
 	{
-		path: `${appPages.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
+		path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
 		element: <CandidatesProfilePage />,
 	},
 
@@ -81,161 +64,96 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{
-		path: appPages.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+		path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
 		element: <CandidateCVEditPage />,
 	},
 
-	/**
-	 * Candidates::END
-	 */
-
-	/**
-	 * Jobs::BEGIN
-	 */
-
 	{
-		path: appPages.jobsAppPages.to,
+		path: appPages.AgencyAdmin.jobsAppPages.to,
 		element: <JobsPage />,
 	},
 
 	{
-		path: `${appPages.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
+		path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
 		element: <JobsViewCandidatesPage />,
 	},
 
 	{
-		path: appPages.jobsAppPages.subPages.createJobsAppPages.to,
+		path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
 		element: <JobsCreateNewJobPage />,
 	},
 
-	/**
-	 * Jobs::END
-	 */
-
-	/**
-	 * Clients::BEGIN
-	 */
-
 	{
-		path: appPages.clientsAppPages.to,
+		path: appPages.AgencyAdmin.clientsAppPages.to,
 		element: <ClientsPage />,
 	},
 
 	{
-		path: `${appPages.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+		path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
 		element: <ClientProfilePage />,
 	},
 
 	{
-		path: appPages.clientsAppPages.subPages.clientProfileAppPages.to,
+		path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
 		element: <ClientProfilePage />,
 	},
 
-	/**
-	 * Clients::END
-	 */
-
-	/**
-	 * Taskboard::BEGIN
-	 */
-
 	{
-		path: appPages.taskBoardAppPages.to,
+		path: appPages.AgencyAdmin.taskBoardAppPages.to,
 		element: <TaskboardPage />,
 	},
 
-	/**
-	 * Taskboard::END
-	 */
-
-	/**
-	 * SettingPage::BEGIN
-	 */
-
 	{
-		path: appPages.settingAppPages.to,
+		path: appPages.AgencyAdmin.settingAppPages.to,
 		element: <SettingPage />,
 	},
 
 	{
-		path: appPages.settingAppPages.subPages.connectCRMAppPages.to,
+		path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
 		element: <ConnectCRMPage />,
 	},
 	{
-		path: appPages.settingAppPages.subPages.subcriptionAppPages.to,
+		path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
 		element: <SubcriptionPage />,
 	},
-	/**
-	 * SettingPage::END
-	 */
-
-	/**
-	 * ReportAndAnalytics::BEGIN
-	 */
 
 	{
-		path: appPages.reportAndAnalyticsAppPages.to,
+		path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
 		element: <ReportAndAnalyticsPage />,
 	},
 
-	/**
-	 * ReportAndAnalytics::END
-	 */
-
-	/**
-	 * KoolabyteAssistan::BEGIN
-	 */
-
 	{
-		path: appPages.KoalaByteAssistantAppPages.to,
+		path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
 		element: <KoolabyteAssistantPage />,
 	},
 
-	/**
-	 * KoolabyteAssistan::END
-	 */
-
-	/**
-	 * ManageTeamPage::BEGIN
-	 */
-
 	{
-		path: appPages.manageTeamAppPages.to,
+		path: appPages.AgencyAdmin.manageTeamAppPages.to,
 		element: <ManageTeamPage />,
 	},
 
 	{
-		path: `${appPages.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+		path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
 		element: <TeammateProfilePage />,
 	},
 	{
-		path: `${appPages.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+		path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
 		element: <TeammateProfilePage />,
 	},
 
 	{
-		path: `${appPages.manageTeamAppPages.subPages.chatAppPage.to}/*`,
+		path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
 		element: <ChatPage />,
 	},
 
-	/**
-	 * ManageTeamPage::END
-	 */
-
-	/**
-	 * Project::BEGIN
-	 */
 	{
-		path: appPages.projectAppPages.subPages.projectDashboardPage.to,
+		path: appPages.AgencyAdmin.projectAppPages.subPages.projectDashboardPage.to,
 		element: <ProjectDashboardPage />,
 	},
 	{
-		path: `${appPages.projectAppPages.subPages.projectBoardPageLink.to}/:id`,
+		path: `${appPages.AgencyAdmin.projectAppPages.subPages.projectBoardPageLink.to}/:id`,
 		element: <ProjectBoardPage />,
 	},
-	/**
-	 * Project::END
-	 */
 
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
 	{ path: authPages.signupPage.to, element: <SignupPage /> },

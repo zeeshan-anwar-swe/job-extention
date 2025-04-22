@@ -35,9 +35,9 @@ const UserTemplate = () => {
 				</Badge>
 			}>
 			<NavSeparator />
-			<NavItem {...appPages.settingAppPages.subPages.settingPage} />
+			<NavItem {...appPages.AgencyAdmin.settingAppPages.subPages.settingPage} />
 
-			<NavItem {...appPages.mailAppPages.subPages.inboxPages}>
+			<NavItem {...appPages.AgencyAdmin.mailAppPages.subPages.inboxPages}>
 				<Badge variant='solid' className='leading-none'>
 					3
 				</Badge>

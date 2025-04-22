@@ -41,7 +41,8 @@ const ProjectItem: FC<IProjectItemProps> = ({ project }) => {
 			<CardHeader>
 				<CardHeaderChild>
 					<CardTitle>
-						<Link to={`../${appPages.projectAppPages.subPages.projectBoardPage.to}`}>
+						<Link
+							to={`../${appPages.AgencyAdmin.projectAppPages.subPages.projectBoardPage.to}`}>
 							{project.name}
 						</Link>
 					</CardTitle>

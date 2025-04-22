@@ -8,15 +8,15 @@ const SettingAside = () => {
 			<Nav ulClassName='max-md:!flex'>
 				<NavItem
 					className='max-md:!w-fit'
-					{...appPages.settingAppPages.subPages.editProfileAppPages}
+					{...appPages.AgencyAdmin.settingAppPages.subPages.editProfileAppPages}
 				/>
 				<NavItem
 					className='max-md:!w-fit'
-					{...appPages.settingAppPages.subPages.connectCRMAppPages}
+					{...appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages}
 				/>
 				<NavItem
 					className='max-md:!w-fit'
-					{...appPages.settingAppPages.subPages.subcriptionAppPages}
+					{...appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages}
 				/>
 			</Nav>
 		</aside>

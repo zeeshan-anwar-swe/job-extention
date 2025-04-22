@@ -1,6 +1,4 @@
-import React from 'react';
 import { RouteProps } from 'react-router-dom';
-import DefaultHeaderTemplate from '../templates/layouts/Headers/DefaultHeader.template';
 import { appPages, authPages, componentsPages } from '../config/pages.config';
 import ComponentAndTemplateHeaderTemplate from '../templates/layouts/Headers/ComponentAndTemplateHeader.template';
 
@@ -12,39 +10,39 @@ const headerRoutes: RouteProps[] = [
 		element: <ComponentAndTemplateHeaderTemplate />,
 	},
 	{
-		path: `${appPages.candidatesAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.candidatesAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.settingAppPages.to}`,
+		path: `${appPages.AgencyAdmin.settingAppPages.to}`,
 		element: null,
 	},
 	{
-		path: `${appPages.jobsAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.jobsAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.clientsAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.clientsAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.taskBoardAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.taskBoardAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.reportAndAnalyticsAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.reportAndAnalyticsAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.aiInterviewAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.aiInterviewAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.manageTeamAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.manageTeamAppPages.to}/*`,
 		element: null,
 	},
 	{
-		path: `${appPages.KoalaByteAssistantAppPages.to}/*`,
+		path: `${appPages.AgencyAdmin.KoalaByteAssistantAppPages.to}/*`,
 		element: null,
 	},
 	{
@@ -56,7 +54,7 @@ const headerRoutes: RouteProps[] = [
 		element: <ComponentAndTemplateHeaderTemplate />,
 	},
 	{
-		path: appPages.projectAppPages.subPages.projectDashboardPage.to,
+		path: appPages.AgencyAdmin.projectAppPages.subPages.projectDashboardPage.to,
 		element: null,
 	},
 	{
@@ -64,7 +62,7 @@ const headerRoutes: RouteProps[] = [
 		element: null,
 	},
 	{ path: '*', element: null },
-	{ path: appPages.pamentAppPages.to, element: null },
+	{ path: appPages.AgencyAdmin.pamentAppPages.to, element: null },
 ];
 
 export default headerRoutes;

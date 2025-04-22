@@ -139,28 +139,59 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		lastName: string,
 		email: string,
 		password: string,
-	) => {
-		axios
-			.post(apiBaseUrl + '/user/register', {
+	): Promise<void> => {
+		try {
+			const response = await axios.post(apiBaseUrl + '/user/register', {
 				firstName,
 				lastName,
 				email,
 				password,
-			})
-			.then((response) => {
-				if (response.data.success) {
-					if (typeof setUserToken === 'function' && typeof setUser === 'function') {
-						setUserToken(response.data.data.token);
-						setUser(response.data.data.user);
-					}
-					navigate('/');
-				}
-			})
-			.catch((e) => {
-				if (e.response.status === 500) {
-					toast.error(e.response.data.message);
-				}
 			});
+
+			if (response.data.success) {
+				if (typeof setUserToken === 'function' && typeof setUser === 'function') {
+					setUserToken(response.data.data.token);
+					setUser(response.data.data.user);
+				}
+				navigate('/');
+			} else {
+				// Handle specific backend errors if provided
+				if (response.data.message) {
+					throw new Error(response.data.message);
+				} else {
+					throw new Error('Registration failed.');
+				}
+			}
+		} catch (error: any) {
+			console.error('Signup error:', error);
+			let errorMessage = 'An unexpected error occurred during signup.';
+			let errorCause: string | undefined;
+
+			if (error.response) {
+				// The request was made and the server responded with a status code
+				// that falls out of the range of 2xx
+				console.error('Response data:', error.response.data);
+				console.error('Response status:', error.response.status);
+				if (error.response.data && error.response.data.message) {
+					errorMessage = error.response.data.message;
+				}
+				if (error.response.data && error.response.data.cause) {
+					errorCause = error.response.data.cause;
+				}
+			} else if (error.request) {
+				// The request was made but no response was received
+				console.error('No response received:', error.request);
+				errorMessage = 'Could not connect to the server.';
+			} else {
+				// Something happened in setting up the request that triggered an Error
+				errorMessage = error.message;
+			}
+
+			// Optionally, you can re-throw the error with more context
+			const enhancedError = new Error(errorMessage);
+			enhancedError.cause = errorCause;
+			throw enhancedError;
+		}
 	};
 	// call this function to sign out logged-in user
 	const onLogout = async () => {

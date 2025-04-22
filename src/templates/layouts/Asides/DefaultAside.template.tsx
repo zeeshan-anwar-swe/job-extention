@@ -26,15 +26,15 @@ const DefaultAsideTemplate = () => {
 			</AsideHead>
 			<AsideBody>
 				<Nav>
-					<NavItem {...appPages.dashboardAppPages} />
-					<NavItem {...appPages.candidatesAppPages.subPages.candidatesPage} />
-					<NavItem {...appPages.jobsAppPages.subPages.jobsPage} />
-					<NavItem {...appPages.clientsAppPages.subPages.clientsPage} />
-					<NavItem {...appPages.taskBoardAppPages} />
-					<NavItem {...appPages.reportAndAnalyticsAppPages} />
+					<NavItem {...appPages.AgencyAdmin.dashboardAppPages} />
+					<NavItem {...appPages.AgencyAdmin.candidatesAppPages.subPages.candidatesPage} />
+					<NavItem {...appPages.AgencyAdmin.jobsAppPages.subPages.jobsPage} />
+					<NavItem {...appPages.AgencyAdmin.clientsAppPages.subPages.clientsPage} />
+					<NavItem {...appPages.AgencyAdmin.taskBoardAppPages} />
+					<NavItem {...appPages.AgencyAdmin.reportAndAnalyticsAppPages} />
 
 					<NavTitle>Apps</NavTitle>
-					<NavItem {...appPages.aiInterviewAppPages}>
+					<NavItem {...appPages.AgencyAdmin.aiInterviewAppPages}>
 						<Badge
 							variant='outline'
 							color='amber'
@@ -42,24 +42,24 @@ const DefaultAsideTemplate = () => {
 							NEW
 						</Badge>
 					</NavItem>
-					<NavItem {...appPages.KoalaByteAssistantAppPages} />
-					<NavItem {...appPages.customCVAppPages} />
-					<NavItem {...appPages.testForCadidateAppPages} />
-					<NavItem {...appPages.integrationsAppPages} />
+					<NavItem {...appPages.AgencyAdmin.KoalaByteAssistantAppPages} />
+					<NavItem {...appPages.AgencyAdmin.customCVAppPages} />
+					<NavItem {...appPages.AgencyAdmin.testForCadidateAppPages} />
+					<NavItem {...appPages.AgencyAdmin.integrationsAppPages} />
 
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>
-					<NavItem {...appPages.manageTeamAppPages.subPages.manageTeamPage} />
+					<NavItem {...appPages.AgencyAdmin.manageTeamAppPages.subPages.manageTeamPage} />
 
 					<NavUser
 						text={`${usersDb[0].firstName} ${usersDb[0].lastName}`}
 						image={usersDb[0].image?.thumb}
-						to={`${appPages.chatAppPages.to}/${usersDb[0].username}`}
+						to={`${appPages.AgencyAdmin.chatAppPages.to}/${usersDb[0].username}`}
 					/>
 					<NavUser
 						text={`${usersDb[1].firstName} ${usersDb[1].lastName}`}
 						image={usersDb[1].image?.thumb}
-						to={`${appPages.chatAppPages.to}/${usersDb[1].username}`}>
+						to={`${appPages.AgencyAdmin.chatAppPages.to}/${usersDb[1].username}`}>
 						<NavButton
 							title='New Message'
 							icon='HeroChatBubbleLeftEllipsis'
@@ -70,12 +70,12 @@ const DefaultAsideTemplate = () => {
 					<NavUser
 						text={`${usersDb[2].firstName} ${usersDb[2].lastName}`}
 						image={usersDb[2].image?.thumb}
-						to={`${appPages.chatAppPages.to}/${usersDb[2].username}`}
+						to={`${appPages.AgencyAdmin.chatAppPages.to}/${usersDb[2].username}`}
 					/>
 					<NavUser
 						text={`${usersDb[3].firstName} ${usersDb[3].lastName}`}
 						image={usersDb[3].image?.thumb}
-						to={`${appPages.chatAppPages.to}/${usersDb[3].username}`}>
+						to={`${appPages.AgencyAdmin.chatAppPages.to}/${usersDb[3].username}`}>
 						<NavButton
 							title='New Message'
 							icon='HeroChatBubbleLeftEllipsis'
@@ -86,7 +86,7 @@ const DefaultAsideTemplate = () => {
 					<NavUser
 						text={`${usersDb[4].firstName} ${usersDb[4].lastName}`}
 						image={usersDb[4].image?.thumb}
-						to={`${appPages.chatAppPages.to}/${usersDb[4].username}`}>
+						to={`${appPages.AgencyAdmin.chatAppPages.to}/${usersDb[4].username}`}>
 						<NavButton
 							title='New Message'
 							icon='HeroChatBubbleLeftEllipsis'

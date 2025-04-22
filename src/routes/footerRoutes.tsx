@@ -1,4 +1,3 @@
-import React from 'react';
 import { RouteProps } from 'react-router-dom';
 import DefaultFooterTemplate from '../templates/layouts/Footers/DefaultFooter.template';
 import { authPages } from '../config/pages.config';

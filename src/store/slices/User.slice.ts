@@ -108,11 +108,8 @@ const userSlice = createSlice({
 			})
 			.addCase(updateUserProfile.fulfilled, (state, action) => {
 				state.loading = false;
-				localStorage.setItem(
-					'user',
-					JSON.stringify({ ...action.payload, role: 'Agency Admin' }),
-				);
-				state.userProfile = { ...action.payload, role: 'Agency Admin' };
+				localStorage.setItem('user', JSON.stringify(action.payload));
+				state.userProfile = action.payload;
 				toast.success('Profile updated successfully');
 			})
 			.addCase(updateUserProfile.rejected, (state, action) => {
