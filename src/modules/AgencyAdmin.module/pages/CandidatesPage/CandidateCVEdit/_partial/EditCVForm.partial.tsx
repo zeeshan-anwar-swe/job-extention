@@ -21,10 +21,8 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 
 	useEffect(() => {
 		if (cadnidateProfile) {
-			console.log('cadnidateProfile', cadnidateProfile);
-
 			formik.setValues({
-				name: cadnidateProfile.profile?.candidate?.name ?? '',
+				name: cadnidateProfile.profile?.about ?? '',
 				roles: cadnidateProfile.profile?.roles
 					? cadnidateProfile.profile.roles.join(' ')
 					: '',
@@ -44,7 +42,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 				<form className='flex flex-col gap-4' noValidate onSubmit={formik.handleSubmit}>
 					<div className='flex gap-4'>
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
-							<Label htmlFor='name'>Name</Label>
+							<Label htmlFor='name'>About</Label>
 							<Validation
 								isValid={formik.isValid}
 								isTouched={formik.touched.name}
@@ -55,7 +53,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										dimension='lg'
 										id='name'
 										name='name'
-										placeholder='Name'
+										placeholder='About'
 										value={formik.values.name}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}

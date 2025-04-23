@@ -25,7 +25,7 @@ const Balance3Partial = () => {
 						{agencyStatistics.inInterview.count}
 					</div>
 					<div className='flex'>
-						<Balance status='fixed' value='0%'>
+						<Balance status='fixed' value={agencyStatistics.inInterview.change + '%'}>
 							Balance
 						</Balance>
 					</div>

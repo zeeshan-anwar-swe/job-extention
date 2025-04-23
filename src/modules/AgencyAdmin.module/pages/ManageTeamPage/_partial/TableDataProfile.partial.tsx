@@ -23,7 +23,7 @@ const TableDataProfilePartial = ({
 			className='flex items-center justify-center gap-x-6'>
 			<ImageLoaderWraper height='h-14' loading={loading}>
 				<img
-					className='aspect-square w-14 rounded-full'
+					className='aspect-square w-14 rounded-full object-cover'
 					src={imageUrl}
 					alt='cadidate-image'
 				/>

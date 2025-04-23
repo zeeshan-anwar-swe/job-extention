@@ -7,11 +7,25 @@ import TableDataProfilePartial from './TableDataProfile.partial';
 import AssignJobModalPartial from './AssignJob.partial';
 import AssignJobToClientModalPartial from './AssignJobToClientModal.partial';
 import { AssignClientToCandidateModalPartial } from '../../_partial/AssignJobToClientModal.partial';
+import { getCandidateCV } from '../../../../services/candidates';
 
 const HeaderPartial = ({ state }: any) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [clientModal, setClientModal] = useState<boolean>(false);
 	const navgiateTo = useNavigate();
+
+	const handleDownloadCV = async () => {
+		const response = await getCandidateCV(state.id);
+		const url = window.URL.createObjectURL(response.data);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `${state.id}.pdf`;
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		window.URL.revokeObjectURL(url);
+	};
+
 	return (
 		<Card className='flex'>
 			<div className='flex items-center justify-between !gap-2 px-4 py-2 max-xl:flex-col max-xl:items-start'>
@@ -39,7 +53,7 @@ const HeaderPartial = ({ state }: any) => {
 						Send To ATS
 					</Button>
 					<Button
-						onClick={() => navgiateTo('/candidates/cv-edit/12')}
+						onClick={() => navgiateTo('/candidates/cv-edit', { state: state })}
 						rightIcon='HeroPencilSquare'
 						className='h-fit max-sm:w-full'
 						variant='outline'
@@ -47,11 +61,12 @@ const HeaderPartial = ({ state }: any) => {
 						Edit CV
 					</Button>
 					<Button
+						onClick={handleDownloadCV}
 						rightIcon='HeroArrowDown'
 						className='h-fit max-sm:w-full'
 						variant='outline'
 						color='zinc'>
-						Download
+						Download CV
 					</Button>
 				</div>
 			</div>

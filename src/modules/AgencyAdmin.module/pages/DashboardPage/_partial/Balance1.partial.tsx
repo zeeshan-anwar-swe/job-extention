@@ -20,7 +20,7 @@ const Balance1Partial = () => {
 					</div>
 					<div className='text-4xl font-semibold'>{agencyStatistics.jobs.count}</div>
 					<div className='flex'>
-						<Balance status='positive' value='32%'>
+						<Balance status='positive' value={agencyStatistics.jobs.change + '%'}>
 							Balance
 						</Balance>
 					</div>

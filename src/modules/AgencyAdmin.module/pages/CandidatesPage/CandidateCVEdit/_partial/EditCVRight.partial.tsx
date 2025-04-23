@@ -6,14 +6,24 @@ import Card, {
 } from '../../../../../../components/ui/Card';
 import { FormikProps } from 'formik';
 import Button from '../../../../../../components/ui/Button';
-import { profileImageUrlValidationCheck } from '../../../../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../../../../utils/validationCheck';
 import { EditCVFormValues } from '../CandidateCVEdit.page';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
+import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
+import useImageValidation from '../../../../../../hooks/useImageValidation';
 
 export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
-	const { componentLoading } = useSelector((state: RootState) => state.candidates);
+	const { componentLoading, cadnidateProfile } = useSelector(
+		(state: RootState) => state.candidates,
+	);
+
+	const { loading, imageUrl } = useImageValidation(cadnidateProfile?.profile?.candidate?.image);
+
 	return (
 		<Card className='col-span-3 h-full w-full max-lg:col-span-12 '>
 			<CardHeader>
@@ -23,16 +33,18 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 				</div>
 			</CardHeader>
 			<CardBody>
-				<img
-					className='aspect-square w-full rounded-xl object-cover'
-					src={profileImageUrlValidationCheck(
-						'https://www.w3schools.com/html/img_girl.jpg',
-					)}
-					alt=''
-				/>
+				<ImageLoaderWraper loading={loading} height='h-full'>
+					<img
+						className='aspect-square w-full rounded-xl object-cover'
+						src={imageUrl}
+						alt='profile-image'
+					/>
+				</ImageLoaderWraper>
 				<div>
-					<h3>Fleur Cook</h3>
-					<p className='font-light'>fleur.cook@example.com</p>
+					<h3>{textValidationCheck(cadnidateProfile?.profile?.candidate?.name)}</h3>
+					<p className='font-light'>
+						{textValidationCheck(cadnidateProfile?.profile?.candidate?.email)}
+					</p>
 				</div>
 			</CardBody>
 			<CardFooter>

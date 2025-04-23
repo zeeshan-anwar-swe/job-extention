@@ -33,11 +33,8 @@ import { getAgencyStatics } from '../../../../store/slices/Agency/Statics.slice'
 
 const DashboardPage = () => {
 	const { i18n } = useTranslation();
-
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
-
 	const dispatch: AppDispatch = useDispatch();
-
 	const [selectedDate, setSelectedDate] = useState<Range[]>([
 		{
 			startDate: dayjs().startOf('week').add(-1, 'week').toDate(),

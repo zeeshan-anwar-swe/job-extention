@@ -23,7 +23,9 @@ const Balance4Partial = () => {
 						{agencyStatistics.hiredCandidates.count}
 					</div>
 					<div className='flex'>
-						<Balance status='negative' value='41%'>
+						<Balance
+							status='negative'
+							value={agencyStatistics.hiredCandidates.change + '%'}>
 							Balance
 						</Balance>
 					</div>

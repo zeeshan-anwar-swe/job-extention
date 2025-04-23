@@ -71,7 +71,9 @@ const ManageTeamPage = () => {
 				</Subheader>
 				<PageLoader loading={pageLoading} error={error} data={paginatedList}>
 					<Container>
-						<TablePartial />
+						<div className=''>
+							<TablePartial />
+						</div>
 					</Container>
 				</PageLoader>
 				<Pagination
