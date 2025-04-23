@@ -284,8 +284,8 @@ const SignupPage = () => {
 							<span className='text-zinc-400 dark:text-zinc-600'>
 								Already have an account?
 							</span>
-							<Link to='/login' className='hover:text-inherit'>
-								Login
+							<Link to='/signin' className='hover:text-inherit'>
+								Sign In
 							</Link>
 						</span>
 					</div>

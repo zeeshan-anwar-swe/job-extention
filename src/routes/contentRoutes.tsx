@@ -20,6 +20,7 @@ import SettingPage from '../modules/AgencyAdmin.module/pages/SettingPage/Setting
 import ConnectCRMPage from '../modules/AgencyAdmin.module/pages/SettingPage/ConnectCRMPage/ConnectCRM.page';
 import SubcriptionPage from '../modules/AgencyAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
 import PaymentPage from '../modules/AgencyAdmin.module/pages/PaymentPage/Payment.page';
+import SSOWaitingPage from '../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWaiting.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -134,6 +135,8 @@ const contentRoutes: RouteProps[] = [
 	},
 
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
+	{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
+
 	{ path: authPages.signupPage.to, element: <SignupPage /> },
 
 	{ path: '*', element: <NotFoundPage /> },

@@ -1,10 +1,9 @@
-import React from 'react';
 import Button from '../../../../../components/ui/Button';
 
 const LoginWithGoogle = () => {
+	const baseUrl = import.meta.env.VITE_API_BASE_URL;
 	const handleGoogleLogin = () => {
-		// Redirect the user to your backend's Google authentication route
-		window.location.href = '/auth/google'; // Replace with your actual route
+		window.location.href = baseUrl + '/sso/google'; // Replace with your actual route
 	};
 
 	return (

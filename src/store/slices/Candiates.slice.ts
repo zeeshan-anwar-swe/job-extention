@@ -5,8 +5,10 @@ import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandl
 
 interface InitialStateType {
 	candidatesList: any[];
+	csvData: any[];
 	allCadidateList: any[];
 	pageLoading: boolean;
+	modalLoading: boolean;
 	paginationCount: number;
 	error: null | Error | any;
 	componentLoading: boolean;
@@ -15,6 +17,8 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	allCadidateList: [],
+	csvData: [],
+	modalLoading: false,
 	pageLoading: false,
 	componentLoading: false,
 	paginationCount: 0,
@@ -31,6 +35,18 @@ export const getAgencyCandidatesList = createAsyncThunk(
 				`/agency/candidates?page=${page}&limit=${limit}`,
 			);
 			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getAgencyCandidatesCsvList = createAsyncThunk(
+	'candidates/getAgencyCandidatesCsvList',
+	async (_, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('/agency/candidates?fetchAll=true');
+			return response.data.data.rows;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
@@ -149,6 +165,21 @@ export const candidatesSlice = createSlice({
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
+			})
+
+			.addCase(getAgencyCandidatesCsvList.pending, (state) => {
+				state.modalLoading = true;
+				state.error = null;
+			})
+			.addCase(getAgencyCandidatesCsvList.fulfilled, (state, action) => {
+				state.csvData = action.payload;
+				state.modalLoading = false;
+			})
+			.addCase(getAgencyCandidatesCsvList.rejected, (state, action) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				state.modalLoading = false;
 			})
 
 			.addCase(getFilteredCandidates.pending, (state) => {

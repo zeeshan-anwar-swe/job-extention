@@ -16,11 +16,16 @@ import { RootState } from '../../../../store';
 import { useSelector } from 'react-redux';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
+import DownloadCsvComponent from './_partial/CSVDownload.partial';
+import DownloadCsvModal from './_partial/CSVDownload.partial';
+import { useState } from 'react';
 
 const CandidatesPage = () => {
 	const { pageLoading, candidatesList, error, paginationCount } = useSelector(
 		(state: RootState) => state.candidates,
 	);
+
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	return (
 		<>
@@ -52,9 +57,10 @@ const CandidatesPage = () => {
 						<CardSubTitle>View, manage, and track Candidates.</CardSubTitle>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<Button variant='solid' rightIcon='HeroArrowDown'>
-							Download CVS
+						<Button onClick={() => setIsOpen(true)} variant='solid'>
+							Download CSV
 						</Button>
+						<DownloadCsvModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
 					</SubheaderRight>
 				</Subheader>
 

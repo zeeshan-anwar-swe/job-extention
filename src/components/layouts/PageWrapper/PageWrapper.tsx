@@ -1,10 +1,9 @@
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import classNames from 'classnames';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../../context/authContext';
 import { authPages } from '../../../config/pages.config';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
-import toast from 'react-hot-toast';
 
 interface IPageWrapperProps {
 	children: ReactNode;

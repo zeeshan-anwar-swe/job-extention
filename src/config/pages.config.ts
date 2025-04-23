@@ -605,14 +605,20 @@ export const componentsPages = {
 export const authPages = {
 	loginPage: {
 		id: 'loginPage',
-		to: '/login',
-		text: 'Login',
+		to: '/signin',
+		text: 'Sign In',
 		icon: 'HeroArrowRightOnRectangle',
 	},
 	signupPage: {
 		id: 'signupPage',
 		to: '/signup',
 		text: 'Signup',
+		icon: 'HeroArrowRightOnRectangle',
+	},
+	ssoWaitingPage: {
+		id: 'ssoWaitingPage',
+		to: '/login',
+		text: 'SSO Waiting',
 		icon: 'HeroArrowRightOnRectangle',
 	},
 	profilePage: {

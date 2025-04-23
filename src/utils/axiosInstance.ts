@@ -17,7 +17,7 @@ axiosInstance.interceptors.request.use(
 		} else {
 			// If there's no token, redirect to login
 			toast.error('No token found. Please log in.');
-			window.location.href = '/login';
+			window.location.href = '/signin';
 			return Promise.reject(new Error('No token found'));
 		}
 		return config;
@@ -38,7 +38,7 @@ axiosInstance.interceptors.response.use(
 			// If token is expired, redirect to login
 			toast.error('Session expired. Please log in again.');
 			localStorage.removeItem('token'); // Remove expired token
-			window.location.href = '/login';
+			window.location.href = '/signin';
 			return Promise.reject(error);
 		}
 
