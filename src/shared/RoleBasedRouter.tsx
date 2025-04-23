@@ -1,7 +1,7 @@
 import App from '../App/App';
 import { Roles } from '../constants/role.enums';
 import { useAuth } from '../context/authContext';
-import LoginPage from '../pages/LoginPage/Login.page';
+import LoginPage from '../modules/AgencyAdmin.module/pages/LoginPage/Login.page';
 
 const RoleBasedRouter = () => {
 	const { userStorage } = useAuth();

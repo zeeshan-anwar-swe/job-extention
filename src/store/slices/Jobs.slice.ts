@@ -333,7 +333,10 @@ export const jobsSlice = createSlice({
 			})
 			.addCase(changeJobStatus.fulfilled, (state, action) => {
 				state.jobDetails && (state.jobDetails.status = action.payload.status);
-				state.jobsList = updateJobStatusByResponse(state.jobsList, action.payload);
+				state.paginatedList = updateJobStatusByResponse(
+					state.paginatedList,
+					action.payload,
+				);
 				toast.success('JobStatus is updated to ' + action.payload.status);
 			})
 			.addCase(changeJobStatus.rejected, (state, action: any) => {
