@@ -38,8 +38,8 @@ const CandidatesPage = () => {
 					<SubheaderLeft>
 						<SearchPartial />
 						<Button
-							color='zinc'
 							variant='outline'
+							color='zinc'
 							rounded='rounded-full'
 							icon='HeroBarFilter'>
 							Filter
