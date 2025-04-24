@@ -22,16 +22,15 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 	useEffect(() => {
 		if (cadnidateProfile) {
 			formik.setValues({
-				name: cadnidateProfile.profile?.about ?? '',
-				roles: cadnidateProfile.profile?.roles
-					? cadnidateProfile.profile.roles.join(' ')
-					: '',
+				name: cadnidateProfile.profile?.candidate?.name ?? '',
+				roles: cadnidateProfile.profile?.roles ?? [], // Ensure roles is always an array
 				experience: cadnidateProfile?.profile?.experience ?? '',
 				cvText: cadnidateProfile.profile?.cv ?? '',
 				education: cadnidateProfile?.profile?.education ?? '',
 			});
 		}
-	}, [cadnidateProfile]);
+	}, [cadnidateProfile, formik.setValues]); // Added formik.setValues to the dependency array
+
 	return (
 		<Card className='col-span-9 flex flex-col gap-2 max-lg:col-span-12'>
 			<CardHeader className='!block'>
@@ -42,7 +41,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 				<form className='flex flex-col gap-4' noValidate onSubmit={formik.handleSubmit}>
 					<div className='flex gap-4'>
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
-							<Label htmlFor='name'>About</Label>
+							<Label htmlFor='name'>Name</Label>
 							<Validation
 								isValid={formik.isValid}
 								isTouched={formik.touched.name}
@@ -53,7 +52,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										dimension='lg'
 										id='name'
 										name='name'
-										placeholder='About'
+										placeholder='Name'
 										value={formik.values.name}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
@@ -63,22 +62,19 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 						</div>
 
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
-							<Label htmlFor='role'>Role</Label>
-							<Validation
-								isValid={formik.isValid}
-								isTouched={formik.touched.roles}
-								invalidFeedback={formik.errors.roles}
-								validFeedback=''>
-								<Input
-									dimension='lg'
-									id='roles'
-									name='roles'
-									placeholder='Current Role'
-									value={formik.values.roles}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-								/>
-							</Validation>
+							<Label htmlFor='roles'>Roles</Label>
+							<Input
+								dimension='lg'
+								id='roles'
+								name='roles'
+								placeholder='Current Role'
+								onChange={() => {}}
+								value={
+									Array.isArray(formik.values.roles)
+										? formik.values.roles.join(', ')
+										: formik.values.roles
+								}
+							/>
 						</div>
 					</div>
 

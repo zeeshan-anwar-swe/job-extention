@@ -55,7 +55,6 @@ const CandidateCVEditPage = () => {
 			return errors;
 		},
 		onSubmit: (values: EditCVFormValues) => {
-			console.log('Form submitted:', values);
 			const { cvText, roles, experience, education } = formik.values;
 			dispatch(
 				updateCandidateProfile({
@@ -65,6 +64,8 @@ const CandidateCVEditPage = () => {
 			);
 		},
 	});
+
+	console.log('formik:', formik.values);
 
 	useEffect(() => {
 		if (state) {

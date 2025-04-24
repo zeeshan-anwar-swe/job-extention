@@ -9,6 +9,8 @@ import LogoTemplate from '../../../templates/layouts/Logo/Logo.template';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Icon from '../../../components/icon/Icon';
 import Validation from '../../../components/form/Validation';
+import SignUpWithGoogle from './SignupPage/_partial/SignUpWithGoogle';
+import SignUpWitLinkedIn from './SignupPage/_partial/SignUpWithLinkedIn';
 
 type TValues = {
 	email: string;
@@ -81,7 +83,7 @@ const SignupPage = () => {
 	);
 
 	return (
-		<div className='grid h-screen grid-cols-2'>
+		<div className='grid h-screen grid-cols-2 bg-white dark:bg-zinc-800'>
 			<div className='py-16 max-md:hidden'>
 				<div className="relative ml-auto h-full w-8/12 overflow-visible rounded-2xl bg-[url('/images/bear-bg.png')] bg-cover bg-center px-8">
 					<img
@@ -258,26 +260,8 @@ const SignupPage = () => {
 						</div>
 					</form>
 					<div className='grid grid-cols-12 gap-4'>
-						<div className='col-span-12'>
-							<Button
-								icon='CustomGoogle'
-								variant='outline'
-								color='zinc'
-								size='lg'
-								className='w-full'>
-								Sign up with Google
-							</Button>
-						</div>
-						<div className='col-span-12'>
-							<Button
-								icon='CustomLinkedin'
-								variant='outline'
-								color='zinc'
-								size='lg'
-								className='w-full'>
-								Sign up with LinkedIn
-							</Button>
-						</div>
+						<SignUpWithGoogle />
+						<SignUpWitLinkedIn />
 					</div>
 					<div>
 						<span className='flex gap-2 text-sm'>

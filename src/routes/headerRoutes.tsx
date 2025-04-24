@@ -1,14 +1,10 @@
 import { RouteProps } from 'react-router-dom';
-import { appPages, authPages, componentsPages } from '../config/pages.config';
-import ComponentAndTemplateHeaderTemplate from '../templates/layouts/Headers/ComponentAndTemplateHeader.template';
+import { appPages, authPages } from '../config/pages.config';
 
 const headerRoutes: RouteProps[] = [
 	{ path: authPages.loginPage.to, element: null },
 	{ path: authPages.signupPage.to, element: null },
-	{
-		path: `${componentsPages.uiPages.to}/*`,
-		element: <ComponentAndTemplateHeaderTemplate />,
-	},
+
 	{
 		path: `${appPages.AgencyAdmin.candidatesAppPages.to}/*`,
 		element: null,
@@ -45,18 +41,7 @@ const headerRoutes: RouteProps[] = [
 		path: `${appPages.AgencyAdmin.KoalaByteAssistantAppPages.to}/*`,
 		element: null,
 	},
-	{
-		path: `${componentsPages.formPages.to}/*`,
-		element: <ComponentAndTemplateHeaderTemplate />,
-	},
-	{
-		path: `${componentsPages.integratedPages.to}/*`,
-		element: <ComponentAndTemplateHeaderTemplate />,
-	},
-	{
-		path: appPages.AgencyAdmin.projectAppPages.subPages.projectDashboardPage.to,
-		element: null,
-	},
+
 	{
 		path: '',
 		element: null,

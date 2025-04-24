@@ -1,24 +1,24 @@
 import Button from '../../../../../components/ui/Button';
 
-const LoginWitLinkedIn = () => {
+const SignUpWithGoogle = () => {
 	const baseUrl = import.meta.env.VITE_API_BASE_URL;
 	const handleGoogleLogin = () => {
-		window.location.href = baseUrl + '/sso/linkedin';
+		window.location.href = baseUrl + '/sso/google'; // Replace with your actual route
 	};
 
 	return (
 		<div className='col-span-12'>
 			<Button
-				onClick={handleGoogleLogin}
-				icon='CustomLinkedin'
+				icon='CustomGoogle'
 				variant='outline'
 				color='zinc'
 				size='lg'
-				className='w-full'>
-				Sign in with LinkedIn
+				className='w-full'
+				onClick={handleGoogleLogin}>
+				Sign Up with Google
 			</Button>
 		</div>
 	);
 };
 
-export default LoginWitLinkedIn;
+export default SignUpWithGoogle;

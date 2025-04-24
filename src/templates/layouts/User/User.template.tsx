@@ -37,12 +37,6 @@ const UserTemplate = () => {
 			<NavSeparator />
 			<NavItem {...appPages.AgencyAdmin.settingAppPages.subPages.settingPage} />
 
-			<NavItem {...appPages.AgencyAdmin.mailAppPages.subPages.inboxPages}>
-				<Badge variant='solid' className='leading-none'>
-					3
-				</Badge>
-				<NavButton icon='HeroPlusCircle' title='New Mail' onClick={() => {}} />
-			</NavItem>
 			<NavItem text='Logout' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
 		</User>
 	);

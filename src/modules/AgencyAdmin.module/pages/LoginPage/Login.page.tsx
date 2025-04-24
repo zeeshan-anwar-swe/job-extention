@@ -36,7 +36,7 @@ const LoginPage = () => {
 				</div>
 			</div>
 			<div className='flex h-full items-center justify-center max-md:col-span-2 max-md:mx-auto'>
-				<div className='mr-auto flex max-w-sm flex-col gap-8'>
+				<div className='mr-auto flex w-96 max-w-sm flex-col gap-8'>
 					{formType !== 'otp' && (
 						<>
 							<div>

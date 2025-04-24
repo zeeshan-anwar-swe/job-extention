@@ -1,6 +1,6 @@
 import Button from '../../../../../components/ui/Button';
 
-const LoginWitLinkedIn = () => {
+const SignUpWitLinkedIn = () => {
 	const baseUrl = import.meta.env.VITE_API_BASE_URL;
 	const handleGoogleLogin = () => {
 		window.location.href = baseUrl + '/sso/linkedin';
@@ -15,10 +15,10 @@ const LoginWitLinkedIn = () => {
 				color='zinc'
 				size='lg'
 				className='w-full'>
-				Sign in with LinkedIn
+				Sign Up with LinkedIn
 			</Button>
 		</div>
 	);
 };
 
-export default LoginWitLinkedIn;
+export default SignUpWitLinkedIn;

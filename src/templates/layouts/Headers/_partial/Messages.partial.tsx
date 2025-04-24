@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
 import Button from '../../../../components/ui/Button';
 import Avatar from '../../../../components/Avatar';
-import usersDb from '../../../../mocks/db/users.db';
 
 interface IMessageItemProps {
 	image?: string;
@@ -60,36 +59,20 @@ const MessagesPartial = () => {
 					placement='bottom-end'
 					className='flex flex-col flex-wrap divide-y divide-dashed divide-zinc-500/50 p-4 [&>*]:py-4'>
 					<MessageItem
-						image={usersDb[0].image?.thumb}
-						name={`${usersDb[0].firstName} ${usersDb[0].lastName}`}
+						image={''}
+						name={`${'Nahoon'} ${'Banak'}`}
 						isOnline
 						isUnread
 						text='You can find the offer file attached. You can find the offer file attached.'
 						time='1h'
 					/>
 					<MessageItem
-						image={usersDb[7].image?.thumb}
-						name={`${usersDb[7].firstName} ${usersDb[7].lastName}`}
-						isOnline={false}
+						image={''}
+						name={`${'Nahoon'} ${'Banak'}`}
+						isOnline
 						isUnread
 						text='You can find the offer file attached. You can find the offer file attached.'
 						time='1h'
-					/>
-					<MessageItem
-						image={usersDb[5].image?.thumb}
-						name={`${usersDb[5].firstName} ${usersDb[5].lastName}`}
-						isOnline
-						isUnread={false}
-						text='You can find the offer file attached. You can find the offer file attached.'
-						time='3h'
-					/>
-					<MessageItem
-						image={usersDb[3].image?.thumb}
-						name={`${usersDb[3].firstName} ${usersDb[3].lastName}`}
-						isOnline
-						isUnread={false}
-						text='You can find the offer file attached. You can find the offer file attached.'
-						time='3h'
 					/>
 				</DropdownMenu>
 			</Dropdown>
