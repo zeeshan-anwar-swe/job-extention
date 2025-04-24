@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { setResetToken, setFormType } from '../store/slices/ForgotPassword.slice';
 import { AppDispatch } from '../store';
 import { useDispatch } from 'react-redux';
+import { Roles, RolesType } from '../constants/role.enums';
 
 export interface IAuthContextProps {
 	userTokenStorage: string | null;
@@ -17,7 +18,7 @@ export interface IAuthContextProps {
 		about?: string;
 		lastName: string;
 		industry?: string;
-		role: string;
+		role: Roles;
 		image?: string;
 	};
 	onLogin: (username: string, password: string) => Promise<void>;
@@ -205,7 +206,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 				firstName: '',
 				industry: '',
 				lastName: '',
-				role: '',
+				role: Roles.AGENCY_ADMIN,
 				image: '',
 				about: '',
 				email: '',

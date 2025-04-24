@@ -4,10 +4,13 @@ import Card from '../../../../../../components/ui/Card';
 import Button from '../../../../../../components/ui/Button';
 import TableDataProfilePartial from './TableDataProfile.partial';
 
-import AssignJobModalPartial from './AssignJob.partial';
 import AssignJobToClientModalPartial from './AssignJobToClientModal.partial';
 import { AssignClientToCandidateModalPartial } from '../../_partial/AssignJobToClientModal.partial';
 import { getCandidateCV } from '../../../../services/candidates';
+// import { AssignJobModalPartial } from '../../../../components/assignJobModal/AssignJob.partial';
+import { RootState } from '../../../../../../store';
+import { useSelector } from 'react-redux';
+import AssignJobModalPartial from './AssignJob.partial';
 
 const HeaderPartial = ({ state }: any) => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -25,6 +28,12 @@ const HeaderPartial = ({ state }: any) => {
 		a.remove();
 		window.URL.revokeObjectURL(url);
 	};
+
+	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
+
+	console.log({ cadnidateProfile });
+
+	console.log('state', state);
 
 	return (
 		<Card className='flex'>
@@ -70,6 +79,13 @@ const HeaderPartial = ({ state }: any) => {
 					</Button>
 				</div>
 			</div>
+			{/* <AssignJobModalPartial
+				setModal={setModal}
+				title='Assign Job To Candidate'
+				modal={modal}
+				assignTo={state.candidateId}
+			/> */}
+
 			<AssignJobModalPartial setModal={setModal} modal={modal} />
 			<AssignClientToCandidateModalPartial modal={clientModal} setModal={setClientModal} />
 		</Card>

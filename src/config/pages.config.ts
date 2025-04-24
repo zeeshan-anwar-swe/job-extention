@@ -373,6 +373,152 @@ export const appPages = {
 			icon: 'HeroChatBubbleLeftRight',
 		},
 	},
+	Client: {
+		dashboardAppPages: {
+			id: 'dashboardHomeApp',
+			to: '/',
+			text: 'Dashboard',
+			icon: 'HeroSquares2X2',
+		},
+
+		settingAppPages: {
+			id: 'SettingApp',
+			to: '/setting',
+			text: 'Setting',
+			icon: 'HeroCog6Tooth',
+			subPages: {
+				editProfileAppPages: {
+					id: 'editProfileApp',
+					to: '/setting',
+					text: 'Edit Profile',
+					icon: 'HeroUser',
+				},
+				deleteAppPages: {
+					id: 'connectCRMApp',
+					to: '/setting/delete-account',
+					text: 'Delete Account',
+					icon: 'HeroTrash',
+				},
+				subcriptionAppPages: {
+					id: 'subcriptionApp',
+					to: '/setting/subcription',
+					text: 'Subscription',
+					icon: 'HeroCreditCard',
+				},
+			},
+		},
+
+		pamentAppPages: {
+			id: 'pamentApp',
+			to: '/payment',
+			text: 'Payment',
+			icon: 'HeroCreditCard',
+		},
+
+		candidatesAppPages: {
+			id: 'candidatesApp',
+			to: '/candidates',
+			text: 'Candidates',
+			icon: 'HeroUsers',
+			subPages: {
+				cadidateProfileAppPage: {
+					id: 'cadidateProfileApp',
+					to: 'candidates/profile',
+					text: 'Candidate Profile',
+					icon: 'HeroIdentification',
+				},
+				candidateCVEditAppPage: {
+					id: 'cadidateProfileApp',
+					to: 'candidates/cv-edit',
+					text: 'Candidate Profile',
+					icon: 'HeroPencilSquare',
+				},
+			},
+		},
+		jobsAppPages: {
+			id: 'jobsApp',
+			to: '/jobs',
+			text: 'Jobs',
+			icon: 'HeroDocumentText',
+			subPages: {
+				viewCadidatesAppPages: {
+					id: 'jobsViewCadidatesApp',
+					to: '/jobs/view-cadidates',
+					text: 'View Cadidates',
+					icon: 'HeroUser',
+				},
+				createJobsAppPages: {
+					id: 'jobsCreateJobsApp',
+					to: '/jobs/create-job',
+					text: 'Create Job',
+					icon: 'Heroplus',
+				},
+			},
+		},
+
+		recruiterAppPages: {
+			id: 'recruiterApp',
+			to: '/recruiter',
+			text: 'Recruiter',
+			icon: 'HeroBriefcase',
+			subPages: {
+				recruiterPage: {
+					id: 'recruiterPage',
+					to: '/recruiter',
+					text: 'Recruiter',
+					icon: 'HeroBriefcase',
+				},
+				recruiterProfilePage: {
+					id: 'recruitmentProfileApp',
+					to: '/recruiter/profile',
+					text: 'Recruitment Profile',
+					icon: 'HeroIdentification',
+				},
+			},
+		},
+
+		reportAndAnalyticsAppPages: {
+			id: 'reportAndAnalyticsApp',
+			to: '/report-and-analytics',
+			text: 'Report & Analytics',
+			icon: 'HeroPresentationChartBar',
+		},
+
+		aiInterviewAppPages: {
+			id: 'aiInterviewApp',
+			to: '/ai-interview',
+			text: 'AI Interview',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+
+		KoalaByteAssistantAppPages: {
+			id: 'KoalaByteAssistantApp',
+			to: '/koalabyte-assistant',
+			text: 'KoalaByte Assistant',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+
+		chatAppPages: {
+			id: 'chatApp',
+			to: '/chat',
+			text: 'Chat',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+		mailAppPages: {
+			id: 'mailApp',
+			to: '/mail',
+			text: 'Mail',
+			icon: 'HeroEnvelope',
+			subPages: {
+				inboxPages: {
+					id: 'inboxPages',
+					to: '/mail/inbox',
+					text: 'Inbox',
+					icon: 'HeroEnvelope',
+				},
+			},
+		},
+	},
 };
 
 export const componentsPages = {

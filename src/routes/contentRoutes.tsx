@@ -30,116 +30,569 @@ const CandidatesPage = lazy(
 );
 const JobsPage = lazy(() => import('../modules/AgencyAdmin.module/pages/Jobs/Jobs.page'));
 
-const contentRoutes: RouteProps[] = [
-	{
-		path: appPages.AgencyAdmin.dashboardAppPages.to,
-		element: <DashboardPage />,
-	},
+interface ContentRoutesType {
+	Admin: RouteProps[];
+	SuperAdmin: RouteProps[];
+	AgencyAdmin: RouteProps[];
+	Client: RouteProps[];
+	Team: RouteProps[];
+}
 
-	{
-		path: appPages.AgencyAdmin.pamentAppPages.to,
-		element: <PaymentPage />,
-	},
+const contentRoutes: ContentRoutesType = {
+	AgencyAdmin: [
+		{
+			path: appPages.AgencyAdmin.dashboardAppPages.to,
+			element: <DashboardPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.candidatesAppPages.to,
-		element: <CandidatesPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.pamentAppPages.to,
+			element: <PaymentPage />,
+		},
 
-	{
-		path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
-		element: <CandidatesProfilePage />,
-	},
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.to,
+			element: <CandidatesPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
-		element: <CandidateCVEditPage />,
-	},
+		{
+			path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
+			element: <CandidatesProfilePage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.jobsAppPages.to,
-		element: <JobsPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			element: <CandidateCVEditPage />,
+		},
 
-	{
-		path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
-		element: <JobsViewCandidatesPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.to,
+			element: <JobsPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
-		element: <JobsCreateNewJobPage />,
-	},
+		{
+			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
+			element: <JobsViewCandidatesPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.clientsAppPages.to,
-		element: <ClientsPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			element: <JobsCreateNewJobPage />,
+		},
 
-	{
-		path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
-		element: <ClientProfilePage />,
-	},
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.to,
+			element: <ClientsPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
-		element: <ClientProfilePage />,
-	},
+		{
+			path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+			element: <ClientProfilePage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.taskBoardAppPages.to,
-		element: <TaskboardPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			element: <ClientProfilePage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.settingAppPages.to,
-		element: <SettingPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.taskBoardAppPages.to,
+			element: <TaskboardPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
-		element: <ConnectCRMPage />,
-	},
-	{
-		path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
-		element: <SubcriptionPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.to,
+			element: <SettingPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
-		element: <ReportAndAnalyticsPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			element: <ConnectCRMPage />,
+		},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			element: <SubcriptionPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
-		element: <KoolabyteAssistantPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
+			element: <ReportAndAnalyticsPage />,
+		},
 
-	{
-		path: appPages.AgencyAdmin.manageTeamAppPages.to,
-		element: <ManageTeamPage />,
-	},
+		{
+			path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
+			element: <KoolabyteAssistantPage />,
+		},
 
-	{
-		path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
-		element: <TeammateProfilePage />,
-	},
-	{
-		path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
-		element: <TeammateProfilePage />,
-	},
+		{
+			path: appPages.AgencyAdmin.manageTeamAppPages.to,
+			element: <ManageTeamPage />,
+		},
 
-	{
-		path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
-		element: <ChatPage />,
-	},
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+			element: <TeammateProfilePage />,
+		},
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+			element: <TeammateProfilePage />,
+		},
 
-	{ path: authPages.loginPage.to, element: <LoginPage /> },
-	{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
+			element: <ChatPage />,
+		},
 
-	{ path: authPages.signupPage.to, element: <SignupPage /> },
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 
-	{ path: '*', element: <NotFoundPage /> },
-];
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
 
+		{ path: '*', element: <NotFoundPage /> },
+	],
+	Client: [
+		{
+			path: appPages.AgencyAdmin.dashboardAppPages.to,
+			element: <DashboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.pamentAppPages.to,
+			element: <PaymentPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.to,
+			element: <CandidatesPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
+			element: <CandidatesProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			element: <CandidateCVEditPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.to,
+			element: <JobsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
+			element: <JobsViewCandidatesPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			element: <JobsCreateNewJobPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.to,
+			element: <ClientsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.taskBoardAppPages.to,
+			element: <TaskboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.to,
+			element: <SettingPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			element: <ConnectCRMPage />,
+		},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			element: <SubcriptionPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
+			element: <ReportAndAnalyticsPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
+			element: <KoolabyteAssistantPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.manageTeamAppPages.to,
+			element: <ManageTeamPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+			element: <TeammateProfilePage />,
+		},
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+			element: <TeammateProfilePage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
+			element: <ChatPage />,
+		},
+
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
+
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
+
+		{ path: '*', element: <NotFoundPage /> },
+	],
+	Team: [
+		{
+			path: appPages.AgencyAdmin.dashboardAppPages.to,
+			element: <DashboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.pamentAppPages.to,
+			element: <PaymentPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.to,
+			element: <CandidatesPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
+			element: <CandidatesProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			element: <CandidateCVEditPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.to,
+			element: <JobsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
+			element: <JobsViewCandidatesPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			element: <JobsCreateNewJobPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.to,
+			element: <ClientsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.taskBoardAppPages.to,
+			element: <TaskboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.to,
+			element: <SettingPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			element: <ConnectCRMPage />,
+		},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			element: <SubcriptionPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
+			element: <ReportAndAnalyticsPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
+			element: <KoolabyteAssistantPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.manageTeamAppPages.to,
+			element: <ManageTeamPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+			element: <TeammateProfilePage />,
+		},
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+			element: <TeammateProfilePage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
+			element: <ChatPage />,
+		},
+
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
+
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
+
+		{ path: '*', element: <NotFoundPage /> },
+	],
+	Admin: [
+		{
+			path: appPages.AgencyAdmin.dashboardAppPages.to,
+			element: <DashboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.pamentAppPages.to,
+			element: <PaymentPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.to,
+			element: <CandidatesPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
+			element: <CandidatesProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			element: <CandidateCVEditPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.to,
+			element: <JobsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
+			element: <JobsViewCandidatesPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			element: <JobsCreateNewJobPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.to,
+			element: <ClientsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.taskBoardAppPages.to,
+			element: <TaskboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.to,
+			element: <SettingPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			element: <ConnectCRMPage />,
+		},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			element: <SubcriptionPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
+			element: <ReportAndAnalyticsPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
+			element: <KoolabyteAssistantPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.manageTeamAppPages.to,
+			element: <ManageTeamPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+			element: <TeammateProfilePage />,
+		},
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+			element: <TeammateProfilePage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
+			element: <ChatPage />,
+		},
+
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
+
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
+
+		{ path: '*', element: <NotFoundPage /> },
+	],
+	SuperAdmin: [
+		{
+			path: appPages.AgencyAdmin.dashboardAppPages.to,
+			element: <DashboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.pamentAppPages.to,
+			element: <PaymentPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.to,
+			element: <CandidatesPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to}`,
+			element: <CandidatesProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			element: <CandidateCVEditPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.to,
+			element: <JobsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
+			element: <JobsViewCandidatesPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			element: <JobsCreateNewJobPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.to,
+			element: <ClientsPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.taskBoardAppPages.to,
+			element: <TaskboardPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.to,
+			element: <SettingPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			element: <ConnectCRMPage />,
+		},
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			element: <SubcriptionPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.reportAndAnalyticsAppPages.to,
+			element: <ReportAndAnalyticsPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.KoalaByteAssistantAppPages.to,
+			element: <KoolabyteAssistantPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.manageTeamAppPages.to,
+			element: <ManageTeamPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}/:id`,
+			element: <TeammateProfilePage />,
+		},
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.teammateProfileAppPages.to}`,
+			element: <TeammateProfilePage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
+			element: <ChatPage />,
+		},
+
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
+
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
+
+		{ path: '*', element: <NotFoundPage /> },
+	],
+};
 export default contentRoutes;

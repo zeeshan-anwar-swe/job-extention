@@ -41,6 +41,23 @@ export const getAgencyCandidatesList = createAsyncThunk(
 	},
 );
 
+export const getSearchedAgencyCandidatesList = createAsyncThunk(
+	'candidates/getSearchedAgencyCandidatesList',
+	async (
+		{ page, limit, search }: { page: number; limit: number; search: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.get(
+				`/agency/candidates?page=${page}&limit=${limit}&search=${search}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const getAgencyCandidatesCsvList = createAsyncThunk(
 	'candidates/getAgencyCandidatesCsvList',
 	async (_, { rejectWithValue }) => {
@@ -96,11 +113,11 @@ export const getAllCandidatesList = createAsyncThunk(
 
 export const assignJobToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
-	async ({ jobId, candidateId }: { jobId: string; candidateId: string }, { rejectWithValue }) => {
+	async ({ jobId, assignTo }: { jobId: string; assignTo: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/candidate/assign-job', {
 				jobId,
-				candidateId,
+				candidateId: assignTo,
 			});
 			return response.data.data;
 		} catch (error: any) {
@@ -161,6 +178,22 @@ export const candidatesSlice = createSlice({
 				state.paginationCount = action.payload.count;
 			})
 			.addCase(getAgencyCandidatesList.rejected, (state, action) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+			})
+
+			.addCase(getSearchedAgencyCandidatesList.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getSearchedAgencyCandidatesList.fulfilled, (state, action) => {
+				state.candidatesList = action.payload.rows;
+				state.paginationCount = action.payload.count;
+				state.pageLoading = false;
+			})
+			.addCase(getSearchedAgencyCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

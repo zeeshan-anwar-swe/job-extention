@@ -19,7 +19,7 @@ const TablePartial = () => {
 				</Tr>
 			</THead>
 			<TBody>
-				{jobDetails?.candidateJobProfiles.map((candidate: any) => (
+				{jobDetails?.candidateJobProfiles?.map((candidate: any) => (
 					<Tr key={candidate.id}>
 						<Td>
 							<TableDataProfilePartial

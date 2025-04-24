@@ -9,13 +9,12 @@ import { assignJobToCandidate } from '../../../../../../store/slices/Candiates.s
 const AssignJobModalListItemPartial = ({ job }: { job: JobDetailsType }) => {
 	const [loading, setLoading] = React.useState(false);
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
-	console.log({ cadnidateProfile });
 
 	const dispatch: AppDispatch = useDispatch();
 	const handleAssignClientToJob = async () => {
 		setLoading(true);
 		await dispatch(
-			assignJobToCandidate({ candidateId: cadnidateProfile.profile.id, jobId: job.id }),
+			assignJobToCandidate({ assignTo: cadnidateProfile.profile.id, jobId: job.id }),
 		);
 		setLoading(false);
 	};

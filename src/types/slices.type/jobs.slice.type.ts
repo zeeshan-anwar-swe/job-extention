@@ -54,5 +54,6 @@ export interface JobDetailsType {
 	skills: string[];
 	team: Team;
 	client: Client;
-	candidateJobProfiles: CandidateJobProfile[];
+	candidateJobProfiles?: CandidateJobProfile[];
+	// appliedCandidates?: CandidateJobProfile[];
 }

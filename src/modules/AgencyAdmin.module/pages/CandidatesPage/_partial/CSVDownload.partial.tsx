@@ -43,6 +43,11 @@ const DataToCsvService = () => {
 			const dataRow = headerList.map((header) => {
 				let value = objArray[i][header];
 
+				// Handle null or undefined values
+				if (value === null || value === undefined) {
+					return 'null';
+				}
+
 				// Manually format the 'invitedOn' date
 				if (header === 'invitedOn' && value) {
 					const date = new Date(value);
@@ -125,8 +130,13 @@ const DownloadCsvModal = ({ isOpen, onClose }: any) => {
 			// Get all unique keys from the first object in the array
 			const headers = Object.keys(csvData[0]);
 
+			// Filter out 'id' and 'candidateId' from the headers
+			const filteredHeaders = headers.filter(
+				(header) => header !== 'id' && header !== 'candidateId',
+			);
+
 			// Adjust headers for nested 'candidate' object
-			const updatedHeaders = headers
+			const updatedHeaders = filteredHeaders
 				.map((header) => {
 					if (header === 'candidate') {
 						return ['name', 'email'].map((key) => `candidate.${key}`).flat();
@@ -142,8 +152,8 @@ const DownloadCsvModal = ({ isOpen, onClose }: any) => {
 					if (key === 'candidate' && item.candidate) {
 						newItem['candidate.name'] = item.candidate.name;
 						newItem['candidate.email'] = item.candidate.email;
-					} else {
-						newItem[key] = item[key];
+					} else if (key !== 'id' && key !== 'candidateId') {
+						newItem[key] = item[key] ?? 'null'; // Use nullish coalescing operator
 					}
 				}
 				return newItem;

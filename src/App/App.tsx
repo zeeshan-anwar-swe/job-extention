@@ -20,7 +20,6 @@ const App = () => {
 	getOS();
 
 	const { userTokenStorage } = useAuth();
-
 	const { fontSize } = useFontSize();
 	dayjs.extend(localizedFormat);
 
