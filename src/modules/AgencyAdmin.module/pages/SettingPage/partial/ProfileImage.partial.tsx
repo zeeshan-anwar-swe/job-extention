@@ -7,11 +7,11 @@ import { useAuth } from '../../../../../context/authContext';
 import useImageValidation from '../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
 
-export const ProfileImagePartial = ({ formik }: { formik: FormikProps<UserProfileDataType> }) => {
+export const ProfileImagePartial = ({ formik, initialImage }: { initialImage?:string ;formik: FormikProps<UserProfileDataType> }) => {
 	const { userStorage } = useAuth();
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-	const { loading, imageUrl } = useImageValidation(userStorage.image);
+	const { loading, imageUrl } = useImageValidation(initialImage);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];

@@ -9,7 +9,6 @@ import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
 import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
-import { getAllCandidatesList } from '../store/slices/Candiates.slice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { getAgencyClientsList } from '../store/slices/Agency/Client.slice';
@@ -28,7 +27,6 @@ const App = () => {
 			dispatch(getAllJobsList());
 			dispatch(getAgencyClientsList());
 			dispatch(getTeamlistForJobs());
-			dispatch(getAllCandidatesList());
 		}
 	}, [userTokenStorage]);
 

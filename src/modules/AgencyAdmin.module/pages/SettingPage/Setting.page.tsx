@@ -33,18 +33,20 @@ export type UserProfileDataType = {
 
 const SettingPage = () => {
 	const { userProfile, loading } = useSelector((state: RootState) => state.user);
+	console.log({userProfile});
+	
 
-	const { onLogout, userStorage } = useAuth();
+	const { onLogout } = useAuth();
 
 	const dispatch: AppDispatch = useDispatch();
 
 	const formik = useFormik({
 		initialValues: {
-			firstName: userStorage.firstName,
-			email: userStorage.email,
-			lastName: userStorage.lastName,
-			industry: userStorage.industry ?? '',
-			about: userStorage.about ?? '',
+			firstName: '',
+			email: '',
+			lastName: '',
+			industry: '',
+			about: '',
 			image: null,
 		},
 		validate: (values: UserProfileDataType) => {
@@ -83,11 +85,17 @@ const SettingPage = () => {
 		},
 	});
 
-	useEffect(() => {
-		if (userProfile.email === '') {
-			dispatch(getMyProfile());
+	useEffect(()=>{
+		if(userProfile){
+			formik.setFieldValue('firstName', userProfile?.firstName??"")
+			formik.setFieldValue('lastName', userProfile?.lastName??"")
+			formik.setFieldValue('industry', userProfile?.industry??"")
+			formik.setFieldValue('about', userProfile?.about??"")
+			formik.setFieldValue('email', userProfile?.email??"")
 		}
-	}, []);
+	},[userProfile])
+
+
 
 	return (
 		<>
@@ -106,7 +114,7 @@ const SettingPage = () => {
 						<Card className='col-span-8 !bg-zinc-100  dark:!bg-zinc-950 max-md:col-span-12 '>
 							<CardBody className='!flex gap-4 max-md:!flex-col'>
 								<form className='flex w-full gap-4'>
-									<ProfileImagePartial formik={formik} />
+									<ProfileImagePartial initialImage={userProfile?.image} formik={formik} />
 
 									<div className='flex w-full flex-1 flex-col gap-4 '>
 										<div className='flex  gap-4 max-md:flex-col'>

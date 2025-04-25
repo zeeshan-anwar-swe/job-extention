@@ -5,6 +5,7 @@ import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandl
 
 interface InitialStateType {
 	candidatesList: any[];
+	filteredCandidate: any[];
 	csvData: any[];
 	allCadidateList: any[];
 	pageLoading: boolean;
@@ -17,6 +18,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	allCadidateList: [],
+	filteredCandidate: [],
 	csvData: [],
 	modalLoading: false,
 	pageLoading: false,
@@ -74,15 +76,22 @@ export const getFilteredCandidates = createAsyncThunk(
 	'candidates/getFilteredCandidates',
 	async (
 		{
+			page,
+			limit,
 			location = '',
 			experiences = [],
 			skills = [],
-		}: { location?: string; experiences?: number[]; skills?: string[] },
+		}: {
+			page: number;
+			limit: number;
+			location?: string;
+			experiences?: number[];
+			skills?: string[];
+		},
 		{ rejectWithValue },
 	) => {
 		try {
-			const url = '/candidate/list';
-			const response = await axiosInstance.post('/candidate/list', {
+			const response = await axiosInstance.post(`/candidate/list?page=${page}&limit=${limit}`, {
 				location,
 				experiences,
 				skills,
@@ -101,10 +110,23 @@ export const getFilteredCandidates = createAsyncThunk(
 
 export const getAllCandidatesList = createAsyncThunk(
 	'candidates/getAllCandidatesList',
-	async (_, { rejectWithValue }) => {
+	async (
+		{
+			page,
+			limit,
+			
+		}: {
+			page: number;
+			limit: number;
+		
+		},
+		{ rejectWithValue },
+	) => {
 		try {
-			const response = await axiosInstance.post(`/candidate/list`);
-			return response.data.data.rows;
+			const response = await axiosInstance.post(
+				`/candidate/list?page=${page}&limit=${limit}`,
+			);
+			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
@@ -232,8 +254,10 @@ export const candidatesSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(getFilteredCandidates.fulfilled, (state, action) => {
+				state.allCadidateList= []
+				state.filteredCandidate = action.payload.rows;
+				state.paginationCount = action.payload.count;
 				state.pageLoading = false;
-				state.candidatesList = action.payload;
 			})
 			.addCase(getFilteredCandidates.rejected, (state, action) => {
 				state.pageLoading = false;
@@ -247,8 +271,10 @@ export const candidatesSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(getAllCandidatesList.fulfilled, (state, action) => {
+				state.filteredCandidate=[]
+				state.allCadidateList = action.payload.rows;
+				state.paginationCount = action.payload.count;
 				state.pageLoading = false;
-				state.allCadidateList = action.payload;
 			})
 			.addCase(getAllCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;

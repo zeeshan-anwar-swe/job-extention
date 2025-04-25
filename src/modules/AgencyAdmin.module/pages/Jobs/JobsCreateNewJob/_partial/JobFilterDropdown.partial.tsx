@@ -35,16 +35,16 @@ const JobFilterDropdownPartial = () => {
 	});
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const experience: ExperienceItem[] = [
-		{ title: '0-1 Year', value: 1 },
-		{ title: '1+ Year', value: 2 },
-		{ title: '2 Year', value: 3 },
-		{ title: '3 Year', value: 4 },
-		{ title: '4 Year', value: 5 },
-		{ title: '5 Year', value: 6 },
-		{ title: '6 Year', value: 7 },
-		{ title: '7 Year', value: 8 },
-		{ title: '8 Year', value: 9 },
-		{ title: '9 Year', value: 10 },
+		{ title: '1 Year', value: 1 },
+		{ title: '2 Year', value: 2 },
+		{ title: '3 Year', value: 3 },
+		{ title: '4 Year', value: 4 },
+		{ title: '5 Year', value: 5 },
+		{ title: '6 Year', value: 6 },
+		{ title: '7 Year', value: 7 },
+		{ title: '8 Year', value: 8 },
+		{ title: '9 Year', value: 9 },
+		{ title: '10 Year', value: 10 },
 		{ title: '10+ Year', value: 11 },
 	];
 
@@ -78,7 +78,7 @@ const JobFilterDropdownPartial = () => {
 
 	const applyFilter = () => {
 		const { location, experiences, skills } = formData;
-		dispatch(getFilteredCandidates({ location, experiences, skills }));
+		dispatch(getFilteredCandidates({page:1, limit:10, location, experiences, skills }));
 		setDropdownOpen(false);
 	};
 
