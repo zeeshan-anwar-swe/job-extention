@@ -1,27 +1,21 @@
-import { useState, KeyboardEvent } from 'react';
-import SelectReact from '../../../components/form/SelectReact';
+import { useState, KeyboardEvent, useEffect } from 'react';
+import SelectReact, { TSelectOptions } from '../../../components/form/SelectReact';
 import { FormikProps } from 'formik';
 
-const MultipleValueSelectorPartial = ({
-	id,
-	name,
-	formik,
-}: {
-	id: string;
-	name: string;
-	formik: FormikProps<any>;
-}) => {
+
+const MultipleValueSelector = ({ id, name, formik, initialValues }: { initialValues:any[]; name:string; id: string; formik:FormikProps<any> }) => {
+	const [formData, setFormData] = useState<TSelectOptions[]>(initialValues);
 	const [inputValue, setInputValue] = useState<string>('');
 	const [selectInputValue, setSelectInputValue] = useState<string>(''); // Local state for SelectReact input
 
+
+	
 	const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && inputValue.trim()) {
 			event.preventDefault();
 			const newSkill = inputValue.trim();
-			const updatedSkills = [formik.values[name], newSkill];
-
-			formik.setFieldValue(name, updatedSkills);
-
+			const updatedSkills = [...formData, newSkill];
+			setFormData(updatedSkills as any);
 			setInputValue('');
 			setSelectInputValue(''); // Clear the SelectReact input
 		}
@@ -29,9 +23,16 @@ const MultipleValueSelectorPartial = ({
 
 	const handleChange = (selectedOptions: any) => {
 		const selectedValues = selectedOptions.map((option: any) => option.value);
-
-		formik.setFieldValue(name, selectedValues);
+		setFormData(selectedValues);
 	};
+
+	
+
+	useEffect(()=>{
+		formik.setFieldValue(name,formData)
+		
+	},[formData])
+
 
 	return (
 		<div className='w-full'>
@@ -40,23 +41,20 @@ const MultipleValueSelectorPartial = ({
 					DropdownIndicator: () => null,
 					IndicatorSeparator: () => null,
 				}}
-				options={[
-					{ label: 'React', value: 'React' },
-					{ label: 'Node', value: 'Node' },
-					{ label: 'Tailwind', value: 'Tailwind' },
-				]}
+				noOptionsMessage={() => null}
+				
 				isMulti
 				isClearable
 				isSearchable
 				id={id}
-				name={name}
-				placeholder='Write skill and press enter'
+				name={id}
+				placeholder='Write and press enter'
 				onInputChange={(value: string) => {
 					setInputValue(value);
 					setSelectInputValue(value); // Update local input state
 				}}
 				onKeyDown={handleKeyDown}
-				value={formik.values[name].map((skill: any) => ({ value: skill, label: skill }))}
+				value={formData.map((skill: any) => ({ value: skill, label: skill }))}
 				onChange={handleChange}
 				inputValue={selectInputValue} // Pass the local input value
 			/>
@@ -64,4 +62,4 @@ const MultipleValueSelectorPartial = ({
 	);
 };
 
-export default MultipleValueSelectorPartial;
+export default MultipleValueSelector;

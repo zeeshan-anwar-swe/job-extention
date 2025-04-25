@@ -15,21 +15,22 @@ import { EditCVFormValues } from '../CandidateCVEdit.page';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
 import { useEffect } from 'react';
+import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
 
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
 
+
+
 	useEffect(() => {
 		if (cadnidateProfile) {
-			formik.setValues({
-				name: cadnidateProfile.profile?.candidate?.name ?? '',
-				roles: cadnidateProfile.profile?.roles ?? [], // Ensure roles is always an array
-				experience: cadnidateProfile?.profile?.experience ?? '',
-				cvText: cadnidateProfile.profile?.cv ?? '',
-				education: cadnidateProfile?.profile?.education ?? '',
-			});
+			formik.setFieldValue("roles", cadnidateProfile.profile?.roles?? [])
+			formik.setFieldValue("name", cadnidateProfile.profile?.candidate?.name ?? '')
+			formik.setFieldValue("experience",  cadnidateProfile?.profile?.experience ?? '')
+			formik.setFieldValue("cvText", cadnidateProfile.profile?.cv ?? '')
+			formik.setFieldValue("education", cadnidateProfile?.profile?.education ?? '')
 		}
-	}, [cadnidateProfile, formik.setValues]); // Added formik.setValues to the dependency array
+	}, [cadnidateProfile,formik.setValues]); // Added formik.setValues to the dependency array
 
 	return (
 		<Card className='col-span-9 flex flex-col gap-2 max-lg:col-span-12'>
@@ -54,7 +55,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										name='name'
 										placeholder='Name'
 										value={formik.values.name}
-										onChange={formik.handleChange}
+										onChange={()=>{}}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>
@@ -63,18 +64,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
 							<Label htmlFor='roles'>Roles</Label>
-							<Input
-								dimension='lg'
-								id='roles'
-								name='roles'
-								placeholder='Current Role'
-								onChange={() => {}}
-								value={
-									Array.isArray(formik.values.roles)
-										? formik.values.roles.join(', ')
-										: formik.values.roles
-								}
-							/>
+							<MultipleValueSelectorPartial initialValues={cadnidateProfile?.profile?.roles?? []} id='rolesForEditCV' name='roles' formik={formik}/>
 						</div>
 					</div>
 

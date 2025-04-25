@@ -20,7 +20,7 @@ import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 
 export type EditCVFormValues = {
 	name: string;
-	roles: string;
+	roles: string[];
 	experience: number;
 	education: string;
 	cvText: string;
@@ -37,7 +37,7 @@ const CandidateCVEditPage = () => {
 	const formik = useFormik({
 		initialValues: {
 			name: '',
-			roles: '',
+			roles: [],
 			experience: 0,
 			education: '',
 			cvText: '',
@@ -55,17 +55,17 @@ const CandidateCVEditPage = () => {
 			return errors;
 		},
 		onSubmit: (values: EditCVFormValues) => {
-			const { cvText, roles, experience, education } = formik.values;
+			const { cvText, roles, experience, education, name } = values;
 			dispatch(
 				updateCandidateProfile({
 					candidateId: state.id,
-					payload: { cv: cvText, roles: [values.roles], experience, education },
+					payload: { cv: cvText, roles, experience, education },
 				}),
 			);
 		},
 	});
 
-	console.log('formik:', formik.values);
+	console.log({state});
 
 	useEffect(() => {
 		if (state) {
@@ -74,6 +74,9 @@ const CandidateCVEditPage = () => {
 			navigateTo('/candidates');
 		}
 	}, [state]);
+
+	console.log({roles:formik.values.roles});
+	
 
 	return (
 		<>
@@ -97,7 +100,7 @@ const CandidateCVEditPage = () => {
 				</Subheader>
 				<PageLoader loading={pageLoading} data={cadnidateProfile} error={error}>
 					<Container className='grid grid-cols-12 gap-4'>
-						<EditCVFormPartial formik={formik} />
+						<EditCVFormPartial  formik={formik} />
 						<EditCVRightPartial formik={formik} />
 					</Container>
 				</PageLoader>

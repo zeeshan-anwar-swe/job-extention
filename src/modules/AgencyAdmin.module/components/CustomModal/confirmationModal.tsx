@@ -1,22 +1,25 @@
-import Button from '../ui/Button';
-import Modal, { ModalBody, ModalFooter, ModalFooterChild, ModalHeader } from '../ui//Modal';
+import Button from '../../../../components/ui/Button';
+import Modal, {
+	ModalBody,
+	ModalFooter,
+	ModalFooterChild,
+	ModalHeader,
+} from '../../../../components/ui/Modal';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { CardSubTitle } from '../ui/Card';
-import { useEffect, useState } from 'react';
+import { AppDispatch} from '../../../../store';
+import { CardSubTitle } from '../../../../components/ui/Card';
+import { useState } from 'react';
 
-const ConfirmationModal = ({
+export const ConfirmationModal = ({
 	modal,
 	setModal,
 	title = 'Assign Job',
 	action,
-	onCloseAction,
 }: {
 	title: string;
 	modal: boolean;
 	setModal: any;
 	action: any;
-	onCloseAction?: any;
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -24,14 +27,9 @@ const ConfirmationModal = ({
 
 	const handleConfirmation = async () => {
 		setLoading(true);
-		await dispatch(action);
-		if(onCloseAction){
-			await dispatch(onCloseAction);
-
-		}
+		dispatch(action);
+		setLoading(false);
 	};
-
-
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
@@ -50,11 +48,7 @@ const ConfirmationModal = ({
 						color='zinc'>
 						Cancel
 					</Button>
-					<Button
-						isLoading={loading}
-						onClick={handleConfirmation}
-						className='w-full'
-						variant='solid'>
+					<Button isLoading={loading} onClick={handleConfirmation} className='w-full' variant='solid'>
 						Confirm
 					</Button>
 				</ModalFooterChild>
@@ -62,5 +56,3 @@ const ConfirmationModal = ({
 		</Modal>
 	);
 };
-
-export default ConfirmationModal;

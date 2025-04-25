@@ -140,6 +140,18 @@ export const getCandidateProfile = createAsyncThunk(
 	},
 );
 
+export const removeAgencyCandidate = createAsyncThunk(
+	'candidates/removeAgencyCandidate',
+	async (candidateId: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.delete('candidate/remove/' + candidateId);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const updateCandidateProfile = createAsyncThunk(
 	'candidates/updateCandidateProfile',
 	async (
@@ -282,6 +294,22 @@ export const candidatesSlice = createSlice({
 				toast.success('Job is assigned successfully');
 			})
 			.addCase(assignJobToCandidate.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(
+					(action.payload.message as string) ||
+						'Unknown error occurred while inviting client',
+				);
+			})
+
+			.addCase(removeAgencyCandidate.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(removeAgencyCandidate.fulfilled, () => {
+				toast.success('cadndidate is removed');
+			})
+			.addCase(removeAgencyCandidate.rejected, (state, action: any) => {
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};

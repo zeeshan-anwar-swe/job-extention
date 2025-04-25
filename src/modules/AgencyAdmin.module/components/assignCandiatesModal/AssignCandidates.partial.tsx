@@ -6,15 +6,15 @@ import Modal, {
 	ModalHeader,
 } from '../../../../components/ui/Modal';
 import SearchPartial from './Search.partial';
-import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
+import { AssignCandidatesModalListItemPartial } from './AssignCandidatesModalListItem.partial';
 import { JobDetailsType } from '../../../../types/slices.type/jobs.slice.type';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store';
 import { getJobsList } from '../../../../store/slices/Jobs.slice';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 
-export const AssignJobModalPartial = ({
+export const AssignCandidatesModal = ({
 	modal,
 	setModal,
 	title = 'Assign Job',
@@ -25,6 +25,7 @@ export const AssignJobModalPartial = ({
 	setModal: any;
 	assignTo: string;
 }) => {
+	const [assignedCandidates, setAssignedCadidates] = useState<any[]>([]);
 	const { paginatedList, pageLoading, error } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
@@ -32,7 +33,7 @@ export const AssignJobModalPartial = ({
 
 	useEffect(() => {
 		if (modal) {
-			dispatch(getJobsList({ limit: 10, page: 1 }));
+			dispatch(getJobsList({ limit: 100, page: 1 }));
 		}
 	}, [modal]);
 
@@ -45,7 +46,7 @@ export const AssignJobModalPartial = ({
 			<PageLoader data={paginatedList} loading={pageLoading} error={error}>
 				<ModalBody className='flex w-full flex-col gap-4'>
 					{paginatedList.map((job: JobDetailsType) => (
-						<AssignJobModalListItemPartial assignTo={assignTo} job={job} key={job.id} />
+						<AssignCandidatesModalListItemPartial assignTo={assignTo} job={job} key={job.id} />
 					))}
 				</ModalBody>
 			</PageLoader>
