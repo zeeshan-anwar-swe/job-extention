@@ -8,21 +8,21 @@ const Pagination = ({
 	count,
 	limit,
 	filterOptions,
-	params,
+	search,
 	getListAction,
 }: {
 	limit: number;
 	count: number;
 	filterOptions?: any;
-	params?: string;
+	search?: string;
 	getListAction: ({
 		page,
 		limit,
-		params,
+		search,
 	}: {
 		page: number;
 		limit: number;
-		params?: string;
+		search?: string;
 	}) => void;
 }) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -35,8 +35,8 @@ const Pagination = ({
 			if (filterOptions) {
 				dispatch(getListAction({ page, limit, ...filterOptions }));
 			} else {
-				if (params) {
-					dispatch(getListAction({ page, limit, params }));
+				if (search) {
+					dispatch(getListAction({ page, limit, search }));
 				} else {
 					dispatch(getListAction({ page, limit }));
 				}
@@ -54,13 +54,11 @@ const Pagination = ({
 
 	useEffect(() => {
 		dispatch(getListAction({ page: 1, limit }));
-
-		return () => {
-			setCurrentPage(1);
-		};
 	}, [dispatch, getListAction, limit]);
 
-	console.log({ totalPages });
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [search]);
 
 	return (
 		<Card className={`${totalPages < 2 && '!hidden'}`}>

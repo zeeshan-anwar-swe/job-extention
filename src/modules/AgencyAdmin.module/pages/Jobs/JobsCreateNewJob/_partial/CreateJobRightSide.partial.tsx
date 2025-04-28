@@ -25,6 +25,7 @@ const CreateJobRightSidePartial = () => {
 		filteredCandidate,
 		filterOptions,
 		paginationCount,
+		search,
 		pageLoading,
 		error,
 	} = useSelector((state: RootState) => state.candidates);
@@ -57,6 +58,7 @@ const CreateJobRightSidePartial = () => {
 			</CardBody>
 			<CardFooter>
 				<Pagination
+					search={search ?? undefined}
 					filterOptions={isFiltered ? filterOptions : undefined}
 					count={paginationCount}
 					getListAction={isFiltered ? getFilteredCandidates : getAllCandidatesList}

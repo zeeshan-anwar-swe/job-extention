@@ -2,28 +2,29 @@ import React, { useState } from 'react'; // Import React
 import FieldWrap from '../../../../../../components/form/FieldWrap';
 import Icon from '../../../../../../components/icon/Icon';
 import Input from '../../../../../../components/form/Input';
-import { AppDispatch } from '../../../../../../store';
-import { useDispatch } from 'react-redux';
-import { getAllCandidatesList } from '../../../../../../store/slices/Candiates.slice';
+import { AppDispatch, RootState } from '../../../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getAllCandidatesList,
+	setCandidatesSearch,
+} from '../../../../../../store/slices/Candiates.slice';
 
 const SearchPartial = () => {
-	const [searchValue, setSearchValue] = useState<string>('');
+	const { search } = useSelector((state: RootState) => state.candidates);
 	const dispatch: AppDispatch = useDispatch();
 	const handleSearch: React.FormEventHandler<HTMLFormElement> = async (e) => {
 		// Corrected type here
 		e.preventDefault();
-		if (!searchValue) {
+		if (!search) {
 			return;
 		} else {
-			dispatch(
-				getAllCandidatesList({ page: 1, limit: 10, params: '&search=' + searchValue }),
-			);
+			dispatch(getAllCandidatesList({ page: 1, limit: 10, search }));
 		}
 	};
 
 	const handleCanncle = async () => {
-		await getAllCandidatesList({ page: 1, limit: 10 });
-		setSearchValue('');
+		await dispatch(setCandidatesSearch(''));
+		await dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 	};
 
 	return (
@@ -31,7 +32,7 @@ const SearchPartial = () => {
 			<FieldWrap
 				firstSuffix={<Icon icon='HeroMagnifyingGlass' className='mx-2 cursor-pointer' />}
 				lastSuffix={
-					searchValue !== '' && (
+					search !== '' && (
 						<Icon
 							icon='HeroXMark'
 							color='red'
@@ -44,9 +45,9 @@ const SearchPartial = () => {
 					id='example'
 					name='example'
 					placeholder='Product Designer, UI/UX Designer'
-					value={searchValue}
+					value={search}
 					rounded='rounded-full'
-					onChange={(e) => setSearchValue(e.target.value)}
+					onChange={(e) => dispatch(setCandidatesSearch(e.target.value))}
 				/>
 			</FieldWrap>
 		</form>

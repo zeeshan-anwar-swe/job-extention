@@ -10,6 +10,7 @@ interface FilterOptionsType {
 }
 
 interface InitialStateType {
+	search: string;
 	filterOptions: FilterOptionsType;
 	candidatesList: any[];
 	filteredCandidate: any[];
@@ -24,6 +25,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+	search: '',
 	filterOptions: {
 		skills: [],
 		location: '',
@@ -127,17 +129,18 @@ export const getAllCandidatesList = createAsyncThunk(
 		{
 			page,
 			limit,
-			params,
+			search = '',
 		}: {
 			page: number;
 			limit: number;
 			params?: string;
+			search?: string;
 		},
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.post(
-				`/candidate/list?page=${page}&limit=${limit}${params ?? ''}`,
+				`/candidate/list?page=${page}&limit=${limit}&search=${search}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -214,6 +217,10 @@ export const candidatesSlice = createSlice({
 		},
 		setCandidateProfile: (state, action: PayloadAction<any>) => {
 			state.cadnidateProfile = action.payload;
+		},
+
+		setCandidatesSearch: (state, action: PayloadAction<string>) => {
+			state.search = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -363,5 +370,6 @@ export const candidatesSlice = createSlice({
 	},
 });
 
-export const { setCandidateProfile, setCandidatesFilterOptions } = candidatesSlice.actions;
+export const { setCandidateProfile, setCandidatesFilterOptions, setCandidatesSearch } =
+	candidatesSlice.actions;
 export default candidatesSlice.reducer;
