@@ -3,7 +3,14 @@ import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 
+interface FilterOptionsType {
+	location: string;
+	experiences: number[];
+	skills: string[];
+}
+
 interface InitialStateType {
+	filterOptions: FilterOptionsType;
 	candidatesList: any[];
 	filteredCandidate: any[];
 	csvData: any[];
@@ -17,6 +24,11 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+	filterOptions: {
+		skills: [],
+		location: '',
+		experiences: [],
+	},
 	allCadidateList: [],
 	filteredCandidate: [],
 	csvData: [],
@@ -76,14 +88,14 @@ export const getFilteredCandidates = createAsyncThunk(
 	'candidates/getFilteredCandidates',
 	async (
 		{
-			page,
-			limit,
+			page = 1,
+			limit = 10,
 			location = '',
 			experiences = [],
 			skills = [],
 		}: {
-			page: number;
-			limit: number;
+			page?: number;
+			limit?: number;
 			location?: string;
 			experiences?: number[];
 			skills?: string[];
@@ -91,17 +103,18 @@ export const getFilteredCandidates = createAsyncThunk(
 		{ rejectWithValue },
 	) => {
 		try {
-			const response = await axiosInstance.post(`/candidate/list?page=${page}&limit=${limit}`, {
-				location,
-				experiences,
-				skills,
-			});
+			const response = await axiosInstance.post(
+				`/candidate/list?page=${page}&limit=${limit}`,
+				{
+					location,
+					experiences,
+					skills,
+				},
+			);
 			if (response.data.data.rows.length < 1) {
 				toast.error('No candidates found');
-				return [];
-			} else {
-				return response.data.data;
 			}
+			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
@@ -114,17 +127,17 @@ export const getAllCandidatesList = createAsyncThunk(
 		{
 			page,
 			limit,
-			
+			params,
 		}: {
 			page: number;
 			limit: number;
-		
+			params?: string;
 		},
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.post(
-				`/candidate/list?page=${page}&limit=${limit}`,
+				`/candidate/list?page=${page}&limit=${limit}${params ?? ''}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -196,6 +209,9 @@ export const candidatesSlice = createSlice({
 	name: 'candidates',
 	initialState,
 	reducers: {
+		setCandidatesFilterOptions: (state, action: PayloadAction<FilterOptionsType>) => {
+			state.filterOptions = action.payload;
+		},
 		setCandidateProfile: (state, action: PayloadAction<any>) => {
 			state.cadnidateProfile = action.payload;
 		},
@@ -254,7 +270,7 @@ export const candidatesSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(getFilteredCandidates.fulfilled, (state, action) => {
-				state.allCadidateList= []
+				state.allCadidateList = [];
 				state.filteredCandidate = action.payload.rows;
 				state.paginationCount = action.payload.count;
 				state.pageLoading = false;
@@ -271,7 +287,7 @@ export const candidatesSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(getAllCandidatesList.fulfilled, (state, action) => {
-				state.filteredCandidate=[]
+				state.filteredCandidate = [];
 				state.allCadidateList = action.payload.rows;
 				state.paginationCount = action.payload.count;
 				state.pageLoading = false;
@@ -347,5 +363,5 @@ export const candidatesSlice = createSlice({
 	},
 });
 
-export const { setCandidateProfile } = candidatesSlice.actions;
+export const { setCandidateProfile, setCandidatesFilterOptions } = candidatesSlice.actions;
 export default candidatesSlice.reducer;

@@ -1,7 +1,10 @@
-import { useState, KeyboardEvent } from 'react';
+import { useState, KeyboardEvent, useEffect } from 'react';
 import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import Label from '../../../../../../components/form/Label';
 import SelectReact from '../../../../../../components/form/SelectReact';
+import { AppDispatch } from '../../../../../../store';
+import { useDispatch } from 'react-redux';
+import { setCandidatesFilterOptions } from '../../../../../../store/slices/Candiates.slice';
 
 type AllowedId = 'skills';
 
@@ -9,37 +12,37 @@ const LabelSkillSelectPartial = ({
 	label,
 	id,
 	formData,
-	setFormData,
 }: {
 	label?: string;
 	id: AllowedId;
 	detail?: string;
 	formData: any;
-	setFormData: any;
 }) => {
+	const dispatch: AppDispatch = useDispatch();
 	const [inputValue, setInputValue] = useState<string>('');
 	const [selectInputValue, setSelectInputValue] = useState<string>(''); // Local state for SelectReact input
+
+	// Initialize local input value based on form data.
+	useEffect(() => {
+		if (formData && formData.skills) {
+			setSelectInputValue('');
+		}
+	}, [formData]);
 
 	const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && inputValue.trim()) {
 			event.preventDefault();
 			const newSkill = inputValue.trim();
 			const updatedSkills = [...formData.skills, newSkill];
-			setFormData({
-				...formData,
-				skills: updatedSkills,
-			});
+			dispatch(setCandidatesFilterOptions({ ...formData, skills: updatedSkills }));
 			setInputValue('');
-			setSelectInputValue(''); // Clear the SelectReact input
+			setSelectInputValue(''); // Clear local input state
 		}
 	};
 
 	const handleChange = (selectedOptions: any) => {
 		const selectedValues = selectedOptions.map((option: any) => option.value);
-		setFormData({
-			...formData,
-			skills: selectedValues,
-		});
+		dispatch(setCandidatesFilterOptions({ ...formData, skills: selectedValues }));
 	};
 
 	return (
@@ -68,12 +71,12 @@ const LabelSkillSelectPartial = ({
 				placeholder='Write skill and press enter'
 				onInputChange={(value: string) => {
 					setInputValue(value);
-					setSelectInputValue(value); // Update local input state
+					setSelectInputValue(value);
 				}}
 				onKeyDown={handleKeyDown}
-				value={formData.skills.map((skill: any) => ({ value: skill, label: skill }))}
+				value={formData.skills.map((skill: string) => ({ value: skill, label: skill }))}
 				onChange={handleChange}
-				inputValue={selectInputValue} // Pass the local input value
+				inputValue={selectInputValue}
 			/>
 		</div>
 	);

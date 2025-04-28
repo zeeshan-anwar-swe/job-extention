@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../../../components/ui/Dropdown';
 import Button from '../../../../../../components/ui/Button';
 import Card, {
@@ -12,28 +12,23 @@ import FieldWrap from '../../../../../../components/form/FieldWrap';
 import Input from '../../../../../../components/form/Input';
 import Icon from '../../../../../../components/icon/Icon';
 import { AppDispatch } from '../../../../../../store';
-import { useDispatch } from 'react-redux';
-import { getFilteredCandidates } from '../../../../../../store/slices/Candiates.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getAllCandidatesList,
+	getFilteredCandidates,
+	setCandidatesFilterOptions,
+} from '../../../../../../store/slices/Candiates.slice';
+import { RootState } from '../../../../../../store';
 
 interface ExperienceItem {
 	title: string;
 	value: number;
 }
 
-interface FormData {
-	location: string;
-	experiences: number[];
-	skills: string[];
-}
-
 const JobFilterDropdownPartial = () => {
 	const dispatch: AppDispatch = useDispatch();
-	const [formData, setFormData] = useState<FormData>({
-		location: '',
-		experiences: [],
-		skills: [],
-	});
-	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const { filterOptions } = useSelector((state: RootState) => state.candidates);
+	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 	const experience: ExperienceItem[] = [
 		{ title: '1 Year', value: 1 },
 		{ title: '2 Year', value: 2 },
@@ -57,29 +52,30 @@ const JobFilterDropdownPartial = () => {
 	};
 
 	const handleExperienceClick = (value: number) => {
-		setFormData((prevFormData) => {
-			const newExperiences = prevFormData.experiences.includes(value)
-				? prevFormData.experiences.filter((item) => item !== value)
-				: [...prevFormData.experiences, value];
-			return {
-				...prevFormData,
-				experiences: newExperiences,
-			};
-		});
+		const newExperiences = filterOptions.experiences.includes(value)
+			? filterOptions.experiences.filter((item) => item !== value)
+			: [...filterOptions.experiences, value];
+		dispatch(setCandidatesFilterOptions({ ...filterOptions, experiences: newExperiences }));
 	};
 
 	const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value } = event.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			location: value,
-		}));
+		dispatch(setCandidatesFilterOptions({ ...filterOptions, location: value }));
+	};
+
+	const handleSkillsChange = (skills: string[]) => {
+		dispatch(setCandidatesFilterOptions({ ...filterOptions, skills }));
 	};
 
 	const applyFilter = () => {
-		const { location, experiences, skills } = formData;
-		dispatch(getFilteredCandidates({page:1, limit:10, location, experiences, skills }));
+		const { location, experiences, skills } = filterOptions;
+		dispatch(getFilteredCandidates({ page: 1, limit: 10, location, experiences, skills }));
 		setDropdownOpen(false);
+	};
+
+	const clearAllFilters = async () => {
+		await dispatch(setCandidatesFilterOptions({ location: '', experiences: [], skills: [] }));
+		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 	};
 
 	return (
@@ -106,10 +102,12 @@ const JobFilterDropdownPartial = () => {
 									rounded='rounded-full'
 									key={item.value}
 									color={
-										formData.experiences.includes(item.value) ? 'blue' : 'zinc'
+										filterOptions.experiences.includes(item.value)
+											? 'blue'
+											: 'zinc'
 									}
 									variant={
-										formData.experiences.includes(item.value)
+										filterOptions.experiences.includes(item.value)
 											? 'solid'
 											: 'outline'
 									}
@@ -134,7 +132,7 @@ const JobFilterDropdownPartial = () => {
 									rounded='rounded-full'
 									name='location'
 									placeholder='Location'
-									value={formData.location}
+									value={filterOptions.location}
 									onChange={handleLocationChange}
 								/>
 							</FieldWrap>
@@ -147,8 +145,7 @@ const JobFilterDropdownPartial = () => {
 						<CardBody>
 							<LabelSkillSelectPartial
 								id='skills'
-								setFormData={setFormData}
-								formData={formData}
+								formData={{ ...filterOptions, setFormData: undefined }}
 								label=''
 							/>
 						</CardBody>
@@ -159,13 +156,7 @@ const JobFilterDropdownPartial = () => {
 								className='flex-1'
 								variant='outline'
 								color='zinc'
-								onClick={() =>
-									setFormData({
-										location: '',
-										experiences: [],
-										skills: [],
-									})
-								}>
+								onClick={clearAllFilters}>
 								Clear All
 							</Button>
 							<Button onClick={applyFilter} className='flex-1' variant='solid'>
