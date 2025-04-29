@@ -1,4 +1,6 @@
 import Badge from '../../../../../components/ui/Badge';
+import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
+import useImageValidation from '../../../../../hooks/useImageValidation';
 
 const TableDataPartial = ({
 	imageUrl,
@@ -11,14 +13,18 @@ const TableDataPartial = ({
 	subTitle?: string;
 	status?: string;
 }) => {
+	const { loading, imageUrl: image } = useImageValidation(imageUrl);
+
 	return (
-		<div className='flex items-center justify-center gap-x-6'>
+		<div className='flex items-center gap-x-6'>
 			{imageUrl && (
-				<img
-					className='aspect-square w-14 rounded-full'
-					src={imageUrl}
-					alt='cadidate-image'
-				/>
+				<ImageLoaderWraper loading={loading} height='h-14'>
+					<img
+						className='aspect-square w-14 rounded-full'
+						src={image}
+						alt='cadidate-image'
+					/>
+				</ImageLoaderWraper>
 			)}
 			<div>
 				{title && <h5>{title}</h5>}

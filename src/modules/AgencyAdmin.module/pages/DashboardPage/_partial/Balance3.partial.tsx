@@ -8,8 +8,6 @@ import { RootState } from '../../../../../store';
 const Balance3Partial = () => {
 	const { agencyStatistics } = useSelector((state: RootState) => state.agencyStatics);
 
-	console.log({ agencyStatistics });
-
 	return (
 		<Card>
 			<CardBody>

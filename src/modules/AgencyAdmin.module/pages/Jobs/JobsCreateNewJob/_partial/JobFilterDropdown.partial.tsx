@@ -102,16 +102,16 @@ const JobFilterDropdownPartial = () => {
 									rounded='rounded-full'
 									key={item.value}
 									color={
-										filterOptions.experiences.includes(item.value)
+										filterOptions?.experiences?.includes(item?.value)
 											? 'blue'
 											: 'zinc'
 									}
 									variant={
-										filterOptions.experiences.includes(item.value)
+										filterOptions?.experiences?.includes(item?.value)
 											? 'solid'
 											: 'outline'
 									}
-									onClick={() => handleExperienceClick(item.value)}>
+									onClick={() => handleExperienceClick(item?.value)}>
 									{item.title}
 								</Button>
 							))}

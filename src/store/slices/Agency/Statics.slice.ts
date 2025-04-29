@@ -16,11 +16,13 @@ interface IAgencyStatistics {
 }
 
 interface InitialStateType {
-	error: null | string;
+	error: null | Error;
 	agencyStatistics: IAgencyStatistics;
 	pageLoading: boolean;
 	modalLoading: boolean;
+	componentLoading: boolean;
 	assignedClientWhileCreatingJob: any | null;
+	chartData: any[];
 }
 
 const initialState: InitialStateType = {
@@ -43,8 +45,10 @@ const initialState: InitialStateType = {
 			change: 0,
 		},
 	},
+	chartData: [],
 	pageLoading: false,
 	modalLoading: false,
+	componentLoading: false,
 	assignedClientWhileCreatingJob: null,
 };
 
@@ -58,6 +62,18 @@ export const getAgencyStatics = createAsyncThunk(
 			const response = await axiosInstance.get(
 				`/agency/dashboard?startDate=${startDate}&endDate=${endDate}&period=${period}`,
 			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getChartData = createAsyncThunk(
+	'agencyStatics/getChartData',
+	async ({ period }: { period: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(`/agency/dashboard-metrics?period=${period}`);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -79,9 +95,29 @@ export const agencyStaticsSlice = createSlice({
 				state.pageLoading = false;
 				state.agencyStatistics = action.payload;
 			})
-			.addCase(getAgencyStatics.rejected, (state, action) => {
+			.addCase(getAgencyStatics.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred ',
+				};
+				toast.error((action.payload.message as string) || 'Unknown error occurred ');
 				state.pageLoading = false;
-				state.error = action.error.message || 'Failed to fetch jobs.';
+			});
+
+		builder
+			.addCase(getChartData.pending, (state) => {
+				state.componentLoading = true;
+				state.error = null;
+			})
+			.addCase(getChartData.fulfilled, (state, action) => {
+				state.chartData = action.payload;
+				state.componentLoading = false;
+			})
+			.addCase(getChartData.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred',
+				};
+				toast.error((action.payload.message as string) || 'Unknown error occurred');
+				state.componentLoading = false;
 			});
 	},
 });

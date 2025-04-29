@@ -4,6 +4,7 @@ import Error from '../../../components/ui/Error';
 import EmptyData from '../../../components/ui/EmptyData';
 import ShimmerEffectPageLoader from '../../../components/layouts/PageLoader/ShimmerEffectPageLoader';
 import CircleLoader from '../../../components/layouts/PageLoader/CircleLoader';
+import ApexLineChartSkeleton from '../../../components/layouts/PageLoader/LineChartShimmer';
 
 interface WrapperProps {
 	data: any;
@@ -11,17 +12,19 @@ interface WrapperProps {
 	messageForEmptyData?: string;
 	children: ReactNode;
 	error: Error | null;
+	shimmer?: boolean;
 }
 
 const PageLoader: React.FC<WrapperProps> = ({
 	children,
 	messageForEmptyData,
+	shimmer = false,
 	loading = true,
 	error = null,
 	data = null,
 }) => {
 	if (loading) {
-		return <CircleLoader />;
+		return shimmer ? <ApexLineChartSkeleton /> : <CircleLoader />;
 	} else if (error) {
 		return <Error color='red' size='text-5xl' message={error.message} />;
 	} else if (!data || data.length === 0) {

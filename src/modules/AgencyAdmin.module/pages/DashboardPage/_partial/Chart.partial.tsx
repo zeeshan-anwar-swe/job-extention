@@ -7,77 +7,18 @@ import Card, {
 	CardTitle,
 } from '../../../../../components/ui/Card';
 import { IChartOptions } from '../../../../../interface/chart.interface';
+import { TPeriod } from '../../../../../constants/periods.constant';
 
-const ChartPartial = () => {
+const ChartPartial = ({ period, series }: { period: TPeriod; series: any }) => {
 	const chartContainerRef = useRef<HTMLDivElement | null>(null);
+	const [range, setRange] = useState<string>(period.text);
 	const [chartDimensions, setChartDimensions] = useState<{
 		width: number;
 		height: number;
 	} | null>(null);
 
-	const [state] = useState<IChartOptions>({
-		//Series Data for days
-		series: [
-			{
-				name: 'Jobs',
-				data: [180, 217, 196, 243, 223, 298, 321],
-			},
-			{
-				name: 'Hired',
-				data: [121, 27, 178, 143, 123, 498, 321],
-			},
-			{
-				name: 'Shortlisted',
-				data: [11, 27, 188, 143, 113, 48, 201],
-			},
-
-			{
-				name: 'Interview',
-				data: [21, 117, 112, 13, 33, 308, 121],
-			},
-		],
-
-		//Series Data for Week
-		// series: [
-		// 	{
-		// 		name: 'Jobs',
-		// 		data: [180, 217, 196, 243],
-		// 	},
-		// 	{
-		// 		name: 'Hired',
-		// 		data: [121, 27, 178, 143],
-		// 	},
-		// 	{
-		// 		name: 'Shortlisted',
-		// 		data: [11, 27, 188, 143],
-		// 	},
-
-		// 	{
-		// 		name: 'Interview',
-		// 		data: [21, 117, 112, 13],
-		// 	},
-		// ],
-
-		// //Series Data for Months
-		// series: [
-		// 	{
-		// 		name: 'Jobs',
-		// 		data: [180, 217, 196, 243, 223, 298, 321, 217, 196, 243, 223, 298, 321],
-		// 	},
-		// 	{
-		// 		name: 'Hired',
-		// 		data: [121, 27, 178, 143, 123, 498, 321, 217, 196, 243, 223, 298, 321],
-		// 	},
-		// 	{
-		// 		name: 'Shortlisted',
-		// 		data: [11, 27, 188, 143, 113, 48, 201, 217, 196, 243, 223, 298, 321],
-		// 	},
-
-		// 	{
-		// 		name: 'Interview',
-		// 		data: [21, 117, 112, 13, 33, 308, 121, 217, 196, 243, 223, 298, 321],
-		// 	},
-		// ],
+	const [state, setState] = useState<IChartOptions>({
+		series,
 
 		options: {
 			chart: {
@@ -97,9 +38,27 @@ const ChartPartial = () => {
 				size: 0,
 			},
 			xaxis: {
-				categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+				categories:
+					period.text === 'Day'
+						? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+						: period.text === 'Week'
+							? ['weak 1', 'weak 2', 'weak 3', 'weak 4', 'weak 5']
+							: [
+									'Jan',
+									'Feb',
+									'Mar',
+									'Apr',
+									'May',
+									'Jun',
+									'Jul',
+									'Aug',
+									'Sep',
+									'Oct',
+									'Nov',
+									'Dec',
+								],
 				title: {
-					text: 'Days',
+					text: range,
 				},
 			},
 			yaxis: {
@@ -128,6 +87,23 @@ const ChartPartial = () => {
 
 		return () => observer.disconnect(); // Cleanup observer on unmount
 	}, []);
+
+	// Observe container dimensions
+	useEffect(() => {
+		setState({
+			...state,
+			options: {
+				...state.options,
+				xaxis: {
+					...state.options.xaxis,
+					title: {
+						...state?.options?.xaxis?.title,
+						text: range,
+					},
+				},
+			},
+		});
+	}, [period.text]);
 
 	return (
 		<Card className='h-full'>

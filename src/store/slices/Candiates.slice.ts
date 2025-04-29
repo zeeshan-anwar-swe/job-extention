@@ -60,7 +60,7 @@ export const getAgencyCandidatesList = createAsyncThunk(
 export const getSearchedAgencyCandidatesList = createAsyncThunk(
 	'candidates/getSearchedAgencyCandidatesList',
 	async (
-		{ page, limit, search }: { page: number; limit: number; search: string },
+		{ page, limit, search = '' }: { page: number; limit: number; search?: string },
 		{ rejectWithValue },
 	) => {
 		try {

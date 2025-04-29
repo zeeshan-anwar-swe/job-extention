@@ -16,17 +16,21 @@ interface InitialStateType {
 	paginationCount: number;
 	pageLoading: boolean;
 	modalLoading: boolean;
+	componentLoading: boolean;
 	assignedClientWhileCreatingJob: any | null;
 	clientDetails: ClientDetailsType | null;
+	clientFeedback: any[];
 }
 
 const initialState: InitialStateType = {
 	error: null,
 	paginationCount: 0,
 	paginatedClients: [],
+	clientFeedback: [],
 	clientsList: [],
 	pageLoading: false,
 	modalLoading: false,
+	componentLoading: false,
 	locallySearchedClients: [],
 	assignedClientWhileCreatingJob: null,
 	clientDetails: null,
@@ -85,13 +89,35 @@ export const inviteClient = createAsyncThunk(
 );
 
 export const assignJobToClient = createAsyncThunk(
-	'jobs/assignJobToClient',
+	'clients/assignJobToClient',
 	async ({ clientId, jobId }: { clientId: string; jobId?: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/job/assign-client', {
 				jobId,
 				clientId,
 			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getClientFeedback = createAsyncThunk(
+	'clients/getClientFeedback',
+	async (
+		{
+			page = 1,
+			limit = 10,
+			search = '',
+			period = '',
+		}: { page?: number; limit?: number; search?: string; period?: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.get(
+				`/feedback/clients?page=${page}&limit=${limit}&search=${search}&period=${period}`,
+			);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -188,6 +214,22 @@ export const clientsSlice = createSlice({
 				toast.success('Job assigned successfully');
 			})
 			.addCase(assignJobToClient.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message || 'Unknown error occurred while assigning job');
+			})
+
+			.addCase(getClientFeedback.pending, (state) => {
+				state.error = null;
+				state.pageLoading = true;
+			})
+			.addCase(getClientFeedback.fulfilled, (state, action) => {
+				state.clientFeedback = action.payload.rows;
+				state.paginationCount = action.payload.count;
+				state.pageLoading = false;
+			})
+			.addCase(getClientFeedback.rejected, (state, action: any) => {
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};

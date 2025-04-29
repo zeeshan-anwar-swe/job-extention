@@ -4,7 +4,6 @@ import Card, {
 	CardHeaderChild,
 	CardTitle,
 } from '../../../../../components/ui/Card';
-
 import MessageItemPartial from './MessageItem.partial';
 
 const MessagePartial = () => {
@@ -16,10 +15,6 @@ const MessagePartial = () => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className=' flex h-96 flex-col gap-4 overflow-y-scroll'>
-				<MessageItemPartial />
-				<MessageItemPartial />
-				<MessageItemPartial />
-				<MessageItemPartial />
 				<MessageItemPartial />
 				<MessageItemPartial />
 				<MessageItemPartial />

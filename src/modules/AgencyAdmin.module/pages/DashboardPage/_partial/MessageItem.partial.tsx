@@ -6,17 +6,22 @@ import Card, {
 } from '../../../../../components/ui/Card';
 import { profileImageUrlValidationCheck } from '../../../../../utils/validationCheck';
 import Badge from '../../../../../components/ui/Badge';
+import useImageValidation from '../../../../../hooks/useImageValidation';
+import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
 
-const MessageItemPartial = () => {
+const MessageItemPartial = ({ feedBack }: any) => {
+	const { loading, imageUrl } = useImageValidation(feedBack?.client?.image);
 	return (
 		<Card className='bg-zinc-100 dark:bg-zinc-950'>
 			<CardHeader>
 				<CardHeaderChild>
-					<img
-						className='h-10 w-10 rounded-full'
-						src={profileImageUrlValidationCheck('')}
-						alt='profile-image'
-					/>
+					<ImageLoaderWraper loading={loading} height='h-10'>
+						<img
+							className='h-10 w-10 rounded-full'
+							src={imageUrl}
+							alt='profile-image'
+						/>
+					</ImageLoaderWraper>
 					<CardTitle className='!text-base'>John Doe</CardTitle>
 					<CardTitle className='!text-base !font-light'>4:16PM Today</CardTitle>
 				</CardHeaderChild>

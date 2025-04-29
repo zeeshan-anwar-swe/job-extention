@@ -27,9 +27,11 @@ import themeConfig from '../../../../config/theme.config';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import Card from '../../../../components/ui/Card';
 import { formatDateStringToYYYYMMDD } from '../../../../utils/helper';
-import { AppDispatch } from '../../../../store';
-import { useDispatch } from 'react-redux';
-import { getAgencyStatics } from '../../../../store/slices/Agency/Statics.slice';
+import { AppDispatch, RootState } from '../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/Statics.slice';
+import PageLoader from '../../../../templates/layouts/main/PageLoader';
+import { transLineChartData } from '../../../../utils/chart.util';
 
 const DashboardPage = () => {
 	const { i18n } = useTranslation();
@@ -42,6 +44,10 @@ const DashboardPage = () => {
 			key: 'selection',
 		},
 	]);
+
+	const { chartData, componentLoading, error } = useSelector(
+		(state: RootState) => state.agencyStatics,
+	);
 
 	useEffect(() => {
 		if (activeTab === PERIOD.DAY) {
@@ -104,6 +110,11 @@ const DashboardPage = () => {
 			getAgencyStatics({
 				startDate: formatDateStringToYYYYMMDD(selectedDate[0].startDate),
 				endDate: formatDateStringToYYYYMMDD(selectedDate[0].endDate),
+				period: activeTab.text.toLowerCase(),
+			}),
+		);
+		dispatch(
+			getChartData({
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
@@ -176,8 +187,17 @@ const DashboardPage = () => {
 							<Balance4Partial />
 						</div>
 
-						<div className='col-span-12 xl:h-[500px] 2xl:col-span-8'>
-							<ChartPartial />
+						<div className='col-span-12 overflow-hidden rounded-xl xl:h-[500px] 2xl:col-span-8'>
+							<PageLoader
+								shimmer={true}
+								loading={componentLoading}
+								data={chartData}
+								error={error}>
+								<ChartPartial
+									series={transLineChartData(chartData)}
+									period={activeTab}
+								/>
+							</PageLoader>
 						</div>
 						<div className=' col-span-12 2xl:col-span-4'>
 							<CommentPartial />
