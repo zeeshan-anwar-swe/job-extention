@@ -96,7 +96,7 @@ const CandidatesProfilePage = () => {
 											label='Roles'
 											detail={
 												cadnidateProfile?.profile?.roles
-													? cadnidateProfile?.profile?.roles[0]
+													? cadnidateProfile?.profile?.roles?.join(', ')
 													: ''
 											}
 										/>

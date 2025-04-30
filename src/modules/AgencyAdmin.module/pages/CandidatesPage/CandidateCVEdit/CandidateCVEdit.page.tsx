@@ -14,16 +14,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
 import {
 	getCandidateProfile,
+	setCandidateProfile,
 	updateCandidateProfile,
 } from '../../../../../store/slices/Candiates.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
+import { getSocialLinkWithId } from '../../../../../utils/helper';
 
 export type EditCVFormValues = {
 	name: string;
+	about:string
+	location:string;
+	availabilty:string;
 	roles: string[];
 	experience: number;
 	education: string;
 	cvText: string;
+	LinkedIn: string;
+	GitHub: string;
 };
 
 const CandidateCVEditPage = () => {
@@ -37,10 +44,15 @@ const CandidateCVEditPage = () => {
 	const formik = useFormik({
 		initialValues: {
 			name: '',
+			about:'',
+			availabilty:"",
+			location:"",
 			roles: [],
 			experience: 0,
 			education: '',
 			cvText: '',
+			LinkedIn: '',
+			GitHub: '',
 		},
 
 		validate: (values: EditCVFormValues) => {
@@ -51,21 +63,50 @@ const CandidateCVEditPage = () => {
 			} else if (values.name.length < 2) {
 				errors.name = 'Name must be at least 2 characters long';
 			}
+			if (values.LinkedIn && !values.LinkedIn.includes('linkedin.com')) {
+				errors.LinkedIn = 'Must be a valid LinkedIn profile URL';
+			}
+
+			if (values.GitHub && !values.GitHub.includes('github.com')) {
+				errors.GitHub = 'Must be a valid GitHub profile URL';
+			}
 
 			return errors;
 		},
 		onSubmit: (values: EditCVFormValues) => {
-			const { cvText, roles, experience, education, name } = values;
+			const { cvText, roles, experience, education, LinkedIn, GitHub, about, availabilty } = values;
+
+			const preGitHub: { id: string; link: string } | null = getSocialLinkWithId(
+				cadnidateProfile?.profile?.socialProfiles ?? [],
+				'GitHub',
+			);
+			const preLinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
+				cadnidateProfile?.profile?.socialProfiles ?? [],
+				'LinkedIn',
+			);
+
 			dispatch(
 				updateCandidateProfile({
 					candidateId: state.id,
-					payload: { cv: cvText, roles, experience, education },
+					payload: {
+						cv: cvText,
+						about,
+						roles,
+						experience,
+						education,
+						socialProfiles: [
+							preGitHub
+								? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
+								: { provider: 'GitHub', link: GitHub },
+							preLinkedIn
+								? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
+								: { provider: 'LinkedIn', link: LinkedIn },
+						],
+					},
 				}),
 			);
 		},
 	});
-
-	console.log({state});
 
 	useEffect(() => {
 		if (state) {
@@ -73,10 +114,11 @@ const CandidateCVEditPage = () => {
 		} else {
 			navigateTo('/candidates');
 		}
-	}, [state]);
 
-	console.log({roles:formik.values.roles});
-	
+		return ()=> {
+			dispatch(setCandidateProfile(null))
+		}
+	}, [state]);
 
 	return (
 		<>
@@ -100,7 +142,7 @@ const CandidateCVEditPage = () => {
 				</Subheader>
 				<PageLoader loading={pageLoading} data={cadnidateProfile} error={error}>
 					<Container className='grid grid-cols-12 gap-4'>
-						<EditCVFormPartial  formik={formik} />
+						<EditCVFormPartial formik={formik} />
 						<EditCVRightPartial formik={formik} />
 					</Container>
 				</PageLoader>

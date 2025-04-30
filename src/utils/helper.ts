@@ -161,3 +161,24 @@ export const formatTimeString = (dateString: string): string => {
 		return 'Invalid Date';
 	}
 };
+
+
+type SocialLink = {
+    id: string;
+    provider: string;
+    link: string;
+};
+
+type SocialLinkResult = {
+    id: string;
+    link: string;
+} | null;
+
+export const getSocialLinkWithId = (links: SocialLink[], provider: string): SocialLinkResult => {
+    if (!links || links.length === 0 || !provider) {
+        return null;
+    }
+
+    const foundLink = links.find(link => link.provider === provider);
+    return foundLink ? { id: foundLink.id, link: foundLink.link } : null;
+};

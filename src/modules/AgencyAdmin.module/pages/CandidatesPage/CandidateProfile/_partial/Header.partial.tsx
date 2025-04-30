@@ -31,16 +31,15 @@ const HeaderPartial = ({ state }: any) => {
 
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
 
-	console.log({ cadnidateProfile });
 
-	console.log('state', state);
 
 	return (
 		<Card className='flex'>
 			<div className='flex items-center justify-between !gap-2 px-4 py-2 max-xl:flex-col max-xl:items-start'>
 				<TableDataProfilePartial
-					title={state?.candidate?.name}
-					subTitle={state?.candidate?.email}
+					imageUrl={cadnidateProfile?.profile?.candidate?.image}
+					title={cadnidateProfile?.profile?.candidate?.name}
+					subTitle={cadnidateProfile?.profile?.candidate?.email}
 				/>
 				<div className='flex flex-wrap justify-end gap-x-4 max-xl:justify-start max-xl:gap-2'>
 					<Button

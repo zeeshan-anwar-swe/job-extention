@@ -16,21 +16,34 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
 import { useEffect } from 'react';
 import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
+import Icon from '../../../../../../components/icon/Icon';
+import Select from '../../../../../../components/form/Select';
+import { getSocialLinkWithId } from '../../../../../../utils/helper';
 
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
 
-
-
 	useEffect(() => {
 		if (cadnidateProfile) {
-			formik.setFieldValue("roles", cadnidateProfile.profile?.roles?? [])
-			formik.setFieldValue("name", cadnidateProfile.profile?.candidate?.name ?? '')
-			formik.setFieldValue("experience",  cadnidateProfile?.profile?.experience ?? '')
-			formik.setFieldValue("cvText", cadnidateProfile.profile?.cv ?? '')
-			formik.setFieldValue("education", cadnidateProfile?.profile?.education ?? '')
+			const GitHub: { id: string; link: string } | null = getSocialLinkWithId(
+				cadnidateProfile?.profile?.socialProfiles ?? [],
+				'GitHub',
+			);
+			const LinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
+				cadnidateProfile?.profile?.socialProfiles ?? [],
+				'LinkedIn',
+			);
+
+			GitHub && formik.setFieldValue('GitHub', GitHub.link);
+			LinkedIn && formik.setFieldValue('LinkedIn', LinkedIn.link);
+
+			formik.setFieldValue('roles', cadnidateProfile.profile?.roles ?? []);
+			formik.setFieldValue('name', cadnidateProfile.profile?.candidate?.name ?? '');
+			formik.setFieldValue('experience', cadnidateProfile?.profile?.experience ?? '');
+			formik.setFieldValue('cvText', cadnidateProfile.profile?.cv ?? '');
+			formik.setFieldValue('education', cadnidateProfile?.profile?.education ?? '');
 		}
-	}, [cadnidateProfile,formik.setValues]); // Added formik.setValues to the dependency array
+	}, [cadnidateProfile, formik.setValues]); // Added formik.setValues to the dependency array
 
 	return (
 		<Card className='col-span-9 flex flex-col gap-2 max-lg:col-span-12'>
@@ -55,7 +68,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										name='name'
 										placeholder='Name'
 										value={formik.values.name}
-										onChange={()=>{}}
+										onChange={() => {}}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>
@@ -64,7 +77,12 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
 							<Label htmlFor='roles'>Roles</Label>
-							<MultipleValueSelectorPartial initialValues={cadnidateProfile?.profile?.roles?? []} id='rolesForEditCV' name='roles' formik={formik}/>
+							<MultipleValueSelectorPartial
+								initialValues={cadnidateProfile?.profile?.roles ?? []}
+								id='rolesForEditCV'
+								name='roles'
+								formik={formik}
+							/>
 						</div>
 					</div>
 
@@ -107,6 +125,105 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 								/>
 							</Validation>
 						</div>
+					</div>
+					<div className='flex gap-4'>
+						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+							<Label htmlFor='location'>Location</Label>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.location}
+								invalidFeedback={formik.errors.location}
+								validFeedback=''>
+								<Input
+									dimension='lg'
+									id='location'
+									name='location'
+									placeholder='Enter your address'
+									value={formik.values.location}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</Validation>
+						</div>
+
+						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+							<Label htmlFor='availabilty'>Availablity</Label>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.availabilty}
+								invalidFeedback={formik.errors.availabilty}
+								validFeedback=''>
+								<Input
+									dimension='lg'
+									id='availabilty'
+									name='availabilty'
+									placeholder='Availablity status'
+									value={formik.values.availabilty}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</Validation>
+						</div>
+					</div>
+					<div className='flex gap-4'>
+						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+							<Label htmlFor='LinkedIn'>LinkedIn Profile</Label>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.LinkedIn}
+								invalidFeedback={formik.errors.LinkedIn}
+								validFeedback=''>
+								<FieldWrap>
+									<Input
+										dimension='lg'
+										id='LinkedIn'
+										name='LinkedIn'
+										placeholder='Enter your GitHub profile url'
+										value={formik.values.LinkedIn}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FieldWrap>
+							</Validation>
+						</div>
+
+						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+							<Label htmlFor='GitHub'>GitHub Profile</Label>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.GitHub}
+								invalidFeedback={formik.errors.GitHub}
+								validFeedback=''>
+								<Input
+									dimension='lg'
+									id='GitHub'
+									name='GitHub'
+									placeholder='Enter your GitHub profile url'
+									value={formik.values.GitHub}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</Validation>
+						</div>
+					</div>
+
+					<div className={classNames({ 'mb-1': !formik.isValid })}>
+						<Label htmlFor='about'>About</Label>
+						<Validation
+							isValid={formik.isValid}
+							isTouched={formik.touched.about}
+							invalidFeedback={formik.errors.about}
+							validFeedback=''>
+							<Input
+								dimension='lg'
+								id='about'
+								name='about'
+								placeholder='Enter your bio'
+								value={formik.values.about}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+							/>
+						</Validation>
 					</div>
 
 					<div className={classNames({ 'mb-1': !formik.isValid })}>
