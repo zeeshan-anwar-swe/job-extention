@@ -16,8 +16,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
 import { useEffect } from 'react';
 import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
-import Icon from '../../../../../../components/icon/Icon';
-import Select from '../../../../../../components/form/Select';
 import { getSocialLinkWithId } from '../../../../../../utils/helper';
 
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
@@ -26,22 +24,25 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 	useEffect(() => {
 		if (cadnidateProfile) {
 			const GitHub: { id: string; link: string } | null = getSocialLinkWithId(
-				cadnidateProfile?.profile?.socialProfiles ?? [],
+				cadnidateProfile?.socialProfiles ?? [],
 				'GitHub',
 			);
 			const LinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
-				cadnidateProfile?.profile?.socialProfiles ?? [],
+				cadnidateProfile?.socialProfiles ?? [],
 				'LinkedIn',
 			);
 
 			GitHub && formik.setFieldValue('GitHub', GitHub.link);
 			LinkedIn && formik.setFieldValue('LinkedIn', LinkedIn.link);
 
-			formik.setFieldValue('roles', cadnidateProfile.profile?.roles ?? []);
-			formik.setFieldValue('name', cadnidateProfile.profile?.candidate?.name ?? '');
-			formik.setFieldValue('experience', cadnidateProfile?.profile?.experience ?? '');
-			formik.setFieldValue('cvText', cadnidateProfile.profile?.cv ?? '');
-			formik.setFieldValue('education', cadnidateProfile?.profile?.education ?? '');
+			formik.setFieldValue('roles', cadnidateProfile?.roles ?? []);
+			formik.setFieldValue('name', cadnidateProfile?.candidate?.name ?? '');
+			formik.setFieldValue('experience', cadnidateProfile?.experience ?? '');
+			formik.setFieldValue('cvText', cadnidateProfile?.cv ?? '');
+			formik.setFieldValue('education', cadnidateProfile?.education ?? '');
+			// formik.setFieldValue('location', cadnidateProfile?.location ?? '');
+			// formik.setFieldValue('availabilty', cadnidateProfile?.availabilty ?? '');
+			formik.setFieldValue('about', cadnidateProfile?.about ?? '');
 		}
 	}, [cadnidateProfile, formik.setValues]); // Added formik.setValues to the dependency array
 
@@ -78,7 +79,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
 							<Label htmlFor='roles'>Roles</Label>
 							<MultipleValueSelectorPartial
-								initialValues={cadnidateProfile?.profile?.roles ?? []}
+								initialValues={cadnidateProfile?.roles ?? []}
 								id='rolesForEditCV'
 								name='roles'
 								formik={formik}
@@ -126,7 +127,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 							</Validation>
 						</div>
 					</div>
-					<div className='flex gap-4'>
+					{/* <div className='flex gap-4'>
 						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
 							<Label htmlFor='location'>Location</Label>
 							<Validation
@@ -164,7 +165,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 								/>
 							</Validation>
 						</div>
-					</div>
+					</div> */}
 					<div className='flex gap-4'>
 						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
 							<Label htmlFor='LinkedIn'>LinkedIn Profile</Label>

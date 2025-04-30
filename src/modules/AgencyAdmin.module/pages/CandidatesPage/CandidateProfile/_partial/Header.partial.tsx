@@ -37,9 +37,9 @@ const HeaderPartial = ({ state }: any) => {
 		<Card className='flex'>
 			<div className='flex items-center justify-between !gap-2 px-4 py-2 max-xl:flex-col max-xl:items-start'>
 				<TableDataProfilePartial
-					imageUrl={cadnidateProfile?.profile?.candidate?.image}
-					title={cadnidateProfile?.profile?.candidate?.name}
-					subTitle={cadnidateProfile?.profile?.candidate?.email}
+					imageUrl={cadnidateProfile?.candidate?.image}
+					title={cadnidateProfile?.candidate?.name}
+					subTitle={cadnidateProfile?.candidate?.email}
 				/>
 				<div className='flex flex-wrap justify-end gap-x-4 max-xl:justify-start max-xl:gap-2'>
 					<Button

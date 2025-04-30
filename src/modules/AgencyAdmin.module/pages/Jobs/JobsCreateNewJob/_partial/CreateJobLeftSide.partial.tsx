@@ -110,7 +110,7 @@ const CreateJobLeftSidePartial = () => {
 					formData={formData}
 					label='Description'
 				/>
-				<LabelSkillSelectPartial id='skills' formData={formData} label='Skills Required' />
+				<LabelSkillSelectPartial id='skills' setFormData={setFormData} formData={formData} label='Required Skills ' />
 				<NavSeparator className='mt-8' />
 			</CardBody>
 			<CardFooter className='!flex-col !items-start'>

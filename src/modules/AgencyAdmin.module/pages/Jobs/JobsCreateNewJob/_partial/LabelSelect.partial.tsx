@@ -51,7 +51,6 @@ const LabelSelectPartial = ({
 			<FieldWrap>
 				<SelectReact
 					// @ts-ignore
-
 					onChange={handleChange}
 					className='w-full'
 					name='type'

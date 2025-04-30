@@ -40,11 +40,10 @@ const CandidatesProfilePage = () => {
 		(state: RootState) => state.candidates,
 	);
 
-	cadnidateProfile && console.log('cadnidateProfile', cadnidateProfile);
 
 	useEffect(() => {
 		if (state) {
-			dispatch(getCandidateProfile({ id: state.id, candidateId: state.id }));
+			dispatch(getCandidateProfile({ id: state.id, candidateId: state.candidateId }));
 		} else {
 			navigateTo('/candidates');
 		}
@@ -86,7 +85,7 @@ const CandidatesProfilePage = () => {
 										<LabelTextareaPartial
 											label='About'
 											detail={textValidationCheck(
-												cadnidateProfile?.profile?.about,
+												cadnidateProfile?.about,
 											)}
 										/>
 									</div>
@@ -95,29 +94,29 @@ const CandidatesProfilePage = () => {
 										<LabelTitlepartial
 											label='Roles'
 											detail={
-												cadnidateProfile?.profile?.roles
-													? cadnidateProfile?.profile?.roles?.join(', ')
+												cadnidateProfile?.roles
+													? cadnidateProfile?.roles?.join(', ')
 													: ''
 											}
 										/>
-										<LabelTitlepartial label='Location' detail={''} />
+										<LabelTitlepartial label='Location' detail={cadnidateProfile?.location} />
 									</div>
 									<div className='flex items-center gap-4 max-md:flex-col'>
 										<LabelTitlepartial
 											label='Experience'
-											detail={cadnidateProfile?.profile?.experience}
+											detail={cadnidateProfile?.experience}
 										/>
 										<LabelTitlepartial
 											label='Education'
-											detail={cadnidateProfile?.profile?.education}
+											detail={cadnidateProfile?.education}
 										/>
 									</div>
 									<div className='flex flex-col items-center'>
-										<LabelTitlepartial label='Availability' detail='' />
+										<LabelTitlepartial label='Availability' detail={cadnidateProfile?.availabilty}/>
 									</div>
 									<LabelTitlepartial
 										label='Top Skills'
-										detail={cadnidateProfile?.profile?.skills?.join(', ')}
+										detail={cadnidateProfile?.skills?.join(', ')}
 									/>
 								</CardBody>
 							</Card>
@@ -126,7 +125,7 @@ const CandidatesProfilePage = () => {
 								<Card className='h-fit w-full pb-4'>
 									<CardHeader>
 										<CardHeaderChild className='!gap-2'>
-											<CardTitle>Jobs Assigned</CardTitle>
+											<CardTitle>Jobs Shortlisted For</CardTitle>
 											<Label htmlFor='Assigment'>
 												View the jobs, candidate is assigned to.
 											</Label>
@@ -168,7 +167,7 @@ const CandidatesProfilePage = () => {
 									<Link
 										target='_blank'
 										to={urlValidationCheck(
-											cadnidateProfile?.profile?.resumeLink,
+											cadnidateProfile?.resumeLink,
 										)}
 										className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
 										<Button className='h-fit' icon='HeroPdf' color='zinc'>

@@ -74,7 +74,7 @@ const CandidateCVEditPage = () => {
 			return errors;
 		},
 		onSubmit: (values: EditCVFormValues) => {
-			const { cvText, roles, experience, education, LinkedIn, GitHub, about, availabilty } = values;
+			const { cvText, roles, experience, education, LinkedIn, GitHub, about, availabilty, location } = values;
 
 			const preGitHub: { id: string; link: string } | null = getSocialLinkWithId(
 				cadnidateProfile?.profile?.socialProfiles ?? [],
@@ -110,7 +110,7 @@ const CandidateCVEditPage = () => {
 
 	useEffect(() => {
 		if (state) {
-			dispatch(getCandidateProfile({ id: state.id, candidateId: state.id }));
+			dispatch(getCandidateProfile({ id: state.id, candidateId: state.candidateId }));
 		} else {
 			navigateTo('/candidates');
 		}

@@ -160,7 +160,7 @@ const JobsPage = () => {
 					</SubheaderRight>
 				</Subheader>
 				<Subheader>
-					<SubheaderLeft>
+					<SubheaderLeft className='!block'>
 						<CardTitle>Jobs</CardTitle>
 						<CardSubTitle>
 							Create, Delete, and assign Candidates to jobs effectively.

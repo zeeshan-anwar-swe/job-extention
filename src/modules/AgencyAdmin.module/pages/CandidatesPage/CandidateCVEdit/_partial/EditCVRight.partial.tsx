@@ -3,6 +3,8 @@ import Card, {
 	CardFooter,
 	CardFooterChild,
 	CardHeader,
+	CardSubTitle,
+	CardTitle,
 } from '../../../../../../components/ui/Card';
 import { FormikProps } from 'formik';
 import Button from '../../../../../../components/ui/Button';
@@ -22,15 +24,13 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 		(state: RootState) => state.candidates,
 	);
 
-	const { loading, imageUrl } = useImageValidation(cadnidateProfile?.profile?.candidate?.image);
+	const { loading, imageUrl } = useImageValidation(cadnidateProfile?.candidate?.image);
 
 	return (
 		<Card className='col-span-3 h-full w-full max-lg:col-span-12 '>
-			<CardHeader>
-				<div>
-					<h1>Preview</h1>
-					<p className='font-light'>Download and Preview CV.</p>
-				</div>
+			<CardHeader className='!block'>
+					<CardTitle>Preview</CardTitle>
+					<CardSubTitle className='font-light'>Download and Preview CV.</CardSubTitle>
 			</CardHeader>
 			<CardBody>
 				<ImageLoaderWraper loading={loading} height='h-full'>
@@ -41,9 +41,9 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 					/>
 				</ImageLoaderWraper>
 				<div>
-					<h3>{textValidationCheck(cadnidateProfile?.profile?.candidate?.name)}</h3>
+					<h3>{textValidationCheck(cadnidateProfile?.candidate?.name)}</h3>
 					<p className='font-light'>
-						{textValidationCheck(cadnidateProfile?.profile?.candidate?.email)}
+						{textValidationCheck(cadnidateProfile?.candidate?.email)}
 					</p>
 				</div>
 			</CardBody>
