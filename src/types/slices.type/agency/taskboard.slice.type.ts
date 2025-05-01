@@ -15,16 +15,19 @@ export interface TaskBoardJobType {
 	team: TaskBoardUserType;
 }
 
-export interface TaskBoardDataType {
-	backlogJobs: TaskBoardJobType[];
-	inProgressJobs: TaskBoardJobType[];
-	inReviewJobs: TaskBoardJobType[];
-	completedJobs: TaskBoardJobType[];
+export interface TaskBoardListType {
+	loading: boolean;
+	count: number;
+	rows: TaskBoardJobType[];
+	error: null | any;
 }
 
 export interface TaskBoardInitialStateType {
 	error: null | Error;
-	taskBoardData: TaskBoardDataType;
+	backlogJobs: TaskBoardListType;
+	inProgressJobs: TaskBoardListType;
+	inReviewJobs: TaskBoardListType;
+	completedJobs: TaskBoardListType;
 	pageLoading: boolean;
 	modalLoading: boolean;
 	componentLoading: boolean;

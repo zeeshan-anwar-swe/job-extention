@@ -3,25 +3,68 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
 import { TaskBoardInitialStateType } from '../../../types/slices.type/agency/taskboard.slice.type';
+import { JobStatus } from '../../../types/enums/jobStatus.enum';
 
 const initialState: TaskBoardInitialStateType = {
 	error: null,
-	taskBoardData: {
-		backlogJobs: [],
-		inProgressJobs: [],
-		inReviewJobs: [],
-		completedJobs: [],
-	},
+	backlogJobs: { loading: false, error: null, count: 0, rows: [] },
+	inProgressJobs: { loading: false, error: null, count: 0, rows: [] },
+	inReviewJobs: { loading: false, error: null, count: 0, rows: [] },
+	completedJobs: { loading: false, error: null, count: 0, rows: [] },
 	pageLoading: false,
 	modalLoading: false,
 	componentLoading: false,
 };
 
-export const getTaskBoardData = createAsyncThunk(
-	'taskBoard/getTaskBoardData',
-	async (_, { rejectWithValue }) => {
+export const getTaskBoardBackLogJobs = createAsyncThunk(
+	'taskBoard/getTaskBoardBackLogJobs',
+	async ({ limit, page }: { limit: number; page: number }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get(`/agency/taskboard`);
+			const response = await axiosInstance.get(
+				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.BACKLOG}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getTaskBoardInProgressJobs = createAsyncThunk(
+	'taskBoard/getTaskBoardInProgressJobs',
+	async ({ limit, page }: { limit: number; page: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(
+				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.IN_PROGRESS}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getTaskBoardInReviewJobs = createAsyncThunk(
+	'taskBoard/getTaskBoardInReviewJobs',
+	async ({ limit, page }: { limit: number; page: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(
+				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.IN_REVIEW}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getTaskBoardCompletedJobs = createAsyncThunk(
+	'taskBoard/getTaskBoardCompletedJobs',
+	async ({ limit, page }: { limit: number; page: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(
+				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.COMPLETED}`,
+			);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -35,20 +78,75 @@ export const taskBoardSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getTaskBoardData.pending, (state) => {
-				state.pageLoading = true;
-				state.error = null;
+			.addCase(getTaskBoardBackLogJobs.pending, (state) => {
+				state.backlogJobs.loading = true;
+				state.backlogJobs.error = null;
 			})
-			.addCase(getTaskBoardData.fulfilled, (state, action) => {
-				state.taskBoardData = action.payload;
-				state.pageLoading = false;
+			.addCase(getTaskBoardBackLogJobs.fulfilled, (state, action) => {
+				state.backlogJobs.rows = action.payload.rows;
+				state.backlogJobs.count = action.payload.count;
+				state.backlogJobs.loading = false;
 			})
-			.addCase(getTaskBoardData.rejected, (state, action: any) => {
-				state.error = action.payload || {
+			.addCase(getTaskBoardBackLogJobs.rejected, (state, action: any) => {
+				state.backlogJobs.error = action.payload || {
 					message: 'Unknown error occurred ',
 				};
 				toast.error((action.payload.message as string) || 'Unknown error occurred ');
-				state.pageLoading = false;
+				state.backlogJobs.loading = false;
+			});
+
+		builder
+			.addCase(getTaskBoardInProgressJobs.pending, (state) => {
+				state.inProgressJobs.loading = true;
+				state.inProgressJobs.error = null;
+			})
+			.addCase(getTaskBoardInProgressJobs.fulfilled, (state, action) => {
+				state.inProgressJobs.rows = action.payload.rows;
+				state.inProgressJobs.count = action.payload.count;
+				state.inProgressJobs.loading = false;
+			})
+			.addCase(getTaskBoardInProgressJobs.rejected, (state, action: any) => {
+				state.inProgressJobs.error = action.payload || {
+					message: 'Unknown error occurred ',
+				};
+				toast.error((action.payload.message as string) || 'Unknown error occurred ');
+				state.inProgressJobs.loading = false;
+			});
+
+		builder
+			.addCase(getTaskBoardInReviewJobs.pending, (state) => {
+				state.inReviewJobs.loading = true;
+				state.backlogJobs.error = null;
+			})
+			.addCase(getTaskBoardInReviewJobs.fulfilled, (state, action) => {
+				state.inReviewJobs.rows = action.payload.rows;
+				state.inReviewJobs.count = action.payload.count;
+				state.inReviewJobs.loading = false;
+			})
+			.addCase(getTaskBoardInReviewJobs.rejected, (state, action: any) => {
+				state.inReviewJobs.error = action.payload || {
+					message: 'Unknown error occurred ',
+				};
+				toast.error((action.payload.message as string) || 'Unknown error occurred ');
+				state.inReviewJobs.loading = false;
+			});
+
+		builder
+			.addCase(getTaskBoardCompletedJobs.pending, (state) => {
+				state.completedJobs.loading = true;
+				state.completedJobs.error = null;
+			})
+			.addCase(getTaskBoardCompletedJobs.fulfilled, (state, action) => {
+				state.completedJobs.rows = action.payload.rows;
+				state.completedJobs.count = action.payload.count;
+				state.completedJobs.loading = false;
+			})
+			.addCase(getTaskBoardCompletedJobs.rejected, (state, action: any) => {
+				state.completedJobs.error = action.payload || {
+					message: 'Unknown error occurred ',
+				};
+				toast.error((action.payload.message as string) || 'Unknown error occurred ');
+				state.completedJobs.loading = false;
 			});
 	},
 });

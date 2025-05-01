@@ -1,4 +1,5 @@
 import { TColors } from '../types/colors.type';
+import { JobStatus } from '../types/enums/jobStatus.enum';
 
 export function addOrRemoveObject<T extends Record<string, any>>(array: T[], newObject: T): T[] {
 	const existingIndex = array.findIndex((item) => item.id === newObject.id);
@@ -162,23 +163,42 @@ export const formatTimeString = (dateString: string): string => {
 	}
 };
 
-
 type SocialLink = {
-    id: string;
-    provider: string;
-    link: string;
+	id: string;
+	provider: string;
+	link: string;
 };
 
 type SocialLinkResult = {
-    id: string;
-    link: string;
+	id: string;
+	link: string;
 } | null;
 
 export const getSocialLinkWithId = (links: SocialLink[], provider: string): SocialLinkResult => {
-    if (!links || links.length === 0 || !provider) {
-        return null;
-    }
+	if (!links || links.length === 0 || !provider) {
+		return null;
+	}
 
-    const foundLink = links.find(link => link.provider === provider);
-    return foundLink ? { id: foundLink.id, link: foundLink.link } : null;
+	const foundLink = links.find((link) => link.provider === provider);
+	return foundLink ? { id: foundLink.id, link: foundLink.link } : null;
+};
+
+export const getQueryParamValue = (input: string, paramName: string): JobStatus => {
+	try {
+		let searchParams;
+		if (input.startsWith('http://') || input.startsWith('https://')) {
+			// Full URL provided
+			const urlObj = new URL(input);
+			searchParams = urlObj.searchParams;
+		} else {
+			// Assume it's a query string
+			searchParams = new URLSearchParams(input.startsWith('?') ? input.substring(1) : input);
+		}
+		const paramValue: JobStatus = searchParams.get(paramName) as JobStatus;
+		return paramValue !== null ? paramValue : JobStatus.BACKLOG;
+	} catch (error) {
+		// Handle cases where the input is not a valid URL or query string.
+		console.error('Invalid input:', error);
+		return JobStatus.BACKLOG;
+	}
 };

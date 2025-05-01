@@ -25,7 +25,7 @@ const TableDataProfilePartial = ({
 	return (
 		<Card className='border-2'>
 			<CardHeader className='flex items-center justify-between '>
-				<CardTitle>{textValidationCheck(title)}</CardTitle>
+				<CardTitle className='!text-lg'>{textValidationCheck(title)}</CardTitle>
 				<Button icon='HeroEllipsisHorizontal'></Button>
 			</CardHeader>
 

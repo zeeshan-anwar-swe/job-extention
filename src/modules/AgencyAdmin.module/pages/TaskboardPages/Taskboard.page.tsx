@@ -26,13 +26,17 @@ import TaskSectionCardPartial from './_partial/TaskSectionCard.partial';
 import CustomDropDown from '../../components/CustomDropDown.component';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store';
-import { getTaskBoardData } from '../../../../store/slices/Agency/Taskboard.slice';
-import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { JobStatus } from '../../../../types/enums/jobStatus.enum';
+import {
+	getTaskBoardBackLogJobs,
+	getTaskBoardCompletedJobs,
+	getTaskBoardInProgressJobs,
+	getTaskBoardInReviewJobs,
+} from '../../../../store/slices/Agency/Taskboard.slice';
 
 const TaskboardPage = () => {
 	const dispatch: AppDispatch = useDispatch();
-	const { pageLoading, taskBoardData, error } = useSelector(
+	const { backlogJobs, inProgressJobs, inReviewJobs, completedJobs } = useSelector(
 		(state: RootState) => state.taskBoard,
 	);
 	const { i18n } = useTranslation();
@@ -102,11 +106,6 @@ const TaskboardPage = () => {
 		}
 		return () => {};
 	}, [selectedDate]);
-
-	useEffect(() => {
-		dispatch(getTaskBoardData());
-		return () => {};
-	}, []);
 
 	return (
 		<>
@@ -189,51 +188,52 @@ const TaskboardPage = () => {
 						</Dropdown>
 					</SubheaderRight>
 				</Subheader>
-				<PageLoader loading={pageLoading} error={error} data={taskBoardData}>
-					<Container className='grid grid-cols-4 gap-4 '>
-						<Card className='col-span-4 grid grid-cols-4 gap-4  p-4 '>
-							<Card className='col-span-4 '>
-								<CardHeader className='w-full'>
-									<CardHeaderChild className='!block'>
-										<CardTitle>Jobs</CardTitle>
-										<CardSubTitle>
-											Create, Delete, and assign Candidates to jobs
-											effectively.
-										</CardSubTitle>
-									</CardHeaderChild>
-								</CardHeader>
-							</Card>
-							<TaskSectionCardPartial
-								jobList={taskBoardData.backlogJobs}
-								color='amber'
-								lineColor='!border-amber-500'
-								cardType={JobStatus.BACKLOG}
-								taskCount={1}
-							/>
-							<TaskSectionCardPartial
-								jobList={taskBoardData.inProgressJobs}
-								color='blue'
-								lineColor='!border-blue-500'
-								cardType={JobStatus.IN_PROGRESS}
-								taskCount={1}
-							/>
-							<TaskSectionCardPartial
-								jobList={taskBoardData.inReviewJobs}
-								color='violet'
-								lineColor='!border-violet-500'
-								cardType={JobStatus.IN_REVIEW}
-								taskCount={1}
-							/>
-							<TaskSectionCardPartial
-								jobList={taskBoardData.completedJobs}
-								color='emerald'
-								lineColor='!border-emerald-500'
-								cardType={JobStatus.COMPLETED}
-								taskCount={1}
-							/>
+				<Container className='grid grid-cols-4 gap-4 '>
+					<Card className='col-span-4 grid grid-cols-4 gap-4  p-4 '>
+						<Card className='col-span-4 '>
+							<CardHeader className='w-full'>
+								<CardHeaderChild className='!block'>
+									<CardTitle>Jobs</CardTitle>
+									<CardSubTitle>
+										Create, Delete, and assign Candidates to jobs effectively.
+									</CardSubTitle>
+								</CardHeaderChild>
+							</CardHeader>
 						</Card>
-					</Container>
-				</PageLoader>
+						<TaskSectionCardPartial
+							ListLimit={10}
+							getJobListAction={getTaskBoardBackLogJobs}
+							jobList={backlogJobs}
+							color='amber'
+							lineColor='!border-amber-500'
+							cardType={JobStatus.BACKLOG}
+						/>
+						<TaskSectionCardPartial
+							ListLimit={10}
+							getJobListAction={getTaskBoardInProgressJobs}
+							jobList={inProgressJobs}
+							color='blue'
+							lineColor='!border-blue-500'
+							cardType={JobStatus.IN_PROGRESS}
+						/>
+						<TaskSectionCardPartial
+							ListLimit={10}
+							getJobListAction={getTaskBoardInReviewJobs}
+							jobList={inProgressJobs}
+							color='violet'
+							lineColor='!border-violet-500'
+							cardType={JobStatus.IN_REVIEW}
+						/>
+						<TaskSectionCardPartial
+							ListLimit={10}
+							getJobListAction={getTaskBoardCompletedJobs}
+							jobList={completedJobs}
+							color='emerald'
+							lineColor='!border-emerald-500'
+							cardType={JobStatus.COMPLETED}
+						/>
+					</Card>
+				</Container>
 			</PageWrapper>
 		</>
 	);

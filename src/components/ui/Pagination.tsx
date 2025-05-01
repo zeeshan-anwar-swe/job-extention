@@ -61,7 +61,7 @@ const Pagination = ({
 	}, [search]);
 
 	return (
-		<Card className={`${totalPages < 2 && '!hidden'}`}>
+		<Card className={`${totalPages < 2 && '!hidden'} ml-auto w-full bg-transparent`}>
 			<CardFooter>
 				<div className='ml-auto flex items-center gap-2 '>
 					<Button
