@@ -14,6 +14,7 @@ import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.help
 import { JobDetailsType } from '../../types/slices.type/jobs.slice.type';
 
 interface InitialStateType {
+	search: string;
 	jobsList: any[];
 	paginatedList: any[];
 	componentLoading: boolean;
@@ -30,6 +31,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+	search: '',
 	jobsList: [],
 	paginatedList: [],
 	paginationCount: 0,
@@ -47,10 +49,13 @@ const initialState: InitialStateType = {
 
 export const getJobsList = createAsyncThunk(
 	'jobs/getJobsList',
-	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+	async (
+		{ page, limit, search = '' }: { page: number; limit: number; search?: string },
+		{ rejectWithValue },
+	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/job/recruiter/list?page=${page}&limit=${limit}`,
+				`/job/recruiter/list?page=${page}&limit=${limit}&search=${search}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -153,6 +158,9 @@ export const jobsSlice = createSlice({
 	name: 'jobs',
 	initialState,
 	reducers: {
+		setJobSearch: (state, action: PayloadAction<string>) => {
+			state.search = action.payload;
+		},
 		setSearchedTeamListForJob: (state, action: PayloadAction<string>) => {
 			state.searchedTeamListForJob = filterTeamMemberByName(
 				state.teamListForJob,
@@ -358,5 +366,6 @@ export const {
 	setJobDetailsById,
 	searchStoredJobs,
 	setJobDetails,
+	setJobSearch,
 } = jobsSlice.actions;
 export default jobsSlice.reducer;

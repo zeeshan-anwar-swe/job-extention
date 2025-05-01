@@ -11,7 +11,10 @@ import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
 import SearchPartial from './_partial/Search.partial';
-import { getAgencyCandidatesList } from '../../../../store/slices/Candiates.slice';
+import {
+	getAgencyCandidatesList,
+	setCandidatesSearch,
+} from '../../../../store/slices/Candiates.slice';
 import { RootState } from '../../../../store';
 import { useSelector } from 'react-redux';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
@@ -19,9 +22,10 @@ import Pagination from '../../../../components/ui/Pagination';
 import DownloadCsvComponent from './_partial/CSVDownload.partial';
 import DownloadCsvModal from './_partial/CSVDownload.partial';
 import { useState } from 'react';
+import CustomSearchComponent from '../../components/CustomSearch.component';
 
 const CandidatesPage = () => {
-	const { pageLoading, candidatesList, error, paginationCount } = useSelector(
+	const { pageLoading, candidatesList, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
@@ -41,7 +45,12 @@ const CandidatesPage = () => {
 			<PageWrapper name='Candidates'>
 				<Subheader>
 					<SubheaderLeft>
-						<SearchPartial />
+						<CustomSearchComponent
+							setSearchActionForPagination={setCandidatesSearch}
+							searchListAction={getAgencyCandidatesList}
+							searchLimit={10}
+							placeholder='Search Candidates...'
+						/>
 						<Button
 							variant='outline'
 							color='zinc'
@@ -75,6 +84,7 @@ const CandidatesPage = () => {
 				</PageLoader>
 
 				<Pagination
+					search={search}
 					getListAction={getAgencyCandidatesList}
 					count={paginationCount}
 					limit={10}

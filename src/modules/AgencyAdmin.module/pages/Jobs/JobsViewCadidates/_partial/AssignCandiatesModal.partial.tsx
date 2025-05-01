@@ -14,6 +14,9 @@ import {
 	getJobDetails,
 	setAssignedCandidatesWhileUpdatingJob,
 } from '../../../../../../store/slices/Jobs.slice';
+import { useEffect } from 'react';
+import { getAllCandidatesList } from '../../../../../../store/slices/Candiates.slice';
+import Pagination from '../../../../../../components/ui/Pagination';
 
 const AssignCandidatesModalPartial = ({
 	modal,
@@ -24,7 +27,9 @@ const AssignCandidatesModalPartial = ({
 	setModal: any;
 	jobTitle?: string;
 }) => {
-	const { allCadidateList } = useSelector((state: RootState) => state.candidates);
+	const { allCadidateList, paginationCount, pageLoading } = useSelector(
+		(state: RootState) => state.candidates,
+	);
 	const dispatch: AppDispatch = useDispatch();
 
 	const { assignedCandidatesWhileUpdatingJob, jobDetails } = useSelector(
@@ -45,6 +50,10 @@ const AssignCandidatesModalPartial = ({
 		await dispatch(setAssignedCandidatesWhileUpdatingJob([]));
 	};
 
+	useEffect(() => {
+		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
+	}, []);
+
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>Assign candidates to “{jobTitle ?? ''}” job</ModalHeader>
@@ -60,7 +69,14 @@ const AssignCandidatesModalPartial = ({
 					/>
 				))}
 			</ModalBody>
-			<ModalFooter>
+			<ModalFooter className='!block'>
+				<ModalFooterChild>
+					<Pagination
+						count={paginationCount}
+						limit={10}
+						getListAction={getAllCandidatesList}
+					/>
+				</ModalFooterChild>
 				<ModalFooterChild className='w-full pt-4 max-md:!flex-col'>
 					<Button
 						onClick={() => setModal(false)}

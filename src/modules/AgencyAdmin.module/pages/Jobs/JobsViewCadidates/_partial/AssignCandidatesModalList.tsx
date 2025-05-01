@@ -13,10 +13,10 @@ export const AssignCandidatesModalListItemPartial = ({ candidate }: any) => {
 	);
 	const dispatch: AppDispatch = useDispatch();
 
-	const isAssigned = true;
-	// const isAssigned = jobDetails?.candidateJobProfiles.some(
-	// 	(assignedCandidate: any) => assignedCandidate.candidateId === candidate.id,
-	// );
+	// const isAssigned = true;
+	const isAssigned = jobDetails?.candidateJobProfiles?.some(
+		(assignedCandidate: any) => assignedCandidate.candidateId === candidate.id,
+	);
 
 	const isNewlyAssigned = assignedCandidatesWhileUpdatingJob.some(
 		(assignedCandidate: any) => assignedCandidate === candidate.id,

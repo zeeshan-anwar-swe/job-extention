@@ -13,10 +13,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { useEffect } from 'react';
-import { getSearchedAgencyCandidatesList } from '../../../../../store/slices/Candiates.slice';
+import {
+	getSearchedAgencyCandidatesList,
+	setCandidatesSearch,
+} from '../../../../../store/slices/Candiates.slice';
+import CustomSearchComponent from '../../../components/CustomSearch.component';
 
 const TablePartial = () => {
-	const { candidatesList, pageLoading, error } = useSelector(
+	const { candidatesList, pageLoading, error, search } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
@@ -33,7 +37,12 @@ const TablePartial = () => {
 					<CardTitle>Candidates</CardTitle>
 				</CardHeaderChild>
 				<CardHeaderChild>
-					<SearchPartial />
+					<CustomSearchComponent
+						placeholder='Search Candidates...'
+						searchLimit={5}
+						setSearchActionForPagination={setCandidatesSearch}
+						searchListAction={getSearchedAgencyCandidatesList}
+					/>
 					<Link to={'/candidates'}>
 						<Button variant='solid'>View All Candidates</Button>
 					</Link>

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../../../components/ui/Dropdown';
 import Button from '../../../../../../components/ui/Button';
 import Card, {
@@ -14,6 +14,7 @@ import Icon from '../../../../../../components/icon/Icon';
 import { AppDispatch } from '../../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+	FilterOptionsType,
 	getAllCandidatesList,
 	getFilteredCandidates,
 	setCandidatesFilterOptions,
@@ -28,6 +29,15 @@ interface ExperienceItem {
 const JobFilterDropdownPartial = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const { filterOptions } = useSelector((state: RootState) => state.candidates);
+
+	const [formData, setFromData] = useState<any>({
+		skills: [],
+		location: '',
+		experiences: [],
+	});
+
+	console.log({ formData });
+
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 	const experience: ExperienceItem[] = [
 		{ title: '1 Year', value: 1 },
@@ -63,8 +73,8 @@ const JobFilterDropdownPartial = () => {
 		dispatch(setCandidatesFilterOptions({ ...filterOptions, location: value }));
 	};
 
-	const handleSkillsChange = (skills: string[]) => {
-		dispatch(setCandidatesFilterOptions({ ...filterOptions, skills }));
+	const handleSkillsChange = () => {
+		dispatch(setCandidatesFilterOptions({ ...filterOptions, skills: formData.skills }));
 	};
 
 	const applyFilter = () => {
@@ -77,6 +87,10 @@ const JobFilterDropdownPartial = () => {
 		await dispatch(setCandidatesFilterOptions({ location: '', experiences: [], skills: [] }));
 		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 	};
+
+	useEffect(() => {
+		handleSkillsChange();
+	}, [formData.skills]);
 
 	return (
 		<div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -144,8 +158,9 @@ const JobFilterDropdownPartial = () => {
 						</CardHeader>
 						<CardBody>
 							<LabelSkillSelectPartial
+								setFormData={setFromData}
 								id='skills'
-								formData={{ ...filterOptions, setFormData: undefined }}
+								formData={formData}
 								label=''
 							/>
 						</CardBody>

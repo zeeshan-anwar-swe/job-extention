@@ -1,34 +1,47 @@
 import Button from '../../../../../components/ui/Button';
+import Card, {
+	CardBody,
+	CardHeader,
+	CardSubTitle,
+	CardTitle,
+} from '../../../../../components/ui/Card';
+import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
+import useImageValidation from '../../../../../hooks/useImageValidation';
 import {
 	profileImageUrlValidationCheck,
 	textValidationCheck,
 } from '../../../../../utils/validationCheck';
 
 const TableDataProfilePartial = ({
-	imageUrl,
+	image,
 	title,
 	subTitle,
 }: {
-	imageUrl?: string;
+	image?: string;
 	title?: string;
 	subTitle?: string;
 }) => {
+	const { loading, imageUrl } = useImageValidation(image);
 	return (
-		<div>
-			<div className='flex items-center justify-between '>
-				<h3>{textValidationCheck(title)}</h3>
+		<Card className='border-2'>
+			<CardHeader className='flex items-center justify-between '>
+				<CardTitle>{textValidationCheck(title)}</CardTitle>
 				<Button icon='HeroEllipsisHorizontal'></Button>
-			</div>
+			</CardHeader>
 
-			<div className='flex w-fit items-center gap-2 rounded-full border border-zinc-300 pl-1 pr-4 dark:border-zinc-600'>
-				<img
-					className='aspect-square w-8 rounded-full'
-					src={profileImageUrlValidationCheck(imageUrl)}
-					alt='cadidate-image'
-				/>
-				<h6>{textValidationCheck(subTitle)}</h6>
-			</div>
-		</div>
+			<CardBody>
+				<div className='flex w-fit items-center gap-4 rounded-full border border-zinc-300 pr-4'>
+					<ImageLoaderWraper loading={loading} height='h-8'>
+						<img
+							className='aspect-square w-8 rounded-full'
+							src={imageUrl}
+							alt='cadidate-image'
+						/>
+					</ImageLoaderWraper>
+					<CardSubTitle>Client: {textValidationCheck(subTitle)}</CardSubTitle>
+				</div>
+			</CardBody>
+		</Card>
 	);
 };
 

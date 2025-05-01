@@ -3,7 +3,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 
-interface FilterOptionsType {
+export interface FilterOptionsType {
 	location: string;
 	experiences: number[];
 	skills: string[];
@@ -45,10 +45,13 @@ const initialState: InitialStateType = {
 
 export const getAgencyCandidatesList = createAsyncThunk(
 	'candidates/getAgencyCandidatesList',
-	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+	async (
+		{ page, limit, search = '' }: { page: number; limit: number; search?: string },
+		{ rejectWithValue },
+	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/candidates?page=${page}&limit=${limit}`,
+				`/agency/candidates?page=${page}&limit=${limit}&search=${search}`,
 			);
 			return response.data.data;
 		} catch (error: any) {

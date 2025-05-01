@@ -8,7 +8,6 @@ import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_com
 import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
-import SearchPartial from './_partial/Search.partial';
 import JobsPageCardPartial from './_partial/JobsPageCard.partial';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
 import { DateRangePicker, Range } from 'react-date-range';
@@ -18,30 +17,34 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import colors from 'tailwindcss/colors';
 import themeConfig from '../../../../config/theme.config';
-import HeaderPartial from './_partial/Header.partial';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
-import { getJobsList } from '../../../../store/slices/Jobs.slice';
+import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
+import { Link } from 'react-router-dom';
+import CustomSearchComponent from '../../components/CustomSearch.component';
+import CustomDropDown from '../../components/CustomDropDown.component';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
 
-	const { pageLoading, error, paginatedList, paginationCount } = useSelector(
+	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
 
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
+	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
 
 	const [selectedDate, setSelectedDate] = useState<Range[]>([
 		{
-			startDate: dayjs().startOf('week').add(-1, 'week').toDate(),
-			endDate: dayjs().endOf('week').toDate(),
+			startDate: dayjs().startOf('month').add(-1, 'month').toDate(),
+			endDate: dayjs().endOf('month').toDate(),
 			key: 'selection',
 		},
 	]);
+
+	console.log({ selectedDate, activeTab });
 
 	useEffect(() => {
 		if (activeTab === PERIOD.DAY) {
@@ -110,16 +113,20 @@ const JobsPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Jobs'>
-				<Subheader>
+				<div className='flex justify-between gap-4 border-b border-zinc-300/25 bg-white/75 px-6 py-4 dark:border-zinc-800/50 dark:bg-zinc-900/75 dark:text-white'>
 					<SubheaderLeft>
-						<SearchPartial />
-						<Button
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroBarFilter'>
-							Filter
-						</Button>
+						<CustomSearchComponent
+							placeholder='Search Jobs...'
+							searchLimit={9}
+							setSearchActionForPagination={setJobSearch}
+							searchListAction={getJobsList}
+						/>
+
+						<CustomDropDown
+							title='Filter'
+							icon='HeroBarFilter'
+							items={['By Name', 'By Position', 'By Location']}
+						/>
 					</SubheaderLeft>
 					<SubheaderRight>
 						<Dropdown>
@@ -144,11 +151,15 @@ const JobsPage = () => {
 							</DropdownToggle>
 							<DropdownMenu className='!p-0'>
 								<DateRangePicker
-									onChange={(item) => setSelectedDate([item.selection])}
-									moveRangeOnFirstSelection={false}
+									onChange={(item) => {
+										console.log({ item });
+
+										setSelectedDate([item.selection]);
+									}}
+									moveRangeOnFirstSelection={true}
 									months={2}
 									ranges={selectedDate}
-									direction='horizontal'
+									direction='vertical'
 									rangeColors={[
 										colors[themeConfig.themeColor][themeConfig.themeColorShade],
 										colors.emerald[themeConfig.themeColorShade],
@@ -158,7 +169,7 @@ const JobsPage = () => {
 							</DropdownMenu>
 						</Dropdown>
 					</SubheaderRight>
-				</Subheader>
+				</div>
 				<Subheader>
 					<SubheaderLeft className='!block'>
 						<CardTitle>Jobs</CardTitle>
@@ -167,7 +178,11 @@ const JobsPage = () => {
 						</CardSubTitle>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<HeaderPartial />
+						<Link to='/jobs/create-job'>
+							<Button variant='solid' rightIcon='HeroPlus'>
+								Create a new job
+							</Button>
+						</Link>
 					</SubheaderRight>
 				</Subheader>
 				<PageLoader loading={pageLoading} error={error} data={paginatedList}>
@@ -177,7 +192,12 @@ const JobsPage = () => {
 						))}
 					</Container>
 				</PageLoader>
-				<Pagination getListAction={getJobsList} count={paginationCount} limit={9} />
+				<Pagination
+					search={search}
+					getListAction={getJobsList}
+					count={paginationCount}
+					limit={9}
+				/>
 			</PageWrapper>
 		</>
 	);

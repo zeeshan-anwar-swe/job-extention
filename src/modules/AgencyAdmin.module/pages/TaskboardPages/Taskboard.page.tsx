@@ -8,7 +8,12 @@ import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card, { CardHeader, CardHeaderChild } from '../../../../components/ui/Card';
+import Card, {
+	CardHeader,
+	CardHeaderChild,
+	CardSubTitle,
+	CardTitle,
+} from '../../../../components/ui/Card';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
 import { DateRangePicker, Range } from 'react-date-range';
 import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
@@ -18,8 +23,18 @@ import dayjs from 'dayjs';
 import colors from 'tailwindcss/colors';
 import themeConfig from '../../../../config/theme.config';
 import TaskSectionCardPartial from './_partial/TaskSectionCard.partial';
+import CustomDropDown from '../../components/CustomDropDown.component';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../store';
+import { getTaskBoardData } from '../../../../store/slices/Agency/Taskboard.slice';
+import PageLoader from '../../../../templates/layouts/main/PageLoader';
+import { JobStatus } from '../../../../types/enums/jobStatus.enum';
 
 const TaskboardPage = () => {
+	const dispatch: AppDispatch = useDispatch();
+	const { pageLoading, taskBoardData, error } = useSelector(
+		(state: RootState) => state.taskBoard,
+	);
 	const { i18n } = useTranslation();
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -87,6 +102,12 @@ const TaskboardPage = () => {
 		}
 		return () => {};
 	}, [selectedDate]);
+
+	useEffect(() => {
+		dispatch(getTaskBoardData());
+		return () => {};
+	}, []);
+
 	return (
 		<>
 			<Header>
@@ -100,38 +121,35 @@ const TaskboardPage = () => {
 			<PageWrapper name='Jobs'>
 				<Subheader>
 					<SubheaderLeft>
-						<Button
-							borderWidth='border-2'
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroListBullet'>
-							All Projects
-						</Button>
-						<Button
-							borderWidth='border-2'
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroArrowsUpDown'>
-							Sort By
-						</Button>
-						<Button
-							borderWidth='border-2'
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroPencilSquare'>
-							Customise
-						</Button>
-						<Button
-							borderWidth='border-2'
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroBarFilter'>
-							Filter
-						</Button>
+						<CustomDropDown
+							items={[
+								'All Projects',
+								'Backlog',
+								'In Progress',
+								'In Review',
+								'Completed',
+							]}
+							title='All Projects'
+							icon='HeroListBullet'
+						/>
+
+						<CustomDropDown
+							items={['Assending', 'Descending']}
+							title='Sort By'
+							icon='HeroArrowsUpDown'
+						/>
+
+						<CustomDropDown
+							items={['Custom1', 'Custom2', 'custom3']}
+							title='Customise'
+							icon='HeroPencilSquare'
+						/>
+
+						<CustomDropDown
+							items={['option1', 'option2', 'option3']}
+							title='Filter'
+							icon='HeroBarFilter'
+						/>
 					</SubheaderLeft>
 					<SubheaderRight>
 						<Dropdown>
@@ -171,44 +189,51 @@ const TaskboardPage = () => {
 						</Dropdown>
 					</SubheaderRight>
 				</Subheader>
-				<Container className='grid grid-cols-4 gap-4 '>
-					<Card className='col-span-4 grid grid-cols-4 gap-4  p-4 '>
-						<Card className='col-span-4 '>
-							<CardHeader className='w-full'>
-								<CardHeaderChild className='!flex-col !items-start !gap-2'>
-									<h1>Jobs</h1>
-									<p>
-										Create, Delete, and assign Candidates to jobs effectively.
-									</p>
-								</CardHeaderChild>
-							</CardHeader>
+				<PageLoader loading={pageLoading} error={error} data={taskBoardData}>
+					<Container className='grid grid-cols-4 gap-4 '>
+						<Card className='col-span-4 grid grid-cols-4 gap-4  p-4 '>
+							<Card className='col-span-4 '>
+								<CardHeader className='w-full'>
+									<CardHeaderChild className='!block'>
+										<CardTitle>Jobs</CardTitle>
+										<CardSubTitle>
+											Create, Delete, and assign Candidates to jobs
+											effectively.
+										</CardSubTitle>
+									</CardHeaderChild>
+								</CardHeader>
+							</Card>
+							<TaskSectionCardPartial
+								jobList={taskBoardData.backlogJobs}
+								color='amber'
+								lineColor='!border-amber-500'
+								cardType={JobStatus.BACKLOG}
+								taskCount={1}
+							/>
+							<TaskSectionCardPartial
+								jobList={taskBoardData.inProgressJobs}
+								color='blue'
+								lineColor='!border-blue-500'
+								cardType={JobStatus.IN_PROGRESS}
+								taskCount={1}
+							/>
+							<TaskSectionCardPartial
+								jobList={taskBoardData.inReviewJobs}
+								color='violet'
+								lineColor='!border-violet-500'
+								cardType={JobStatus.IN_REVIEW}
+								taskCount={1}
+							/>
+							<TaskSectionCardPartial
+								jobList={taskBoardData.completedJobs}
+								color='emerald'
+								lineColor='!border-emerald-500'
+								cardType={JobStatus.COMPLETED}
+								taskCount={1}
+							/>
 						</Card>
-						<TaskSectionCardPartial
-							color='amber'
-							lineColor='!border-amber-500'
-							cardType='Backlog'
-							taskCount={1}
-						/>
-						<TaskSectionCardPartial
-							color='blue'
-							lineColor='!border-blue-500'
-							cardType='In progress'
-							taskCount={1}
-						/>
-						<TaskSectionCardPartial
-							color='violet'
-							lineColor='!border-violet-500'
-							cardType='In review'
-							taskCount={1}
-						/>
-						<TaskSectionCardPartial
-							color='emerald'
-							lineColor='!border-emerald-500'
-							cardType='Completed'
-							taskCount={1}
-						/>
-					</Card>
-				</Container>
+					</Container>
+				</PageLoader>
 			</PageWrapper>
 		</>
 	);
