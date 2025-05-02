@@ -9,13 +9,10 @@ import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
 import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 const App = () => {
 	const navigate = useNavigate();
-	const dispatch: AppDispatch = useDispatch();
 	getOS();
 
 	const commandToRouteMap: Record<string, string> = {
@@ -41,6 +38,25 @@ const App = () => {
 		'landing page': '/',
 		'back to home': '/',
 
+		// Task Board
+		'go to task board': '/task-board',
+		'open task board': '/task-board',
+		'show task board': '/task-board',
+		'take me to task board': '/task-board',
+		'navigate to task board': '/task-board',
+		'back to task board': '/task-board',
+		'bring up task board': '/task-board',
+		'task board page': '/task-board',
+		'access task board': '/task-board',
+		'go to task board page': '/task-board',
+		'open task board page': '/task-board',
+		'show task board page': '/task-board',
+		'take me to task board page': '/task-board',
+		'navigate to task board page': '/task-board',
+		'back to task board page': '/task-board',
+		'bring up task board page': '/task-board',
+		'access task board page': '/task-board',
+
 		// Profile
 		'go to profile': '/settings',
 		'open profile': '/settings',
@@ -60,10 +76,13 @@ const App = () => {
 
 		// Client
 		'go to client': '/client',
+		'go to client page': '/client',
 		'open client': '/client',
+		'open page': '/client',
 		'show client': '/client',
 		'take me to client': '/client',
 		'navigate to client': '/client',
+		'navigate to client page': '/client',
 		'back to client': '/client',
 		'bring up client': '/client',
 		'client page': '/client',
