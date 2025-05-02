@@ -72,11 +72,11 @@ export const inviteTeamMember = createAsyncThunk(
 
 export const assignJobToTeamMember = createAsyncThunk(
 	'candidates/assignJobToTeamMember',
-	async ({ jobId, teamId }: { jobId: string; teamId: string }, { rejectWithValue }) => {
+	async ({ jobId, assignTo }: { jobId: string; assignTo: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/job/assign-team', {
 				jobId,
-				teamId,
+				teamId: assignTo,
 			});
 			return response.data.data;
 		} catch (error: any) {

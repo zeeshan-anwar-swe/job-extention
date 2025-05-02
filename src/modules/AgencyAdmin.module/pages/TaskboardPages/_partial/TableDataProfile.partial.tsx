@@ -24,8 +24,8 @@ const TableDataProfilePartial = ({
 	const { loading, imageUrl } = useImageValidation(image);
 	return (
 		<Card className='border-2'>
-			<CardHeader className='flex items-center justify-between '>
-				<CardTitle className='!text-lg'>{textValidationCheck(title)}</CardTitle>
+			<CardHeader className='!flex !flex-nowrap items-center justify-between '>
+				<CardTitle className='break-all !text-lg'>{textValidationCheck(title)}</CardTitle>
 				<Button icon='HeroEllipsisHorizontal'></Button>
 			</CardHeader>
 

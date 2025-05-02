@@ -2,15 +2,24 @@ import { useState } from 'react';
 import Card from '../../../../../../components/ui/Card';
 import Badge from '../../../../../../components/ui/Badge';
 import Button from '../../../../../../components/ui/Button';
-import AssignJobModalPartial from './AssignJob.partial';
 import useImageValidation from '../../../../../../hooks/useImageValidation';
 import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { ClientDetailsType } from '../../../../../../types/slices.type/clients.slice.type';
+import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
+import { assignJobToClient } from '../../../../../../store/slices/Agency/Client.slice';
 
-const HeaderPartial = ({ clientDetails }: { clientDetails: ClientDetailsType | null }) => {
+const HeaderPartial = ({
+	clientDetails,
+	state,
+}: {
+	clientDetails: ClientDetailsType;
+	state: any;
+}) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const { loading, imageUrl } = useImageValidation(clientDetails?.clientUser.image);
+
+	console.log('clientDetails', clientDetails);
 
 	return (
 		<Card className='!col-span-12 flex'>
@@ -34,7 +43,7 @@ const HeaderPartial = ({ clientDetails }: { clientDetails: ClientDetailsType | n
 						color='amber'
 						colorIntensity='300'
 						className='!text-amber-950 max-md:p-2  max-sm:w-full'>
-						53% Hiring Percentage
+						{Number(state?.hiringRate ?? 0)}% Hiring Percentage
 					</Badge>
 					<Button
 						onClick={() => setModal(true)}
@@ -44,7 +53,14 @@ const HeaderPartial = ({ clientDetails }: { clientDetails: ClientDetailsType | n
 					</Button>
 				</div>
 			</div>
-			<AssignJobModalPartial setModal={setModal} modal={modal} />
+			<AssignJobModalPartial
+				title={`Assign Jobs to client: ${clientDetails?.clientUser?.firstName ?? ''}`}
+				assignToModule='client'
+				modal={modal}
+				setModal={setModal}
+				assignTo={clientDetails?.id}
+				jobAssignAction={assignJobToClient}
+			/>
 		</Card>
 	);
 };

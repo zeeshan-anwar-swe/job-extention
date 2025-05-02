@@ -15,6 +15,10 @@ interface Team {
 	teamUser: User;
 }
 
+interface Team2 {
+	teamId: string;
+}
+
 interface Client {
 	id: string;
 	clientUser: User;
@@ -56,4 +60,18 @@ export interface JobDetailsType {
 	client: Client;
 	candidateJobProfiles?: CandidateJobProfile[];
 	// appliedCandidates?: CandidateJobProfile[];
+}
+
+export interface JobDetailsType2 {
+	id: string;
+	title: string;
+	experience: string;
+	location: string;
+	type: string;
+	status: string;
+	positions: number;
+	skills: string[];
+	team: Team2;
+	client: Client;
+	appliedCandidates?: CandidateJobProfile[];
 }

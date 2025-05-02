@@ -65,10 +65,11 @@ const Pagination = ({
 			<CardFooter>
 				<div className='ml-auto flex items-center gap-2 '>
 					<Button
+						variant='solid'
 						onClick={handlePrevPage}
 						color='blue'
 						colorIntensity='500'
-						className={`!border-blue-500 hover:!border-blue-600 hover:bg-blue-600 hover:!text-white ${currentPage === 1 && 'cursor-not-allowed opacity-50'}`}
+						className={`${currentPage === 1 && 'cursor-not-allowed opacity-50'}`}
 						isDisable={currentPage === 1}>
 						Prev
 					</Button>
@@ -76,16 +77,17 @@ const Pagination = ({
 						<Button
 							color='blue'
 							colorIntensity='500'
-							className='!border-blue-500'
+							className='text-nowrap !border-blue-500'
 							variant='solid'>
 							{currentPage} / {totalPages}
 						</Button>
 					)}
 					<Button
+						variant='solid'
 						onClick={handleNextPage}
 						color='blue'
 						colorIntensity='500'
-						className={`!border-blue-500 hover:!border-blue-600 hover:bg-blue-600 hover:!text-white ${currentPage === totalPages && 'cursor-not-allowed opacity-50'}`}
+						className={`${currentPage === totalPages && 'cursor-not-allowed opacity-50'}`}
 						isDisable={currentPage === totalPages}>
 						Next
 					</Button>

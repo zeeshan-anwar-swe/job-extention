@@ -9,14 +9,13 @@ import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card, { CardBody, CardSubTitle, CardTitle } from '../../../../components/ui/Card';
-import SearchPartial from './_partial/Search.partial';
-import { useEffect, useState } from 'react';
-import { AppDispatch, RootState } from '../../../../store';
-import { useDispatch, useSelector } from 'react-redux';
+import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
+import { useState } from 'react';
+import { RootState } from '../../../../store';
+import { useSelector } from 'react-redux';
 import {
-	getAgencyClientsList,
 	getPaginatedAgencyClientsList,
+	setClientSearch,
 } from '../../../../store/slices/Agency/Client.slice';
 import Dropdown, {
 	DropdownItem,
@@ -26,6 +25,7 @@ import Dropdown, {
 import InviteModalPartial from './_partial/InviteModal.partial';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
+import SearchPartial from '../../common/Search.partial';
 
 const ClientsPage = () => {
 	const [sortBy, setSortBy] = useState<string>('Default');
@@ -48,7 +48,12 @@ const ClientsPage = () => {
 			<PageWrapper name='Candidates'>
 				<Subheader>
 					<SubheaderLeft>
-						<SearchPartial />
+						<SearchPartial
+							placeholder='Search clients...'
+							setSearchActionForPagination={setClientSearch}
+							searchListAction={getPaginatedAgencyClientsList}
+							searchLimit={10}
+						/>
 						<Button
 							color='zinc'
 							variant='outline'

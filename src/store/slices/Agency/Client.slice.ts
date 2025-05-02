@@ -10,6 +10,7 @@ import {
 
 interface InitialStateType {
 	error: null | any;
+	clentSearch: string;
 	clientsList: ClientListItemType[];
 	paginatedClients: ClientListItemType[];
 	locallySearchedClients: any[];
@@ -24,6 +25,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	error: null,
+	clentSearch: '',
 	paginationCount: 0,
 	paginatedClients: [],
 	clientFeedback: [],
@@ -36,23 +38,16 @@ const initialState: InitialStateType = {
 	clientDetails: null,
 };
 
-export const getAgencyClientsList = createAsyncThunk(
-	'clients/getAgencyClientsList',
-	async (_, { rejectWithValue }) => {
-		try {
-			const response = await axiosInstance.get('/agency/clients');
-			return response.data.data.rows;
-		} catch (error: any) {
-			return withAsyncThunkErrorHandler(error, rejectWithValue);
-		}
-	},
-);
-
 export const getPaginatedAgencyClientsList = createAsyncThunk(
 	'clients/getPaginatedAgencyClientsList',
-	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+	async (
+		{ page, limit, search = '' }: { page: number; limit: number; search?: string },
+		{ rejectWithValue },
+	) => {
 		try {
-			const response = await axiosInstance.get(`/agency/clients?page=${page}&limit=${limit}`);
+			const response = await axiosInstance.get(
+				`/agency/clients?page=${page}&limit=${limit}&search=${search}`,
+			);
 			return response.data.data;
 		} catch (error: any) {
 			return withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -90,11 +85,11 @@ export const inviteClient = createAsyncThunk(
 
 export const assignJobToClient = createAsyncThunk(
 	'clients/assignJobToClient',
-	async ({ clientId, jobId }: { clientId: string; jobId?: string }, { rejectWithValue }) => {
+	async ({ assignTo, jobId }: { assignTo: string; jobId?: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post('/job/assign-client', {
 				jobId,
-				clientId,
+				clientId: assignTo,
 			});
 			return response.data.data;
 		} catch (error: any) {
@@ -140,24 +135,27 @@ export const clientsSlice = createSlice({
 				value: action.payload,
 			});
 		},
+		setClientSearch: (state, action: PayloadAction<string>) => {
+			state.clentSearch = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getAgencyClientsList.pending, (state) => {
-				state.pageLoading = true;
-				state.error = null;
-			})
-			.addCase(getAgencyClientsList.fulfilled, (state, action) => {
-				state.pageLoading = false;
-				state.clientsList = action.payload;
-			})
-			.addCase(getAgencyClientsList.rejected, (state, action: any) => {
-				state.pageLoading = false;
-				state.error = action.payload || {
-					message: 'Unknown error occurred while inviting client',
-				};
-				toast.error(action.payload.message || 'Unknown error');
-			})
+			// .addCase(getAgencyClientsList.pending, (state) => {
+			// 	state.pageLoading = true;
+			// 	state.error = null;
+			// })
+			// .addCase(getAgencyClientsList.fulfilled, (state, action) => {
+			// 	state.pageLoading = false;
+			// 	state.clientsList = action.payload;
+			// })
+			// .addCase(getAgencyClientsList.rejected, (state, action: any) => {
+			// 	state.pageLoading = false;
+			// 	state.error = action.payload || {
+			// 		message: 'Unknown error occurred while inviting client',
+			// 	};
+			// 	toast.error(action.payload.message || 'Unknown error');
+			// })
 
 			.addCase(getPaginatedAgencyClientsList.pending, (state) => {
 				state.pageLoading = true;
@@ -238,5 +236,6 @@ export const clientsSlice = createSlice({
 	},
 });
 
-export const { assignClientWhileCreatingJob, searchStoredClients } = clientsSlice.actions;
+export const { assignClientWhileCreatingJob, searchStoredClients, setClientSearch } =
+	clientsSlice.actions;
 export default clientsSlice.reducer;

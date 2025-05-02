@@ -30,6 +30,8 @@ const ClientProfilePage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const navigateTo = useNavigate();
 
+	console.log({ state });
+
 	useEffect(() => {
 		if (state) {
 			dispatch(getClientDetails(state?.id));
@@ -59,7 +61,9 @@ const ClientProfilePage = () => {
 				</Subheader>
 				<PageLoader loading={pageLoading} error={error} data={clientDetails}>
 					<Container className='!grid !grid-cols-12  !gap-4'>
-						<HeaderPartial clientDetails={clientDetails} />
+						{clientDetails && (
+							<HeaderPartial state={state} clientDetails={clientDetails} />
+						)}
 						<Card className='col-span-8 flex flex-col gap-2 max-lg:col-span-12'>
 							<CardHeader className='!block'>
 								<CardTitle>Client Details</CardTitle>

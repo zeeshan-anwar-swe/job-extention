@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Button from '../../../../../components/ui/Button';
-import AssignJobModalPartial from './AssignJob.partial';
 import { ClientListItemType } from '../../../../../types/slices.type/clients.slice.type';
+import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
+import { assignJobToClient } from '../../../../../store/slices/Agency/Client.slice';
 
 const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -11,7 +12,14 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 			<Button onClick={() => setModal(true)}>Assign A job</Button>
 			<Button onClick={() => setModal(true)}>Assign to a Team Member</Button>
 			<Button>Remove Client</Button>
-			<AssignJobModalPartial client={client} modal={modal} setModal={setModal} />
+			<AssignJobModalPartial
+				title={`Assign Jobs to a client: ${client?.name ?? ''}`}
+				assignToModule='client'
+				modal={modal}
+				setModal={setModal}
+				assignTo={client.id}
+				jobAssignAction={assignJobToClient}
+			/>
 		</div>
 	);
 };
