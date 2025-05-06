@@ -1,3 +1,5 @@
+import { Roles } from "../constants/role.enums";
+
 export const examplePages = {
 	examplesPage: {
 		id: 'examplesPage',
@@ -14,7 +16,7 @@ export const examplePages = {
 };
 
 export const appPages = {
-	AgencyAdmin: {
+	[Roles.AGENCY_ADMIN]: {
 		dashboardAppPages: {
 			id: 'dashboardHomeApp',
 			to: '/',
@@ -261,7 +263,7 @@ export const appPages = {
 			},
 		},
 	},
-	Client: {
+	[Roles.CLIENT]: {
 		dashboardAppPages: {
 			id: 'dashboardHomeApp',
 			to: '/',
@@ -405,6 +407,118 @@ export const appPages = {
 					icon: 'HeroEnvelope',
 				},
 			},
+		},
+	},
+	[Roles.TEAM]: {
+		dashboardAppPages: {
+			id: 'dashboardHomeApp',
+			to: '/',
+			text: 'Dashboard',
+			icon: 'HeroSquares2X2',
+		},
+
+
+		recruiterAppPages: {
+			id: 'recruiterApp',
+			to: '/recruiter',
+			text: 'Recruiter',
+			icon: 'HeroBriefcase',
+			subPages: {
+				recruiterPage: {
+					id: 'recruiterPage',
+					to: '/recruiter',
+					text: 'Recruiter',
+					icon: 'HeroBriefcase',
+				},
+				recruiterProfilePage: {
+					id: 'recruitmentProfileApp',
+					to: '/recruiter/profile',
+					text: 'Recruitment Profile',
+					icon: 'HeroIdentification',
+				},
+			},
+		},
+		
+		chatAppPages: {
+			id: 'chatApp',
+			to: '/chat',
+			text: 'Chat',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+	},
+	[Roles.ADMIN]: {
+		dashboardAppPages: {
+			id: 'dashboardHomeApp',
+			to: '/',
+			text: 'Dashboard',
+			icon: 'HeroSquares2X2',
+		},
+
+
+		recruiterAppPages: {
+			id: 'recruiterApp',
+			to: '/recruiter',
+			text: 'Recruiter',
+			icon: 'HeroBriefcase',
+			subPages: {
+				recruiterPage: {
+					id: 'recruiterPage',
+					to: '/recruiter',
+					text: 'Recruiter',
+					icon: 'HeroBriefcase',
+				},
+				recruiterProfilePage: {
+					id: 'recruitmentProfileApp',
+					to: '/recruiter/profile',
+					text: 'Recruitment Profile',
+					icon: 'HeroIdentification',
+				},
+			},
+		},
+		
+		chatAppPages: {
+			id: 'chatApp',
+			to: '/chat',
+			text: 'Chat',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+	},
+
+	[Roles.SUPER_ADMIN]: {
+		dashboardAppPages: {
+			id: 'dashboardHomeApp',
+			to: '/',
+			text: 'Dashboard',
+			icon: 'HeroSquares2X2',
+		},
+
+
+		recruiterAppPages: {
+			id: 'recruiterApp',
+			to: '/recruiter',
+			text: 'Recruiter',
+			icon: 'HeroBriefcase',
+			subPages: {
+				recruiterPage: {
+					id: 'recruiterPage',
+					to: '/recruiter',
+					text: 'Recruiter',
+					icon: 'HeroBriefcase',
+				},
+				recruiterProfilePage: {
+					id: 'recruitmentProfileApp',
+					to: '/recruiter/profile',
+					text: 'Recruitment Profile',
+					icon: 'HeroIdentification',
+				},
+			},
+		},
+		
+		chatAppPages: {
+			id: 'chatApp',
+			to: '/chat',
+			text: 'Chat',
+			icon: 'HeroChatBubbleLeftRight',
 		},
 	},
 };
