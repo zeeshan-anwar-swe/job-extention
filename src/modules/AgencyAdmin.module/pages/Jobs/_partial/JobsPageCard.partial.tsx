@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 const JobsPageCardPartial = ({ item }: any) => {
 	const navigateTo = useNavigate();
 	return (
-		<Card className='col-span-4 flex flex-col gap-2 border border-zinc-300 hover:cursor-pointer max-2xl:col-span-6 max-lg:col-span-12'>
+		<Card className='col-span-4 max-2xl:last:col-span-12 flex flex-col gap-2 border border-zinc-300 hover:cursor-pointer max-2xl:col-span-6 max-lg:col-span-12'>
 			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>

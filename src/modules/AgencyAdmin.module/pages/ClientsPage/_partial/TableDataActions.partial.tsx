@@ -5,6 +5,8 @@ import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.part
 import { assignJobToClient } from '../../../../../store/slices/Agency/Client.slice';
 
 const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => {
+	console.log('client', client);
+	
 	const [modal, setModal] = useState<boolean>(false);
 	return (
 		<div className='flex justify-center break-all max-lg:flex-col'>

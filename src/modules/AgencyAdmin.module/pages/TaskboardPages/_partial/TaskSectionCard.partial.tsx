@@ -35,7 +35,7 @@ const TaskSectionCardPartial = ({
 	ListLimit: number;
 }) => {
 	return (
-		<Card className='bg-zinc-100 max-xl:col-span-2 max-lg:col-span-4'>
+		<Card className='bg-zinc-100 max-2xl:col-span-2 max-lg:col-span-4'>
 			<CardHeader>
 				<CardHeaderChild>
 					<Alert
