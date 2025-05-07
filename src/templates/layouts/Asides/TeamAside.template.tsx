@@ -25,7 +25,7 @@ export const TeamAsideTemplate = () => {
 			<AsideBody>
 				<Nav>
 					<NavItem {...appPages.Team.dashboardAppPages} />
-					<NavItem {...appPages.Team.recruiterAppPages} />
+					<NavItem {...appPages.Team.recruiterAppPages.subPages.recruiterPage} />
 					<NavItem {...appPages.Team.chatAppPages} />
 
 				</Nav>

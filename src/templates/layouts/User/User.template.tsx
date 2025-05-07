@@ -16,11 +16,11 @@ const UserTemplate = () => {
 	const { userProfile, loading } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
-		if (userProfile.email === '') {
+		
 			if (userTokenStorage) {
 				dispatch(getMyProfile());
 			}
-		}
+		
 	}, []);
 
 	return (

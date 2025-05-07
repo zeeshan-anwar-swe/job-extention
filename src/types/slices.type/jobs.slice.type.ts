@@ -16,6 +16,7 @@ interface Team {
 }
 
 interface Team2 {
+	id: string;
 	teamId: string;
 }
 

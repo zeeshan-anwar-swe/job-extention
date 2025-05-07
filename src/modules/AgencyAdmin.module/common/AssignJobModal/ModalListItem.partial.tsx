@@ -25,7 +25,7 @@ const AssignJobModalListItemPartial = ({
 				selfAssign
 			: assignToModule === 'client'
 				? job?.client?.id === assignTo || selfAssign
-				: job?.team?.teamId === assignTo || selfAssign;
+				: job?.team?.id === assignTo || selfAssign;
 
 	const dispatch: AppDispatch = useDispatch();
 	const handleAssignJob = async () => {

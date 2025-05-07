@@ -420,14 +420,14 @@ export const appPages = {
 
 		recruiterAppPages: {
 			id: 'recruiterApp',
-			to: '/recruiter',
-			text: 'Recruiter',
+			to: '/recruiters',
+			text: 'Recruiters',
 			icon: 'HeroBriefcase',
 			subPages: {
 				recruiterPage: {
 					id: 'recruiterPage',
-					to: '/recruiter',
-					text: 'Recruiter',
+					to: '/recruiters',
+					text: 'Recruiters',
 					icon: 'HeroBriefcase',
 				},
 				recruiterProfilePage: {

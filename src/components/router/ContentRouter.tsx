@@ -10,7 +10,7 @@ const ContentRouter = () => {
 	return (
 		<Suspense fallback={<ShimmerEffectPageLoader />}>
 			<Routes>
-				{contentRoutes[userStorage.role ?? Roles.AGENCY_ADMIN].map((routeProps) => (
+				{contentRoutes[userStorage.role].map((routeProps) => (
 					<Route key={routeProps.path} {...routeProps} />
 				))}
 			</Routes>
