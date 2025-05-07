@@ -8,9 +8,11 @@ import clients from './slices/Agency/Client.slice';
 import agencyStatics from './slices/Agency/Statics.slice';
 import taskBoard from './slices/Agency/Taskboard.slice';
 import recruiters from './slices/Agency/Recruiter.slice';
+import teamChat from './slices/Team/Chat.slice';
 
 export const store = configureStore({
 	reducer: {
+		teamChat,
 		recruiters,
 		user,
 		candidates,

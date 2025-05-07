@@ -14,6 +14,6 @@ export interface RecruiterProfileType {
 }
 
 export interface RecruitersInitialStateType {
-	recruitersList: RecruiterListType;
+	recruiterProfilerecruitersList: RecruiterListType;
 	recruiterProfile: RecruiterProfileType;
 }

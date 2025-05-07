@@ -21,7 +21,7 @@ import { getRecruitersList } from '../../../../store/slices/Agency/Recruiter.sli
 
 const RecruitersPage = () => {
 	const { rows,count,loading, error } = useSelector(
-		(state: RootState) => state.recruiters.recruitersList,
+		(state: RootState) => state.recruiters.recruiterProfilerecruitersList,
 	);
 
 	console.log({ rows,count,loading, error });

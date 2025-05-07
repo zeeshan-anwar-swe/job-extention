@@ -2,11 +2,10 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../../../utils/axiosInstance';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
-import { JobStatus } from '../../../types/enums/jobStatus.enum';
 import { RecruitersInitialStateType } from '../../../types/slices.type/agency/recruiters.slice.type';
 
 const initialState: RecruitersInitialStateType = {
-    recruitersList: { loading: true, error: null, count: 0, rows: [] },
+    recruiterProfilerecruitersList: { loading: true, error: null, count: 0, rows: [] },
     recruiterProfile: { loading: false, error: null,  data: null },
 };
 
@@ -31,20 +30,20 @@ const recruitersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getRecruitersList.pending, (state) => {
-                state.recruitersList.loading = true;
-                state.recruitersList.error = null;
+                state.recruiterProfilerecruitersList.loading = true;
+                state.recruiterProfilerecruitersList.error = null;
             })
             .addCase(getRecruitersList.fulfilled, (state, action) => {
-                state.recruitersList.rows = action.payload.rows;
-                state.recruitersList.count = action.payload.count;
-                state.recruitersList.loading = false;
+                state.recruiterProfilerecruitersList.rows = action.payload.rows;
+                state.recruiterProfilerecruitersList.count = action.payload.count;
+                state.recruiterProfilerecruitersList.loading = false;
             })
             .addCase(getRecruitersList.rejected, (state, action: any) => {
-                state.recruitersList.error = action.payload || {
+                state.recruiterProfilerecruitersList.error = action.payload || {
                     message: 'Unknown error occurred ',
                 };
                 toast.error((action.payload.message as string) || 'Unknown error occurred ');
-                state.recruitersList.loading = false;
+                state.recruiterProfilerecruitersList.loading = false;
             });
 
     },

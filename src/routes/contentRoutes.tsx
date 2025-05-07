@@ -22,6 +22,7 @@ import SubcriptionPage from '../modules/AgencyAdmin.module/pages/SettingPage/Sub
 import PaymentPage from '../modules/AgencyAdmin.module/pages/PaymentPage/Payment.page';
 import SSOWaitingPage from '../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWaiting.page';
 import RecruitersPage from '../modules/Team.module/pages/Recruiter/Recruiter.page';
+import ChatWithRecruiterPage from '../modules/Team.module/pages/ChatPage/Chat.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -271,6 +272,11 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.Team.recruiterAppPages.to,
 			element: <RecruitersPage />,
+		},
+
+		{
+			path: appPages.Team.chatPage.to,
+			element: <ChatWithRecruiterPage />,
 		},
 
 		

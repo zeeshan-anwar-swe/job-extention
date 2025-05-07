@@ -28,6 +28,12 @@ const ChatPage = () => {
 
 	const [chat, setChat] = useState<any>([]);
 
+	console.log('chat', chat);
+
+	console.log('state', state);
+	
+	
+
 	const { userTokenStorage: token, userStorage } = useAuth();
 
 	const socket = io(apiBaseUrl, {
@@ -41,12 +47,9 @@ const ChatPage = () => {
 			navigateTo('/manage-team');
 		} else {
 			socket.on('receive_message', (message) => {
-				if (
-					(message.senderId === state.user.id && message.receiverId === userStorage.id) ||
-					(message.senderId === userStorage.id && message.receiverId === state.user.id)
-				) {
+				
 					setChat((prev: any[]) => [...prev, message]);
-				}
+				
 			});
 
 			return () => {
@@ -78,7 +81,11 @@ const ChatPage = () => {
 
 					<NavSeparator />
 
-					<CardBody className='flex flex-1 flex-col gap-4'></CardBody>
+					<CardBody className='flex flex-1 flex-col gap-4'>
+						{chat.map((item: any, index: number) => (
+							<h1 key={index}>{item?.text}</h1>
+						))}
+					</CardBody>
 					<CardFooter className='rounded-full border !px-4 !py-1'>
 						<CardFooterChild className='flex-1'>
 							<ChatInputPartial />

@@ -417,6 +417,12 @@ export const appPages = {
 			icon: 'HeroSquares2X2',
 		},
 
+		chatPage: {
+			id: 'chatWithRecruiter',
+			to: '/chat-with-recruiter',
+			text: 'Chat With Recruiter',
+			icon: 'HeroChatBubbleLeftRight',
+		},
 
 		recruiterAppPages: {
 			id: 'recruiterApp',
