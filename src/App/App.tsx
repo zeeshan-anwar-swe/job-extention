@@ -8,12 +8,15 @@ import HeaderRouter from '../components/router/HeaderRouter';
 import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
 import { Toaster } from 'react-hot-toast';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 const App = () => {
 	const navigate = useNavigate();
 	getOS();
+
+	const { userStorage: user } = useAuth();
+	const [transcriptText, setTranscriptText] = useState('');
 
 	const commandToRouteMap: Record<string, string> = {
 		// Dashboard / Home
@@ -289,6 +292,11 @@ const App = () => {
 	useEffect(() => {
 		const handleSpeech = (e: any) => {
 			const transcript: string = e.detail.toLowerCase();
+			setTranscriptText(transcript); // Set the transcript text
+
+			setTimeout(() => {
+				setTranscriptText('');
+			}, 3000); // Hide after 3 seconds
 
 			for (const [command, route] of Object.entries(commandToRouteMap)) {
 				if (transcript.includes(command)) {
@@ -303,12 +311,29 @@ const App = () => {
 		return () => window.removeEventListener('FROM_IFRAME_SPEECH', handleSpeech);
 	}, [navigate]);
 
-	const { userTokenStorage } = useAuth();
 	const { fontSize } = useFontSize();
 	dayjs.extend(localizedFormat);
 
 	return (
 		<>
+			{user && transcriptText && (
+				<div
+					style={{
+						position: 'fixed',
+						top: '20px',
+						left: '50%',
+						transform: 'translateX(-50%)',
+						background: 'rgba(0, 0, 0, 0.8)',
+						color: 'white',
+						padding: '10px 20px',
+						borderRadius: '20px',
+						zIndex: 9999,
+						fontSize: '16px',
+						transition: 'opacity 0.3s ease-in-out',
+					}}>
+					{transcriptText}
+				</div>
+			)}
 			<style>{`:root {font-size: ${fontSize}px}`}</style>
 			<div data-component-name='App' className='flex grow flex-col'>
 				<AsideRouter />
