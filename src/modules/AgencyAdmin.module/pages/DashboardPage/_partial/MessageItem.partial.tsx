@@ -4,13 +4,15 @@ import Card, {
 	CardHeaderChild,
 	CardTitle,
 } from '../../../../../components/ui/Card';
-import { profileImageUrlValidationCheck } from '../../../../../utils/validationCheck';
+import { profileImageUrlValidationCheck, textValidationCheck } from '../../../../../utils/validationCheck';
 import Badge from '../../../../../components/ui/Badge';
 import useImageValidation from '../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
+import { ChatRow } from '../../../../../types/slices.type/chat/chat.slice.type';
+import { formatTimeString } from '../../../../../utils/helper';
 
-const MessageItemPartial = ({ feedBack }: any) => {
-	const { loading, imageUrl } = useImageValidation(feedBack?.client?.image);
+const MessageItemPartial = ({ chatRow }: { chatRow: ChatRow }) => {
+	const { loading, imageUrl } = useImageValidation("");
 	return (
 		<Card className='bg-zinc-100 dark:bg-zinc-950'>
 			<CardHeader>
@@ -22,17 +24,16 @@ const MessageItemPartial = ({ feedBack }: any) => {
 							alt='profile-image'
 						/>
 					</ImageLoaderWraper>
-					<CardTitle className='!text-base'>John Doe</CardTitle>
-					<CardTitle className='!text-base !font-light'>4:16PM Today</CardTitle>
+					<CardTitle className='!text-base'>{textValidationCheck(chatRow?.sender?.name)}</CardTitle>
+					<CardTitle className='!text-base !font-light'>{formatTimeString(chatRow?.createdAt)}</CardTitle>
 				</CardHeaderChild>
 				<CardHeaderChild>
-					<Badge variant='solid'>3</Badge>
+					<Badge variant='solid'>1</Badge>
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody>
 				<p>
-					How will the independent contractor be paid? A fixed wage (i.e. hourly or
-					monthly), A set fee, After completing certain milestones or Other?
+					{textValidationCheck(chatRow?.text)}
 				</p>
 			</CardBody>
 		</Card>
