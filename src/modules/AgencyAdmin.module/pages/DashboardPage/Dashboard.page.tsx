@@ -32,84 +32,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/Statics.slice';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { transLineChartData } from '../../../../utils/chart.util';
+import PeriodAndDateRange, { getDefaultRangeForPeriod } from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 
 const DashboardPage = () => {
 	const { i18n } = useTranslation();
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 	const dispatch: AppDispatch = useDispatch();
-	const [selectedDate, setSelectedDate] = useState<Range[]>([
-		{
-			startDate: dayjs().startOf('week').add(-1, 'week').toDate(),
-			endDate: dayjs().endOf('week').toDate(),
-			key: 'selection',
-		},
-	]);
+	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
+	const [dateRange, setDateRange] = useState<Range>(getDefaultRangeForPeriod(PERIOD.DAY));
 
 	const { chartData, componentLoading, error } = useSelector(
 		(state: RootState) => state.agencyStatics,
 	);
 
-	useEffect(() => {
-		if (activeTab === PERIOD.DAY) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('day').toDate(),
-					endDate: dayjs().endOf('day').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.WEEK) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('week').toDate(),
-					endDate: dayjs().endOf('week').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.MONTH) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('month').toDate(),
-					endDate: dayjs().endOf('month').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		return () => {};
-	}, [activeTab]);
 
-	useEffect(() => {
-		const selectedStart = dayjs(selectedDate[0].startDate).format('LL');
-		const selectedEnd = dayjs(selectedDate[0].endDate).format('LL');
 
-		if (
-			selectedStart === dayjs().startOf('day').format('LL') &&
-			selectedEnd === dayjs().endOf('day').format('LL')
-		) {
-			setActiveTab(PERIOD.DAY);
-		}
-		if (
-			selectedStart === dayjs().startOf('week').format('LL') &&
-			selectedEnd === dayjs().endOf('week').format('LL')
-		) {
-			setActiveTab(PERIOD.WEEK);
-		}
-		if (
-			selectedStart === dayjs().startOf('month').format('LL') &&
-			selectedEnd === dayjs().endOf('month').format('LL')
-		) {
-			setActiveTab(PERIOD.MONTH);
-		}
-		return () => {};
-	}, [selectedDate]);
+
 
 	useEffect(() => {
 		dispatch(
 			getAgencyStatics({
-				startDate: formatDateStringToYYYYMMDD(selectedDate[0].startDate),
-				endDate: formatDateStringToYYYYMMDD(selectedDate[0].endDate),
+				startDate: formatDateStringToYYYYMMDD(dateRange.startDate),
+				endDate: formatDateStringToYYYYMMDD(dateRange.endDate),
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
@@ -118,7 +61,7 @@ const DashboardPage = () => {
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
-	}, [activeTab, selectedDate]);
+	}, [activeTab, dateRange]);
 	return (
 		<>
 			<Header>
@@ -130,48 +73,8 @@ const DashboardPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Sales Dashboard'>
-				<Subheader>
-					<SubheaderLeft>
-						<PeriodButtonsPartial activeTab={activeTab} setActiveTab={setActiveTab} />
-					</SubheaderLeft>
-					<SubheaderRight>
-						<Dropdown>
-							<DropdownToggle>
-								<Button icon='HeroCalendarDays'>
-									{activeTab === PERIOD.DAY &&
-										dayjs().locale(i18n.language).format('LL')}
-									{activeTab === PERIOD.WEEK &&
-										`${dayjs()
-											.startOf('week')
-											.locale(i18n.language)
-											.format('MMMM D')} - ${dayjs()
-											.endOf('week')
-											.locale(i18n.language)
-											.format('MMMM D, YYYY')}`}
-									{activeTab === PERIOD.MONTH &&
-										dayjs()
-											.startOf('month')
-											.locale(i18n.language)
-											.format('MMMM, YYYY')}
-								</Button>
-							</DropdownToggle>
-							<DropdownMenu className='!p-0'>
-								<DateRangePicker
-									onChange={(item) => setSelectedDate([item.selection])}
-									moveRangeOnFirstSelection={false}
-									months={2}
-									ranges={selectedDate}
-									direction='horizontal'
-									rangeColors={[
-										colors[themeConfig.themeColor][themeConfig.themeColorShade],
-										colors.emerald[themeConfig.themeColorShade],
-										colors.amber[themeConfig.themeColorShade],
-									]}
-								/>
-							</DropdownMenu>
-						</Dropdown>
-					</SubheaderRight>
-				</Subheader>
+				
+				<PeriodAndDateRange activeTab={activeTab} setActiveTab={setActiveTab} dateRange={dateRange} setDateRange={setDateRange} />
 				<Container>
 					<div className='grid grid-cols-12 gap-4'>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
@@ -189,7 +92,6 @@ const DashboardPage = () => {
 
 						<div className='col-span-12 overflow-hidden rounded-xl xl:h-[500px] 2xl:col-span-8'>
 							<PageLoader
-								shimmer={true}
 								loading={componentLoading}
 								data={chartData}
 								error={error}>
