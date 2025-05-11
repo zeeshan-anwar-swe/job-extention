@@ -17,6 +17,7 @@ import Button from '../../../../components/ui/Button';
 import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import Label from '../../../../components/form/Label';
 import Icon from '../../../../components/icon/Icon';
+import Alert from '../../../../components/ui/Alert';
 
 // Define TypeScript Interfaces
 interface Media {
@@ -51,6 +52,7 @@ const ReusableChatPage = ({
 	// const { userId } = useParams<{ userId: string }>();
 	const [chat, setChat] = useState<ChatMessage[]>([]);
 	const chatContainerRef = useRef<HTMLDivElement>(null);
+	const [loading, setLoading] = useState(false);
 	const [loadingMore, setLoadingMore] = useState(false);
 	const [hasMore, setHasMore] = useState(true);
 	const [text, setText] = useState<string>('');
@@ -97,6 +99,7 @@ const ReusableChatPage = ({
 
 	// Send message function
 	const sendMessage = async () => {
+		setLoading(true);
 		if (!text.trim() && files.length === 0) return;
 
 		let media: Media[] = [];
@@ -138,6 +141,7 @@ const ReusableChatPage = ({
 		setChat((prev) => [...prev, message]);
 		setText('');
 		setFiles([]);
+		setLoading(false);
 	};
 
 	// Handle file selection
@@ -271,15 +275,33 @@ const ReusableChatPage = ({
 								className='w-full rounded-full border p-2'
 							/>
 						</CardFooterChild>
-						<CardFooterChild >
+						<CardFooterChild>
 							<div className='flex items-center gap-4'>
-							<Label className='!p-0 !m-0' htmlFor='chatFile'>
-								<Icon color='zinc' size='text-2xl' icon='HeroPaperClip' />
-							</Label>
-							<input id='chatFile' className='hidden' type='file' multiple onChange={handleFileChange} />
-							<Button rightIcon='HeroPaperAirplane' onClick={sendMessage} variant='solid'>
-								Send
-							</Button>
+								<Label className='!m-0 !p-0' htmlFor='chatFile'>
+									<Icon color='zinc' size='text-2xl' icon='HeroPaperClip' />
+								</Label>
+								{files.length > 0 && (
+									<Alert icon='HeroDocument' iconSize='text-2xl'>
+										<h1 className='text-inherit text-2xl'>
+
+										{files.length}
+										</h1>
+									</Alert>
+								)}
+								<input
+									id='chatFile'
+									className='hidden'
+									type='file'
+									multiple
+									onChange={handleFileChange}
+								/>
+								<Button
+									isLoading={loading}
+									rightIcon='HeroPaperAirplane'
+									onClick={sendMessage}
+									variant='solid'>
+									Send
+								</Button>
 							</div>
 						</CardFooterChild>
 					</CardFooter>
