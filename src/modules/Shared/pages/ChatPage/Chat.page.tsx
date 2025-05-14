@@ -18,6 +18,7 @@ import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import Label from '../../../../components/form/Label';
 import Icon from '../../../../components/icon/Icon';
 import Alert from '../../../../components/ui/Alert';
+import { formatIsoTimeString, formatTimeString } from '../../../../utils/helper';
 
 // Define TypeScript Interfaces
 interface Media {
@@ -30,7 +31,8 @@ interface ChatMessage {
 	receiverId: string;
 	text?: string;
 	media?: Media[];
-	createdAt?: string;
+	createdAt: string;
+	seen?: boolean;
 }
 
 interface AuthContextType {
@@ -189,6 +191,7 @@ const ReusableChatPage = ({
 		}
 		setLoadingMore(false);
 	};
+	console.log(chat);
 
 	return (
 		<PageWrapper name='Chat'>
@@ -216,48 +219,63 @@ const ReusableChatPage = ({
 								{chat.map((msg, index) => (
 									<div
 										key={index}
-										className={`flex ${msg.senderId === userData.id ? 'justify-end' : 'justify-start'}`}>
-										<div className='max-w-[70%] rounded-md bg-gray-200 p-3 shadow-md'>
+										className={`flex ${msg.senderId === userData.id ? 'justify-end ' : 'justify-start'}`}>
+										<div className={`max-w-[70%] rounded-md ${msg.senderId === userData.id ? 'bg-blue-100 ' : 'bg-zinc-100'} p-3 shadow-md`}>
 											<strong>
 												{msg.senderId === userData.id
 													? 'You'
 													: receiverName}
 												:
 											</strong>
-											{msg.text && <p>{msg.text}</p>}
-											{msg.media?.map((media, idx) => (
-												<div key={idx} className='mt-2'>
-													{media.mediaType === 'image' && (
-														<img
-															src={apiBaseUrl + media.mediaUrl}
-															alt='Media'
-															className='h-20 w-20 rounded-lg'
-														/>
-													)}
-													{media.mediaType === 'video' && (
-														<video
-															src={apiBaseUrl + media.mediaUrl}
-															controls
-															className='h-20 w-20 rounded-lg'
-														/>
-													)}
-													{media.mediaType === 'audio' && (
-														<audio
-															src={apiBaseUrl + media.mediaUrl}
-															controls
-															className='w-full'
-														/>
-													)}
-													{media.mediaType === 'file' && (
-														<a
-															href={apiBaseUrl + media.mediaUrl}
-															target='_blank'
-															rel='noopener noreferrer'>
-															Download File
-														</a>
-													)}
+											<div>
+												{msg.text && <p>{msg.text}</p>}
+												{msg.media?.map((media, idx) => (
+													<div key={idx} className='mt-2'>
+														{media.mediaType === 'image' && (
+															<img
+																src={apiBaseUrl + media.mediaUrl}
+																alt='Media'
+																className='!aspect-square w-64 rounded-lg object-cover'
+															/>
+														)}
+														{media.mediaType === 'video' && (
+															<video
+																src={apiBaseUrl + media.mediaUrl}
+																controls
+																className='aspect-video w-64 rounded-lg'
+															/>
+														)}
+														{media.mediaType === 'audio' && (
+															<audio
+																src={apiBaseUrl + media.mediaUrl}
+																controls
+																className='w-full'
+															/>
+														)}
+														{media.mediaType === 'file' && (
+															<a
+																href={apiBaseUrl + media.mediaUrl}
+																target='_blank'
+																rel='noopener noreferrer'>
+																<Button
+																	rightIcon='HeroArrowDown'
+																	variant='solid'>
+																	Download File
+																</Button>
+															</a>
+														)}
+													</div>
+												))}
+												<div className='mt-6 flex items-center gap-2'>
+													<p>{formatIsoTimeString(msg.createdAt)}</p>
+													<Icon
+														color={msg.seen ? 'blue' : 'zinc'}
+														className='ml-auto'
+														size='text-2xl'
+														icon='HeroTwiceCheck'
+													/>
 												</div>
-											))}
+											</div>
 										</div>
 									</div>
 								))}
@@ -282,10 +300,7 @@ const ReusableChatPage = ({
 								</Label>
 								{files.length > 0 && (
 									<Alert icon='HeroDocument' iconSize='text-2xl'>
-										<h1 className='text-inherit text-2xl'>
-
-										{files.length}
-										</h1>
+										<h1 className='text-2xl text-inherit'>{files.length}</h1>
 									</Alert>
 								)}
 								<input
