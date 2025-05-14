@@ -2,8 +2,9 @@ import Card, { CardBody } from '../../../../../components/ui/Card';
 import Icon from '../../../../../components/icon/Icon';
 import Tooltip from '../../../../../components/ui/Tooltip';
 import Balance from '../../../../../components/Balance';
+import { JobsStatusType } from '../../../../../types/slices.type/agency/reportsAndAnalytics.slice.type';
 
-const Balance3Partial = () => {
+const Balance3Partial = ({ data }: { data: JobsStatusType }) => {
 	return (
 		<Card>
 			<CardBody>
@@ -15,7 +16,7 @@ const Balance3Partial = () => {
 						<span className='font-semibold'>Rejected Jobs</span>
 						<Tooltip text='Number of candidate in interview.' />
 					</div>
-					<div className='text-4xl font-semibold'>12</div>
+					<div className='text-4xl font-semibold'>{data.rejectedJobs}</div>
 					<div className='flex'>
 						<Balance status='fixed' value='0%'>
 							Balance

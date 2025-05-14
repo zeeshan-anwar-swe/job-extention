@@ -21,8 +21,8 @@ const Chart: FC<IChartProps> = (props) => {
 			colors.blue['500'],
 			colors.emerald['500'],
 			colors.purple['500'],
-			colors.amber['500'],
 			colors.rose['500'],
+			colors.amber['500'],
 		],
 		dataLabels: {
 			enabled: false,
@@ -56,7 +56,7 @@ const Chart: FC<IChartProps> = (props) => {
 		},
 		plotOptions: {
 			bar: {
-				borderRadius: 12,
+				borderRadius: 4,
 			},
 			candlestick: {
 				colors: {
@@ -72,9 +72,9 @@ const Chart: FC<IChartProps> = (props) => {
 			},
 		},
 		stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent'],
+			// show: true,
+			// width: 2,
+			// colors: ['transparent'],
 		},
 
 		tooltip: {

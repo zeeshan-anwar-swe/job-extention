@@ -26,3 +26,34 @@ export const transLineChartData = (
 		},
 	];
 };
+
+
+
+export const transformRAChartData = (
+	data: {
+		label: string;
+		jobsApplied: number;
+		pendingJobs: number;
+		rejectedJobs: number;
+		totalHirings: number;
+	}[],
+): { name: string; data: number[] }[] => {
+	return [
+		{
+			name: 'Jobs Applied',
+			data: data.map((item) => item.jobsApplied),
+		},
+		{
+			name: 'Total Hirings',
+			data: data.map((item) => item.totalHirings),
+		},
+		{
+			name: 'Pending Jobs',
+			data: data.map((item) => item.pendingJobs),
+		},
+		{
+			name: 'Rejected Jobs',
+			data: data.map((item) => item.rejectedJobs),
+		},
+	];
+};

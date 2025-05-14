@@ -35,7 +35,6 @@ import { transLineChartData } from '../../../../utils/chart.util';
 import PeriodAndDateRange, { getDefaultRangeForPeriod } from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 
 const DashboardPage = () => {
-	const { i18n } = useTranslation();
 	const dispatch: AppDispatch = useDispatch();
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 	const [dateRange, setDateRange] = useState<Range>(getDefaultRangeForPeriod(PERIOD.DAY));
@@ -43,10 +42,6 @@ const DashboardPage = () => {
 	const { chartData, componentLoading, error } = useSelector(
 		(state: RootState) => state.agencyStatics,
 	);
-
-
-
-
 
 	useEffect(() => {
 		dispatch(

@@ -5,30 +5,20 @@ import Card, {
 	CardHeaderChild,
 	CardTitle,
 } from '../../../../../components/ui/Card';
-import Chart from '../../../../../components/Chart';
+import Chart from '../../../../../components/Chart2';
 import { IChartOptions } from '../../../../../interface/chart.interface';
 
-const ChartPartial = () => {
+const ChartPartial = ({chartData, period}:any) => {
+
+	console.log({chartData,period});
+	
+
+	
+
+
 	const [state] = useState<IChartOptions>({
-		series: [
-			{
-				name: 'Jobs Applied',
-				data: [61, 58, 63, 60],
-			},
-			{
-				name: 'Total Hirings',
-				data: [87, 105, 91, 114],
-			},
-			{
-				name: 'Pending Jobs',
-				data: [45, 48, 52, 53],
-			},
-			{
-				name: 'Rejected Jobs',
-				data: [45, 48, 52, 53],
-			},
-		],
-		options: {
+		series: chartData,
+			options: {
 			plotOptions: {
 				bar: {
 					horizontal: false,
@@ -45,11 +35,28 @@ const ChartPartial = () => {
 				colors: ['transparent'],
 			},
 			xaxis: {
-				categories: ['Jun', 'Jul', 'Aug', 'Sep'],
+				categories: period.text === 'Day'
+						? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+						: period.text === 'Week'
+							? ['weak 1', 'weak 2', 'weak 3','weak 3','weak 4','weak 5']
+							: [
+									'Jan',
+									'Feb',
+									'Mar',
+									'Apr',
+									'May',
+									'Jun',
+									'Jul',
+									'Aug',
+									'Sep',
+									'Oct',
+									'Nov',
+									'Dec',
+								],
 			},
 			yaxis: {
 				title: {
-					text: '$ (thousands)',
+					text: 'Jobs',
 				},
 			},
 			fill: {
@@ -58,7 +65,7 @@ const ChartPartial = () => {
 			tooltip: {
 				y: {
 					formatter(val) {
-						return `$ ${val} thousands`;
+						return `${val}`;
 					},
 				},
 			},
@@ -72,7 +79,7 @@ const ChartPartial = () => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody>
-				<Chart series={state.series} options={state.options} type='bar' height={400} />
+				<Chart series={state.series} options={state.options} type='bar' height={500} />
 			</CardBody>
 		</Card>
 	);

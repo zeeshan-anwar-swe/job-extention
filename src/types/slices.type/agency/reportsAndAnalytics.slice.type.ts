@@ -6,16 +6,31 @@ export interface ClientMetricsType {
 	hiringRate: string;
 }
 
-interface TeamPerformanceType {
+export interface TeamPerformanceType {
   teamUser: {
     id: string;
     email: string;
     firstName: string;
     lastName: string;
-    image: null;
+    image: null | string;
     createdAt: string;
   };
   jobsClosed: number;
+}
+
+export interface JobStatsChartType {
+  label: string;
+  jobsApplied: number;
+  totalHirings: number;
+  rejectedJobs: number;
+  pendingJobs: number;
+}
+
+export interface JobsStatusType {
+  jobsApplied: number;
+  totalHirings: number;
+  rejectedJobs: number;
+  pendingJobs: number;
 }
 
 export interface ClientMetricsStateType {
@@ -32,10 +47,24 @@ export interface TeamPerformanceStateType {
 	error: null | any;
 }
 
+export interface ChartDataStateType {
+	loading: boolean;
+	data: JobStatsChartType[]
+	error: null | any;
+}
+
+export interface StaticsStateType {
+	loading: boolean;
+	data: JobsStatusType
+	error: null | any;
+}
 
 
 
 export interface reportsAndAnalyticsInitialStateType {
 	clientMetrics: ClientMetricsStateType;
 	teamPerformance: ClientMetricsStateType;
+	chartData: ChartDataStateType
+	statics: StaticsStateType
+
 }

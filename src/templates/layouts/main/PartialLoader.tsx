@@ -19,7 +19,7 @@ const PartialLoader: React.FC<WrapperProps> = ({
 	data = null,
 }) => {
 	if (loading) {
-		return  <CircleLoader />;
+		return <CircleLoader />;
 	} else if (error) {
 		return <Error color='red' size='text-5xl' message={error.message} />;
 	} else if (!data || data.length === 0) {
