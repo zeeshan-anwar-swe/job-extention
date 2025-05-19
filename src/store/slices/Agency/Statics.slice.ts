@@ -23,6 +23,7 @@ interface InitialStateType {
 	componentLoading: boolean;
 	assignedClientWhileCreatingJob: any | null;
 	chartData: any[];
+	chartCategory: string[];
 }
 
 const initialState: InitialStateType = {
@@ -45,6 +46,7 @@ const initialState: InitialStateType = {
 			change: 0,
 		},
 	},
+	chartCategory: [],
 	chartData: [],
 	pageLoading: false,
 	modalLoading: false,
@@ -109,7 +111,8 @@ export const agencyStaticsSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(getChartData.fulfilled, (state, action) => {
-				state.chartData = action.payload;
+				state.chartData = action.payload.metrics;
+				state.chartCategory = action.payload.categories;
 				state.componentLoading = false;
 			})
 			.addCase(getChartData.rejected, (state, action: any) => {

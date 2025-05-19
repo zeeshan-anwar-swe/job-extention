@@ -37,7 +37,7 @@ export const transformRAChartData = (
 		rejectedJobs: number;
 		totalHirings: number;
 	}[],
-): { name: string; data: number[] }[] => {
+): { name: string; data: any[] }[] => {
 	return [
 		{
 			name: 'Jobs Applied',

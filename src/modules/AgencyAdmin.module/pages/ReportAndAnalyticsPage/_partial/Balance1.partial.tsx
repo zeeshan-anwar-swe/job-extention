@@ -16,9 +16,9 @@ const Balance1Partial = ({ data }: { data: JobsStatusType }) => {
 						<span className='font-semibold'>Jobs Applied</span>
 						<Tooltip text='Total number of new jobs.' />
 					</div>
-					<div className='text-4xl font-semibold'>{data.jobsApplied}</div>
+					<div className='text-4xl font-semibold'>{data.jobsApplied.value}</div>
 					<div className='flex'>
-						<Balance status='positive' value='32%'>
+						<Balance status='positive' value={data.jobsApplied.change}>
 							Balance
 						</Balance>
 					</div>

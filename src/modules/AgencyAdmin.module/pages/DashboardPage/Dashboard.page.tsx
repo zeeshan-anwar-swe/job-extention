@@ -39,7 +39,7 @@ const DashboardPage = () => {
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 	const [dateRange, setDateRange] = useState<Range>(getDefaultRangeForPeriod(PERIOD.DAY));
 
-	const { chartData, componentLoading, error } = useSelector(
+	const { chartData,chartCategory, componentLoading, error } = useSelector(
 		(state: RootState) => state.agencyStatics,
 	);
 
@@ -91,6 +91,7 @@ const DashboardPage = () => {
 								data={chartData}
 								error={error}>
 								<ChartPartial
+									categories={chartCategory}
 									series={transLineChartData(chartData)}
 									period={activeTab}
 								/>

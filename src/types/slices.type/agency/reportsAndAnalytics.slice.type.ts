@@ -26,11 +26,16 @@ export interface JobStatsChartType {
   pendingJobs: number;
 }
 
+export interface RAJobDataType {
+	change: string;
+	value: number;
+}
+
 export interface JobsStatusType {
-  jobsApplied: number;
-  totalHirings: number;
-  rejectedJobs: number;
-  pendingJobs: number;
+  jobsApplied: RAJobDataType;
+  totalHirings: RAJobDataType;
+  rejectedJobs: RAJobDataType;
+  pendingJobs: RAJobDataType;
 }
 
 export interface ClientMetricsStateType {
@@ -50,6 +55,7 @@ export interface TeamPerformanceStateType {
 export interface ChartDataStateType {
 	loading: boolean;
 	data: JobStatsChartType[]
+	chartCategories: string[]
 	error: null | any;
 }
 
@@ -66,5 +72,4 @@ export interface reportsAndAnalyticsInitialStateType {
 	teamPerformance: ClientMetricsStateType;
 	chartData: ChartDataStateType
 	statics: StaticsStateType
-
 }

@@ -50,7 +50,6 @@ const formatDateRange = (range: Range, period: TPeriod): string => {
   const { startDate, endDate } = range;
   if (!startDate || !endDate) return '';
 
-  console.log({ startDate, endDate });
   
   
   const start = dayjs(startDate).locale(i18n.language);

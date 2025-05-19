@@ -8,9 +8,9 @@ import Card, {
 import Chart from '../../../../../components/Chart2';
 import { IChartOptions } from '../../../../../interface/chart.interface';
 
-const ChartPartial = ({chartData, period}:any) => {
+const ChartPartial = ({chartData,  categories }:any) => {
 
-	console.log({chartData,period});
+	
 	
 
 	
@@ -35,24 +35,25 @@ const ChartPartial = ({chartData, period}:any) => {
 				colors: ['transparent'],
 			},
 			xaxis: {
-				categories: period.text === 'Day'
-						? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-						: period.text === 'Week'
-							? ['weak 1', 'weak 2', 'weak 3','weak 3','weak 4','weak 5']
-							: [
-									'Jan',
-									'Feb',
-									'Mar',
-									'Apr',
-									'May',
-									'Jun',
-									'Jul',
-									'Aug',
-									'Sep',
-									'Oct',
-									'Nov',
-									'Dec',
-								],
+				categories,
+				// : period.text === 'Day'
+				// 		? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+				// 		: period.text === 'Week'
+				// 			? ['weak 1', 'weak 2', 'weak 3','weak 3','weak 4','weak 5']
+				// 			: [
+				// 					'Jan',
+				// 					'Feb',
+				// 					'Mar',
+				// 					'Apr',
+				// 					'May',
+				// 					'Jun',
+				// 					'Jul',
+				// 					'Aug',
+				// 					'Sep',
+				// 					'Oct',
+				// 					'Nov',
+				// 					'Dec',
+				// 				],
 			},
 			yaxis: {
 				title: {

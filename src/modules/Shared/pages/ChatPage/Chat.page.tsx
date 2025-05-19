@@ -145,7 +145,7 @@ const ReusableChatPage = ({
 		};
 
 		socketRef.current?.emit('send_message', message);
-		// setChat((prev) => [...prev, message]);
+		setChat((prev) => [...prev, message]);
 		setText('');
 		setFiles([]);
 		setLoading(false);

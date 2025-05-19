@@ -35,9 +35,11 @@ const ReportAndAnalyticsPage = () => {
 		(state: RootState) => state.reportsAndAnalytics.statics,
 	);
 
-	const { loading: chartLoading, data: chartData, error: chartError } = useSelector(
+	const { loading: chartLoading, chartCategories, data: chartData, error: chartError } = useSelector(
 		(state: RootState) => state.reportsAndAnalytics.chartData,
 	);
+	
+	
 	
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -59,6 +61,10 @@ const ReportAndAnalyticsPage = () => {
 			}),
 		);
 	}, [activeTab, dateRange]);
+
+
+	console.log({chartData, chartCategories});
+	
 
 	return (
 		<>
@@ -83,7 +89,7 @@ const ReportAndAnalyticsPage = () => {
 				<PageLoader loading={loading} error={error} data={data}>
 					<Container>
 						<div className='grid grid-cols-12 gap-4'>
-							<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
+							 <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
 								<PartialLoader loading={loading} error={error} data={data}>
 									<Balance1Partial data={data} />
 								</PartialLoader>
@@ -102,11 +108,11 @@ const ReportAndAnalyticsPage = () => {
 								<PartialLoader loading={loading} error={error} data={data}>
 									<Balance4Partial data={data} />
 								</PartialLoader>
-							</div>
+							</div> 
 
 							<div className='col-span-12 xl:h-[600px] 2xl:col-span-8'>
 								<PartialLoader loading={chartLoading} error={chartError} data={chartData}>
-									<ChartPartial period={activeTab} chartData={transformRAChartData(chartData)} />
+									<ChartPartial categories={chartCategories} chartData={transformRAChartData(chartData)} />
 								</PartialLoader>
 							</div>
 							<div className='col-span-12 2xl:col-span-4'>

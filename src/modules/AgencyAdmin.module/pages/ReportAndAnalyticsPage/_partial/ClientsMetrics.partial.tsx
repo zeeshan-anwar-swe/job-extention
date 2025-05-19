@@ -20,7 +20,6 @@ const ClientMetricsPartial = () => {
 		(state: RootState) => state.reportsAndAnalytics.clientMetrics,
 	);
 
-	console.log('clientMetrics rows', rows);
 
 	return (
 		<Card className='h-full'>

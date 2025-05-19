@@ -9,7 +9,7 @@ import Card, {
 import { IChartOptions } from '../../../../../interface/chart.interface';
 import { TPeriod } from '../../../../../constants/periods.constant';
 
-const ChartPartial = ({ period, series }: { period: TPeriod; series: any }) => {
+const ChartPartial = ({ period, series, categories }: { period: TPeriod; series: any, categories: string[] }) => {
 	const chartContainerRef = useRef<HTMLDivElement | null>(null);
 	const [range, setRange] = useState<string>(period.text);
 	const [chartDimensions, setChartDimensions] = useState<{
@@ -38,25 +38,25 @@ const ChartPartial = ({ period, series }: { period: TPeriod; series: any }) => {
 				size: 0,
 			},
 			xaxis: {
-				categories:
-					period.text === 'Day'
-						? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-						: period.text === 'Week'
-							? ['weak 1', 'weak 2', 'weak 3', 'weak 4', 'weak 5']
-							: [
-									'Jan',
-									'Feb',
-									'Mar',
-									'Apr',
-									'May',
-									'Jun',
-									'Jul',
-									'Aug',
-									'Sep',
-									'Oct',
-									'Nov',
-									'Dec',
-								],
+				categories,
+					// period.text === 'Day'
+					// 	? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+					// 	: period.text === 'Week'
+					// 		? ['weak 1', 'weak 2', 'weak 3', 'weak 4', 'weak 5']
+					// 		: [
+					// 				'Jan',
+					// 				'Feb',
+					// 				'Mar',
+					// 				'Apr',
+					// 				'May',
+					// 				'Jun',
+					// 				'Jul',
+					// 				'Aug',
+					// 				'Sep',
+					// 				'Oct',
+					// 				'Nov',
+					// 				'Dec',
+					// 			],
 				title: {
 					text: range,
 				},

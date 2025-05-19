@@ -8,11 +8,11 @@ import { TPeriod, TPeriods } from '../../../constants/periods.constant';
 const initialState: reportsAndAnalyticsInitialStateType = {
 	clientMetrics: { loading: true, error: null, count: 0, rows: [] },
 	teamPerformance: { loading: true, error: null, count: 0, rows: [] },
-	chartData: { loading: true, error: null, data: [] },
+	chartData: { loading: true, error: null, data: [], chartCategories:[] },
 	statics: {
 		loading: true,
 		error: null,
-		data: { jobsApplied: 0, rejectedJobs: 0, totalHirings: 0, pendingJobs: 0 },
+	data: { jobsApplied: {value: 0,change: '0%'}, rejectedJobs: {value: 0,change: '0%'}, totalHirings: {value: 0,change: '0%'}, pendingJobs: {value: 0,change: '0%'} },
 	},
 };
 
@@ -72,7 +72,7 @@ export const getReportsAndAnalyticsChartData = createAsyncThunk(
 			const response = await axiosInstance.get(
 				`/agency/performance-metrics?period=${period}&startDate=${startDate}&endDate=${endDate}`,
 			);
-			return response.data;
+			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
@@ -127,7 +127,8 @@ const reportsAndAnalyticsSlice = createSlice({
 				state.chartData.error = null;
 			})
 			.addCase(getReportsAndAnalyticsChartData.fulfilled, (state, action) => {
-				state.chartData = action.payload;
+				state.chartData.data = action.payload.metrics;
+				state.chartData.chartCategories = action.payload.categories;
 				state.chartData.loading = false;
 			})
 			.addCase(getReportsAndAnalyticsChartData.rejected, (state, action: any) => {
