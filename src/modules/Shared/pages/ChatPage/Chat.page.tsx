@@ -65,7 +65,7 @@ const ReusableChatPage = ({
 	const socketRef = useRef<Socket | null>(null);
 
 	useEffect(() => {
-		if (!token || !userId) return;
+		if (!token || !userData?.id) return;
 
 		// Initialize socket connection
 		socketRef.current = io(apiBaseUrl, {
@@ -73,7 +73,12 @@ const ReusableChatPage = ({
 		});
 
 		socketRef.current.on('receive_message', (message: ChatMessage) => {
-			setChat((prev) => [...prev, message]);
+			if (
+				(message.receiverId === userData.id && message.senderId === userData.id) ||
+				(message.receiverId === userData.id && message.senderId === userData.id)
+			) {
+				setChat((prev) => [...prev, message]);
+			}
 		});
 
 		return () => {
@@ -140,7 +145,7 @@ const ReusableChatPage = ({
 		};
 
 		socketRef.current?.emit('send_message', message);
-		setChat((prev) => [...prev, message]);
+		// setChat((prev) => [...prev, message]);
 		setText('');
 		setFiles([]);
 		setLoading(false);
@@ -220,7 +225,8 @@ const ReusableChatPage = ({
 									<div
 										key={index}
 										className={`flex ${msg.senderId === userData.id ? 'justify-end ' : 'justify-start'}`}>
-										<div className={`max-w-[70%] rounded-md ${msg.senderId === userData.id ? 'bg-blue-100 ' : 'bg-zinc-100'} p-3 shadow-md`}>
+										<div
+											className={`max-w-[70%] rounded-md ${msg.senderId === userData.id ? 'bg-blue-100 ' : 'bg-zinc-100'} p-3 shadow-md`}>
 											<strong>
 												{msg.senderId === userData.id
 													? 'You'
