@@ -54,6 +54,8 @@ const DashboardPage = () => {
 		dispatch(
 			getChartData({
 				period: activeTab.text.toLowerCase(),
+				startDate: formatDateStringToYYYYMMDD(dateRange.startDate),
+				endDate: formatDateStringToYYYYMMDD(dateRange.endDate),
 			}),
 		);
 	}, [activeTab, dateRange]);

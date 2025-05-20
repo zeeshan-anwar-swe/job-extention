@@ -73,9 +73,9 @@ export const getAgencyStatics = createAsyncThunk(
 
 export const getChartData = createAsyncThunk(
 	'agencyStatics/getChartData',
-	async ({ period }: { period: string }, { rejectWithValue }) => {
+	async ({ period, startDate, endDate }: { period: string; startDate: string; endDate: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get(`/agency/dashboard-metrics?period=${period}`);
+			const response = await axiosInstance.get(`/agency/dashboard-metrics?period=${period}&startDate=${startDate}&endDate=${endDate}`);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);

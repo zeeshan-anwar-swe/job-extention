@@ -63,9 +63,6 @@ const ReportAndAnalyticsPage = () => {
 	}, [activeTab, dateRange]);
 
 
-	console.log({chartData, chartCategories});
-	
-
 	return (
 		<>
 			<Header>
