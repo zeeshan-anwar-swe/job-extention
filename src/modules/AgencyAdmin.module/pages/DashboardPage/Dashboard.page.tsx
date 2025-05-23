@@ -36,7 +36,7 @@ import PeriodAndDateRange, { getDefaultRangeForPeriod } from '../../../Shared/pa
 
 const DashboardPage = () => {
 	const dispatch: AppDispatch = useDispatch();
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
+	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
 	const [dateRange, setDateRange] = useState<Range>(getDefaultRangeForPeriod(PERIOD.DAY));
 
 	const { chartData,chartCategory, componentLoading, error } = useSelector(

@@ -17,13 +17,13 @@ const Chart: FC<IChartProps> = (props) => {
 				show: false,
 			},
 		},
-		colors: [
-			colors.blue['500'],
-			colors.emerald['500'],
-			colors.purple['500'],
-			colors.amber['500'],
-			colors.rose['500'],
-		],
+		// colors: [
+		// 	colors.blue['500'],
+		// 	colors.emerald['500'],
+		// 	colors.purple['500'],
+		// 	colors.amber['500'],
+		// 	colors.rose['500'],
+		// ],
 		dataLabels: {
 			enabled: false,
 		},
