@@ -17,6 +17,9 @@ const ChartPartial = ({ period, series, categories }: { period: TPeriod; series:
 		height: number;
 	} | null>(null);
 
+	console.log({series, categories});
+	
+
 	const [state, setState] = useState<IChartOptions>({
 		series,
 
@@ -39,11 +42,11 @@ const ChartPartial = ({ period, series, categories }: { period: TPeriod; series:
 			},
 			xaxis: {
 				categories,
-					// period.text === 'Day'
+				//  categories: period.text === 'Day'
 					// 	? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 					// 	: period.text === 'Week'
 					// 		? ['weak 1', 'weak 2', 'weak 3', 'weak 4', 'weak 5']
-					// 		: [
+					// 		: period.text === 'Month' ? [
 					// 				'Jan',
 					// 				'Feb',
 					// 				'Mar',
@@ -56,7 +59,7 @@ const ChartPartial = ({ period, series, categories }: { period: TPeriod; series:
 					// 				'Oct',
 					// 				'Nov',
 					// 				'Dec',
-					// 			],
+					// 			]:categories,
 				title: {
 					text: range,
 				},
