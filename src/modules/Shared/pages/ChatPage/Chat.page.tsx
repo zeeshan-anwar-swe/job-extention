@@ -74,7 +74,7 @@ const ReusableChatPage = ({
 
 		socketRef.current.on('receive_message', (message: ChatMessage) => {
 			if (
-				(message.receiverId === userData.id && message.senderId === userId) ||
+				(message.senderId === userData.id && message.receiverId === userId) ||
 				(message.receiverId === userData.id && message.senderId === userId)
 			) {
 				setChat((prev) => [...prev, message]);
@@ -145,7 +145,7 @@ const ReusableChatPage = ({
 		};
 
 		socketRef.current?.emit('send_message', message);
-		setChat((prev) => [...prev, message]);
+		// setChat((prev) => [...prev, message]);
 		setText('');
 		setFiles([]);
 		setLoading(false);
