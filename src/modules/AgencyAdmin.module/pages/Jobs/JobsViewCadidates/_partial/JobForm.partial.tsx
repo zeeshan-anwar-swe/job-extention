@@ -18,6 +18,9 @@ import CardDropdownPartial from './CardDropdown.partial';
 import { getStatusColor } from '../../../../../../utils/helper';
 import useImageValidation from '../../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../../../store';
+import { getJobDetails, updateJob } from '../../../../../../store/slices/Jobs.slice';
 
 interface JobFormData {
 	title: string;
@@ -30,6 +33,7 @@ interface JobFormData {
 }
 
 const JobFormPartial = ({ jobDetails }: any) => {
+	const dispatch: AppDispatch = useDispatch();
 	const [formData, setFormData] = useState<JobFormData>({
 		title: '',
 		description: '',
@@ -40,8 +44,12 @@ const JobFormPartial = ({ jobDetails }: any) => {
 		skills: [],
 	});
 
+	const { componentLoading, error } = useSelector((state: RootState) => state.jobsSlice);
+
 	useEffect(() => {
 		if (jobDetails) {
+			console.log('jobDetails', jobDetails);
+			
 			setFormData({
 				title: jobDetails.title,
 				description: jobDetails.description,
@@ -55,6 +63,16 @@ const JobFormPartial = ({ jobDetails }: any) => {
 	}, []);
 
 	const { loading, imageUrl } = useImageValidation(jobDetails?.client?.clientUser?.image);
+
+	const updateJobHandler = async () => {
+		await dispatch(
+			updateJob({
+				jobId: jobDetails.id,
+				payload: { ...formData, status: jobDetails.status },
+			}),
+		);
+		dispatch(getJobDetails(jobDetails.id));
+	};
 
 	return (
 		<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
@@ -135,11 +153,20 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					setFormData={setFormData}
 					label='Required Skill'
 				/>
+				<LabelTitlepartial
+					id='description'
+					label='description'
+					formData={formData}
+					setFormData={setFormData}
+					detail={formData.description}
+				/>
 			</CardBody>
 			<CardFooter>
 				<CardFooterChild>
 					<Button variant='outline'>Cancel</Button>
-					<Button variant='solid'>Save and update the job</Button>
+					<Button onClick={updateJobHandler} isLoading={componentLoading} variant='solid'>
+						Save and update the job
+					</Button>
 				</CardFooterChild>
 			</CardFooter>
 		</Card>
