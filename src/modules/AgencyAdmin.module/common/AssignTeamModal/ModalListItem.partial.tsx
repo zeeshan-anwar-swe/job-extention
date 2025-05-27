@@ -19,8 +19,6 @@ import { assignTeamToClient } from '../../../../store/slices/Team.slice';
 export const AssignTeamModalListItemPartial = ({
 	team,
 	assignTo,
-	jobAssignAction,
-	assignToModule,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
 	team: any;
