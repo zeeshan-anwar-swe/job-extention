@@ -154,6 +154,18 @@ export const changeJobStatus = createAsyncThunk(
 	},
 );
 
+export const updateJob = createAsyncThunk(
+	'jobs/updateJob',
+	async ({ jobId, payload }: { jobId: string; payload: any }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.put(`/job/${jobId}/edit/`, payload);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const jobsSlice = createSlice({
 	name: 'jobs',
 	initialState,
@@ -352,6 +364,23 @@ export const jobsSlice = createSlice({
 					message: 'Unknown error occurred while inviting client',
 				};
 				toast.error(action.payload.message);
+			});
+
+		builder
+			.addCase(updateJob.pending, (state) => {
+				state.componentLoading = true;
+				state.error = null;
+			})
+			.addCase(updateJob.fulfilled, (state) => {
+				toast.success('JobStatus is updated successfully');
+				state.componentLoading = false;
+			})
+			.addCase(updateJob.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+				state.componentLoading = false;
 			});
 	},
 });

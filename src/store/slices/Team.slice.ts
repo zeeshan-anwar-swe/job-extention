@@ -2,8 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
+import { error } from 'console';
 
 interface InitialStateType {
+	search: string;
 	teamList: any[];
 	componentLoading: boolean;
 	pageLoading: boolean;
@@ -15,6 +17,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+	search: '',
 	teamMemberProfile: null,
 	paginatedList: [],
 	paginationCount: 0,
@@ -36,9 +39,9 @@ export const getTeamlist = createAsyncThunk('team/getTeamlist', async (_, { reje
 
 export const getPaginatedTeamlist = createAsyncThunk(
 	'team/getPaginatedTeamlist',
-	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+	async ({ page, limit, search='' }: { page: number; limit: number, search?: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get(`/team/list?page=${page}&limit=${limit}`);
+			const response = await axiosInstance.get(`/team/list?page=${page}&limit=${limit}&search=${search}`);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -84,6 +87,23 @@ export const assignJobToTeamMember = createAsyncThunk(
 		}
 	},
 );
+
+export const assignTeamToClient = createAsyncThunk(
+	'candidates/assignTeamToClient',
+	async ({ clientId, teamId }: { clientId: string; teamId: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/team/assign-client', {
+				clientId,
+				teamId,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+
 
 export const teamSlice = createSlice({
 	name: 'team',
@@ -154,6 +174,22 @@ export const teamSlice = createSlice({
 					action.payload.message || 'Unknown error occurred while inviting client',
 				);
 			})
+
+
+			.addCase(assignTeamToClient.pending, (state) => {
+				state.error = null;
+			})
+			.addCase(assignTeamToClient.fulfilled, () => {
+				toast.success('Client is assigned successfully');
+			})
+			.addCase(assignTeamToClient.rejected, ( state,action: any) => {
+			
+				state.error = null
+				toast.error(
+					action.payload.message || 'Unknown error occurred while inviting client',
+				);
+			})
+
 
 			.addCase(getTeamMemberDetails.pending, (state) => {
 				state.pageLoading = true;
