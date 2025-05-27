@@ -1,61 +1,63 @@
 import React, { useState } from 'react';
 import Card, {
-	CardBody,
-	CardHeader,
-	CardHeaderChild,
-	CardTitle,
+  CardBody,
+  CardHeader,
+  CardHeaderChild,
+  CardTitle,
 } from '../../../../../components/ui/Card';
-import Chart from '../../../../../components/Chart';
-import { IChartOptions } from '../../../../../interface/chart.interface';
 import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 
-const ChartPartial = ({series, categories}:{series:any, categories:any}) => {
-	 const [state, setState] = React.useState({
-          
-            series: series,
-            options: {
-              chart: {
-                height: 350,
-                type: 'line',
-                zoom: {
-                  enabled: false
-                }
-              },
-              dataLabels: {
+const ChartPartial = ({series, categories}:{series:ApexOptions["series"], categories:string[]}) => {
+  console.log({series, categories});
+
+    const [state, setState] = React.useState({
+
+          series: series,
+          options: {
+            chart: {
+              height: 400,
+              type: 'line' as const,
+              zoom: {
                 enabled: false
-              },
-              stroke: {
-                curve: 'straight'
-              },
-              title: {
-                text: 'Product Trends by Month',
-                align: 'left'
-              },
-              grid: {
-                row: {
-                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                  opacity: 0.5
-                },
-              },
-              xaxis: {
-                categories: categories,
               }
             },
-          
-          
-        });
-	return (
-		<Card className='h-full'>
-			<CardHeader>
-				<CardHeaderChild>
-					<CardTitle>Chart</CardTitle>
-				</CardHeaderChild>
-			</CardHeader>
-			<CardBody>
-				  <ReactApexChart options={state.options} series={state.series} type="line" height={400} />
-			</CardBody>
-		</Card>
-	);
+
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              curve: 'smooth' as ApexOptions["stroke"]["curve"]
+            },
+            title: {
+              text: 'Product Trends by Month',
+              align: 'left' as ApexOptions["title"]["align"] // Explicitly type 'left'
+            },
+            grid: {
+              row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+              },
+            },
+            xaxis: {
+              categories: categories,
+            }
+          },
+
+
+      });
+  return (
+    <Card className='h-full'>
+      <CardHeader>
+        <CardHeaderChild>
+          <CardTitle>Chart</CardTitle>
+        </CardHeaderChild>
+      </CardHeader>
+      <CardBody>
+        <ReactApexChart options={state.options} series={state.series} type="line" height={400} />
+      </CardBody>
+    </Card>
+  );
 };
 
 export default ChartPartial;
