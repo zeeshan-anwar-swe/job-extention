@@ -95,7 +95,6 @@ const DashboardPage = () => {
 								<ChartPartial
 									categories={chartCategory}
 									series={transLineChartData(chartData)}
-									period={activeTab}
 								/>
 							</PageLoader>
 						</div>

@@ -1,135 +1,105 @@
-import { useEffect, useRef, useState } from 'react';
-import Chart from '../../../../../components/Chart';
+import React, { useState } from 'react';
 import Card, {
 	CardBody,
 	CardHeader,
 	CardHeaderChild,
+	CardSubTitle,
 	CardTitle,
 } from '../../../../../components/ui/Card';
-import { IChartOptions } from '../../../../../interface/chart.interface';
-import { TPeriod } from '../../../../../constants/periods.constant';
+import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import colors from 'tailwindcss/colors';
 
-const ChartPartial = ({ period, series, categories }: { period: TPeriod; series: any, categories: string[] }) => {
-	const chartContainerRef = useRef<HTMLDivElement | null>(null);
-	const [range, setRange] = useState<string>(period.text);
-	const [chartDimensions, setChartDimensions] = useState<{
-		width: number;
-		height: number;
-	} | null>(null);
-
-	console.log({series, categories});
-	
-
-	const [state, setState] = useState<IChartOptions>({
-		series,
-
+const ChartPartial = ({
+	series,
+	categories,
+}: {
+	series: ApexOptions['series'];
+	categories: string[];
+}) => {
+	const [state, setState] = React.useState({
+		series: series,
 		options: {
+			colors: [
+				colors.blue['500'],
+				colors.violet['500'],
+				colors.emerald['500'],
+				colors.amber['500'],
+				colors.rose['500'],
+				colors.purple['500'],
+			],
 			chart: {
 				height: 400,
 				type: 'line',
-				toolbar: {
-					show: false,
+				zoom: {
+					enabled: false,
 				},
 			},
-			dataLabels: {
-				// enabled: true,
+
+      plotOptions: {
+				bar: {
+					horizontal: false,
+					columnWidth: '55%',
+					borderRadiusWhenStacked: 'all',
+				},
 			},
+
+			dataLabels: {
+				enabled: false,
+			},
+
 			stroke: {
 				curve: 'smooth',
+        show: true,
+				// width: 2,
+				// colors: ['transparent'],
 			},
-			markers: {
-				size: 0,
+			title: {
+				// text: 'Job Openings vs Filled',
+				align: 'left', // Explicitly type 'left'
 			},
-			xaxis: {
-				categories,
-				//  categories: period.text === 'Day'
-					// 	? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-					// 	: period.text === 'Week'
-					// 		? ['weak 1', 'weak 2', 'weak 3', 'weak 4', 'weak 5']
-					// 		: period.text === 'Month' ? [
-					// 				'Jan',
-					// 				'Feb',
-					// 				'Mar',
-					// 				'Apr',
-					// 				'May',
-					// 				'Jun',
-					// 				'Jul',
-					// 				'Aug',
-					// 				'Sep',
-					// 				'Oct',
-					// 				'Nov',
-					// 				'Dec',
-					// 			]:categories,
-				title: {
-					text: range,
-				},
-			},
-			yaxis: {
-				title: {
-					text: 'Views',
-				},
-			},
-		},
-	});
-
-	// Observe container dimensions
-	useEffect(() => {
-		if (!chartContainerRef.current) return;
-
-		const updateDimensions = () => {
-			const rect = chartContainerRef.current?.getBoundingClientRect();
-			if (rect) {
-				setChartDimensions({ width: rect.width, height: rect.height });
-			}
-		};
-
-		updateDimensions(); // Set initial dimensions
-
-		const observer = new ResizeObserver(() => updateDimensions());
-		observer.observe(chartContainerRef.current);
-
-		return () => observer.disconnect(); // Cleanup observer on unmount
-	}, []);
-
-	// Observe container dimensions
-	useEffect(() => {
-		setState({
-			...state,
-			options: {
-				...state.options,
+			grid: {
+				show: true,
+				borderColor: `${colors.zinc['500']}25`,
+				strokeDashArray: 0,
 				xaxis: {
-					...state.options.xaxis,
-					title: {
-						...state?.options?.xaxis?.title,
-						text: range,
+					lines: {
+						show: false,
 					},
 				},
-			},
-		});
-	}, [period.text]);
+				yaxis: {
+					lines: {
+						show: true,
+					},
+				},
 
+				padding: {
+					top: 0,
+					right: 10,
+					bottom: 0,
+					left: 10,
+				},
+			},
+			xaxis: {
+				categories: categories,
+			},
+		} as ApexOptions,
+	});
 	return (
 		<Card className='h-full'>
 			<CardHeader>
-				<CardHeaderChild className=''>
-					<div>
-						<p>Performance Metrics</p>
-						<CardTitle>Job Openings vs Filled</CardTitle>
-					</div>
+				<CardHeaderChild className='!block'>
+					<CardSubTitle>Performance Metrics</CardSubTitle>
+					<CardTitle>Job Openings vs Filled</CardTitle>
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody>
-				<div ref={chartContainerRef} className=' w-full'>
-					{chartDimensions && (
-						<Chart
-							series={state.series}
-							options={state.options}
-							type='line'
-							width={chartDimensions.width}
-							height={400}
-						/>
-					)}
-				</div>
+				<ReactApexChart
+					options={state.options}
+					series={state.series}
+					type='line'
+					height={400}
+				/>
 			</CardBody>
 		</Card>
 	);

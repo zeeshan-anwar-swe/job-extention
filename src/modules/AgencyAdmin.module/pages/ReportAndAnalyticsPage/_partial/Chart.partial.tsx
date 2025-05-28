@@ -31,8 +31,8 @@ const ChartPartial = ({chartData,  categories }:any) => {
 			},
 			stroke: {
 				show: true,
-				width: 2,
-				colors: ['transparent'],
+				// width: 2,
+				// colors: ['transparent'],
 			},
 			xaxis: {
 				categories,
