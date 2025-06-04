@@ -13,16 +13,18 @@ const AssignJobModalListItemPartial = ({
 	assignToModule,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
-	job: JobDetailsType2;
+	job: any;
 	assignTo: string;
 	jobAssignAction: any;
 }) => {
 	const [loading, setLoading] = React.useState(false);
 	const [selfAssign, setSelfAssign] = React.useState(false);
+
 	const isAssigned =
 		assignToModule === 'candidate'
-			? job.appliedCandidates?.some((candidate: any) => candidate.candidateId === assignTo) ||
-				selfAssign
+			? (job?.appliedCandidates ? job?.appliedCandidates : job?.candidateJobProfiles)?.some(
+					(candidate: any) => candidate.candidateId === assignTo,
+				) || selfAssign
 			: assignToModule === 'client'
 				? job?.client?.id === assignTo || selfAssign
 				: job?.team?.id === assignTo || selfAssign;

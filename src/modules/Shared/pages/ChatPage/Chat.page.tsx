@@ -19,6 +19,8 @@ import Label from '../../../../components/form/Label';
 import Icon from '../../../../components/icon/Icon';
 import Alert from '../../../../components/ui/Alert';
 import { formatIsoTimeString, formatTimeString } from '../../../../utils/helper';
+import { Image } from 'antd';
+import { ViewableImagePartial } from './_partial/Image.partial';
 
 // Define TypeScript Interfaces
 interface Media {
@@ -196,7 +198,6 @@ const ReusableChatPage = ({
 		}
 		setLoadingMore(false);
 	};
-	console.log(chat);
 
 	return (
 		<PageWrapper name='Chat'>
@@ -236,12 +237,11 @@ const ReusableChatPage = ({
 											<div>
 												{msg.text && <p>{msg.text}</p>}
 												{msg.media?.map((media, idx) => (
-													<div key={idx} className='mt-2'>
+													<div key={idx} className='mt-2 w-96'>
 														{media.mediaType === 'image' && (
-															<img
-																src={apiBaseUrl + media.mediaUrl}
-																alt='Media'
-																className='!aspect-square w-64 rounded-lg object-cover'
+															<ViewableImagePartial
+																url={media.mediaUrl}
+																height='h-64'
 															/>
 														)}
 														{media.mediaType === 'video' && (

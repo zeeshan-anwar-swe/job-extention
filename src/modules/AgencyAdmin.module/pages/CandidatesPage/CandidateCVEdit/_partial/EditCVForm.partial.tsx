@@ -17,6 +17,7 @@ import { RootState } from '../../../../../../store';
 import { useEffect } from 'react';
 import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
 import { getSocialLinkWithId } from '../../../../../../utils/helper';
+import Tooltip from '../../../../../../components/ui/Tooltip';
 
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
@@ -76,15 +77,17 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 							</Validation>
 						</div>
 
-						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
-							<Label htmlFor='roles'>Roles</Label>
-							<MultipleValueSelectorPartial
-								initialValues={cadnidateProfile?.roles ?? []}
-								id='rolesForEditCV'
-								name='roles'
-								formik={formik}
-							/>
-						</div>
+						<Tooltip text='Write text and press enter'>
+							<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
+								<Label htmlFor='roles'>Roles</Label>
+								<MultipleValueSelectorPartial
+									initialValues={cadnidateProfile?.roles ?? []}
+									id='rolesForEditCV'
+									name='roles'
+									formik={formik}
+								/>
+							</div>
+						</Tooltip>
 					</div>
 
 					<div className='flex gap-4'>

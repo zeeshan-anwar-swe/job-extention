@@ -11,6 +11,7 @@ import {
 interface InitialStateType {
 	error: null | any;
 	clentSearch: string;
+	search:string,
 	clientsList: ClientListItemType[];
 	paginatedClients: ClientListItemType[];
 	locallySearchedClients: any[];
@@ -25,6 +26,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	error: null,
+	search:"",
 	clentSearch: '',
 	paginationCount: 0,
 	paginatedClients: [],

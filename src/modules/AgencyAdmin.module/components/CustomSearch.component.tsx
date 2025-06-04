@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Input from '../../../components/form/Input';
 import Icon from '../../../components/icon/Icon';
 import FieldWrap from '../../../components/form/FieldWrap';
+import Button from '../../../components/ui/Button';
 
 interface CustomSearchComponentProps {
 	searchListAction: (payload: { search?: string; limit: number; page: number }) => void;
@@ -46,9 +47,9 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 		return () => dispatch(setSearchActionForPagination(''));
 	}, []);
 	return (
-		<form onSubmit={handleSearch}>
+		<form className='flex items-center gap-2' onSubmit={handleSearch}>
 			<FieldWrap
-				firstSuffix={<Icon className='mx-2 rounded-full' icon='HeroMagnifyingGlass' />}
+				// firstSuffix={<Icon className='mx-2 rounded-full' onClick={handleSearch} icon='HeroMagnifyingGlass' />}
 				lastSuffix={
 					searchValue !== '' && (
 						<Icon
@@ -65,10 +66,13 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 					name='example'
 					placeholder={placeholder}
 					value={searchValue}
-					className='rounded-full'
+					className='px-4'
 					onChange={(e: any) => handleChange(e.target.value as string)}
 				/>
 			</FieldWrap>
+			<Button variant='solid' rightIcon='HeroMagnifyingGlass' type='submit'>
+				Search
+			</Button>
 		</form>
 	);
 };

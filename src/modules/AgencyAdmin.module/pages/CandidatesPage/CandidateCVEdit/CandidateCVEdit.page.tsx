@@ -73,7 +73,7 @@ const CandidateCVEditPage = () => {
 
 			return errors;
 		},
-		onSubmit: (values: EditCVFormValues) => {
+		onSubmit: async (values: EditCVFormValues) => {
 			const { cvText, roles, experience, education, LinkedIn, GitHub, about, availabilty, location } = values;
 
 			const preGitHub: { id: string; link: string } | null = getSocialLinkWithId(
@@ -85,7 +85,7 @@ const CandidateCVEditPage = () => {
 				'LinkedIn',
 			);
 
-			dispatch(
+			await dispatch(
 				updateCandidateProfile({
 					candidateId: state.id,
 					payload: {
@@ -105,6 +105,8 @@ const CandidateCVEditPage = () => {
 					},
 				}),
 			);
+
+			navigateTo('/candidates');
 		},
 	});
 

@@ -90,9 +90,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			.then(() => toast.success('OTP is sended'))
 			.then(() => dispatch(setFormType('otp')))
 			.catch((e) => {
-				if (e.response.status === 500) {
-					toast.error(e?.response?.data?.message);
-				}
+				toast.error(e?.response?.data?.message);
 				console.error(e);
 			});
 	};

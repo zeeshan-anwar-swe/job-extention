@@ -11,7 +11,7 @@ const serverUrl = import.meta.env.VITE_SERVER_PREFIX_URL;
 
 export const textValidationCheck: TextValidationCheckType = (value) => {
 	if (value === null || value === undefined || value === '') {
-		return 'N/A';
+		return '';
 	}
 	return value;
 };

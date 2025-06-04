@@ -167,6 +167,21 @@ export const assignJobToCandidate = createAsyncThunk(
 	},
 );
 
+export const assignClientToCandidate = createAsyncThunk(
+	'candidates/assignJobToCandidate',
+	async ({ clientId, assignTo }: { clientId: string; assignTo: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/candidate/assign-job', {
+				clientId,
+				candidateId: assignTo,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const getCandidateProfile = createAsyncThunk(
 	'candidates/getCandidateProfile',
 	async ({ candidateId, id }: { candidateId: string; id: string }, { rejectWithValue }) => {
