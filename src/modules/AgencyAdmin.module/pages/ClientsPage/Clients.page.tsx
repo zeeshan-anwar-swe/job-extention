@@ -84,9 +84,6 @@ const ClientsPage = () => {
 										<DropdownItem onClick={() => setSortBy('Desending')}>
 											Desending
 										</DropdownItem>
-										<DropdownItem onClick={() => setSortBy('New First')}>
-											New First
-										</DropdownItem>
 									</DropdownMenu>
 								</Dropdown>
 							</div>
@@ -105,7 +102,7 @@ const ClientsPage = () => {
 
 				<PageLoader loading={pageLoading} error={error} data={paginatedClients}>
 					<Container>
-						<TablePartial />
+						<TablePartial sortBy={sortBy} />
 					</Container>
 				</PageLoader>
 				<Pagination
