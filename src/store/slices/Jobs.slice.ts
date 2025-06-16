@@ -11,7 +11,7 @@ import {
 } from '../../utils/helper';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
-import { JobDetailsType } from '../../types/slices.type/jobs.slice.type';
+import { ClientJobsStateType, JobDetailsType } from '../../types/slices.type/jobs.slice.type';
 
 interface InitialStateType {
 	search: string;
@@ -28,6 +28,7 @@ interface InitialStateType {
 	assignedCandidatesWhileUpdatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
 	jobDetails: JobDetailsType | null;
+	clientJobs: ClientJobsStateType;
 }
 
 const initialState: InitialStateType = {
@@ -45,6 +46,11 @@ const initialState: InitialStateType = {
 	pageLoading: false,
 	componentLoading: false,
 	error: null,
+	clientJobs: {
+		error: null,
+		jobs: [],
+		loading: false,
+	},
 };
 
 export const getJobsList = createAsyncThunk(
@@ -69,6 +75,18 @@ export const getAllJobsList = createAsyncThunk(
 	async (_, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(`/job/recruiter/list`);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getJobsByClientId = createAsyncThunk(
+	'jobs/getJobsByClientId',
+	async ({ clientId }: { clientId: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get('/job/client/jobs/' + clientId);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -237,6 +255,24 @@ export const jobsSlice = createSlice({
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
+				toast.error(action.payload.message);
+			});
+
+		builder
+			.addCase(getJobsByClientId.pending, (state) => {
+				state.clientJobs.loading = true;
+				state.clientJobs.error = null;
+			})
+			.addCase(getJobsByClientId.fulfilled, (state, action) => {
+				state.clientJobs.jobs = action.payload;
+				state.clientJobs.loading = false;
+			})
+			.addCase(getJobsByClientId.rejected, (state, action: any) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				state.clientJobs.loading = false;
+
 				toast.error(action.payload.message);
 			});
 

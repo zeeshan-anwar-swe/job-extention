@@ -70,7 +70,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 					onChange={(e: any) => handleChange(e.target.value as string)}
 				/>
 			</FieldWrap>
-			<Button variant='solid' rightIcon='HeroMagnifyingGlass' type='submit'>
+			<Button rounded='rounded-full' variant='solid' type='submit'>
 				Search
 			</Button>
 		</form>

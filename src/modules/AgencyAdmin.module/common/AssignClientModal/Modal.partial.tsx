@@ -6,8 +6,8 @@ import { AppDispatch, RootState } from '../../../../store';
 import Pagination from '../../../../components/ui/Pagination';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { AssignClientModalListItemPartial } from './ModalListItem.partial';
-import { getPaginatedTeamlist } from '../../../../store/slices/Team.slice';
 import {
+	getAgencyClientsWithJobs,
 	getPaginatedAgencyClientsList,
 	setClientSearch,
 } from '../../../../store/slices/Agency/Client.slice';
@@ -23,27 +23,21 @@ export const AssignClientModalPartial = ({
 	setModal,
 	title = 'Assign Client to Candiate',
 	assignTo,
-	assignToModule,
-	clientAssignAction,
 }: {
-	assignToModule: 'candidate' | 'client' | 'teamMember';
 	title?: string;
 	modal: boolean;
 	setModal: any;
-	clientAssignAction: any;
 	assignTo: string;
 }) => {
-	const { clientsList, pageLoading, error, paginationCount, search } = useSelector(
-		(state: RootState) => state.clients,
+	const { count, loading, error, rows } = useSelector(
+		(state: RootState) => state.clients.clientsWithJobs,
 	);
 
-	const dispatch: AppDispatch = useDispatch();
+	console.log({ count, loading, error, rows });
+	
 
-	useEffect(() => {
-		if (modal) {
-			dispatch(getPaginatedAgencyClientsList({ limit: 10, page: 1 }));
-		}
-	}, [modal]);
+
+	
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
@@ -57,14 +51,12 @@ export const AssignClientModalPartial = ({
 				/>
 			</div>
 			<ModalBody className='flex h-96 w-full flex-col gap-4 overflow-y-scroll'>
-				<PageLoader data={clientsList} loading={pageLoading} error={error}>
-					{clientsList.map((team: any) => (
+				<PageLoader data={rows} loading={loading} error={error}>
+					{rows.map((client: any) => (
 						<AssignClientModalListItemPartial
-							assignToModule={assignToModule}
-							jobAssignAction={clientAssignAction}
 							assignTo={assignTo}
-							team={team}
-							key={team.id}
+							client={client}
+							key={client.id}
 						/>
 					))}
 				</PageLoader>
@@ -72,10 +64,9 @@ export const AssignClientModalPartial = ({
 			<ModalFooter className='flex-col !items-end'>
 				<ModalFooterChild>
 					<Pagination
-						count={paginationCount}
+						count={count}
 						limit={10}
-						search={search}
-						getListAction={getPaginatedTeamlist}
+						getListAction={getAgencyClientsWithJobs}
 					/>
 				</ModalFooterChild>
 				<ModalFooterChild className='w-full'>

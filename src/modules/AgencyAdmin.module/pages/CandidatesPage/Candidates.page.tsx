@@ -29,6 +29,8 @@ const CandidatesPage = () => {
 		(state: RootState) => state.candidates,
 	);
 
+
+
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	return (

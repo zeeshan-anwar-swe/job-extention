@@ -30,10 +30,10 @@ const JobsPageCardPartial = ({ item }: any) => {
 						rightIcon='Hero'>
 						<img
 							className='aspect-square w-6 rounded-full object-cover '
-							src={profileImageUrlValidationCheck(item?.client?.image)}
+							src={profileImageUrlValidationCheck(item?.client?.clientUser?.image)}
 							alt='profile-image'
 						/>
-						<h5 className='max-md:text-sm'>{item?.client?.name}</h5>
+						<h5 className='max-md:text-sm'>{item?.client?.clientUser?.firstName} {item?.client?.clientUser?.lastName}</h5>
 					</Button>
 				</div>
 				<div className='h-full max-md:flex-1'>

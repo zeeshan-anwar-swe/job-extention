@@ -27,6 +27,8 @@ export const store = configureStore({
 		forgotPasswordSlice,
 		reportsAndAnalytics,
 	},
+
+	
 });
 
 export type RootState = ReturnType<typeof store.getState>;

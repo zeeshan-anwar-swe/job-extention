@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '../../../../components/ui/Button';
 import { JobDetailsType2 } from '../../../../types/slices.type/jobs.slice.type';
 import { textValidationCheck } from '../../../../utils/validationCheck';
@@ -15,27 +15,50 @@ import Card, {
 import useImageValidation from '../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
 import { assignClientToCandidate } from '../../../../store/slices/Candiates.slice';
-
+import {
+	TCandidateJobProfile,
+	TClientWithJobs,
+	TJobForClientWithJobs,
+} from '../../../../types/slices.type/clients.slice.type';
+import Select from '../../../../components/form/Select';
+import SelectReact from '../../../../components/form/SelectReact';
 
 export const AssignClientModalListItemPartial = ({
-	candidate,
+	client,
 	assignTo,
 }: {
-	candidate: any;
+	client: TClientWithJobs;
 	assignTo: string;
 }) => {
-	const [loading, setLoading] = React.useState(false);
 	
+	const [isAssiged, setIsAssiged] = React.useState(false);
+	const [selectedJob, setSelectedJob] = React.useState<null | any>(null);
 
 	const dispatch: AppDispatch = useDispatch();
 
-	const { loading: loadingImage, imageUrl } = useImageValidation(team?.user?.image);
+	
+	
 
-	const handleAssignTeamToClient = async ()=>{
-		setLoading(true);
-		await dispatch(assignClientToCandidate({clientId: client,  assignTo}));
-		setLoading(false);
-	}
+	const { loading: loadingImage, imageUrl } = useImageValidation(client.clientUser.image);
+
+	const handleAssignTeamToClient = async () => {
+		await dispatch(assignClientToCandidate({ clientId: selectedJob.id, assignTo }));
+	};
+
+	useEffect(()=>{
+		if(selectedJob){
+			
+			client.jobs.map((job: TJobForClientWithJobs) =>{
+				job.candidateJobProfiles.map((candidateJobProfile: TCandidateJobProfile) =>{
+					if(candidateJobProfile.candidateId === assignTo){
+						console.log({assignTo,candidateId:candidateJobProfile.candidateId});
+						setIsAssiged(true);
+					}
+				})
+			})
+		}
+
+	},[selectedJob])
 
 	return (
 		<Card className='border'>
@@ -48,11 +71,24 @@ export const AssignClientModalListItemPartial = ({
 							alt=''
 						/>
 					</ImageLoaderWraper>
-					<CardSubTitle className='font-medium'>{team?.user?.name}</CardSubTitle>
+					<CardSubTitle className='font-medium'>
+						{client.clientUser.firstName + ' ' + client.clientUser.lastName}
+					</CardSubTitle>
 				</CardHeaderChild>
+				<div className='flex-1 gap-2'>
+					<SelectReact
+						variant='solid'
+						name='jobs'
+						className='!w-full'
+						options={client.jobs.map((job: any) => {
+							return { label: job.title, value: job };
+						})}
+						onChange={(list: any) => setSelectedJob(list.value)}
+					/>
+				</div>
 				<CardHeaderChild>
-					<Button onClick={handleAssignTeamToClient} variant='solid'>
-						Assign
+					<Button rightIcon={isAssiged ? 'HeroTwiceCheck' : undefined} color={isAssiged ? 'emerald' : 'blue'} isDisable={selectedJob === null}  onClick={isAssiged ? undefined : handleAssignTeamToClient} variant='solid'>
+						{isAssiged ? 'Assigned' : 'Assign'}
 					</Button>
 				</CardHeaderChild>
 			</CardHeader>

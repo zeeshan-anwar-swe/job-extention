@@ -54,13 +54,13 @@ const ClientsPage = () => {
 							searchListAction={getPaginatedAgencyClientsList}
 							searchLimit={10}
 						/>
-						<Button
+						{/* <Button
 							color='zinc'
 							variant='outline'
 							rounded='rounded-full'
 							icon='HeroBarFilter'>
 							Filter
-						</Button>
+						</Button> */}
 					</SubheaderLeft>
 				</Subheader>
 				<Subheader>

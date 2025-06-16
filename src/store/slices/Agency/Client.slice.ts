@@ -6,12 +6,13 @@ import { searchObjectsByKeyAndValue } from '../../../utils/helper';
 import {
 	ClientDetailsType,
 	ClientListItemType,
+	TClientWithJobInitialState,
 } from '../../../types/slices.type/clients.slice.type';
 
 interface InitialStateType {
 	error: null | any;
 	clentSearch: string;
-	search:string,
+	search: string;
 	clientsList: ClientListItemType[];
 	paginatedClients: ClientListItemType[];
 	locallySearchedClients: any[];
@@ -22,11 +23,12 @@ interface InitialStateType {
 	assignedClientWhileCreatingJob: any | null;
 	clientDetails: ClientDetailsType | null;
 	clientFeedback: any[];
+	clientsWithJobs: TClientWithJobInitialState;
 }
 
 const initialState: InitialStateType = {
 	error: null,
-	search:"",
+	search: '',
 	clentSearch: '',
 	paginationCount: 0,
 	paginatedClients: [],
@@ -38,6 +40,7 @@ const initialState: InitialStateType = {
 	locallySearchedClients: [],
 	assignedClientWhileCreatingJob: null,
 	clientDetails: null,
+	clientsWithJobs: { rows: [], count: 0, loading: false, error: null },
 };
 
 export const getPaginatedAgencyClientsList = createAsyncThunk(
@@ -62,6 +65,18 @@ export const getClientDetails = createAsyncThunk(
 	async (id: string, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get('/client/detail/' + id);
+			return response.data.data;
+		} catch (error: any) {
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getAgencyClientsWithJobs = createAsyncThunk(
+	'clients/getAgencyClientsWithJobs',
+	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(`agency/client-with-jobs?page=${page}&limit=${limit}`);
 			return response.data.data;
 		} catch (error: any) {
 			return withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -175,6 +190,30 @@ export const clientsSlice = createSlice({
 				};
 				toast.error(action.payload.message || 'Unknown error');
 			})
+
+
+
+
+			.addCase(getAgencyClientsWithJobs.pending, (state) => {
+				state.clientsWithJobs.loading = true;
+				state.clientsWithJobs.error = null;
+			})
+			.addCase(getAgencyClientsWithJobs.fulfilled, (state, action) => {
+				state.clientsWithJobs.rows = action.payload.rows;
+				state.clientsWithJobs.count = action.payload.count;
+				state.clientsWithJobs.loading = false;
+			})
+			.addCase(getAgencyClientsWithJobs.rejected, (state, action: any) => {
+				state.clientsWithJobs.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message || 'Unknown error');
+				state.clientsWithJobs.loading = false;
+			})
+
+
+
+
 
 			.addCase(getClientDetails.pending, (state) => {
 				state.pageLoading = true;

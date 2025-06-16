@@ -40,3 +40,33 @@ export interface ClientDetailsType {
 	jobs: Job[];
 	clientUser: ClientUser;
 }
+
+export interface TCandidateJobProfile {
+	id: string;
+	candidateId: string;
+}
+export interface TJobForClientWithJobs {
+	id: string;
+	title: string;
+	candidateJobProfiles: TCandidateJobProfile[];
+}
+
+export interface TClientWithJobs {
+	id: string;
+	clientUser: {
+		id: string;
+		email: string;
+		firstName: string;
+		lastName: string;
+		image: string | null;
+		createdAt: string;
+	};
+	jobs: TJobForClientWithJobs[];
+}
+
+export interface TClientWithJobInitialState {
+	count:number;
+	loading: boolean;
+	error: Error | null;
+	rows: TClientWithJobs[];
+}

@@ -156,6 +156,12 @@ export const appPages = {
 					text: 'Client Profile',
 					icon: 'HeroIdentification',
 				},
+				clientJobsAppPages: {
+					id: 'clientJobsApp',
+					to: '/clients/jobs',
+					text: 'Client Profile',
+					icon: 'HeroIdentification',
+				},
 			},
 		},
 

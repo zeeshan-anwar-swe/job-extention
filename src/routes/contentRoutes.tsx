@@ -24,6 +24,7 @@ import SSOWaitingPage from '../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWa
 import RecruitersPage from '../modules/Team.module/pages/Recruiter/Recruiter.page';
 import ChatWithRecruiterPage from '../modules/Team.module/pages/ChatPage/Chat.page';
 import TestPage from '../modules/Shared/pages/TestPage/Test.page';
+import ClientJobsPage from '../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -73,6 +74,8 @@ const contentRoutes: ContentRoutesType = {
 			element: <JobsPage />,
 		},
 
+		
+
 		{
 			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.viewCadidatesAppPages.to}`,
 			element: <JobsViewCandidatesPage />,
@@ -96,6 +99,11 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
 			element: <ClientProfilePage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientJobsAppPages.to,
+			element: <ClientJobsPage />,
 		},
 
 		{

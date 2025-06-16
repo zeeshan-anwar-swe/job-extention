@@ -76,3 +76,26 @@ export interface JobDetailsType2 {
 	client: Client;
 	appliedCandidates?: CandidateJobProfile[];
 }
+
+
+export interface ClientJob {
+  id: string;
+  title: string;
+  experience: string;
+  location: string;
+  description: string;
+  type: string; // Or string if other types are possible
+  status: string; // Or string if other statuses are possible
+  teamId: string;
+  clientId: string;
+  skills: string[];
+  positions: number;
+  createdAt: string; // Consider using Date type if you parse it
+  updatedAt: string; // Consider using Date type if you parse it
+}
+
+export interface ClientJobsStateType {
+  jobs: ClientJob[];
+  loading: boolean;
+  error: Error | null;
+};

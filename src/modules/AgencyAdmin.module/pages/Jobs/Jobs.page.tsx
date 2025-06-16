@@ -23,12 +23,14 @@ import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import CustomSearchComponent from '../../components/CustomSearch.component';
 import CustomDropDown from '../../components/CustomDropDown.component';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
+
+		
 
 	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
