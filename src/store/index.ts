@@ -9,8 +9,9 @@ import agencyStatics from './slices/Agency/Statics.slice';
 import taskBoard from './slices/Agency/Taskboard.slice';
 import recruiters from './slices/Agency/Recruiter.slice';
 import teamChat from './slices/Team/TeamChat.slice';
-import chat from './slices/Chat.slice';	
+import chat from './slices/Chat.slice';
 import reportsAndAnalytics from './slices/Agency/ReportsAndAnalytics.slice';
+import subscription from './slices/Subcription.slice';
 
 export const store = configureStore({
 	reducer: {
@@ -23,12 +24,11 @@ export const store = configureStore({
 		taskBoard,
 		recruiters,
 		candidates,
+		subscription,
 		agencyStatics,
 		forgotPasswordSlice,
 		reportsAndAnalytics,
 	},
-
-	
 });
 
 export type RootState = ReturnType<typeof store.getState>;

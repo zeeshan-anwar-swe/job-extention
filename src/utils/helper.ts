@@ -241,3 +241,30 @@ export const getQueryParamValue = (input: string, paramName: string): JobStatus 
 		return JobStatus.BACKLOG;
 	}
 };
+
+
+export const formatString = (inputString: string | null | undefined): string => {
+  // Return an empty string if the input is null, undefined, or an empty string
+  if (inputString === null || inputString === undefined || inputString === '') {
+    return '';
+  }
+
+  // Corrected: Replace underscores, hyphens, and commas with spaces
+  // Place '-' at the end of the character set to treat it literally,
+  // or escape it like /[_,\-]/g
+  const cleanedString = inputString.replace(/[_,-]/g, ' '); // Changed from /[_-|,]/g
+
+  // Split the string into words, filter out empty strings, and then format each word
+  const formattedWords = cleanedString.split(' ').filter(word => word.length > 0).map(word => {
+    // Capitalize the first letter and make the rest lowercase
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  });
+
+  // Join the formatted words back into a single string
+  return formattedWords.join(' ');
+};
+
+// Example Usage:
+// const input = "koalabyte_monthly_enterprise";
+// const output = formatString(input);
+// console.log(output); // Expected: "Koalabyte Monthly Enterprise"

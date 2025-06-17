@@ -130,45 +130,6 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 							</Validation>
 						</div>
 					</div>
-					{/* <div className='flex gap-4'>
-						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
-							<Label htmlFor='location'>Location</Label>
-							<Validation
-								isValid={formik.isValid}
-								isTouched={formik.touched.location}
-								invalidFeedback={formik.errors.location}
-								validFeedback=''>
-								<Input
-									dimension='lg'
-									id='location'
-									name='location'
-									placeholder='Enter your address'
-									value={formik.values.location}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-								/>
-							</Validation>
-						</div>
-
-						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
-							<Label htmlFor='availabilty'>Availablity</Label>
-							<Validation
-								isValid={formik.isValid}
-								isTouched={formik.touched.availabilty}
-								invalidFeedback={formik.errors.availabilty}
-								validFeedback=''>
-								<Input
-									dimension='lg'
-									id='availabilty'
-									name='availabilty'
-									placeholder='Availablity status'
-									value={formik.values.availabilty}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-								/>
-							</Validation>
-						</div>
-					</div> */}
 					<div className='flex gap-4'>
 						<div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
 							<Label htmlFor='LinkedIn'>LinkedIn Profile</Label>

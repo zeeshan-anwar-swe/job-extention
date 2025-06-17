@@ -22,9 +22,9 @@ import { getSocialLinkWithId } from '../../../../../utils/helper';
 
 export type EditCVFormValues = {
 	name: string;
-	about:string
-	location:string;
-	availabilty:string;
+	about: string;
+	location: string;
+	availabilty: string;
 	roles: string[];
 	experience: number;
 	education: string;
@@ -44,9 +44,9 @@ const CandidateCVEditPage = () => {
 	const formik = useFormik({
 		initialValues: {
 			name: '',
-			about:'',
-			availabilty:"",
-			location:"",
+			about: '',
+			availabilty: '',
+			location: '',
 			roles: [],
 			experience: 0,
 			education: '',
@@ -63,18 +63,34 @@ const CandidateCVEditPage = () => {
 			} else if (values.name.length < 2) {
 				errors.name = 'Name must be at least 2 characters long';
 			}
-			if (values.LinkedIn && !values.LinkedIn.includes('linkedin.com')) {
-				errors.LinkedIn = 'Must be a valid LinkedIn profile URL';
+			// Add validation for required GitHub field
+			if (!values.GitHub) {
+				errors.GitHub = 'GitHub profile is required';
+			} else if (!values.GitHub.includes('github.com')) {
+				errors.GitHub = 'Must be a valid URL ex:github.com/user-name';
 			}
 
-			if (values.GitHub && !values.GitHub.includes('github.com')) {
-				errors.GitHub = 'Must be a valid GitHub profile URL';
+			// Add validation for required LinkedIn field
+			if (!values.LinkedIn) {
+				errors.LinkedIn = 'LinkedIn profile is required';
+			} else if (!values.LinkedIn.includes('linkedin.com')) {
+				errors.LinkedIn = 'Must be a valid URL ex: linkedin.com/in/user-name';
 			}
 
 			return errors;
 		},
 		onSubmit: async (values: EditCVFormValues) => {
-			const { cvText, roles, experience, education, LinkedIn, GitHub, about, availabilty, location } = values;
+			const {
+				cvText,
+				roles,
+				experience,
+				education,
+				LinkedIn,
+				GitHub,
+				about,
+				availabilty,
+				location,
+			} = values;
 
 			const preGitHub: { id: string; link: string } | null = getSocialLinkWithId(
 				cadnidateProfile?.profile?.socialProfiles ?? [],
@@ -117,9 +133,9 @@ const CandidateCVEditPage = () => {
 			navigateTo('/candidates');
 		}
 
-		return ()=> {
-			dispatch(setCandidateProfile(null))
-		}
+		return () => {
+			dispatch(setCandidateProfile(null));
+		};
 	}, [state]);
 
 	return (

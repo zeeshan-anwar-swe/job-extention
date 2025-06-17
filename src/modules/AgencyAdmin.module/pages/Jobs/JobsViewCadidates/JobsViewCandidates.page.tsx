@@ -31,8 +31,6 @@ const JobsViewCandidatesPage = () => {
 	const params = useLocation();
 	const { state } = params;
 
-	console.log({ state });
-	
 
 	const { jobDetails, pageLoading, error } = useSelector((state: RootState) => state.jobsSlice);
 	const hiredCandidates = filterAndExtract({

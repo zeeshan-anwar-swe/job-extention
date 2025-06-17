@@ -7,9 +7,18 @@ import Modal, {
 } from '../../../../../../components/ui/Modal';
 import { useState } from 'react';
 import Alert from '../../../../../../components/ui/Alert';
+import { createPortalSession } from '../../../../../../services/stripe-subscriptions';
 
 const SubscriptionModalPartial = () => {
 	const [modal, setModal] = useState<boolean>(false);
+
+	const handleManageOrCancelOrUpdatePlan = async () => {
+		const url = await createPortalSession();
+		if (url) {
+			window.location.href = url;
+		}
+	};
+
 	return (
 		<>
 			<Button
@@ -37,7 +46,7 @@ const SubscriptionModalPartial = () => {
 				<ModalFooter className='!flex-col'>
 					<ModalFooterChild className='w-full pt-4'>
 						<Button
-							onClick={() => setModal(false)}
+							onClick={handleManageOrCancelOrUpdatePlan}
 							className='w-full'
 							variant='solid'
 							color='red'>
