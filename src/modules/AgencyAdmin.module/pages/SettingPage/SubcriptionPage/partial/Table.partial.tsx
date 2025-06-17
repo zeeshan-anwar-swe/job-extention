@@ -7,9 +7,14 @@ import TableDataCreditPartial from './TableDataSource.partial';
 import Alert from '../../../../../../components/ui/Alert';
 import Checkbox from '../../../../../../components/form/Checkbox';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../../store';
+import { TSInvoice } from '../../../../../../types/slices.type/subcription.slice.type';
+import { formatString, formatTimestampToDate } from '../../../../../../utils/helper';
 
 const TablePartial = () => {
 	const [allChecked, setAllChecked] = useState<boolean>(false);
+	const { data } = useSelector((state: RootState) => state.subscription.userSubscription);
 	return (
 		<Table className='table-fixed !rounded-xl max-md:min-w-[70rem]'>
 			<THead>
@@ -30,103 +35,33 @@ const TablePartial = () => {
 							Billing Date
 						</Alert>
 					</Th>
-					<Th>Credit Added</Th>
+					<Th>Plan</Th>
 					<Th>Status</Th>
 					<Th>Amount</Th>
 				</Tr>
 			</THead>
 			<TBody>
-				<Tr>
-					<Td>
-						<TableDataProfilePartial allChecked={allChecked} title='#007 – Dec 2022' />
-					</Td>
-					<Td>
-						<TableDataDatePartial title='Dec 1, 2022' />
-					</Td>
+				{data.invoices.map((invoice: TSInvoice) => (
+					<Tr key={invoice.id}>
+						<Td>
+							<TableDataProfilePartial
+								allChecked={allChecked}
+								title={invoice.invoiceNumber}
+							/>
+						</Td>
+						<Td>
+							<TableDataDatePartial
+								title={formatTimestampToDate(invoice.createdAt)}
+							/>
+						</Td>
 
-					<Td>
-						<TableDataCreditPartial />
-					</Td>
-					<Td>
-						<TableDataStatusPartial title='Paid' />
-					</Td>
-					<Td>
-						<TableDataAmountPartial />
-					</Td>
-				</Tr>
-
-				<Tr>
-					<Td>
-						<TableDataProfilePartial allChecked={allChecked} title='#007 – Dec 2022' />
-					</Td>
-					<Td>
-						<TableDataDatePartial title='Dec 1, 2022' />
-					</Td>
-
-					<Td>
-						<TableDataCreditPartial />
-					</Td>
-					<Td>
-						<TableDataStatusPartial title='Paid' />
-					</Td>
-					<Td>
-						<TableDataAmountPartial />
-					</Td>
-				</Tr>
-				<Tr>
-					<Td>
-						<TableDataProfilePartial allChecked={allChecked} title='#007 – Dec 2022' />
-					</Td>
-					<Td>
-						<TableDataDatePartial title='Dec 1, 2022' />
-					</Td>
-
-					<Td>
-						<TableDataCreditPartial />
-					</Td>
-					<Td>
-						<TableDataStatusPartial title='Un paid' />
-					</Td>
-					<Td>
-						<TableDataAmountPartial />
-					</Td>
-				</Tr>
-				<Tr>
-					<Td>
-						<TableDataProfilePartial allChecked={allChecked} title='#005 – Dec 2022' />
-					</Td>
-					<Td>
-						<TableDataDatePartial title='Dec 1, 2022' />
-					</Td>
-
-					<Td>
-						<TableDataCreditPartial />
-					</Td>
-					<Td>
-						<TableDataStatusPartial title='Paid' />
-					</Td>
-					<Td>
-						<TableDataAmountPartial />
-					</Td>
-				</Tr>
-				<Tr>
-					<Td>
-						<TableDataProfilePartial allChecked={allChecked} title='#003 – Dec 2022' />
-					</Td>
-					<Td>
-						<TableDataDatePartial title='Dec 1, 2022' />
-					</Td>
-
-					<Td>
-						<TableDataCreditPartial />
-					</Td>
-					<Td>
-						<TableDataStatusPartial title='Paid' />
-					</Td>
-					<Td>
-						<TableDataAmountPartial />
-					</Td>
-				</Tr>
+						<Td className='text-center'>{formatString(invoice.lookup_key)}</Td>
+						<Td>
+							<TableDataStatusPartial title={invoice.status} />
+						</Td>
+						<Td className='text-center'>{invoice.amount}</Td>
+					</Tr>
+				))}
 			</TBody>
 			<TFoot>
 				<Tr>
@@ -146,7 +81,7 @@ const TablePartial = () => {
 							Billing Date
 						</Alert>
 					</Th>
-					<Th>Credit Added</Th>
+					<Th>Plan</Th>
 					<Th>Status</Th>
 					<Th>Amount</Th>
 				</Tr>

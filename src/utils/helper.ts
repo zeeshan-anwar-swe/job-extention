@@ -268,3 +268,29 @@ export const formatString = (inputString: string | null | undefined): string => 
 // const input = "koalabyte_monthly_enterprise";
 // const output = formatString(input);
 // console.log(output); // Expected: "Koalabyte Monthly Enterprise"
+
+
+
+
+export const formatTimestampToDate = (timestamp: number | null | undefined): string => {
+  // Return an empty string if the timestamp is null, undefined, or not a valid number
+  if (timestamp === null || timestamp === undefined || isNaN(timestamp)) {
+    return '';
+  }
+
+  // Unix timestamps are typically in seconds, Date constructor expects milliseconds
+  const date = new Date(timestamp * 1000);
+
+  // Check if the date object is valid (e.g., if the original timestamp was extremely out of range)
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+  // Get month, day, and year
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+  const day = date.getDate().toString().padStart(2, '0');
+
+  // Return in MM/DD/YYYY format
+  return `${day}-${month}-${year}`;
+};

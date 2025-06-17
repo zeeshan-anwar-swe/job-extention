@@ -44,7 +44,6 @@ const SubcriptionPage = () => {
 		dispatch(getSubscriptionPlan());
 	},[])
 
-	console.log({ spData ,data});
 	
 	return (
 		<>

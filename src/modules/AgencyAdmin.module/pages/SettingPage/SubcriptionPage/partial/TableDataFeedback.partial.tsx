@@ -7,7 +7,19 @@ const TableDataFeedbackPartial = ({ title }: { title?: string }) => {
 		switch (title) {
 			case 'Paid':
 				return 'emerald';
+
+			case 'paid':
+				return 'emerald';
 			case 'Un paid':
+				return 'red';
+
+			case 'Un_paid':
+				return 'red';
+
+			case 'UnPaid':
+				return 'red';
+
+			case 'un_paid':
 				return 'red';
 
 			default:
