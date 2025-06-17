@@ -17,6 +17,9 @@ interface InitialStateType {
 		industry?: string;
 		role: string;
 		image?: string;
+		location: string | null;
+		experience: string | null;
+		dob: string | null;
 	};
 }
 

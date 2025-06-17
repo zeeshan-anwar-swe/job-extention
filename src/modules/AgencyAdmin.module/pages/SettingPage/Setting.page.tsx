@@ -29,12 +29,14 @@ export type UserProfileDataType = {
 	industry: string;
 	about: string;
 	image: File | null;
+	location: string;
+	experience: string;
+	dob: string;
 };
 
 const SettingPage = () => {
 	const { userProfile, loading } = useSelector((state: RootState) => state.user);
-	console.log({userProfile});
-	
+	console.log({ userProfile });
 
 	const { onLogout } = useAuth();
 
@@ -48,6 +50,9 @@ const SettingPage = () => {
 			industry: '',
 			about: '',
 			image: null,
+			location: '',
+			experience: '',
+			dob: '',
 		},
 		validate: (values: UserProfileDataType) => {
 			const errors: Partial<UserProfileDataType> = {};
@@ -81,21 +86,34 @@ const SettingPage = () => {
 				formData.append('file', values.image);
 			}
 
+			if (values.location) {
+				formData.append('location', values.location);
+			}
+
+			if (values.experience) {
+				formData.append('experience', values.experience);
+			}
+
+			if (values.dob) {
+				formData.append('dob', values.dob);
+			}
+
 			dispatch(updateUserProfile(formData));
 		},
 	});
 
-	useEffect(()=>{
-		if(userProfile){
-			formik.setFieldValue('firstName', userProfile?.firstName??"")
-			formik.setFieldValue('lastName', userProfile?.lastName??"")
-			formik.setFieldValue('industry', userProfile?.industry??"")
-			formik.setFieldValue('about', userProfile?.about??"")
-			formik.setFieldValue('email', userProfile?.email??"")
+	useEffect(() => {
+		if (userProfile) {
+			formik.setFieldValue('firstName', userProfile?.firstName ?? '');
+			formik.setFieldValue('lastName', userProfile?.lastName ?? '');
+			formik.setFieldValue('industry', userProfile?.industry ?? '');
+			formik.setFieldValue('about', userProfile?.about ?? '');
+			formik.setFieldValue('email', userProfile?.email ?? '');
+			formik.setFieldValue('location', userProfile?.location ?? '');
+			formik.setFieldValue('dob', userProfile?.dob ?? '');
+			formik.setFieldValue('experience', userProfile?.experience ?? '');
 		}
-	},[userProfile])
-
-
+	}, [userProfile]);
 
 	return (
 		<>
@@ -114,7 +132,10 @@ const SettingPage = () => {
 						<Card className='col-span-8 !bg-zinc-100  dark:!bg-zinc-950 max-md:col-span-12 '>
 							<CardBody className='!flex gap-4 max-md:!flex-col'>
 								<form className='flex w-full gap-4'>
-									<ProfileImagePartial initialImage={userProfile?.image} formik={formik} />
+									<ProfileImagePartial
+										initialImage={userProfile?.image}
+										formik={formik}
+									/>
 
 									<div className='flex w-full flex-1 flex-col gap-4 '>
 										<div className='flex  gap-4 max-md:flex-col'>
@@ -218,7 +239,69 @@ const SettingPage = () => {
 												</Validation>
 											</div>
 										</div>
-										<div className=''>
+
+										<div className='flex  gap-4 max-md:flex-col '>
+											<div className='w-full'>
+												<Label htmlFor='location'>Location</Label>
+												<Validation
+													isValid={formik.isValid}
+													isTouched={formik.touched.location}
+													invalidFeedback={formik.errors.location}
+													validFeedback=''>
+													<FieldWrap
+														firstSuffix={
+															<Icon
+																size='text-2xl'
+																icon='HeroMapPin'
+																className='mx-2'
+															/>
+														}>
+														<Input
+															className='!bg-white dark:!bg-zinc-800'
+															type='text'
+															dimension='lg'
+															autoComplete='location'
+															name='location'
+															onChange={formik.handleChange}
+
+															value={formik.values.location}
+															placeholder='Enter your location'
+															onBlur={formik.handleBlur}
+														/>
+													</FieldWrap>
+												</Validation>
+											</div>
+
+											<div className='w-full'>
+												<Label htmlFor='experience'>Experience</Label>
+												<Validation
+													isValid={formik.isValid}
+													isTouched={formik.touched.experience}
+													invalidFeedback={formik.errors.experience}
+													validFeedback=''>
+													<FieldWrap
+														firstSuffix={
+															<Icon
+																size='text-2xl'
+																icon='HeroBriefcase'
+																className='mx-2'
+															/>
+														}>
+														<Input
+															className='!bg-white dark:!bg-zinc-800'
+															dimension='lg'
+															autoComplete='experience'
+															name='experience'
+															value={formik.values.experience}
+															placeholder='Enter your experience'
+															onChange={formik.handleChange}
+															onBlur={formik.handleBlur}
+														/>
+													</FieldWrap>
+												</Validation>
+											</div>
+										</div>
+										<div>
 											<Label htmlFor='about'>About</Label>
 											<Validation
 												isValid={formik.isValid}
@@ -234,6 +317,28 @@ const SettingPage = () => {
 														name='about'
 														value={formik.values.about}
 														placeholder='Enter your about'
+														onChange={formik.handleChange}
+														onBlur={formik.handleBlur}
+													/>
+												</FieldWrap>
+											</Validation>
+										</div>
+										<div>
+											<Label htmlFor='dob'>Date</Label>
+											<Validation
+												isValid={formik.isValid}
+												isTouched={formik.touched.about}
+												invalidFeedback={formik.errors.about}
+												validFeedback='Good'>
+												<FieldWrap>
+													<Input
+														type='date'
+														className='!bg-white dark:!bg-zinc-800'
+														dimension='lg'
+														autoComplete='dob'
+														placeholder='Enter your date of birth'
+														name='dob'
+														value={formik.values.dob}
 														onChange={formik.handleChange}
 														onBlur={formik.handleBlur}
 													/>

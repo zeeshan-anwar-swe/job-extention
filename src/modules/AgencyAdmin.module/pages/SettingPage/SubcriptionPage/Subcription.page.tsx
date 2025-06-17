@@ -83,7 +83,7 @@ const SubcriptionPage = () => {
 										<CardHeaderChild>
 											<h3>Billing and invoicing</h3>
 										</CardHeaderChild>
-										<CardHeaderChild>
+										{/* <CardHeaderChild>
 											<Button
 												variant='outline'
 												borderWidth='border'
@@ -91,7 +91,7 @@ const SubcriptionPage = () => {
 												icon='HeroDocumentArrowDown'>
 												Download all
 											</Button>
-										</CardHeaderChild>
+										</CardHeaderChild> */}
 									</CardHeader>
 									<CardBody className=' overflow-x-scroll rounded-xl bg-white py-4 dark:bg-zinc-900'>
 										<TablePartial />
