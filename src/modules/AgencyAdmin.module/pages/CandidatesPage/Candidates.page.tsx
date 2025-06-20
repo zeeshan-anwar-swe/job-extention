@@ -28,9 +28,6 @@ const CandidatesPage = () => {
 	const { pageLoading, candidatesList, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.candidates,
 	);
-
-
-
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	return (

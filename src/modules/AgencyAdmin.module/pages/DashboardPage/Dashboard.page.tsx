@@ -32,33 +32,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/Statics.slice';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { transLineChartData } from '../../../../utils/chart.util';
-import PeriodAndDateRange, { getDefaultRangeForPeriod } from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import { Space, DatePicker, DatePickerProps } from 'antd';
+
+const { RangePicker } = DatePicker;
 
 const DashboardPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
-	const [dateRange, setDateRange] = useState<Range>(getDefaultRangeForPeriod(PERIOD.DAY));
+	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
 
-	const { chartData,chartCategory, componentLoading, error } = useSelector(
+	const { chartData, chartCategory, componentLoading, error } = useSelector(
 		(state: RootState) => state.agencyStatics,
 	);
+
+	console.log({ dateRange });
 
 	useEffect(() => {
 		dispatch(
 			getAgencyStatics({
-				startDate: formatDateStringToYYYYMMDD(dateRange.startDate),
-				endDate: formatDateStringToYYYYMMDD(dateRange.endDate),
+				startDate: dateRange.startDate,
+				endDate: dateRange.endDate,
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
 		dispatch(
 			getChartData({
 				period: activeTab.text.toLowerCase(),
-				startDate: formatDateStringToYYYYMMDD(dateRange.startDate),
-				endDate: formatDateStringToYYYYMMDD(dateRange.endDate),
+				startDate: dateRange.startDate,
+				endDate: dateRange.endDate,
 			}),
 		);
 	}, [activeTab, dateRange]);
+
 	return (
 		<>
 			<Header>
@@ -70,8 +76,11 @@ const DashboardPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Sales Dashboard'>
-				
-				<PeriodAndDateRange activeTab={activeTab} setActiveTab={setActiveTab} dateRange={dateRange} setDateRange={setDateRange} />
+				<PeriodAndDateRange
+					activeTab={activeTab}
+					setActiveTab={setActiveTab}
+					setDateRange={setDateRange}
+				/>
 				<Container>
 					<div className='grid grid-cols-12 gap-4'>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
@@ -88,10 +97,7 @@ const DashboardPage = () => {
 						</div>
 
 						<div className='col-span-12 overflow-hidden rounded-xl xl:h-[500px] 2xl:col-span-8'>
-							<PageLoader
-								loading={componentLoading}
-								data={chartData}
-								error={error}>
+							<PageLoader loading={componentLoading} data={chartData} error={error}>
 								<ChartPartial
 									categories={chartCategory}
 									series={transLineChartData(chartData)}

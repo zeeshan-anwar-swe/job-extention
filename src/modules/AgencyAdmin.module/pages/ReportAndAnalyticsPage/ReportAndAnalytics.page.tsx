@@ -15,13 +15,11 @@ import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
-import PeriodAndDateRange, {
-	getDefaultRangeForPeriod,
-} from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import PeriodAndDateRange from // getDefaultRangeForPeriod,
+'../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 import { AppDispatch, RootState } from '../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import PartialLoader from '../../../../templates/layouts/main/PartialLoader';
-import { formatDateStringToYYYYMMDD } from '../../../../utils/helper';
 import {
 	getReportsAndAnalyticsChartData,
 	getStatics,
@@ -35,33 +33,32 @@ const ReportAndAnalyticsPage = () => {
 		(state: RootState) => state.reportsAndAnalytics.statics,
 	);
 
-	const { loading: chartLoading, chartCategories, data: chartData, error: chartError } = useSelector(
-		(state: RootState) => state.reportsAndAnalytics.chartData,
-	);
-	
-	
-	
+	const {
+		loading: chartLoading,
+		chartCategories,
+		data: chartData,
+		error: chartError,
+	} = useSelector((state: RootState) => state.reportsAndAnalytics.chartData);
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
-	const [dateRange, setDateRange] = useState<Range>(getDefaultRangeForPeriod(PERIOD.DAY));
+	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
 
 	useEffect(() => {
 		dispatch(
 			getStatics({
-				startDate: formatDateStringToYYYYMMDD(dateRange.startDate),
-				endDate: formatDateStringToYYYYMMDD(dateRange.endDate),
+				startDate: dateRange.startDate,
+				endDate: dateRange.endDate,
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
 		dispatch(
 			getReportsAndAnalyticsChartData({
-				startDate: formatDateStringToYYYYMMDD(dateRange.startDate),
-				endDate: formatDateStringToYYYYMMDD(dateRange.endDate),
+				startDate: dateRange.startDate,
+				endDate: dateRange.endDate,
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
 	}, [activeTab, dateRange]);
-
 
 	return (
 		<>
@@ -80,13 +77,12 @@ const ReportAndAnalyticsPage = () => {
 				<PeriodAndDateRange
 					activeTab={activeTab}
 					setActiveTab={setActiveTab}
-					dateRange={dateRange}
 					setDateRange={setDateRange}
 				/>
 				<PageLoader loading={loading} error={error} data={data}>
 					<Container>
 						<div className='grid grid-cols-12 gap-4'>
-							 <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
+							<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
 								<PartialLoader loading={loading} error={error} data={data}>
 									<Balance1Partial data={data} />
 								</PartialLoader>
@@ -105,11 +101,17 @@ const ReportAndAnalyticsPage = () => {
 								<PartialLoader loading={loading} error={error} data={data}>
 									<Balance4Partial data={data} />
 								</PartialLoader>
-							</div> 
+							</div>
 
 							<div className='col-span-12 xl:h-[600px] 2xl:col-span-8'>
-								<PartialLoader loading={chartLoading} error={chartError} data={chartData}>
-									<ChartPartial categories={chartCategories} chartData={transformRAChartData(chartData)} />
+								<PartialLoader
+									loading={chartLoading}
+									error={chartError}
+									data={chartData}>
+									<ChartPartial
+										categories={chartCategories}
+										chartData={transformRAChartData(chartData)}
+									/>
 								</PartialLoader>
 							</div>
 							<div className='col-span-12 2xl:col-span-4'>
