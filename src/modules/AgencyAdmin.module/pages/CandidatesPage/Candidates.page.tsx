@@ -45,25 +45,19 @@ const CandidatesPage = () => {
 			</Header>
 
 			<PageWrapper name='Candidates'>
-				<Subheader>
-					<SubheaderLeft>
+				<Subheader className='!z-20'>
+					<SubheaderLeft >
 						<CustomSearchComponent
 							setSearchActionForPagination={setCandidatesSearch}
 							searchListAction={getAgencyCandidatesList}
 							searchLimit={10}
+							searchByFilterOptions={ ['name', 'email', 'status', 'jobTitle', 'clientName', 'clientEmail']}
 							placeholder='Search Candidates...'
 						/>
-						<Button
-							variant='outline'
-							color='zinc'
-							rounded='rounded-full'
-							icon='HeroBarFilter'>
-							Filter
-						</Button>
 					</SubheaderLeft>
 				</Subheader>
-				<Subheader>
-					<SubheaderLeft>
+				<Subheader className='!z-10'>
+					<SubheaderLeft className='!block'>
 						<CardTitle>Candidates</CardTitle>
 						<CardSubTitle>View, manage, and track Candidates.</CardSubTitle>
 					</SubheaderLeft>
@@ -90,6 +84,7 @@ const CandidatesPage = () => {
 					getListAction={getAgencyCandidatesList}
 					count={paginationCount}
 					limit={10}
+					
 				/>
 			</PageWrapper>
 		</>

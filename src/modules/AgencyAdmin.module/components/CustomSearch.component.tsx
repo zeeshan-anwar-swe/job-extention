@@ -12,7 +12,12 @@ import Dropdown, {
 } from '../../../components/ui/Dropdown';
 
 interface CustomSearchComponentProps {
-	searchListAction: (payload: { search?: string; limit: number; page: number, searchBy?: string }) => void;
+	searchListAction: (payload: {
+		search?: string;
+		limit: number;
+		page: number;
+		searchBy?: string;
+	}) => void;
 	setSearchActionForPagination: (payload: any) => void;
 	searchByFilterOptions?: string[];
 	placeholder?: string;
@@ -33,7 +38,14 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 	const handleSearch = async (e: any) => {
 		e.preventDefault();
 		if (searchValue) {
-			dispatch(searchListAction({ search: searchValue, limit: searchLimit, page: 1, searchBy }));
+			dispatch(
+				searchListAction({
+					search: encodeURIComponent(searchValue),
+					limit: searchLimit,
+					page: 1,
+					searchBy,
+				}),
+			);
 		}
 	};
 
@@ -59,14 +71,14 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 			<FieldWrap
 				// firstSuffix={<Icon className='mx-2 rounded-full' onClick={handleSearch} icon='HeroMagnifyingGlass' />}
 				lastSuffix={
-					searchValue !== '' || searchBy !== '' && (
+					searchValue || searchBy ? (
 						<Icon
 							icon='HeroXMark'
 							color='red'
 							className='mx-2 cursor-pointer'
 							onClick={() => clearSearch()}
 						/>
-					)
+					) : null
 				}>
 				<Input
 					rounded='rounded-full'

@@ -56,7 +56,7 @@ export const getPaginatedAgencyClientsList = createAsyncThunk(
 	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/clients?page=${page}&limit=${limit}&search=${search} ${searchBy && `&searchBy=${searchBy}`}`,
+				`/agency/clients?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -122,7 +122,6 @@ export const assignJobToClient = createAsyncThunk(
 	},
 );
 
-
 export const unAssignJobToClient = createAsyncThunk(
 	'clients/unAssignJobToClient',
 	async ({ jobId }: { jobId: string }, { rejectWithValue }) => {
@@ -135,10 +134,7 @@ export const unAssignJobToClient = createAsyncThunk(
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
-
-	
 );
-
 
 export const getClientFeedback = createAsyncThunk(
 	'clients/getClientFeedback',
