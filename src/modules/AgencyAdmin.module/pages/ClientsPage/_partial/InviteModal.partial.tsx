@@ -10,7 +10,10 @@ import Icon from '../../../../../components/icon/Icon';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import Validation from '../../../../../components/form/Validation';
 import Label from '../../../../../components/form/Label';
-import { inviteClient } from '../../../../../store/slices/Agency/Client.slice';
+import {
+	getPaginatedAgencyClientsList,
+	inviteClient,
+} from '../../../../../store/slices/Agency/Client.slice';
 
 interface TValues {
 	clientName: string;
@@ -50,10 +53,14 @@ const AssignJobModalPartial = ({ modal, setModal }: { modal: boolean; setModal: 
 		},
 	});
 
+	
+
 	useEffect(() => {
 		if (!modalLoading && !error) {
 			formik.resetForm();
-			setModal(false);
+			dispatch(getPaginatedAgencyClientsList({ page: 1, limit: 10 })).then(() =>
+				setModal(false),
+			);
 		}
 	}, [modalLoading, error]);
 
