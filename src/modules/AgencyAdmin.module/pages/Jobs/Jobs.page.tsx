@@ -23,14 +23,11 @@ import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
-import { Link, useParams } from 'react-router-dom';
 import CustomSearchComponent from '../../components/CustomSearch.component';
-import CustomDropDown from '../../components/CustomDropDown.component';
+import { Link } from 'react-router-dom';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
-
-		
 
 	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
@@ -46,7 +43,6 @@ const JobsPage = () => {
 		},
 	]);
 
-	console.log({ selectedDate, activeTab });
 
 	useEffect(() => {
 		if (activeTab === PERIOD.DAY) {
@@ -122,13 +118,14 @@ const JobsPage = () => {
 							searchLimit={9}
 							setSearchActionForPagination={setJobSearch}
 							searchListAction={getJobsList}
+							searchByFilterOptions={['title', 'location', 'type', 'experience', 'clientName', 'clientEmail']}
 						/>
 
-						<CustomDropDown
+						{/* <CustomDropDown
 							title='Filter'
 							icon='HeroBarFilter'
 							items={['By Name', 'By Position', 'By Location']}
-						/>
+						/> */}
 					</SubheaderLeft>
 					<SubheaderRight>
 						<Dropdown>

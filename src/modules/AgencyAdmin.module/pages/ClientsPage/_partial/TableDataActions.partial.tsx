@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../../../../../components/ui/Button';
 import { ClientListItemType } from '../../../../../types/slices.type/clients.slice.type';
 import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
-import { assignJobToClient } from '../../../../../store/slices/Agency/Client.slice';
+import { assignJobToClient, unAssignJobToClient } from '../../../../../store/slices/Agency/Client.slice';
 import { AssignTeamModalPartial } from '../../../common/AssignTeamModal/Modal.partial';
 import { Link } from 'react-router-dom';
 
@@ -24,6 +24,7 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 				setModal={setModal}
 				assignTo={client.id}
 				jobAssignAction={assignJobToClient}
+				unAssignAction={unAssignJobToClient}
 			/>
 			<AssignTeamModalPartial
 				modal={teamModal}

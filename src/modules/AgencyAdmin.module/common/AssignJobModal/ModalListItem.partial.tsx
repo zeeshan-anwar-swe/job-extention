@@ -2,23 +2,31 @@ import React from 'react';
 import Button from '../../../../components/ui/Button';
 import { JobDetailsType2 } from '../../../../types/slices.type/jobs.slice.type';
 import { textValidationCheck } from '../../../../utils/validationCheck';
-import { AppDispatch } from '../../../../store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '../../../../components/ui/Tooltip';
+import { useAuth } from '../../../../context/authContext';
+import { getJobsList } from '../../../../store/slices/Jobs.slice';
 
 const AssignJobModalListItemPartial = ({
 	job,
 	assignTo,
+	unAssignAction,
 	jobAssignAction,
 	assignToModule,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
-	job: any;
+	job: JobDetailsType2;
 	assignTo: string;
+	unAssignAction?: any;
 	jobAssignAction: any;
 }) => {
+	const {currentListPage} = useSelector((state: RootState) => state.jobsSlice);
+	const { userStorage } = useAuth();
 	const [loading, setLoading] = React.useState(false);
 	const [selfAssign, setSelfAssign] = React.useState(false);
+
+	const isJobSelfCreated = job?.createdBy === userStorage.id;
 
 	const isAssigned =
 		assignToModule === 'candidate'
@@ -31,11 +39,31 @@ const AssignJobModalListItemPartial = ({
 
 	const dispatch: AppDispatch = useDispatch();
 	const handleAssignJob = async () => {
-		if (isAssigned) return;
-		setLoading(true);
-		await dispatch(jobAssignAction({ assignTo, jobId: job.id }));
-		setSelfAssign(true);
-		setLoading(false);
+		try {
+			setLoading(true);
+
+			if (isAssigned) {
+				if (assignToModule === 'client') {
+					if (userStorage.id === job.createdBy) {
+						unAssignAction && (await dispatch(unAssignAction({ jobId: job.id })));
+					}
+				}else if (assignToModule === 'candidate') {
+						unAssignAction && (await dispatch(unAssignAction({ jobId: job.id, unAssignTo: assignTo })));
+				} 
+				
+				else {
+					unAssignAction && (await dispatch(unAssignAction({ jobId: job.id })));
+				}
+			} else {
+				await dispatch(jobAssignAction({ jobId: job.id, assignTo: assignTo }));
+				// setSelfAssign(true);
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			await dispatch(getJobsList({ limit: 10, page: currentListPage }));
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -63,16 +91,27 @@ const AssignJobModalListItemPartial = ({
 					<p>June 13, 2024</p>
 				</div>
 			</div>
-
-			<Button
-				rightIcon={isAssigned ? 'HeroTwiceCheck' : undefined}
-				color={isAssigned ? 'emerald' : 'blue'}
-				isLoading={loading}
-				onClick={handleAssignJob}
-				className='h-fit'
-				variant='solid'>
-				{isAssigned ? 'Assigned' : 'Assign'}
-			</Button>
+			{assignToModule === 'client' && !isJobSelfCreated && isAssigned ? (
+				<Tooltip placement='top'  text='You cannot Un Assign this job as it is created by client'>
+					<Button
+						rightIcon={isAssigned ? 'HeroTwiceCheck' : undefined}
+						color="zinc"
+						className='h-fit'
+						variant='solid'>
+						{isAssigned ? 'Assigned' : 'Assign'}
+					</Button>
+				</Tooltip>
+			) : (
+				<Button
+					rightIcon={isAssigned ? 'HeroTwiceCheck' : undefined}
+					color={isAssigned ? 'emerald' : 'blue'}
+					isLoading={loading}
+					onClick={handleAssignJob}
+					className='h-fit'
+					variant='solid'>
+					{isAssigned ? 'Assigned' : 'Assign'}
+				</Button>
+			)}
 		</div>
 	);
 };

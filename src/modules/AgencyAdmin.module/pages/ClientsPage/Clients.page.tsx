@@ -25,7 +25,7 @@ import Dropdown, {
 import InviteModalPartial from './_partial/InviteModal.partial';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
-import SearchPartial from '../../common/Search.partial';
+import CustomSearchComponent from '../../components/CustomSearch.component';
 
 const ClientsPage = () => {
 	const [sortBy, setSortBy] = useState<string>('Default');
@@ -46,24 +46,18 @@ const ClientsPage = () => {
 			</Header>
 
 			<PageWrapper name='Candidates'>
-				<Subheader>
+				<Subheader className='!z-20'>
 					<SubheaderLeft>
-						<SearchPartial
+						<CustomSearchComponent
+							searchLimit={10}
 							placeholder='Search clients...'
+							searchByFilterOptions={['name', 'email']}
 							setSearchActionForPagination={setClientSearch}
 							searchListAction={getPaginatedAgencyClientsList}
-							searchLimit={10}
 						/>
-						{/* <Button
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroBarFilter'>
-							Filter
-						</Button> */}
 					</SubheaderLeft>
 				</Subheader>
-				<Subheader>
+				<Subheader className='!z-10'>
 					<SubheaderLeft>
 						<div>
 							<CardTitle>Clients</CardTitle>

@@ -167,6 +167,22 @@ export const assignJobToCandidate = createAsyncThunk(
 	},
 );
 
+export const unAssignJobToCandidate = createAsyncThunk(
+	'candidates/unAssignJobToCandidate',
+	async ({ jobId, unAssignTo }: { jobId: string; unAssignTo: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/candidate/unassign-job', {
+				jobId,
+				candidateId: unAssignTo,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+
 export const assignClientToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ clientId, assignTo }: { clientId: string; assignTo: string }, { rejectWithValue }) => {

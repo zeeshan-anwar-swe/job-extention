@@ -8,6 +8,7 @@ const Pagination = ({
 	count,
 	limit,
 	filterOptions,
+	setCurrentPageAction,
 	search,
 	getListAction,
 }: {
@@ -15,6 +16,7 @@ const Pagination = ({
 	count: number;
 	filterOptions?: any;
 	search?: string;
+	setCurrentPageAction?: any;
 	getListAction: ({
 		page,
 		limit,
@@ -32,6 +34,7 @@ const Pagination = ({
 	const handlePageChange = async (page: number) => {
 		if (page >= 1 && page <= totalPages && page !== currentPage) {
 			await setCurrentPage(page);
+			setCurrentPageAction && (await dispatch(setCurrentPageAction(page)));
 			if (filterOptions) {
 				dispatch(getListAction({ page, limit, ...filterOptions }));
 			} else {
@@ -58,6 +61,7 @@ const Pagination = ({
 
 	useEffect(() => {
 		setCurrentPage(1);
+		setCurrentPageAction && dispatch(setCurrentPageAction(1));
 	}, [search]);
 
 	return (

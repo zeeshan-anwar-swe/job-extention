@@ -14,43 +14,32 @@ import Card, {
 } from '../../../../components/ui/Card';
 import useImageValidation from '../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
-import { assignTeamToClient } from '../../../../store/slices/Team.slice';
+import { assignTeamToClient, getPaginatedTeamlist } from '../../../../store/slices/Team.slice';
+import { TeamMemberType } from '../../../../types/slices.type/team/team.slice.type';
 
 export const AssignTeamModalListItemPartial = ({
 	team,
 	assignTo,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
-	team: any;
+	team: TeamMemberType;
 	assignTo: string;
 	jobAssignAction: any;
 }) => {
 	const [loading, setLoading] = React.useState(false);
-	const [selfAssign, setSelfAssign] = React.useState(false);
-	// const isAssigned =
-	// 	assignToModule === 'candidate'
-	// 		? job.appliedCandidates?.some((candidate: any) => candidate.candidateId === assignTo) ||
-	// 			selfAssign
-	// 		: assignToModule === 'client'
-	// 			? job?.client?.id === assignTo || selfAssign
-	// 			: job?.team?.id === assignTo || selfAssign;
+	const isAssigned = team.clientIds.includes(assignTo);
 
 	const dispatch: AppDispatch = useDispatch();
-	// const handleAssignJob = async () => {
-	// 	if (isAssigned) return;
-	// 	setLoading(true);
-	// 	await dispatch(jobAssignAction({ assignTo, jobId: job.id }));
-	// 	setSelfAssign(true);
-	// 	setLoading(false);
-	// };
 
 	const { loading: loadingImage, imageUrl } = useImageValidation(team?.user?.image);
 
-	const handleAssignTeamToClient = async ()=>{
+	const handleAssignTeamToClient = async () => {
+		if (isAssigned) return;
 		setLoading(true);
-		await dispatch(assignTeamToClient({teamId: team.id, clientId: assignTo}));
+		await dispatch(assignTeamToClient({ teamId: team.id, clientId: assignTo }));
+		await dispatch(getPaginatedTeamlist({ limit: 10, page: 1 }));
 		setLoading(false);
-	}
+	};
 
 	return (
 		<Card className='border'>
@@ -66,8 +55,13 @@ export const AssignTeamModalListItemPartial = ({
 					<CardSubTitle className='font-medium'>{team?.user?.name}</CardSubTitle>
 				</CardHeaderChild>
 				<CardHeaderChild>
-					<Button onClick={handleAssignTeamToClient} variant='solid'>
-						Assign
+					<Button
+						isLoading={loading}
+						rightIcon={isAssigned ? 'HeroTwiceCheck	' : undefined}
+						color={isAssigned ? 'emerald' : 'blue'}
+						onClick={handleAssignTeamToClient}
+						variant='solid'>
+						{isAssigned ? 'Assigned' : 'Assign'}
 					</Button>
 				</CardHeaderChild>
 			</CardHeader>

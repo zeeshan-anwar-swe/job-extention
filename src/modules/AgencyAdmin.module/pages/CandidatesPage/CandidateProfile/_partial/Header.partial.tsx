@@ -8,7 +8,7 @@ import { getCandidateCV } from '../../../../services/candidates';
 import { RootState } from '../../../../../../store';
 import { useSelector } from 'react-redux';
 import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
-import { assignJobToCandidate } from '../../../../../../store/slices/Candiates.slice';
+import { assignJobToCandidate, unAssignJobToCandidate } from '../../../../../../store/slices/Candiates.slice';
 
 const HeaderPartial = ({ state }: any) => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -78,6 +78,7 @@ const HeaderPartial = ({ state }: any) => {
 			<AssignJobModalPartial
 				title={`Assign Jobs to candidate: ${cadnidateProfile?.candidate?.name ?? ''}`}
 				assignToModule='candidate'
+				unAssignAction={unAssignJobToCandidate}
 				jobAssignAction={assignJobToCandidate}
 				assignTo={state.candidateId}
 				setModal={setModal}

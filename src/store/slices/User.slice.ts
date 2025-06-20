@@ -37,6 +37,9 @@ const initialState: InitialStateType = {
 		industry: '',
 		role: '',
 		image: '',
+		dob: '',
+		experience: '',
+		location: '',
 	},
 };
 

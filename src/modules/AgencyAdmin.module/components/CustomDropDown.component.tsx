@@ -6,7 +6,6 @@ import Dropdown, {
 } from '../../../components/ui/Dropdown';
 import Button from '../../../components/ui/Button';
 import { TRounded } from '../../../types/rounded.type';
-import { t } from 'i18next';
 
 const CustomDropDown = ({
 	title = 'title',

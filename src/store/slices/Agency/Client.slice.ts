@@ -46,12 +46,17 @@ const initialState: InitialStateType = {
 export const getPaginatedAgencyClientsList = createAsyncThunk(
 	'clients/getPaginatedAgencyClientsList',
 	async (
-		{ page, limit, search = '' }: { page: number; limit: number; search?: string },
+		{
+			page,
+			limit,
+			search = '',
+			searchBy = '',
+		}: { page: number; limit: number; search?: string; searchBy?: string },
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/clients?page=${page}&limit=${limit}&search=${search}`,
+				`/agency/clients?page=${page}&limit=${limit}&search=${search} ${searchBy && `&searchBy=${searchBy}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -76,7 +81,9 @@ export const getAgencyClientsWithJobs = createAsyncThunk(
 	'clients/getAgencyClientsWithJobs',
 	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get(`agency/client-with-jobs?page=${page}&limit=${limit}`);
+			const response = await axiosInstance.get(
+				`agency/client-with-jobs?page=${page}&limit=${limit}`,
+			);
 			return response.data.data;
 		} catch (error: any) {
 			return withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -114,6 +121,24 @@ export const assignJobToClient = createAsyncThunk(
 		}
 	},
 );
+
+
+export const unAssignJobToClient = createAsyncThunk(
+	'clients/unAssignJobToClient',
+	async ({ jobId }: { jobId: string }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post('/job/unassign-client', {
+				jobId,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+
+	
+);
+
 
 export const getClientFeedback = createAsyncThunk(
 	'clients/getClientFeedback',
@@ -191,9 +216,6 @@ export const clientsSlice = createSlice({
 				toast.error(action.payload.message || 'Unknown error');
 			})
 
-
-
-
 			.addCase(getAgencyClientsWithJobs.pending, (state) => {
 				state.clientsWithJobs.loading = true;
 				state.clientsWithJobs.error = null;
@@ -210,10 +232,6 @@ export const clientsSlice = createSlice({
 				toast.error(action.payload.message || 'Unknown error');
 				state.clientsWithJobs.loading = false;
 			})
-
-
-
-
 
 			.addCase(getClientDetails.pending, (state) => {
 				state.pageLoading = true;

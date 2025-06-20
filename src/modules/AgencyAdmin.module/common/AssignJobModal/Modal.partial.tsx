@@ -10,7 +10,7 @@ import { JobDetailsType2 } from '../../../../types/slices.type/jobs.slice.type';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store';
-import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
+import { getJobsList, setCurrentPage, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Search from '../Search.partial';
 import Pagination from '../../../../components/ui/Pagination';
@@ -21,12 +21,14 @@ export const AssignJobModalPartial = ({
 	title = 'Assign Job',
 	assignTo,
 	assignToModule,
+	unAssignAction,
 	jobAssignAction,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
 	title?: string;
 	modal: boolean;
 	setModal: any;
+	unAssignAction?: any;
 	jobAssignAction: any;
 	assignTo: string;
 }) => {
@@ -56,6 +58,7 @@ export const AssignJobModalPartial = ({
 				<PageLoader data={paginatedList} loading={pageLoading} error={error}>
 					{paginatedList.map((job: JobDetailsType2) => (
 						<ModalListItem
+							unAssignAction={unAssignAction}
 							assignToModule={assignToModule}
 							jobAssignAction={jobAssignAction}
 							assignTo={assignTo}
@@ -68,6 +71,7 @@ export const AssignJobModalPartial = ({
 			<ModalFooter className='flex-col !items-end'>
 				<ModalFooterChild>
 					<Pagination
+						setCurrentPageAction={setCurrentPage}
 						count={paginationCount}
 						limit={10}
 						search={search}

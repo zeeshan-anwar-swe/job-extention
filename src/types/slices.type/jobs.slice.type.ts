@@ -60,6 +60,7 @@ export interface JobDetailsType {
 	team: Team;
 	client: Client;
 	candidateJobProfiles?: CandidateJobProfile[];
+	createdBy: string;
 	// appliedCandidates?: CandidateJobProfile[];
 }
 
@@ -75,6 +76,9 @@ export interface JobDetailsType2 {
 	team: Team2;
 	client: Client;
 	appliedCandidates?: CandidateJobProfile[];
+	candidateJobProfiles?: CandidateJobProfile[];
+
+	createdBy: string;
 }
 
 

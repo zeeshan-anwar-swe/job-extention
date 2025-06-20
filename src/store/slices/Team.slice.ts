@@ -3,10 +3,11 @@ import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { error } from 'console';
+import { TeamMemberType } from '../../types/slices.type/team/team.slice.type';
 
 interface InitialStateType {
 	search: string;
-	teamList: any[];
+	teamList: TeamMemberType[];
 	componentLoading: boolean;
 	pageLoading: boolean;
 	paginationCount: number;

@@ -5,10 +5,16 @@ import Input from '../../../components/form/Input';
 import Icon from '../../../components/icon/Icon';
 import FieldWrap from '../../../components/form/FieldWrap';
 import Button from '../../../components/ui/Button';
+import Dropdown, {
+	DropdownItem,
+	DropdownMenu,
+	DropdownToggle,
+} from '../../../components/ui/Dropdown';
 
 interface CustomSearchComponentProps {
-	searchListAction: (payload: { search?: string; limit: number; page: number }) => void;
+	searchListAction: (payload: { search?: string; limit: number; page: number, searchBy?: string }) => void;
 	setSearchActionForPagination: (payload: any) => void;
+	searchByFilterOptions?: string[];
 	placeholder?: string;
 	searchLimit?: number;
 }
@@ -18,20 +24,22 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 	setSearchActionForPagination,
 	placeholder = 'Search...',
 	searchLimit = 10,
+	searchByFilterOptions,
 }) => {
 	const [searchValue, setSearchValue] = useState<string>('');
-
+	const [searchBy, setSearchBy] = useState<string>('');
 	const dispatch: AppDispatch = useDispatch();
 
 	const handleSearch = async (e: any) => {
 		e.preventDefault();
 		if (searchValue) {
-			dispatch(searchListAction({ search: searchValue, limit: searchLimit, page: 1 }));
+			dispatch(searchListAction({ search: searchValue, limit: searchLimit, page: 1, searchBy }));
 		}
 	};
 
 	const clearSearch = async () => {
 		setSearchValue('');
+		setSearchBy('');
 		dispatch(searchListAction({ limit: searchLimit, page: 1 }));
 	};
 
@@ -51,7 +59,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 			<FieldWrap
 				// firstSuffix={<Icon className='mx-2 rounded-full' onClick={handleSearch} icon='HeroMagnifyingGlass' />}
 				lastSuffix={
-					searchValue !== '' && (
+					searchValue !== '' || searchBy !== '' && (
 						<Icon
 							icon='HeroXMark'
 							color='red'
@@ -70,6 +78,30 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 					onChange={(e: any) => handleChange(e.target.value as string)}
 				/>
 			</FieldWrap>
+			{searchByFilterOptions && (
+				<Dropdown className='!z-[9999]'>
+					<DropdownToggle hasIcon={false}>
+						<Button
+							rounded='rounded-full'
+							variant='outline'
+							color='zinc'
+							icon='HeroBarFilter'>
+							{searchBy ? searchBy : 'Search By'}
+						</Button>
+					</DropdownToggle>
+					<DropdownMenu>
+						{searchByFilterOptions.map((item, index) => (
+							<DropdownItem
+								onClick={() => setSearchBy(item)}
+								icon='HeroChevronRight'
+								key={index}>
+								{item}
+							</DropdownItem>
+						))}
+					</DropdownMenu>
+				</Dropdown>
+			)}
+
 			<Button rounded='rounded-full' variant='solid' type='submit'>
 				Search
 			</Button>
