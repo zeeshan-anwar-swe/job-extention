@@ -33,12 +33,6 @@ export const AssignClientModalPartial = ({
 		(state: RootState) => state.clients.clientsWithJobs,
 	);
 
-	console.log({ count, loading, error, rows });
-	
-
-
-	
-
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>{title}</ModalHeader>

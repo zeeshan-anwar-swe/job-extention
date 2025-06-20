@@ -16,7 +16,7 @@ const TableDataProfilePartial = ({
 }) => {
 	const { imageUrl, loading } = useImageValidation(image);
 	return (
-		<div className='flex items-center gap-x-6 max-lg:justify-center'>
+		<div className='w-fit flex items-center gap-x-6 max-lg:justify-center'>
 			<ImageLoaderWraper loading={loading} height='h-14'>
 				<img
 					className='aspect-square w-14 rounded-full'

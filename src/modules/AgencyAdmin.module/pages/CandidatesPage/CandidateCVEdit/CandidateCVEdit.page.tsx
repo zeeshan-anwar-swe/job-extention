@@ -103,7 +103,7 @@ const CandidateCVEditPage = () => {
 
 			await dispatch(
 				updateCandidateProfile({
-					candidateId: state.id,
+					candidateId: state.selectedJob.id,
 					payload: {
 						cv: cvText,
 						about,
@@ -128,7 +128,9 @@ const CandidateCVEditPage = () => {
 
 	useEffect(() => {
 		if (state) {
-			dispatch(getCandidateProfile({ id: state.id, candidateId: state.candidateId }));
+			console.log({state});
+			
+			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
 		} else {
 			navigateTo('/candidates');
 		}

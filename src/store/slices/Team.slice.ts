@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
@@ -40,9 +40,9 @@ export const getTeamlist = createAsyncThunk('team/getTeamlist', async (_, { reje
 
 export const getPaginatedTeamlist = createAsyncThunk(
 	'team/getPaginatedTeamlist',
-	async ({ page, limit, search='' }: { page: number; limit: number, search?: string }, { rejectWithValue }) => {
+	async ({ page, limit, search='' , searchBy='' }: { page: number; limit: number, search?: string , searchBy?: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get(`/team/list?page=${page}&limit=${limit}&search=${search}`);
+			const response = await axiosInstance.get(`/team/list?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -123,7 +123,11 @@ export const assignTeamToClient = createAsyncThunk(
 export const teamSlice = createSlice({
 	name: 'team',
 	initialState,
-	reducers: {},
+	reducers: {
+		setTeamMemberSearch: (state, action: PayloadAction<string>) => {
+			state.search = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getTeamlist.pending, (state) => {
@@ -224,5 +228,7 @@ export const teamSlice = createSlice({
 			});
 	},
 });
+
+export const { setTeamMemberSearch } = teamSlice.actions;
 
 export default teamSlice.reducer;

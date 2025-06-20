@@ -4,33 +4,62 @@ import TableDataPositionPartial from './TableDataPosition.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataSourcePartial from './TableDataSource.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
+import {
+	TCandidateJobProfile,
+	TCandidateListItem,
+} from '../../../../../types/slices.type/candidate.slice.type';
+import { useState } from 'react';
+import SelectReact from '../../../../../components/form/SelectReact';
+import { formatString } from '../../../../../utils/helper';
 
-const TableRowPartial = ({ candidate }: { candidate: any }) => {
+const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
+	const [selectedJob, setSelectedJob] = useState<null | TCandidateJobProfile>(null);
+	
+
 	return (
 		<Tr>
 			<Td>
 				<TableDataProfilePartial
-					image={candidate?.candidate?.image}
-					title={candidate?.candidate?.name}
-					subTitle={candidate?.candidate?.email}
-				/>
-			</Td>
-			<Td>
-				<TableDataPositionPartial
-					title={candidate?.title}
-					subTitle={candidate?.client?.firstName ?? ''}
+					image={candidate?.image}
+					title={candidate?.name}
+					subTitle={candidate?.email}
 				/>
 			</Td>
 
 			<Td>
-				<TableDataFeedbackPartial title='Fair' />
+				<SelectReact
+					variant='solid'
+					placeholder='Select Position'
+					className='!min-w-48 !border-zinc-300'
+					name='job'
+					options={candidate?.jobProfiles.map((job: any) => ({
+						value: job,
+						label: job.job.title,
+					}))}
+					onChange={(list: any) => setSelectedJob(list.value)}
+				/>
 			</Td>
-			<Td>
-				<TableDataSourcePartial />
-			</Td>
-			<Td colSpan={2}>
-				<TableDataActionsPartial candidate={candidate} />
-			</Td>
+
+			{selectedJob ? (
+				<>
+					<Td>
+						{selectedJob?.job?.client?.clientUser.firstName +
+							' ' +
+							selectedJob?.job?.client?.clientUser.lastName}
+					</Td>
+					<Td>
+						<TableDataFeedbackPartial title={formatString(selectedJob?.status ?? '')} />
+					</Td>
+					<Td>{<TableDataSourcePartial />}</Td>
+					<Td colSpan={2}>
+						<TableDataActionsPartial selectedJob={selectedJob} candidate={candidate} />
+					</Td>
+				</>
+			) : (
+				<Td className='text-center' colSpan={4}>
+					Select Position
+				</Td>
+			)}
 		</Tr>
 	);
 };

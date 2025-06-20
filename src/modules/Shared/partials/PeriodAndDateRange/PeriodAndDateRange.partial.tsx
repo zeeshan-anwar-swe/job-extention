@@ -9,7 +9,7 @@ const { RangePicker } = DatePicker;
 
 const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 	const onChange = (date: any, dateString: any) => {
-		console.log({date, dateString});
+		console.log({ date, dateString });
 		setActiveTab(PERIOD.RANGE);
 		setDateRange({ startDate: dateString[0], endDate: dateString[1] });
 	};
@@ -21,7 +21,10 @@ const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 			</SubheaderLeft>
 			<SubheaderRight>
 				<Space direction='horizontal'>
-					<RangePicker variant='borderless' onChange={onChange} />
+					<RangePicker
+						className=' [&:not(.ant-picker-disabled)]:rounded-full [&:not(.ant-picker-disabled)]:border-2'
+						onChange={onChange}
+					/>
 				</Space>
 			</SubheaderRight>
 		</Subheader>

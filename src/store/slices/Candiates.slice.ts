@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
+import { TCandidateListItem } from '../../types/slices.type/candidate.slice.type';
 
 export interface FilterOptionsType {
 	location: string;
@@ -12,7 +13,7 @@ export interface FilterOptionsType {
 interface InitialStateType {
 	search: string;
 	filterOptions: FilterOptionsType;
-	candidatesList: any[];
+	candidatesList: TCandidateListItem[];
 	filteredCandidate: any[];
 	csvData: any[];
 	allCadidateList: any[];
@@ -46,12 +47,12 @@ const initialState: InitialStateType = {
 export const getAgencyCandidatesList = createAsyncThunk(
 	'candidates/getAgencyCandidatesList',
 	async (
-		{ page, limit, search = '' }: { page: number; limit: number; search?: string },
+		{ page, limit, search = '', searchBy = '' }: { page: number; limit: number; search?: string; searchBy?: string },
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/candidates?page=${page}&limit=${limit}&search=${search}`,
+				`/agency/test/candidates?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -68,7 +69,7 @@ export const getSearchedAgencyCandidatesList = createAsyncThunk(
 	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/candidates?page=${page}&limit=${limit}&search=${search}`,
+				`/agency/test/candidates?page=${page}&limit=${limit}&search=${search}`,
 			);
 			return response.data.data;
 		} catch (error: any) {

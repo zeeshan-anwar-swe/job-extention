@@ -39,11 +39,11 @@ const CandidatesProfilePage = () => {
 	const { pageLoading, cadnidateProfile, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
-
+ 
 
 	useEffect(() => {
 		if (state) {
-			dispatch(getCandidateProfile({ id: state.id, candidateId: state.candidateId }));
+			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
 		} else {
 			navigateTo('/candidates');
 		}

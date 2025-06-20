@@ -18,6 +18,8 @@ import {
 	setCandidatesSearch,
 } from '../../../../../store/slices/Candiates.slice';
 import CustomSearchComponent from '../../../components/CustomSearch.component';
+import { TableRowPartial } from './TableRow.partial';
+import { TCandidateListItem } from '../../../../../types/slices.type/candidate.slice.type';
 
 const TablePartial = () => {
 	const { candidatesList, pageLoading, error, search } = useSelector(
@@ -59,28 +61,8 @@ const TablePartial = () => {
 							</Tr>
 						</THead>
 						<TBody>
-							{candidatesList.map((candidate) => (
-								<Tr key={candidate.id}>
-									<Td>
-										<TableDataPartial
-											title={candidate?.candidate?.name}
-											subTitle={candidate?.candidate?.email}
-											imageUrl={candidate?.candidate?.image}
-										/>
-									</Td>
-									<Td>
-										<TableDataPartial
-											title={candidate?.title}
-											subTitle={
-												candidate?.client?.firstName +
-												' ' +
-												candidate?.client?.lastName
-											}
-										/>
-									</Td>
-
-									<Td className='text-center'>{candidate?.status}</Td>
-								</Tr>
+							{candidatesList.map((candidate: TCandidateListItem) => (
+								<TableRowPartial candidate={candidate} key={candidate.id} />
 							))}
 						</TBody>
 						<TFoot>

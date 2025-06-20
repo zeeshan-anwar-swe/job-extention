@@ -11,6 +11,7 @@ const TablePartial = () => {
 				<Tr>
 					<Th>NAME</Th>
 					<Th>POSITION</Th>
+					<Th>CLIENT</Th>
 					<Th>Feedback</Th>
 					<Th>Source</Th>
 					<Th colSpan={2}>Action</Th>
@@ -25,6 +26,7 @@ const TablePartial = () => {
 				<Tr>
 					<Th>NAME</Th>
 					<Th>POSITION</Th>
+					<Th>CLIENT</Th>
 					<Th>Feedback</Th>
 					<Th>Source</Th>
 					<Th colSpan={2}>Action</Th>

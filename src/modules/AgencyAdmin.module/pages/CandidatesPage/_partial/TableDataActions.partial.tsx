@@ -11,19 +11,23 @@ import {
 } from '../../../../../store/slices/Candiates.slice';
 import ConfirmationModal from '../../../../../components/modal/ConfirmationModal';
 import { AssignClientModalPartial } from '../../../common/AssignClientModal/Modal.partial';
+import { TCandidateJobProfile } from '../../../../../types/slices.type/candidate.slice.type';
 
-const TableDataActionsPartial = ({ candidate }: { candidate: any }) => {
+const TableDataActionsPartial = ({ candidate, selectedJob }: { candidate: any; selectedJob :TCandidateJobProfile }) => {
 	const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+	console.log({candidate});
+	
 
 	return (
 		<>
 			<div className='flex justify-center'>
 				<Button onClick={() => setAssignClientModal(true)}>Assign to Client</Button>
-				<Link to='/candidates/cv-edit' state={candidate}>
+				<Link to='/candidates/cv-edit' state={{ candidate, selectedJob }}>
 					<Button>Edit CV</Button>
 				</Link>
-				<Link to='/candidates/profile' state={candidate}>
+				<Link to='/candidates/profile' state={{ candidate, selectedJob }}>
 					<Button>View CV</Button>
 				</Link>
 				<Button onClick={() => setDeleteModal(true)}>Remove Candidate</Button>

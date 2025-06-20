@@ -13,13 +13,15 @@ import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
-import { getPaginatedTeamlist } from '../../../../store/slices/Team.slice';
+import { getPaginatedTeamlist, setTeamMemberSearch } from '../../../../store/slices/Team.slice';
 import InviteModalPartial from './_partial/InviteModal.partial';
 import Pagination from '../../../../components/ui/Pagination';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
+import CustomSearchComponent from '../../components/CustomSearch.component';
+import { getAgencyCandidatesList, setCandidatesSearch } from '../../../../store/slices/Candiates.slice';
 
 const ManageTeamPage = () => {
-	const { pageLoading, paginatedList, error, paginationCount } = useSelector(
+	const { pageLoading, paginatedList, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.team,
 	);
 	const [modal, setModal] = useState<boolean>(false);
@@ -35,24 +37,15 @@ const ManageTeamPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Candidates'>
-				<Subheader>
-					<SubheaderLeft>
-						<Button
-							borderWidth='border-2'
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroUserGroup'>
-							All Members
-						</Button>
-						<Button
-							borderWidth='border-2'
-							color='zinc'
-							variant='outline'
-							rounded='rounded-full'
-							icon='HeroArrowsUpDown'>
-							Sort By
-						</Button>
+				<Subheader className='!z-20'>
+					<SubheaderLeft >
+						<CustomSearchComponent
+							setSearchActionForPagination={setTeamMemberSearch}
+							searchListAction={getPaginatedTeamlist}
+							searchLimit={10}
+							searchByFilterOptions={['name', 'email']}
+							placeholder='Search TeamMember...'
+						/>
 					</SubheaderLeft>
 				</Subheader>
 				<Subheader>
@@ -77,9 +70,10 @@ const ManageTeamPage = () => {
 					</Container>
 				</PageLoader>
 				<Pagination
+					limit={10}
+					search={search}
 					count={paginationCount}
 					getListAction={getPaginatedTeamlist}
-					limit={10}
 				/>
 			</PageWrapper>
 		</>
