@@ -1,61 +1,51 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
 import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
 import Button from '../../../../components/ui/Button';
 import Avatar from '../../../../components/Avatar';
-
 import Icon from '../../../../components/icon/Icon';
 import { TIcons } from '../../../../types/icons.type';
+import { useSocket } from '../../../../context/socketContext';
+import CircleLoader from '../../../../components/layouts/PageLoader/CircleLoader';
+import { formatRelativeTime } from '../../../../utils/formatRelativeTime';
+import NotificationItem from './NotificationItem.partial';
 
-interface INotificationItemProps {
-	image?: string;
-	name: string;
-	icon?: TIcons;
-	firstLine: ReactNode;
-	secondLine: ReactNode;
-	isUnread: boolean;
-	time: string;
-}
-const NotificationItem: FC<INotificationItemProps> = ({
-	image,
-	name,
-	icon,
-	firstLine,
-	secondLine,
-	isUnread,
-	time,
-}) => {
-	return (
-		<div className='flex min-w-[24rem] gap-2'>
-			<div className='relative flex-shrink-0'>
-				<Avatar src={image} name={name} />
-				{icon && (
-					<span className='absolute start-3/4 top-3/4 flex rounded-full bg-blue-500/75 outline outline-2 outline-blue-500/75'>
-						<Icon icon={icon} />
-					</span>
-				)}
-			</div>
-			<div className='grow'>
-				<div className='flex gap-2'>{firstLine}</div>
-				<div className='flex gap-2'>{secondLine}</div>
-			</div>
-			<div className='relative flex flex-shrink-0 items-center'>
-				{isUnread && (
-					<span className='absolute end-0 top-0 flex h-2 w-2'>
-						<span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75' />
-						<span className='relative inline-flex h-2 w-2 rounded-full bg-red-500' />
-					</span>
-				)}
-				<div className='text-zinc-500'>{time}</div>
-			</div>
-		</div>
-	);
-};
-NotificationItem.defaultProps = {
-	image: undefined,
-	icon: undefined,
-};
+
+
 
 const NotificationPartial = () => {
+	const { socket, notifications, loading, setNotifications } = useSocket();
+	const [marking, setMarking] = useState(false);
+
+	const unreadNotificationIds = notifications.filter((n) => !n.isRead).map((n) => n.id);
+
+	const hasUnread = unreadNotificationIds.length > 0;
+	useEffect(() => {
+		if (!socket) return;
+
+		const handler = ({ notificationIds }: { notificationIds: string[] }) => {
+			setNotifications((prev) =>
+				prev.map((n) => (notificationIds.includes(n.id) ? { ...n, isRead: true } : n)),
+			);
+			setMarking(false);
+		};
+
+		socket.on('notifications_seen_ack', handler);
+
+		return () => {
+			socket.off('notifications_seen_ack', handler);
+		};
+	}, [socket, setNotifications]);
+
+	const handleMarkAllAsRead = () => {
+		if (!socket || !hasUnread) return;
+		setMarking(true);
+		socket.emit('notifications_seen', { notificationIds: unreadNotificationIds });
+	};
+
+	const handleMarkOneAsRead = (id: string) => {
+		socket?.emit('notifications_seen', { notificationIds: [id] });
+	};
+
 	return (
 		<div className='relative'>
 			<Dropdown>
@@ -65,68 +55,49 @@ const NotificationPartial = () => {
 				<DropdownMenu
 					placement='bottom-end'
 					className='flex flex-col flex-wrap divide-y divide-dashed divide-zinc-500/50 p-4 [&>*]:py-4'>
-					<NotificationItem
-						image={''}
-						name={`${'amir'} ${'khan'}`}
-						icon='HeroBolt'
-						firstLine={
-							<>
-								<b>{'ubaid'}</b>
-								<span className='text-zinc-500'>@{'ubdus'}</span>
-							</>
-						}
-						secondLine={
-							<>
-								Comment on <b>{'ubdus2'}</b>
-							</>
-						}
-						isUnread
-						time='1h'
-					/>
-
-					<NotificationItem
-						image={''}
-						name={`${'amir'} ${'khan'}`}
-						icon='HeroBolt'
-						firstLine={
-							<>
-								<b>{'ubaid'}</b>
-								<span className='text-zinc-500'>@{'ubdus'}</span>
-							</>
-						}
-						secondLine={
-							<>
-								Comment on <b>{'ubdus2'}</b>
-							</>
-						}
-						isUnread
-						time='1h'
-					/>
-
-					<NotificationItem
-						image={''}
-						name={`${'amir'} ${'khan'}`}
-						icon='HeroBolt'
-						firstLine={
-							<>
-								<b>{'ubaid'}</b>
-								<span className='text-zinc-500'>@{'ubdus'}</span>
-							</>
-						}
-						secondLine={
-							<>
-								Comment on <b>{'ubdus2'}</b>
-							</>
-						}
-						isUnread
-						time='1h'
-					/>
+					{loading ? (
+						<CircleLoader />
+					) : (
+						<>
+							{hasUnread && (
+								<Button
+									size='sm'
+									variant='solid'
+									className='mb-2 ml-auto text-blue-500'
+									onClick={handleMarkAllAsRead}
+									isDisable={marking}>
+									Mark all as read
+								</Button>
+							)}
+							{notifications.map((item: any) => (
+								<NotificationItem
+									key={item.id}
+									image={item.user.image}
+									name={`${item.user.firstName} ${item.user.lastName}`}
+									icon='HeroBolt'
+									firstLine={
+										<b>{`${item.user.firstName} ${item.user.lastName}`}</b>
+									}
+									secondLine={<>{item.notification}</>}
+									isUnread={!item.isRead}
+									time={formatRelativeTime(item.createdAt)}
+									onMarkAsRead={
+										!item.isRead
+											? () => handleMarkOneAsRead(item.id)
+											: undefined
+									}
+								/>
+							))}
+						</>
+					)}
 				</DropdownMenu>
 			</Dropdown>
-			<span className='absolute end-0 top-0 flex h-3 w-3'>
-				<span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75' />
-				<span className='relative inline-flex h-3 w-3 rounded-full bg-red-500' />
-			</span>
+			{hasUnread && (
+				<span className='absolute end-0 top-0 flex h-3 w-3'>
+					<span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75' />
+					<span className='relative inline-flex h-3 w-3 rounded-full bg-red-500' />
+				</span>
+			)}
 		</div>
 	);
 };

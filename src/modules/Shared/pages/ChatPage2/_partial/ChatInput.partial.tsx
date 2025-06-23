@@ -3,7 +3,6 @@ import FieldWrap from '../../../../../components/form/FieldWrap';
 import Icon from '../../../../../components/icon/Icon';
 import Input from '../../../../../components/form/Input';
 
-
 interface ChatInputPartialProps {
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

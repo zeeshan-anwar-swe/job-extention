@@ -31,6 +31,13 @@ export const appPages = {
 			icon: 'HeroDocumentText',
 		},
 
+		chatAppPages: {
+			id: 'chatApp',
+			to: '/chat',
+			text: 'Chat',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+
 		testForCadidateAppPages: {
 			id: 'testForCadidateApp',
 			to: '/test-for-cadidate',

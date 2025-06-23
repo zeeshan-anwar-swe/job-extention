@@ -15,6 +15,7 @@ import 'react-date-range/dist/theme/default.css';
 import './styles/vendors.css';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import { SocketProvider } from './context/socketContext';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
@@ -22,7 +23,9 @@ root.render(
 			<ThemeContextProvider>
 				<BrowserRouter>
 					<AuthProvider>
-						<App />
+						<SocketProvider>
+							<App />
+						</SocketProvider>
 					</AuthProvider>
 				</BrowserRouter>
 			</ThemeContextProvider>

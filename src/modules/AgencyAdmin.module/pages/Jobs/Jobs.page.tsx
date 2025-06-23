@@ -121,11 +121,6 @@ const JobsPage = () => {
 							searchByFilterOptions={['title', 'location', 'type', 'experience', 'clientName', 'clientEmail']}
 						/>
 
-						{/* <CustomDropDown
-							title='Filter'
-							icon='HeroBarFilter'
-							items={['By Name', 'By Position', 'By Location']}
-						/> */}
 					</SubheaderLeft>
 					<SubheaderRight>
 						<Dropdown>

@@ -37,7 +37,7 @@ const ManageTeamPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Candidates'>
-				<Subheader className='!z-20'>
+				<Subheader>
 					<SubheaderLeft >
 						<CustomSearchComponent
 							setSearchActionForPagination={setTeamMemberSearch}
@@ -48,7 +48,7 @@ const ManageTeamPage = () => {
 						/>
 					</SubheaderLeft>
 				</Subheader>
-				<Subheader>
+				<Subheader className='!-z-0'>
 					<SubheaderLeft>
 						<div>
 							<CardTitle>Your Team</CardTitle>

@@ -42,7 +42,8 @@ const CandidatesPage = () => {
 			</Header>
 
 			<PageWrapper name='Candidates'>
-				<Subheader className='!z-20'>
+
+				<Subheader >
 					<SubheaderLeft >
 						<CustomSearchComponent
 							setSearchActionForPagination={setCandidatesSearch}
@@ -52,8 +53,11 @@ const CandidatesPage = () => {
 							placeholder='Search Candidates...'
 						/>
 					</SubheaderLeft>
+					<SubheaderRight>
+						<div></div>
+					</SubheaderRight>
 				</Subheader>
-				<Subheader className='!z-10'>
+				<Subheader className='!-z-0'>
 					<SubheaderLeft className='!block'>
 						<CardTitle>Candidates</CardTitle>
 						<CardSubTitle>View, manage, and track Candidates.</CardSubTitle>
@@ -65,6 +69,7 @@ const CandidatesPage = () => {
 						<DownloadCsvModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
 					</SubheaderRight>
 				</Subheader>
+
 
 				<PageLoader
 					loading={pageLoading}

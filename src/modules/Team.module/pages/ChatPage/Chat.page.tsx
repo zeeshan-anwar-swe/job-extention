@@ -22,7 +22,7 @@ import { AppDispatch, RootState } from '../../../../store';
 import { getRecruiter } from '../../../../store/slices/Team/TeamChat.slice';
 import PartialLoader from '../../../../templates/layouts/main/PartialLoader';
 import { getChatData } from '../../../../store/slices/Chat.slice';
-import ReusableChatPage from '../../../Shared/pages/ChatPage/Chat.page';
+import ReusableChatPage from '../../../Shared/pages/ChatPage2/Chat.page';
 
 const ChatWithRecruiterPage = () => {
 	const dispatch: AppDispatch = useDispatch();

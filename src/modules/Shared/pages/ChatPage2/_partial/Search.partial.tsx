@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import Icon from '../../../../../components/icon/Icon';
-import { Input } from 'antd';
+import Input from '../../../../../components/form/Input';
 
 
 const SearchPartial = () => {

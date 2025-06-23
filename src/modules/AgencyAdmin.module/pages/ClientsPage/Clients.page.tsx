@@ -46,7 +46,7 @@ const ClientsPage = () => {
 			</Header>
 
 			<PageWrapper name='Candidates'>
-				<Subheader className='!z-20'>
+				<Subheader>
 					<SubheaderLeft>
 						<CustomSearchComponent
 							searchLimit={10}
@@ -57,31 +57,10 @@ const ClientsPage = () => {
 						/>
 					</SubheaderLeft>
 				</Subheader>
-				<Subheader className='!z-10'>
-					<SubheaderLeft>
-						<div>
-							<CardTitle>Clients</CardTitle>
-							<CardSubTitle>View and manage your client relationships.</CardSubTitle>
-							<div className='relative flex items-center'>
-								<h6>Sort By</h6>
-								<Dropdown>
-									<DropdownToggle hasIcon={true}>
-										<Button>{sortBy}</Button>
-									</DropdownToggle>
-									<DropdownMenu placement='bottom-end'>
-										<div className='px-4 text-sm font-bold'>
-											Select An Order
-										</div>
-										<DropdownItem onClick={() => setSortBy('Assending')}>
-											Assending
-										</DropdownItem>
-										<DropdownItem onClick={() => setSortBy('Desending')}>
-											Desending
-										</DropdownItem>
-									</DropdownMenu>
-								</Dropdown>
-							</div>
-						</div>
+				<Subheader className='!-z-0'>
+					<SubheaderLeft className='!block'>
+						<CardTitle>Clients</CardTitle>
+						<CardSubTitle>View and manage your client relationships.</CardSubTitle>
 					</SubheaderLeft>
 					<SubheaderRight>
 						<Button
@@ -96,6 +75,23 @@ const ClientsPage = () => {
 
 				<PageLoader loading={pageLoading} error={error} data={paginatedClients}>
 					<Container>
+						<div className='relative mb-4 flex items-center'>
+							<h6>Sort By</h6>
+							<Dropdown>
+								<DropdownToggle hasIcon={true}>
+									<Button>{sortBy}</Button>
+								</DropdownToggle>
+								<DropdownMenu placement='bottom-end'>
+									<div className='px-4 text-sm font-bold'>Select An Order</div>
+									<DropdownItem onClick={() => setSortBy('Assending')}>
+										Assending
+									</DropdownItem>
+									<DropdownItem onClick={() => setSortBy('Desending')}>
+										Desending
+									</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
+						</div>
 						<TablePartial sortBy={sortBy} />
 					</Container>
 				</PageLoader>

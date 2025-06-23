@@ -16,6 +16,7 @@ import ReportAndAnalyticsPage from '../modules/AgencyAdmin.module/pages/ReportAn
 import ManageTeamPage from '../modules/AgencyAdmin.module/pages/ManageTeamPage/ManageTeam.page';
 import TeammateProfilePage from '../modules/AgencyAdmin.module/pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page';
 import ChatPage from '../modules/AgencyAdmin.module/pages/ManageTeamPage/ChatPage/Chat.page';
+import CommonChatPage from '../modules/Shared/pages/ChatPage/Chat.page';
 import SettingPage from '../modules/AgencyAdmin.module/pages/SettingPage/Setting.page';
 import ConnectCRMPage from '../modules/AgencyAdmin.module/pages/SettingPage/ConnectCRMPage/ConnectCRM.page';
 import SubcriptionPage from '../modules/AgencyAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
@@ -44,6 +45,11 @@ interface ContentRoutesType {
 
 const contentRoutes: ContentRoutesType = {
 	AgencyAdmin: [
+		{
+			path: appPages.AgencyAdmin.chatAppPages.to+'/*',
+			element: <CommonChatPage />,
+		},
+
 		{
 			path: appPages.AgencyAdmin.dashboardAppPages.to,
 			element: <DashboardPage />,
