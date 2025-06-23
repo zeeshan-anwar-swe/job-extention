@@ -430,6 +430,13 @@ export const appPages = {
 			icon: 'HeroSquares2X2',
 		},
 
+		chatAppPages: {
+			id: 'chatApp',
+			to: '/chat',
+			text: 'Chat',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+
 		chatPage: {
 			id: 'chatWithRecruiter',
 			to: '/chat-with-recruiter',
@@ -458,12 +465,7 @@ export const appPages = {
 			},
 		},
 		
-		chatAppPages: {
-			id: 'chatApp',
-			to: '/chat',
-			text: 'Chat',
-			icon: 'HeroChatBubbleLeftRight',
-		},
+		
 	},
 	[Roles.ADMIN]: {
 		dashboardAppPages: {

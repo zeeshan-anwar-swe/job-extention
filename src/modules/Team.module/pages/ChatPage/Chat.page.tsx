@@ -23,20 +23,28 @@ import { getRecruiter } from '../../../../store/slices/Team/TeamChat.slice';
 import PartialLoader from '../../../../templates/layouts/main/PartialLoader';
 import { getChatData } from '../../../../store/slices/Chat.slice';
 import ReusableChatPage from '../../../Shared/pages/ChatPage2/Chat.page';
+import { useNavigate } from 'react-router-dom';
 
 const ChatWithRecruiterPage = () => {
 	const dispatch: AppDispatch = useDispatch();
+	const navigateTo = useNavigate();
 
 	const { loading, data, error } = useSelector(
 		(state: RootState) => state.teamChat.recruiterProfile,
 	);
 
+	if(data){
+		navigateTo(`/chat/${data.id}`, { state: {userName: data.firstName+" "+data.lastName, userId: data.id} })
+	}
+
+	
+
 	useEffect(() => {
 		dispatch(getRecruiter());
 	}, []);
 
-	if (data) {
-		return <ReusableChatPage receiverName={data.firstName+" "+data.lastName}  receiverId={data.id} />;
+	if (loading) {
+		return <div>Loading.....</div>;
 	}
 };
 

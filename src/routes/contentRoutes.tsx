@@ -26,6 +26,7 @@ import RecruitersPage from '../modules/Team.module/pages/Recruiter/Recruiter.pag
 import ChatWithRecruiterPage from '../modules/Team.module/pages/ChatPage/Chat.page';
 import TestPage from '../modules/Shared/pages/TestPage/Test.page';
 import ClientJobsPage from '../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page';
+import  ChatMain  from '../modules/Shared/pages/ChatPage2/ChatMain';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -47,7 +48,7 @@ const contentRoutes: ContentRoutesType = {
 	AgencyAdmin: [
 		{
 			path: appPages.AgencyAdmin.chatAppPages.to+'/*',
-			element: <CommonChatPage />,
+			element: <ChatMain />,
 		},
 
 		{
@@ -283,6 +284,11 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.Team.dashboardAppPages.to,
 			element: <h1>Team Dashboard</h1>,
+		},
+
+		{
+			path: appPages.Team.chatAppPages.to+'/*',
+			element: <ChatMain />,
 		},
 
 		{

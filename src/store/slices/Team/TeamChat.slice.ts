@@ -13,6 +13,8 @@ export const getRecruiter = createAsyncThunk(
 	async (_, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(`/team/agency-admin`);
+			console.log({response});
+			
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -31,7 +33,7 @@ const teamChatSlice = createSlice({
 				state.recruiterProfile.error = null;
 			})
 			.addCase(getRecruiter.fulfilled, (state, action) => {
-				state.recruiterProfile = action.payload;
+				state.recruiterProfile.data = action.payload;
 				state.recruiterProfile.loading = false;
 			})
 			.addCase(getRecruiter.rejected, (state, action: any) => {

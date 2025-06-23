@@ -34,7 +34,6 @@ export const AssignTeamModalPartial = ({
 	const { paginatedList, pageLoading, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.team,
 	);
-	console.log({error});
 	
 	const dispatch: AppDispatch = useDispatch();
 

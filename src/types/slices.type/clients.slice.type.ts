@@ -5,6 +5,7 @@ export interface ClientListItemType {
 	image: string;
 	hiringRate: string;
 	jobCounts: number;
+	userId?: string;
 }
 
 interface Job {

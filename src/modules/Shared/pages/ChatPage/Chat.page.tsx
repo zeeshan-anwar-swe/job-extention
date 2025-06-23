@@ -98,6 +98,8 @@ const ChatPage: FC = () => {
 				}
 			}
 		};
+
+		
 		socket.emit('messages_seen', { senderId: userId });
 		socket.on('user_status', handleStatus);
 		socket.on('user_status_bulk', handleBulkStatus);

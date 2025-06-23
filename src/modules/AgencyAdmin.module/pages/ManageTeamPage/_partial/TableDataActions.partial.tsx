@@ -7,9 +7,11 @@ import { assignJobToTeamMember, unAssignJobToTeamMember } from '../../../../../s
 const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const navigateTo = useNavigate();
+	console.log({teamMember});
+	
 	return (
 		<div className='flex justify-center'>
-			<Button onClick={() => navigateTo(`/manage-team/chat`, { state: teamMember })}>
+			<Button onClick={() => navigateTo(`/chat/${teamMember.user.id}`, { state: {userName: teamMember.user.name, userId: teamMember.user.id} })}>
 				Message
 			</Button>
 			<Button onClick={() => setModal(true)}>Assign Job</Button>

@@ -13,6 +13,8 @@ interface IMessageItemProps {
 }
 const MessageItem: FC<IMessageItemProps> = ({ image, name, isOnline, text, isUnread, time }) => {
     const {imageUrl, loading} = useImageValidation(image);
+    console.log({isOnline});
+    
 
     
 

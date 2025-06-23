@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, ChangeEvent, FC, KeyboardEvent, useRef } from 'react';
+import { useEffect, useState, ChangeEvent, KeyboardEvent, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../../context/authContext';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
@@ -16,10 +16,10 @@ import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import Label from '../../../../components/form/Label';
 import Icon from '../../../../components/icon/Icon';
 import Alert from '../../../../components/ui/Alert';
-import { formatIsoTimeString, formatTimeString } from '../../../../utils/helper';
-import { Image } from 'antd';
+import { formatIsoTimeString } from '../../../../utils/helper';
 import { ViewableImagePartial } from './_partial/Image.partial';
 import { useSocket } from '../../../../context/socketContext'; // Import useSocket
+import { Divider } from 'antd';
 
 // Define TypeScript Interfaces
 interface Media {
@@ -52,7 +52,7 @@ const ReusableChatPage = ({
 	const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 	const { userStorage: userData, userTokenStorage } = useAuth();
-	const { socket} = useSocket(); // Get socket from context
+	const { socket } = useSocket(); // Get socket from context
 	// const { userId } = useParams<{ userId: string }>();
 	const [chat, setChat] = useState<ChatMessage[]>([]);
 	const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -267,6 +267,7 @@ const ReusableChatPage = ({
 																target='_blank'
 																rel='noopener noreferrer'>
 																<Button
+																	
 																	rightIcon='HeroArrowDown'
 																	variant='solid'>
 																	Download File
@@ -291,7 +292,8 @@ const ReusableChatPage = ({
 							</CardBody>
 						</div>
 					</div>
-					<CardFooter className='rounded-full border !px-4 !py-1'>
+					<NavSeparator/>
+					<CardFooter className=''>
 						<CardFooterChild className='flex-1'>
 							<input
 								type='text'
@@ -302,7 +304,7 @@ const ReusableChatPage = ({
 								className='w-full rounded-full border p-2'
 							/>
 						</CardFooterChild>
-						<CardFooterChild>
+						<CardFooterChild >
 							<div className='flex items-center gap-4'>
 								<Label className='!m-0 !p-0' htmlFor='chatFile'>
 									<Icon color='zinc' size='text-2xl' icon='HeroPaperClip' />
@@ -320,6 +322,7 @@ const ReusableChatPage = ({
 									onChange={handleFileChange}
 								/>
 								<Button
+									rounded='rounded-full'
 									isLoading={loading}
 									rightIcon='HeroPaperAirplane'
 									onClick={sendMessage}

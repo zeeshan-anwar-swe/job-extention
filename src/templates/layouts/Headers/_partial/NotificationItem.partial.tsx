@@ -24,6 +24,8 @@ const NotificationItem: FC<INotificationItemProps> = ({
     time,
     onMarkAsRead,
 }) => {
+    console.log({icon});
+    
     const {imageUrl, loading} = useImageValidation(image);
     return (
         <div className='flex min-w-[24rem] z-[999999999] gap-2'>

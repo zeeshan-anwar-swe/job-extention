@@ -18,7 +18,7 @@ const MessagesPartial = () => {
 
 	const handleClick = (id: string, name: string) => {
 		navigate(`/chat/${id}`, {
-			state: { name },
+			state: { userName: name, userId: id },
 		});
 	};
 	return (
