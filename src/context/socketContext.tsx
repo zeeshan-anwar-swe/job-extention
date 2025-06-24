@@ -6,6 +6,8 @@ import { getInboxMessages } from '../services/message.ts';
 import { getNotifications } from '../services/notification.ts';
 import { useLocation } from 'react-router-dom';
 import { playMessageSound, playNotifcationSound } from '../utils/socketTunes.ts';
+import toast from 'react-hot-toast';
+import { ToastMessage } from '../components/notification/ToastMessage.tsx';
 
 interface InboxEntry {
 	userId: string;
@@ -58,7 +60,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	const [onlineStatusMap, setOnlineStatusMap] = useState<Map<string, boolean>>(new Map());
 
 	const socketRef = useRef<Socket | null>(null);
-	const { userStorage:userData } = useAuth();
+	const { userStorage: userData } = useAuth();
 	const [loading, setLoading] = useState(true);
 
 	const token = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) : '';
@@ -81,7 +83,14 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 			const currentChatMatch = location.pathname.match(/\/chat\/([^/]+)/);
 			const currentChatUserId = currentChatMatch ? currentChatMatch[1] : null;
 
+			console.log('currentChatUserId:', currentChatUserId , 'userId:', userId , 'isSender:', isSender);
+			
+
 			if (!isSender && currentChatUserId !== userId) {
+				console.log({ user, msg });
+				toast.custom((t) => (
+					<ToastMessage t={t} msg={msg}/>
+				));
 				playMessageSound();
 			}
 

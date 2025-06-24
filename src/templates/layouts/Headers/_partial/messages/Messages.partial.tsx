@@ -21,6 +21,8 @@ const MessagesPartial = () => {
 			state: { userName: name, userId: id },
 		});
 	};
+	console.log({inboxMessages});
+	
 	return (
 		<div className='relative !z-30'>
 			<Dropdown className='!z-30'>

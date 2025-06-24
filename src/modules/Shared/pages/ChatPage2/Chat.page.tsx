@@ -20,6 +20,7 @@ import { formatIsoTimeString } from '../../../../utils/helper';
 import { ViewableImagePartial } from './_partial/Image.partial';
 import { useSocket } from '../../../../context/socketContext'; // Import useSocket
 import { Divider } from 'antd';
+import { useParams } from 'react-router-dom';
 
 // Define TypeScript Interfaces
 interface Media {
@@ -42,6 +43,11 @@ interface AuthContextType {
 	};
 }
 
+type UserStatus = {
+	userId: string;
+	status: 'online' | 'offline';
+};
+
 const ReusableChatPage = ({
 	receiverId: userId,
 	receiverName,
@@ -50,6 +56,7 @@ const ReusableChatPage = ({
 	receiverName: string;
 }) => {
 	const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+	const [onlineStatus, setOnlineStatus] = useState<Map<string, boolean>>(new Map());
 
 	const { userStorage: userData, userTokenStorage } = useAuth();
 	const { socket } = useSocket(); // Get socket from context
@@ -70,19 +77,71 @@ const ReusableChatPage = ({
 	useEffect(() => {
 		if (!socket || !userData?.id) return; // Ensure socket and userData are available
 
+		const handleStatus = ({ userId, status }: UserStatus) => {
+			setOnlineStatus((prevStatus) => {
+				const newMap = new Map(prevStatus);
+				newMap.set(userId, status === 'online');
+				return newMap;
+			});
+		};
+
+		const handleBulkStatus = (statuses: UserStatus[]) => {
+			setOnlineStatus((prevStatus) => {
+				const newMap = new Map(prevStatus);
+				statuses.forEach(({ userId, status }) => {
+					newMap.set(userId, status === 'online');
+				});
+				return newMap;
+			});
+		};
+
 		const handleReceiveMessage = (message: ChatMessage) => {
 			if (
 				(message.senderId === userData.id && message.receiverId === userId) ||
 				(message.receiverId === userData.id && message.senderId === userId)
 			) {
 				setChat((prev) => [...prev, message]);
+
+				console.log(
+					'message.receiverId: ',
+					message.receiverId,
+					'userData.id: ',
+					userData.id,
+					'message.senderId: ',
+					message.senderId,
+					'userId: ',
+					userId,
+				);
+
+				if (message.receiverId === userData.id && message.senderId === userId) {
+					console.log('message seen>>>>>>>>>>>>>>>');
+
+					socket.emit('messages_seen', { senderId: userId });
+				}
 			}
 		};
-
+		socket.emit('messages_seen', { senderId: userId });
+		socket.on('user_status', handleStatus);
+		socket.on('user_status_bulk', handleBulkStatus);
 		socket.on('receive_message', handleReceiveMessage);
 
+		socket.on('messages_seen', ({ seenBy, messageIds }) => {
+			console.log(seenBy);
+			setChat((msgs) =>
+				msgs.map((msg: any) =>
+					messageIds.includes(msg.id) ? { ...msg, seen: true } : msg,
+				),
+			);
+			socket.emit('messages_seen', { receiverId: userId });
+		});
+
+		socket.emit('check_user_status', { userIds: [userId] });
+
 		return () => {
+			socket.off('user_status', handleStatus);
+			socket.off('user_status_bulk', handleBulkStatus);
 			socket.off('receive_message', handleReceiveMessage); // Clean up event listener
+			socket.off('messages_seen', handleReceiveMessage);
 		};
 	}, [socket, userData, userId]); // Depend on socket, userData, and userId
 
@@ -102,6 +161,8 @@ const ReusableChatPage = ({
 			})
 			.catch((err) => console.error(err));
 	}, [userId, token, apiBaseUrl]); // Added apiBaseUrl to dependency array
+
+	const isUserOnline = (id?: string) => (id && onlineStatus.get(id)) || false;
 
 	// Send message function
 	const sendMessage = async () => {
@@ -208,7 +269,13 @@ const ReusableChatPage = ({
 				<Card className='col-span-12 flex flex-col gap-2'>
 					<CardHeader>
 						<CardHeaderChild className='!flex w-full !items-center !justify-between'>
-							<h1>{receiverName}</h1>
+							<div className='flex items-center gap-2'>
+								<h1>{receiverName}</h1>
+								<span
+									className={`h-2 w-2 rounded-full ${
+										isUserOnline(userId) ? 'bg-green-500' : 'bg-gray-400'
+									}`}></span>
+							</div>
 							<div className='flex items-center gap-2'>
 								<SearchPartial />
 								<Button variant='outline' onClick={() => setChat([])}>
@@ -267,7 +334,6 @@ const ReusableChatPage = ({
 																target='_blank'
 																rel='noopener noreferrer'>
 																<Button
-																	
 																	rightIcon='HeroArrowDown'
 																	variant='solid'>
 																	Download File
@@ -292,7 +358,7 @@ const ReusableChatPage = ({
 							</CardBody>
 						</div>
 					</div>
-					<NavSeparator/>
+					<NavSeparator />
 					<CardFooter className=''>
 						<CardFooterChild className='flex-1'>
 							<input
@@ -304,7 +370,7 @@ const ReusableChatPage = ({
 								className='w-full rounded-full border p-2'
 							/>
 						</CardFooterChild>
-						<CardFooterChild >
+						<CardFooterChild>
 							<div className='flex items-center gap-4'>
 								<Label className='!m-0 !p-0' htmlFor='chatFile'>
 									<Icon color='zinc' size='text-2xl' icon='HeroPaperClip' />
