@@ -102,20 +102,8 @@ const ReusableChatPage = ({
 			) {
 				setChat((prev) => [...prev, message]);
 
-				console.log(
-					'message.receiverId: ',
-					message.receiverId,
-					'userData.id: ',
-					userData.id,
-					'message.senderId: ',
-					message.senderId,
-					'userId: ',
-					userId,
-				);
 
 				if (message.receiverId === userData.id && message.senderId === userId) {
-					console.log('message seen>>>>>>>>>>>>>>>');
-
 					socket.emit('messages_seen', { senderId: userId });
 				}
 			}
@@ -125,8 +113,7 @@ const ReusableChatPage = ({
 		socket.on('user_status_bulk', handleBulkStatus);
 		socket.on('receive_message', handleReceiveMessage);
 
-		socket.on('messages_seen', ({ seenBy, messageIds }) => {
-			console.log(seenBy);
+		socket.on('messages_seen', ({  messageIds }) => {
 			setChat((msgs) =>
 				msgs.map((msg: any) =>
 					messageIds.includes(msg.id) ? { ...msg, seen: true } : msg,
@@ -342,14 +329,17 @@ const ReusableChatPage = ({
 														)}
 													</div>
 												))}
-												<div className='mt-6 flex items-center gap-2'>
-													<p>{formatIsoTimeString(msg.createdAt)}</p>
+													<div className='mt-6 flex items-center gap-2'>
+														<p>{formatIsoTimeString(msg.createdAt)}</p>
+												{
+													msg.senderId === userData.id &&
 													<Icon
 														color={msg.seen ? 'blue' : 'zinc'}
 														className='ml-auto'
 														size='text-2xl'
 														icon='HeroTwiceCheck'
-													/>
+														/>
+													}
 												</div>
 											</div>
 										</div>

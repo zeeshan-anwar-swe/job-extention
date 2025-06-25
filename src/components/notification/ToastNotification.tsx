@@ -1,8 +1,11 @@
+import React from 'react';
+import toast from 'react-hot-toast';
 import useImageValidation from '../../hooks/useImageValidation';
 import ImageLoaderWraper from '../ui/ImageLoaderWraper';
 import Button from '../ui/Button';
-
-import { useLocation, useNavigate } from 'react-router-dom';
+import { NavSeparator } from '../layouts/Navigation/Nav';
+import { Divider } from 'antd';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 interface Message {
 	id: string;
@@ -28,18 +31,10 @@ interface Message {
 }
 
 export const ToastMessage = ({ t, msg }: { t: any; msg: Message }) => {
-	const {pathname} = useLocation()
     const navigateTo = useNavigate();
 	const { loading, imageUrl } = useImageValidation(msg?.sender?.image);
 
-    const handleClick = () => {
-        // toast.dismiss(t.id)
-
-		if(pathname !== `/chat/${msg?.senderId}`){
-			navigateTo(`/chat/${msg?.senderId}`, {state: {userName: msg.sender.firstName+" "+msg.sender.lastName, userId: msg.senderId}});
-		}
-		
-    }
+    
 	return (
 		<div
 			className={`${
@@ -54,13 +49,13 @@ export const ToastMessage = ({ t, msg }: { t: any; msg: Message }) => {
 					</div>
 					<div className='ml-3 flex-1'>
 						<p className='text-sm font-medium text-gray-900'>{msg?.sender?.firstName + ' ' + msg?.sender?.lastName}</p>
-						<p className='mt-1 text-sm text-gray-500'>{msg?.text.length > 15 ? msg?.text.slice(0, 15) + '...' : msg.text}</p>
+						<p className='mt-1 text-sm text-gray-500'>{msg?.text}</p>
 					</div>
 				</div>
 			</div>
             
 			<div className='flex border-l items-center border-gray-200 px-4'>
-                <Button onClick={handleClick} icon='HeroChatBubbleLeft'/>
+                <Button icon='HeroBellAlert'/>
 			</div>
 		</div>
 	);

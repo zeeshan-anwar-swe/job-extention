@@ -55,6 +55,8 @@ const SocketContext = createContext<SocketContextType>({
 export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
+	const { pathname } = useLocation();
+
 	const [inbox, setInbox] = useState<Record<string, InboxEntry>>({});
 	const [notifications, setNotifications] = useState<Notification[]>([]);
 	const [onlineStatusMap, setOnlineStatusMap] = useState<Map<string, boolean>>(new Map());
@@ -80,18 +82,23 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 			const user = isSender ? msg.receiver : msg.sender;
 			const userId = user.id;
 
-			const currentChatMatch = location.pathname.match(/\/chat\/([^/]+)/);
+			const currentChatMatch = pathname.match(/\/chat\/([^/]+)/);
+
 			const currentChatUserId = currentChatMatch ? currentChatMatch[1] : null;
-
-			console.log('currentChatUserId:', currentChatUserId , 'userId:', userId , 'isSender:', isSender);
-			
-
-			if (!isSender && currentChatUserId !== userId) {
-				console.log({ user, msg });
-				toast.custom((t) => (
-					<ToastMessage t={t} msg={msg}/>
-				));
+			console.log({
+				pathname,
+				'/chat/${msg?.senderId}': `/chat/${msg?.senderId}`,
+				'/chat/${msg?.receiverId}': `/chat/${msg?.receiverId}`,
+			});
+			if (pathname === `/chat/${msg?.senderId}` || pathname === `/chat/${msg?.receiverId}`) {
+				if (currentChatUserId !== userId) {
+					playMessageSound();
+					toast.dismiss();
+					toast.custom((t) => <ToastMessage t={t} msg={msg} />);
+				}
+			} else {
 				playMessageSound();
+				toast.custom((t) => <ToastMessage t={t} msg={msg} />);
 			}
 
 			setInbox((prev) => {
@@ -117,6 +124,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		});
 
 		socket.on('notification', (notif: any) => {
+			const parsedNotif = JSON.parse(notif);
+			toast(parsedNotif.notification, {
+				icon: '🔔',
+			});
+
 			setNotifications((prev) => [JSON.parse(notif), ...prev]);
 			playNotifcationSound();
 		});
@@ -149,7 +161,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 			socket.disconnect();
 			socketRef.current = null;
 		};
-	}, [userData]);
+	}, [userData, pathname]);
 
 	const fetchInbox = async () => {
 		try {

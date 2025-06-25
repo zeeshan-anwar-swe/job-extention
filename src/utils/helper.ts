@@ -294,3 +294,40 @@ export const formatTimestampToDate = (timestamp: number | null | undefined): str
   // Return in MM/DD/YYYY format
   return `${day}-${month}-${year}`;
 };
+
+
+
+interface User {
+  userId: string;
+  lastMessage: string;
+  unreadCount: number;
+  image: string | null;
+  name: string;
+  createdAt: string;
+}
+
+
+export const hasUnreadMessages = (users: any[]): boolean => {
+  // Iterate through each user in the array.
+  for (const user of users) {
+    // If a user's unreadCount is greater than 0, it means there's at least one unread message.
+    if (user.unreadCount > 0) {
+      return true; // Immediately return true as the condition is met.
+    }
+  }
+  // If the loop completes, it means no user had an unreadCount greater than 0.
+  return false;
+};
+
+
+export const hasUnreadNotifications = (notifications: any[]): boolean => {
+  // Iterate through each notification in the array.
+  for (const notification of notifications) {
+    // If a notification's isRead property is false, it means it's unread.
+    if (notification.isRead === false) {
+      return true; // Immediately return true as the condition is met.
+    }
+  }
+  // If the loop completes, it means all notifications were read.
+  return false;
+};

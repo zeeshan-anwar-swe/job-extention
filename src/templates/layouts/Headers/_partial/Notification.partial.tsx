@@ -46,6 +46,9 @@ const NotificationPartial = () => {
 		socket?.emit('notifications_seen', { notificationIds: [id] });
 	};
 
+	
+	
+
 	return (
 		<div className='relative'>
 			<Dropdown>
