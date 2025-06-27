@@ -12,7 +12,8 @@ import { ChatRow } from '../../../../../types/slices.type/chat/chat.slice.type';
 import { formatTimeString } from '../../../../../utils/helper';
 
 const MessageItemPartial = ({ chatRow }: { chatRow: ChatRow }) => {
-	const { loading, imageUrl } = useImageValidation("");
+	const { loading, imageUrl } = useImageValidation(chatRow.sender.image);
+	
 	return (
 		<Card className='bg-zinc-100 dark:bg-zinc-950'>
 			<CardHeader>

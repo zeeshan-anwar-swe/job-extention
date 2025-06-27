@@ -17,7 +17,6 @@ const TableDataActionsPartial = ({ candidate, selectedJob }: { candidate: any; s
 	const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
-	console.log({candidate});
 	
 
 	return (
@@ -36,7 +35,7 @@ const TableDataActionsPartial = ({ candidate, selectedJob }: { candidate: any; s
 					modal={deleteModal}
 					setModal={setDeleteModal}
 					title='delete candidate'
-					action={removeAgencyCandidate(candidate.id)}
+					action={removeAgencyCandidate(selectedJob.id)}
 				/>
 			</div>
 			{/* {assignClientModal && ( */}

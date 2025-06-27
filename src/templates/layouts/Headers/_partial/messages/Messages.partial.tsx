@@ -10,9 +10,7 @@ import { hasUnreadMessages } from '../../../../../utils/helper';
 const MessagesPartial = () => {
 	const { inbox, loading, onlineStatusMap } = useSocket();
 	const navigate = useNavigate();
-	const inboxMessages = Object.values(inbox).sort(
-		(a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-	);
+	const inboxMessages = inbox ? Object.values(inbox) : [];
 
 	const handleClick = (id: string, name: string) => {
 		navigate(`/chat/${id}`, {

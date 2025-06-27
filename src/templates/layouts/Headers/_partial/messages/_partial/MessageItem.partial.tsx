@@ -75,7 +75,7 @@ const MessageItem: FC<IMessageItemProps> = ({
 					<span className='truncate font-semibold'>
 						{text.length > 15 ? text.slice(0, 15) + '...' : text}
 					</span>
-					<span className='truncate'>{unreadCount}Unread</span>
+					{isUnread && <span className='truncate'>{unreadCount}Unread</span>}
 				</div>
 			</div>
 			<div className='relative ml-auto flex items-center'>

@@ -13,9 +13,13 @@ import Card, {
 	CardHeader,
 } from '../../../../../components/ui/Card';
 import { useNavigate } from 'react-router-dom';
+import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
+import AssignCandidatesModalPartial from '../../../common/assignCandidateModal/AssignCandiatesModal.partial';
+import { useState } from 'react';
 
 const JobsPageCardPartial = ({ item }: any) => {
 	const navigateTo = useNavigate();
+	const [assignCandidateModal, setAssignCandidateModal] = useState(false);
 	return (
 		<Card className='col-span-4 max-2xl:last:col-span-12 flex flex-col gap-2 border border-zinc-300 hover:cursor-pointer max-2xl:col-span-6 max-lg:col-span-12'>
 			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
@@ -75,10 +79,12 @@ const JobsPageCardPartial = ({ item }: any) => {
 
 						<Button
 							variant='solid'
+							onClick={() => setAssignCandidateModal(true)}
 							rounded='rounded-full'
 							// className='!bg-white dark:!bg-zinc-800 dark:text-white'
 							icon='HeroPlus'></Button>
 					</div>
+					<AssignCandidatesModalPartial modal={assignCandidateModal} setModal={setAssignCandidateModal} jobId={item?.id} jobTitle={item?.title} />
 				</CardFooterChild>
 			</CardFooter>
 		</Card>
