@@ -91,7 +91,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 				/>
 			</FieldWrap>
 			{searchByFilterOptions && (
-				<Dropdown className='!z-[9999]'>
+				<Dropdown>
 					<DropdownToggle hasIcon={false}>
 						<Button
 							rounded='rounded-full'

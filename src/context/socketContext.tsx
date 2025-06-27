@@ -9,7 +9,7 @@ import { playMessageSound, playNotifcationSound } from '../utils/socketTunes.ts'
 import toast from 'react-hot-toast';
 import { ToastMessage } from '../components/notification/ToastMessage.tsx';
 
-interface InboxEntry {
+export interface InboxEntry {
 	userId: string;
 	lastMessage: string;
 	unreadCount: number;

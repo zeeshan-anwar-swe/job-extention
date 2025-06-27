@@ -1,24 +1,28 @@
-export interface ChatSender {
-	name: string;
-	email: string;
-	image: string | null;
-  }
-  
-  export interface ChatRow {
-	id: string;
-	text: string;
-	mediaType: string;
-	mediaUrl: string | null;
-	seen: boolean;
-	sender: ChatSender;
-	createdAt: string;
-  }
+export interface Message {
+  senderId: string;
+  receiverId: string;
+  sender: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    image: string | null;
+  };
+  receiver: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    image: string | null;
+  };
+  text: string;
+  createdAt: string; // ISO 8601 date string
+  unreadCount: number;
+}
   
   
   
 export interface ChatDataType {
 	loading: boolean;
-	rows: ChatRow[];
+	rows: Message[];
 	count: number;
 	error: null | any;
 }

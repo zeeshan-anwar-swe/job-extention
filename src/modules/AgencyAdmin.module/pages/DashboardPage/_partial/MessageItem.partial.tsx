@@ -4,38 +4,48 @@ import Card, {
 	CardHeaderChild,
 	CardTitle,
 } from '../../../../../components/ui/Card';
-import { profileImageUrlValidationCheck, textValidationCheck } from '../../../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../../../utils/validationCheck';
 import Badge from '../../../../../components/ui/Badge';
 import useImageValidation from '../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
-import { ChatRow } from '../../../../../types/slices.type/chat/chat.slice.type';
+import { Message } from '../../../../../types/slices.type/chat/chat.slice.type';
 import { formatTimeString } from '../../../../../utils/helper';
-
-const MessageItemPartial = ({ chatRow }: { chatRow: ChatRow }) => {
-	const { loading, imageUrl } = useImageValidation(chatRow.sender.image);
+interface User {
+  userId: string;
+  lastMessage: string;
+  unreadCount: number;
+  image: string | null;
+  name: string;
+  createdAt: string; // Consider using Date for better date handling if parsing later
+}
+const MessageItemPartial = ({ chatRow }: { chatRow: User }) => {
+	console.log('chatRow', chatRow);
 	
+	const { loading, imageUrl } = useImageValidation(chatRow?.image);
+
 	return (
-		<Card className='bg-zinc-100 dark:bg-zinc-950'>
+		<Card className='!flex-row !items-center gap-2 bg-zinc-100 dark:bg-zinc-950'>
 			<CardHeader>
-				<CardHeaderChild>
-					<ImageLoaderWraper loading={loading} height='h-10'>
-						<img
-							className='h-10 w-10 rounded-full'
-							src={imageUrl}
-							alt='profile-image'
-						/>
-					</ImageLoaderWraper>
-					<CardTitle className='!text-base'>{textValidationCheck(chatRow?.sender?.name)}</CardTitle>
-					<CardTitle className='!text-base !font-light'>{formatTimeString(chatRow?.createdAt)}</CardTitle>
-				</CardHeaderChild>
-				<CardHeaderChild>
-					<Badge variant='solid'>1</Badge>
-				</CardHeaderChild>
+				<ImageLoaderWraper loading={loading} height='h-12'>
+					<img className='h-12 w-12 rounded-full' src={imageUrl} alt='profile-image' />
+				</ImageLoaderWraper>
 			</CardHeader>
-			<CardBody>
-				<p>
-					{textValidationCheck(chatRow?.text)}
-				</p>
+
+			<CardBody className='py-4'>
+				<CardTitle className='!text-base'>
+					{textValidationCheck(
+						chatRow?.name,
+					)}
+				</CardTitle>
+				<CardTitle className='!text-base !font-light'>
+					{formatTimeString(chatRow?.createdAt)}
+				</CardTitle>
+
+				{chatRow.unreadCount > 0 && <Badge variant='solid'>{chatRow.unreadCount}</Badge>}
+				<p>{textValidationCheck(chatRow?.lastMessage)}</p>
 			</CardBody>
 		</Card>
 	);

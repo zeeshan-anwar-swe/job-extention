@@ -9,10 +9,10 @@ const initialState:ChatInitialStateType  = {
 };
 
 export const getChatData = createAsyncThunk(
-    'Chat/getChatData',
+    'Chat/getChatData', 
     async ({page=1, limit=10}: { page?: number; limit?: number }, { rejectWithValue }) => {
         try {
-            const response = await axiosInstance.get(`/chat?page=${page}&limit=${limit}`);
+            const response = await axiosInstance.get(`/chat/inbox?limit=${limit}&page=${page}`);
             return response.data.data;
         } catch (error: any) {
             return await withAsyncThunkErrorHandler(error, rejectWithValue);

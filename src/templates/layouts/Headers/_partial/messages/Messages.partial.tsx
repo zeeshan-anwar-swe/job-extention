@@ -11,7 +11,7 @@ const MessagesPartial = () => {
 	const { inbox, loading, onlineStatusMap } = useSocket();
 	const navigate = useNavigate();
 	const inboxMessages = inbox ? Object.values(inbox) : [];
-
+ 
 	const handleClick = (id: string, name: string) => {
 		navigate(`/chat/${id}`, {
 			state: { userName: name, userId: id },

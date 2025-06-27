@@ -11,7 +11,7 @@ import Balance1Partial from './_partial/Balance1.partial';
 import Balance2Partial from './_partial/Balance2.partial';
 import Balance3Partial from './_partial/Balance3.partial';
 import Balance4Partial from './_partial/Balance4.partial';
-import MessagePartial from './_partial/Timeline.partial';
+import MessagePartial from './_partial/Messages.partial';
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
