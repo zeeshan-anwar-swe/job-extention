@@ -48,7 +48,6 @@ const JobFormPartial = ({ jobDetails }: any) => {
 
 	useEffect(() => {
 		if (jobDetails) {
-			console.log('jobDetails', jobDetails);
 			
 			setFormData({
 				title: jobDetails.title,

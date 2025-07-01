@@ -10,11 +10,11 @@ const { RangePicker } = DatePicker;
 const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 	const onChange = (date: any, dateString: any) => {
 		console.log({ date, dateString });
-		setActiveTab(PERIOD.RANGE);
+		typeof setDateRange === 'function' && setActiveTab(PERIOD.RANGE);
 		setDateRange({ startDate: dateString[0], endDate: dateString[1] });
 	};
 
-	return (
+	return activeTab ? (
 		<Subheader>
 			<SubheaderLeft>
 				<PeriodButtonsPartial activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -28,6 +28,13 @@ const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 				</Space>
 			</SubheaderRight>
 		</Subheader>
+	) : (
+		<Space direction='horizontal'>
+			<RangePicker
+				className=' [&:not(.ant-picker-disabled)]:rounded-full [&:not(.ant-picker-disabled)]:border-2'
+				onChange={onChange}
+			/>
+		</Space>
 	);
 };
 

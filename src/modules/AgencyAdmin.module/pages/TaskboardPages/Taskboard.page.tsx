@@ -33,79 +33,18 @@ import {
 	getTaskBoardInProgressJobs,
 	getTaskBoardInReviewJobs,
 } from '../../../../store/slices/Agency/Taskboard.slice';
+import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 
 const TaskboardPage = () => {
-	const dispatch: AppDispatch = useDispatch();
+
+	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
+
 	const { backlogJobs, inProgressJobs, inReviewJobs, completedJobs } = useSelector(
 		(state: RootState) => state.taskBoard,
 	);
-	const { i18n } = useTranslation();
 
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 
-	const [selectedDate, setSelectedDate] = useState<Range[]>([
-		{
-			startDate: dayjs().startOf('week').add(-1, 'week').toDate(),
-			endDate: dayjs().endOf('week').toDate(),
-			key: 'selection',
-		},
-	]);
 
-	useEffect(() => {
-		if (activeTab === PERIOD.DAY) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('day').toDate(),
-					endDate: dayjs().endOf('day').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.WEEK) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('week').toDate(),
-					endDate: dayjs().endOf('week').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.MONTH) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('month').toDate(),
-					endDate: dayjs().endOf('month').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		return () => {};
-	}, [activeTab]);
-
-	useEffect(() => {
-		const selectedStart = dayjs(selectedDate[0].startDate).format('LL');
-		const selectedEnd = dayjs(selectedDate[0].endDate).format('LL');
-
-		if (
-			selectedStart === dayjs().startOf('day').format('LL') &&
-			selectedEnd === dayjs().endOf('day').format('LL')
-		) {
-			setActiveTab(PERIOD.DAY);
-		}
-		if (
-			selectedStart === dayjs().startOf('week').format('LL') &&
-			selectedEnd === dayjs().endOf('week').format('LL')
-		) {
-			setActiveTab(PERIOD.WEEK);
-		}
-		if (
-			selectedStart === dayjs().startOf('month').format('LL') &&
-			selectedEnd === dayjs().endOf('month').format('LL')
-		) {
-			setActiveTab(PERIOD.MONTH);
-		}
-		return () => {};
-	}, [selectedDate]);
 
 	return (
 		<>
@@ -151,41 +90,9 @@ const TaskboardPage = () => {
 						/>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<Dropdown>
-							<DropdownToggle>
-								<Button icon='HeroCalendarDays'>
-									{activeTab === PERIOD.DAY &&
-										dayjs().locale(i18n.language).format('LL')}
-									{activeTab === PERIOD.WEEK &&
-										`${dayjs()
-											.startOf('week')
-											.locale(i18n.language)
-											.format('MMMM D')} - ${dayjs()
-											.endOf('week')
-											.locale(i18n.language)
-											.format('MMMM D, YYYY')}`}
-									{activeTab === PERIOD.MONTH &&
-										dayjs()
-											.startOf('month')
-											.locale(i18n.language)
-											.format('MMMM, YYYY')}
-								</Button>
-							</DropdownToggle>
-							<DropdownMenu className='!p-0'>
-								<DateRangePicker
-									onChange={(item) => setSelectedDate([item.selection])}
-									moveRangeOnFirstSelection={false}
-									months={2}
-									ranges={selectedDate}
-									direction='horizontal'
-									rangeColors={[
-										colors[themeConfig.themeColor][themeConfig.themeColorShade],
-										colors.emerald[themeConfig.themeColorShade],
-										colors.amber[themeConfig.themeColorShade],
-									]}
-								/>
-							</DropdownMenu>
-						</Dropdown>
+						<PeriodAndDateRange
+							setDateRange={setDateRange}
+						/>
 					</SubheaderRight>
 				</Subheader>
 				<Container className='grid grid-cols-4 gap-4 '>
@@ -219,7 +126,7 @@ const TaskboardPage = () => {
 						<TaskSectionCardPartial
 							ListLimit={10}
 							getJobListAction={getTaskBoardInReviewJobs}
-							jobList={inProgressJobs}
+							jobList={inReviewJobs}
 							color='violet'
 							lineColor='!border-violet-500'
 							cardType={JobStatus.IN_REVIEW}

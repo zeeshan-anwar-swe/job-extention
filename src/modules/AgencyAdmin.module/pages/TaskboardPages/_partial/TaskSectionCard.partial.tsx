@@ -13,9 +13,6 @@ import {
 	TaskBoardJobType,
 	TaskBoardListType,
 } from '../../../../../types/slices.type/agency/taskboard.slice.type';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../../store';
 import Pagination from '../../../../../components/ui/Pagination';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 
@@ -72,6 +69,7 @@ const TaskSectionCardPartial = ({
 							image={job.client?.image}
 							key={job.id}
 							title={job.title}
+							job={job}
 							subTitle={job.client?.name}
 						/>
 					))}

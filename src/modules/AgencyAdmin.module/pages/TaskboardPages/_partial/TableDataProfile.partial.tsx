@@ -7,26 +7,30 @@ import Card, {
 } from '../../../../../components/ui/Card';
 import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
 import useImageValidation from '../../../../../hooks/useImageValidation';
+import { TaskBoardJobType } from '../../../../../types/slices.type/agency/taskboard.slice.type';
 import {
 	profileImageUrlValidationCheck,
 	textValidationCheck,
 } from '../../../../../utils/validationCheck';
+import JobStatusDropdownPartial from './JobStatusDropdown.partial';
 
 const TableDataProfilePartial = ({
 	image,
 	title,
 	subTitle,
+	job
 }: {
 	image?: string;
 	title?: string;
 	subTitle?: string;
+	job?: TaskBoardJobType;
 }) => {
 	const { loading, imageUrl } = useImageValidation(image);
 	return (
 		<Card className='border-2'>
 			<CardHeader className='!flex !flex-nowrap items-center justify-between '>
 				<CardTitle className='break-all !text-lg'>{textValidationCheck(title)}</CardTitle>
-				<Button icon='HeroEllipsisHorizontal'></Button>
+				{job && <JobStatusDropdownPartial item={job} />}
 			</CardHeader>
 
 			<CardBody>

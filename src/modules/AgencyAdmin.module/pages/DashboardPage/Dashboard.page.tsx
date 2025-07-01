@@ -75,7 +75,7 @@ const DashboardPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Sales Dashboard'>
+			<PageWrapper name='Sales Dashboard'> 
 				<PeriodAndDateRange
 					activeTab={activeTab}
 					setActiveTab={setActiveTab}

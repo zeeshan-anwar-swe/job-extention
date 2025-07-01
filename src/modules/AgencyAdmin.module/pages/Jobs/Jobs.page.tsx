@@ -25,9 +25,11 @@ import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
 import CustomSearchComponent from '../../components/CustomSearch.component';
 import { Link } from 'react-router-dom';
+import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 
 const JobsPage = () => {
 	const { i18n } = useTranslation();
+	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
 
 	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
@@ -42,7 +44,6 @@ const JobsPage = () => {
 			key: 'selection',
 		},
 	]);
-
 
 	useEffect(() => {
 		if (activeTab === PERIOD.DAY) {
@@ -118,50 +119,20 @@ const JobsPage = () => {
 							searchLimit={9}
 							setSearchActionForPagination={setJobSearch}
 							searchListAction={getJobsList}
-							searchByFilterOptions={['title', 'location', 'type', 'experience', 'clientName', 'clientEmail']}
+							searchByFilterOptions={[
+								'title',
+								'location',
+								'type',
+								'experience',
+								'clientName',
+								'clientEmail',
+							]}
 						/>
-
 					</SubheaderLeft>
 					<SubheaderRight>
-						<Dropdown>
-							<DropdownToggle>
-								<Button icon='HeroCalendarDays'>
-									{activeTab === PERIOD.DAY &&
-										dayjs().locale(i18n.language).format('LL')}
-									{activeTab === PERIOD.WEEK &&
-										`${dayjs()
-											.startOf('week')
-											.locale(i18n.language)
-											.format('MMMM D')} - ${dayjs()
-											.endOf('week')
-											.locale(i18n.language)
-											.format('MMMM D, YYYY')}`}
-									{activeTab === PERIOD.MONTH &&
-										dayjs()
-											.startOf('month')
-											.locale(i18n.language)
-											.format('MMMM, YYYY')}
-								</Button>
-							</DropdownToggle>
-							<DropdownMenu className='!p-0'>
-								<DateRangePicker
-									onChange={(item) => {
-										console.log({ item });
-
-										setSelectedDate([item.selection]);
-									}}
-									moveRangeOnFirstSelection={true}
-									months={2}
-									ranges={selectedDate}
-									direction='vertical'
-									rangeColors={[
-										colors[themeConfig.themeColor][themeConfig.themeColorShade],
-										colors.emerald[themeConfig.themeColorShade],
-										colors.amber[themeConfig.themeColorShade],
-									]}
-								/>
-							</DropdownMenu>
-						</Dropdown>
+						<PeriodAndDateRange
+							setDateRange={setDateRange}
+						/>
 					</SubheaderRight>
 				</div>
 				<Subheader>
