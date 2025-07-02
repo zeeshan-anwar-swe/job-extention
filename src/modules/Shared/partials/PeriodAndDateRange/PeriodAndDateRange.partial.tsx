@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
@@ -5,12 +6,13 @@ import Subheader, {
 import PERIOD from '../../../../constants/periods.constant';
 import PeriodButtonsPartial from './_partial/PeriodButtons.partial';
 import { DatePicker, Space } from 'antd';
+import dayjs from 'dayjs';
 const { RangePicker } = DatePicker;
 
 const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 	const onChange = (date: any, dateString: any) => {
 		console.log({ date, dateString });
-		typeof setDateRange === 'function' && setActiveTab(PERIOD.RANGE);
+		typeof setActiveTab === 'function' && setActiveTab(PERIOD.RANGE);
 		setDateRange({ startDate: dateString[0], endDate: dateString[1] });
 	};
 
@@ -22,6 +24,7 @@ const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 			<SubheaderRight>
 				<Space direction='horizontal'>
 					<RangePicker
+						defaultValue={[dayjs().startOf('day'), null]}
 						className=' [&:not(.ant-picker-disabled)]:rounded-full [&:not(.ant-picker-disabled)]:border-2'
 						onChange={onChange}
 					/>
@@ -31,6 +34,7 @@ const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 	) : (
 		<Space direction='horizontal'>
 			<RangePicker
+				defaultValue={[dayjs().startOf('day'), null]}
 				className=' [&:not(.ant-picker-disabled)]:rounded-full [&:not(.ant-picker-disabled)]:border-2'
 				onChange={onChange}
 			/>

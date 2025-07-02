@@ -33,22 +33,25 @@ import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { transLineChartData } from '../../../../utils/chart.util';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
-import { Space, DatePicker, DatePickerProps } from 'antd';
 
-const { RangePicker } = DatePicker;
 
 const DashboardPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
-	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
+	const [dateRange, setDateRange] = useState<any>({ startDate: dayjs().format('YYYY-MM-DD'), endDate: '' });
+
+	console.log({ dateRange });
+	
 
 	const { chartData, chartCategory, componentLoading, error } = useSelector(
 		(state: RootState) => state.agencyStatics,
 	);
 
-	console.log({ dateRange });
 
 	useEffect(() => {
+		if(activeTab === PERIOD.RANGE){
+			if(!dateRange.startDate || !dateRange.endDate) return
+		}
 		dispatch(
 			getAgencyStatics({
 				startDate: dateRange.startDate,
@@ -69,7 +72,7 @@ const DashboardPage = () => {
 		<>
 			<Header>
 				<HeaderLeft>
-					<Breadcrumb path='Pages / Dashboard' currentPage='Sales' />
+					<Breadcrumb path='Pages / Dashboard' currentPage='Dashboard' />
 				</HeaderLeft>
 				<HeaderRight>
 					<DefaultHeaderRightCommon />

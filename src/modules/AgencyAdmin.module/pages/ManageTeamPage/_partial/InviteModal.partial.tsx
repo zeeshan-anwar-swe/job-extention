@@ -13,7 +13,7 @@ import { AppDispatch, RootState } from '../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import Validation from '../../../../../components/form/Validation';
-import { inviteTeamMember } from '../../../../../store/slices/Team.slice';
+import { getPaginatedTeamlist, inviteTeamMember } from '../../../../../store/slices/Team.slice';
 import { useEffect } from 'react';
 
 type TValues = {
@@ -46,18 +46,20 @@ const InviteModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any
 
 			return errors;
 		},
-		onSubmit: (values: TValues) => {
+		onSubmit: async (values: TValues) => {
 			const { email, name } = values;
-			dispatch(inviteTeamMember({ email, name }));
+			await dispatch(inviteTeamMember({ email, name }));
 		},
 	});
-
+	
 	useEffect(() => {
 		if (!modalLoading && !error) {
 			formik.resetForm();
 			setModal(false);
-			// dispatch(getTeamlist());
+			dispatch(getPaginatedTeamlist({ limit: 10, page: 1 }));
 		}
+
+		
 	}, [modalLoading, error]);
 
 	return (

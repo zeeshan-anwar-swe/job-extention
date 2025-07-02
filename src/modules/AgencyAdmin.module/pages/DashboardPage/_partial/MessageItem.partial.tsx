@@ -22,7 +22,6 @@ interface User {
   createdAt: string; // Consider using Date for better date handling if parsing later
 }
 const MessageItemPartial = ({ chatRow }: { chatRow: User }) => {
-	console.log('chatRow', chatRow);
 	
 	const { loading, imageUrl } = useImageValidation(chatRow?.image);
 
