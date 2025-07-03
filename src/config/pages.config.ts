@@ -429,6 +429,7 @@ export const appPages = {
 			text: 'Dashboard',
 			icon: 'HeroSquares2X2',
 		},
+		
 
 		chatAppPages: {
 			id: 'chatApp',
@@ -442,6 +443,33 @@ export const appPages = {
 			to: '/chat-with-recruiter',
 			text: 'Chat With Recruiter',
 			icon: 'HeroChatBubbleLeftRight',
+		},
+
+		candidatesPage:{
+			id: 'candidatesApp',
+			to: '/candidates',
+			text: 'Candidates',
+			icon: 'HeroUsers',
+			subPages: {
+				candidatesPage: {
+					id: 'candidatesPage',
+					to: '/candidates',
+					text: 'Candidates',
+					icon: 'HeroUsers',
+				},
+				cadidateProfileAppPage: {
+					id: 'cadidateProfileApp',
+					to: '/candidates/profile',
+					text: 'Candidate Profile',
+					icon: 'HeroIdentification',
+				},
+				candidateCVEditAppPage: {
+					id: 'cadidateProfileApp',
+					to: 'candidates/cv-edit',
+					text: 'Candidate Profile',
+					icon: 'HeroPencilSquare',
+				},
+			},
 		},
 
 		recruiterAppPages: {
