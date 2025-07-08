@@ -13,6 +13,8 @@ import chat from './slices/Chat.slice';
 import reportsAndAnalytics from './slices/Agency/ReportsAndAnalytics.slice';
 import subscription from './slices/Subcription.slice';
 import teamCandidates from './slices/Team/Candidates.slice';
+import teamJobs from './slices/Team/TeamJobs.slice';
+import teamDashboard from './slices/Team/TeamDashboard.slice';
 
 export const store = configureStore({
 	reducer: {
@@ -27,9 +29,11 @@ export const store = configureStore({
 		candidates,
 		subscription,
 		agencyStatics,
+		teamDashboard,
 		forgotPasswordSlice,
 		reportsAndAnalytics,
 		teamCandidates,
+		teamJobs,
 	},
 });
 

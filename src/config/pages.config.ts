@@ -118,6 +118,7 @@ export const appPages = {
 				},
 			},
 		},
+
 		jobsAppPages: {
 			id: 'jobsApp',
 			to: '/jobs',
@@ -430,6 +431,33 @@ export const appPages = {
 			icon: 'HeroSquares2X2',
 		},
 		
+		jobsPages: {
+			id: 'jobsApp',
+			to: '/jobs',
+			text: 'Jobs',
+			icon: 'HeroDocumentText',
+			subPages: {
+				jobsPage: {
+					id: 'jobsApp',
+					to: '/jobs',
+					text: 'Jobs',
+					icon: 'HeroDocumentText',
+				},
+				viewCadidatesAppPages: {
+					id: 'jobsViewCadidatesApp',
+					to: '/jobs/view-job-details',
+					text: 'View Cadidates',
+					icon: 'HeroUser',
+				},
+				createJobsAppPages: {
+					id: 'jobsCreateJobsApp',
+					to: '/jobs/create-job',
+					text: 'Create Job',
+					icon: 'Heroplus',
+				},
+			},
+		},
+
 
 		chatAppPages: {
 			id: 'chatApp',
@@ -473,16 +501,16 @@ export const appPages = {
 		},
 
 		recruiterAppPages: {
-			id: 'recruiterApp',
-			to: '/recruiters',
-			text: 'Recruiters',
-			icon: 'HeroBriefcase',
+			id: 'TeamMembersApp',
+			to: '/team-members',
+			text: 'Team Members',
+			icon: 'HeroUserGroup',
 			subPages: {
 				recruiterPage: {
-					id: 'recruiterPage',
-					to: '/recruiters',
-					text: 'Recruiters',
-					icon: 'HeroBriefcase',
+					id: 'TeamMembersPage',
+					to: '/team-members',
+					text: 'Team Members',
+					icon: 'HeroUserGroup',
 				},
 				recruiterProfilePage: {
 					id: 'recruitmentProfileApp',

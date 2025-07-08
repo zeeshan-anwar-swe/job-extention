@@ -16,7 +16,7 @@ export const getRecruitersList = createAsyncThunk(
             const response = await axiosInstance.get(
                 `/team/list?page=${page}&limit=${limit}`,
             );
-            return response.data;
+            return response.data.data;
         } catch (error: any) {
             return await withAsyncThunkErrorHandler(error, rejectWithValue);
         }

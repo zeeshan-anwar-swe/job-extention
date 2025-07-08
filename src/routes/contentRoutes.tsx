@@ -22,7 +22,7 @@ import ConnectCRMPage from '../modules/AgencyAdmin.module/pages/SettingPage/Conn
 import SubcriptionPage from '../modules/AgencyAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
 import PaymentPage from '../modules/AgencyAdmin.module/pages/PaymentPage/Payment.page';
 import SSOWaitingPage from '../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWaiting.page';
-import RecruitersPage from '../modules/Team.module/pages/Recruiter/Recruiter.page';
+import RecruitersPage from '../modules/Team.module/pages/TeamMembers/Recruiter.page';
 import ChatWithRecruiterPage from '../modules/Team.module/pages/ChatPage/Chat.page';
 import TestPage from '../modules/Shared/pages/TestPage/Test.page';
 import ClientJobsPage from '../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page';
@@ -31,6 +31,8 @@ import TeamDashboardPage from '../modules/Team.module/pages/DashboardPage/Dashbo
 import TeamCandidatesPage from '../modules/Team.module/pages/CandidatesPage/Candidates.page';
 import TeamCandidateCVEditPage from '../modules/Team.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
 import TeamCandidatesProfilePage from '../modules/Team.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
+import TeamJobsPage from '../modules/Team.module/pages/Jobs/Jobs.page';
+import TeamJobDetailsPage from '../modules/Team.module/pages/Jobs/JobsViewCadidates/TeamJobDetails.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -291,6 +293,16 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
+			path: appPages.Team.jobsPages.to,
+			element: <TeamJobsPage/>,
+		},
+
+		{
+			path: appPages.Team.jobsPages.subPages.viewCadidatesAppPages.to,
+			element: <TeamJobDetailsPage/>,
+		},
+
+		{
 			path: appPages.Team.candidatesPage.to,
 			element: <TeamCandidatesPage/>,
 		},
@@ -303,7 +315,6 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.Team.chatAppPages.to+'/*',
 			element: <ChatMain />,
-			
 		},
 
 		{

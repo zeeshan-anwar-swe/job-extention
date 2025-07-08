@@ -48,7 +48,7 @@ const MessagesPartial = () => {
 							</div>
 						))
 					) : (
-						<p>No Message</p>
+						<p className='text-nowrap'>No Message</p>
 					)}
 				</DropdownMenu>
 			</Dropdown>

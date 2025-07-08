@@ -13,7 +13,6 @@ import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
-import { getPaginatedTeamlist } from '../../../../store/slices/Team.slice';
 import InviteModalPartial from './_partial/InviteModal.partial';
 import Pagination from '../../../../components/ui/Pagination';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
@@ -23,8 +22,6 @@ const RecruitersPage = () => {
 	const { rows,count,loading, error } = useSelector(
 		(state: RootState) => state.recruiters.recruiterProfilerecruitersList,
 	);
-
-	console.log({ rows,count,loading, error });
 	
 	const [modal, setModal] = useState<boolean>(false);
 
@@ -75,9 +72,7 @@ const RecruitersPage = () => {
 				</Subheader>
 				<PageLoader loading={loading} error={error} data={rows}>
 					<Container>
-						<div className=''>
-							{/* <TablePartial /> */}
-						</div>
+							<TablePartial />
 					</Container>
 				</PageLoader>
 				<Pagination

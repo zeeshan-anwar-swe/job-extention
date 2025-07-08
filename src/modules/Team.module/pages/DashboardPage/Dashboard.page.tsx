@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import Container from '../../../../components/layouts/Container/Container';
-import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
+import { useEffect, useState } from 'react';
 import ChartPartial from './_partial/Chart.partial';
+import { useDispatch, useSelector } from 'react-redux';
+import CommentPartial from './_partial/Comment.partial';
 import Balance1Partial from './_partial/Balance1.partial';
 import Balance2Partial from './_partial/Balance2.partial';
 import Balance3Partial from './_partial/Balance3.partial';
 import Balance4Partial from './_partial/Balance4.partial';
-import CommentPartial from './_partial/Comment.partial';
+import { AppDispatch, RootState } from '../../../../store';
+import { transLineChartData } from '../../../../utils/chart.util';
+import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
+import Container from '../../../../components/layouts/Container/Container';
+import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
+import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-
-import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card from '../../../../components/ui/Card';
-import { AppDispatch, RootState } from '../../../../store';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/Statics.slice';
-import PageLoader from '../../../../templates/layouts/main/PageLoader';
-import { transLineChartData } from '../../../../utils/chart.util';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import { getTeamStatics } from '../../../../store/slices/Team/TeamDashboard.slice';
+import MessagePartial from './_partial/Messages.partial';
 
 const TeamDashboardPage = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -30,7 +29,7 @@ const TeamDashboardPage = () => {
 	});
 
 	const { chartData, chartCategory, componentLoading, error } = useSelector(
-		(state: RootState) => state.agencyStatics,
+		(state: RootState) => state.teamDashboard,
 	);
 
 	useEffect(() => {
@@ -38,19 +37,19 @@ const TeamDashboardPage = () => {
 			if (!dateRange.startDate || !dateRange.endDate) return;
 		}
 		dispatch(
-			getAgencyStatics({
+			getTeamStatics({
 				startDate: dateRange.startDate,
 				endDate: dateRange.endDate,
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
-		dispatch(
-			getChartData({
-				period: activeTab.text.toLowerCase(),
-				startDate: dateRange.startDate,
-				endDate: dateRange.endDate,
-			}),
-		);
+		// dispatch(
+		// 	getChartData({
+		// 		period: activeTab.text.toLowerCase(),
+		// 		startDate: dateRange.startDate,
+		// 		endDate: dateRange.endDate,
+		// 	}),
+		// );
 	}, [activeTab, dateRange]);
 
 	return (
@@ -92,18 +91,19 @@ const TeamDashboardPage = () => {
 								/>
 							</PageLoader>
 						</div>
-						<div className=' col-span-12 2xl:col-span-4'>
+						<div className='col-span-12 2xl:col-span-4'>
+							<MessagePartial />
+						</div> 
+						{/* <div className=' col-span-12 2xl:col-span-4'>
 							<CommentPartial />
-						</div>
+						</div> */}
 
 						{/* <div className='col-span-12 2xl:col-span-8'>
 							<Card className='h-full'>
 								<TablePartial />
 							</Card>
 						</div>
-						<div className='col-span-12 2xl:col-span-4'>
-							<MessagePartial />
-						</div> */}
+						*/}
 					</div>
 				</Container>
 			</PageWrapper>

@@ -19,19 +19,20 @@ import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
-import CustomSearchComponent from '../../components/CustomSearch.component';
+import CustomSearchComponent from '../../../Shared/components/CustomSearch.component';
 import { Link } from 'react-router-dom';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import { getTeamJobs } from '../../../../store/slices/Team/TeamJobs.slice';
+import { TeamJob } from '../../../../types/slices.type/team/jobs.slice.type';
 
-const JobsPage = () => {
+const TeamJobsPage = () => {
+
 	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
-
-	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
-		(state: RootState) => state.jobsSlice,
+	const { loading, error, rows, count, search } = useSelector(
+		(state: RootState) => state.teamJobs.jobList,
 	);
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
-
 	const [selectedDate, setSelectedDate] = useState<Range[]>([
 		{
 			startDate: dayjs().startOf('month').add(-1, 'month').toDate(),
@@ -113,7 +114,7 @@ const JobsPage = () => {
 							placeholder='Search Jobs...'
 							searchLimit={9}
 							setSearchActionForPagination={setJobSearch}
-							searchListAction={getJobsList}
+							searchListAction={getTeamJobs}
 							searchByFilterOptions={[
 								'title',
 								'location',
@@ -137,25 +138,18 @@ const JobsPage = () => {
 							Create, Delete, and assign Candidates to jobs effectively.
 						</CardSubTitle>
 					</SubheaderLeft>
-					<SubheaderRight>
-						<Link to='/jobs/create-job'>
-							<Button variant='solid' rightIcon='HeroPlus'>
-								Create a new job
-							</Button>
-						</Link>
-					</SubheaderRight>
 				</Subheader>
-				<PageLoader loading={pageLoading} error={error} data={paginatedList}>
+				<PageLoader loading={loading} error={error} data={rows}>
 					<Container className='grid grid-cols-12 gap-4'>
-						{paginatedList.map((item: any) => (
-							<JobsPageCardPartial item={item} key={item.id} />
+						{rows.map((teamJob: TeamJob) => (
+							<JobsPageCardPartial teamJob={teamJob} key={teamJob.id} />
 						))}
 					</Container>
 				</PageLoader>
 				<Pagination
 					search={search}
-					getListAction={getJobsList}
-					count={paginationCount}
+					getListAction={getTeamJobs}
+					count={count}
 					limit={9}
 				/>
 			</PageWrapper>
@@ -163,4 +157,4 @@ const JobsPage = () => {
 	);
 };
 
-export default JobsPage;
+export default TeamJobsPage;

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../store';
 
 const Balance1Partial = () => {
-	const { agencyStatistics } = useSelector((state: RootState) => state.agencyStatics);
+	const { agencyStatistics } = useSelector((state: RootState) => state.teamDashboard);
 	return (
 		<Card>
 			<CardBody>
