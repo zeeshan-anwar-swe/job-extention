@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import ChartPartial from './_partial/Chart.partial';
 import { useDispatch, useSelector } from 'react-redux';
-import CommentPartial from './_partial/Comment.partial';
 import Balance1Partial from './_partial/Balance1.partial';
 import Balance2Partial from './_partial/Balance2.partial';
 import Balance3Partial from './_partial/Balance3.partial';
