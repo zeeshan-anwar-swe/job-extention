@@ -16,7 +16,7 @@ import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper'
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
-import { getTeamStatics } from '../../../../store/slices/Team/TeamDashboard.slice';
+import { getTeamChartData, getTeamStatics } from '../../../../store/slices/Team/TeamDashboard.slice';
 import MessagePartial from './_partial/Messages.partial';
 
 const TeamDashboardPage = () => {
@@ -42,13 +42,13 @@ const TeamDashboardPage = () => {
 				period: activeTab.text.toLowerCase(),
 			}),
 		);
-		// dispatch(
-		// 	getChartData({
-		// 		period: activeTab.text.toLowerCase(),
-		// 		startDate: dateRange.startDate,
-		// 		endDate: dateRange.endDate,
-		// 	}),
-		// );
+		dispatch(
+			getTeamChartData({
+				period: activeTab.text.toLowerCase(),
+				startDate: dateRange.startDate,
+				endDate: dateRange.endDate,
+			}),
+		);
 	}, [activeTab, dateRange]);
 
 	return (

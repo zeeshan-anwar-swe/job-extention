@@ -71,11 +71,11 @@ export const getTeamStatics = createAsyncThunk(
     },
 );
 
-export const getChartData = createAsyncThunk(
-    'teamDashboard/getChartData',
+export const getTeamChartData = createAsyncThunk(
+    'teamDashboard/getTeamChartData',
     async ({ period, startDate, endDate }: { period: string; startDate: string; endDate: string }, { rejectWithValue }) => {
         try {
-            const response = await axiosInstance.get(`/agency/dashboard-metrics?period=${period}&startDate=${startDate}&endDate=${endDate}`);
+            const response = await axiosInstance.get(`/team/dashboard-metrics?period=${period}&startDate=${startDate}&endDate=${endDate}`);
             return response.data.data;
         } catch (error: any) {
             return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -106,16 +106,16 @@ export const teamDashboardSlice = createSlice({
             });
 
         builder
-            .addCase(getChartData.pending, (state) => {
+            .addCase(getTeamChartData.pending, (state) => {
                 state.componentLoading = true;
                 state.error = null;
             })
-            .addCase(getChartData.fulfilled, (state, action) => {
+            .addCase(getTeamChartData.fulfilled, (state, action) => {
                 state.chartData = action.payload.metrics;
                 state.chartCategory = action.payload.categories;
                 state.componentLoading = false;
             })
-            .addCase(getChartData.rejected, (state, action: any) => {
+            .addCase(getTeamChartData.rejected, (state, action: any) => {
                 state.error = action.payload || {
                     message: 'Unknown error occurred',
                 };
