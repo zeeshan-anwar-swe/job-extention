@@ -8,6 +8,7 @@ import { setResetToken, setFormType } from '../store/slices/ForgotPassword.slice
 import { AppDispatch } from '../store';
 import { useDispatch } from 'react-redux';
 import { Roles, RolesType } from '../constants/role.enums';
+import useDarkMode from '../hooks/useDarkMode';
 
 export interface IAuthContextProps {
 	userTokenStorage: string | null;
@@ -45,6 +46,8 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 
 	const selectedEmail = useRef('');
 	const resetToken = useRef('');
+
+	const {setDarkModeStatus} = useDarkMode();
 
 	const [userTokenStorage, setUserToken] = useLocalStorage('token', null);
 	const [userStorage, setUser] = useLocalStorage('user', null);
@@ -195,6 +198,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	// call this function to sign out logged-in user
 	const onLogout = async () => {
 		await localStorage.removeItem('token');
+		await setDarkModeStatus("system");
 		navigate('/signin');
 	};
 

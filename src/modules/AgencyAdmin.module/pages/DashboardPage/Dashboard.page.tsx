@@ -40,7 +40,6 @@ const DashboardPage = () => {
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
 	const [dateRange, setDateRange] = useState<any>({ startDate: dayjs().format('YYYY-MM-DD'), endDate: '' });
 
-	console.log({ dateRange });
 	
 
 	const { chartData, chartCategory, componentLoading, error } = useSelector(

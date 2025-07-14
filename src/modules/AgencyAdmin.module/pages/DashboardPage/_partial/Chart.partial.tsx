@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useState and useEffect
 import Card, {
 	CardBody,
 	CardHeader,
@@ -17,74 +17,181 @@ const ChartPartial = ({
 	series: ApexOptions['series'];
 	categories: string[];
 }) => {
-	const [state, setState] = React.useState({
-		series: series,
-		options: {
-			colors: [
-				colors.blue['500'],
-				colors.violet['500'],
-				colors.emerald['500'],
-				colors.amber['500'],
-				colors.rose['500'],
-				colors.purple['500'],
-			],
-			chart: {
-				height: 400,
-				type: 'line',
-				zoom: {
-					enabled: false,
-				},
-			},
+	// State to track dark mode status
+	const [isDarkMode, setIsDarkMode] = useState(false);
 
-      plotOptions: {
-				bar: {
-					horizontal: false,
-					columnWidth: '55%',
-					borderRadiusWhenStacked: 'all',
-				},
-			},
+	// Effect to detect changes in the 'dark' class on the html element
+	useEffect(() => {
+		const checkDarkMode = () => {
+			setIsDarkMode(document.documentElement.classList.contains('dark'));
+		};
 
-			dataLabels: {
+		// Initial check
+		checkDarkMode();
+
+		const observer = new MutationObserver((mutationsList) => {
+			for (const mutation of mutationsList) {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+					checkDarkMode();
+				}
+			}
+		});
+
+		observer.observe(document.documentElement, { attributes: true });
+
+		return () => observer.disconnect();
+	}, []); // Empty dependency array ensures this runs once on mount
+
+	// Use a state for chart options that updates with theme changes
+	const [chartOptions, setChartOptions] = useState<ApexOptions>({
+		colors: [
+			colors.blue['500'],
+			colors.violet['500'],
+			colors.emerald['500'],
+			colors.amber['500'],
+			colors.rose['500'],
+			colors.purple['500'],
+		],
+		chart: {
+			height: 400,
+			type: 'line',
+			zoom: {
 				enabled: false,
 			},
+			toolbar: {
+				show: false,
+			},
+			background: isDarkMode ? colors.zinc['800'] : colors.white, // Chart background
+		},
+		plotOptions: {
+			bar: {
+				horizontal: false,
+				columnWidth: '55%',
+				borderRadiusWhenStacked: 'all',
+			},
+		},
+		dataLabels: {
+			enabled: false,
+		},
+		stroke: {
+			curve: 'smooth',
+			show: true,
+		},
+		title: {
+			align: 'left',
+			style: {
+				color: isDarkMode ? colors.zinc['200'] : colors.zinc['800'], // Title color
+			},
+		},
+		grid: {
+			show: true,
+			borderColor: isDarkMode ? colors.zinc['700'] : `${colors.zinc['500']}25`, // Grid line color
+			strokeDashArray: 0,
+			xaxis: {
+				lines: {
+					show: false,
+				},
+			},
+			yaxis: {
+				lines: {
+					show: true,
+				},
+			},
+			padding: {
+				top: 0,
+				right: 10,
+				bottom: 0,
+				left: 10,
+			},
+		},
+		xaxis: {
+			categories: categories,
+			labels: {
+				style: {
+					colors: isDarkMode ? colors.zinc['200'] : colors.zinc['700'], // X-axis label color
+				},
+			},
+			axisBorder: {
+				color: isDarkMode ? colors.zinc['600'] : colors.zinc['300'], // X-axis border color
+			},
+			axisTicks: {
+				color: isDarkMode ? colors.zinc['600'] : colors.zinc['300'], // X-axis tick color
+			},
+		},
+		yaxis: {
+			labels: {
+				style: {
+					colors: isDarkMode ? colors.zinc['200'] : colors.zinc['700'], // Y-axis label color
+				},
+			},
+		},
+		tooltip: {
+			theme: isDarkMode ? 'dark' : 'light', // Crucial for tooltip theme
+			style: {
+				fontSize: '12px',
+				fontFamily: undefined,
+				// Optionally, you can directly control background/text here if 'theme' isn't enough
+				// background: isDarkMode ? colors.zinc['700'] : colors.white,
+				// color: isDarkMode ? colors.white : colors.black,
+			},
+		},
+	});
 
-			stroke: {
-				curve: 'smooth',
-        show: true,
-				// width: 2,
-				// colors: ['transparent'],
+	// Effect to update chart options when isDarkMode changes
+	useEffect(() => {
+		setChartOptions((prevOptions) => ({
+			...prevOptions,
+			chart: {
+				...prevOptions.chart,
+				background: isDarkMode ? colors.zinc['800'] : colors.white,
 			},
 			title: {
-				// text: 'Job Openings vs Filled',
-				align: 'left', // Explicitly type 'left'
+				...prevOptions.title,
+				style: {
+					color: isDarkMode ? colors.zinc['200'] : colors.zinc['800'],
+				},
 			},
 			grid: {
-				show: true,
-				borderColor: `${colors.zinc['500']}25`,
-				strokeDashArray: 0,
-				xaxis: {
-					lines: {
-						show: false,
-					},
-				},
-				yaxis: {
-					lines: {
-						show: true,
-					},
-				},
-
-				padding: {
-					top: 0,
-					right: 10,
-					bottom: 0,
-					left: 10,
-				},
+				...prevOptions.grid,
+				borderColor: isDarkMode ? colors.zinc['700'] : `${colors.zinc['500']}25`,
 			},
 			xaxis: {
-				categories: categories,
+				...prevOptions.xaxis,
+				labels: {
+					...prevOptions.xaxis?.labels,
+					style: {
+						colors: isDarkMode ? colors.zinc['200'] : colors.zinc['700'],
+					},
+				},
+				axisBorder: {
+					...prevOptions.xaxis?.axisBorder,
+					color: isDarkMode ? colors.zinc['600'] : colors.zinc['300'],
+				},
+				axisTicks: {
+					...prevOptions.xaxis?.axisTicks,
+					color: isDarkMode ? colors.zinc['600'] : colors.zinc['300'],
+				},
 			},
-		} as ApexOptions,
-	});
+			yaxis: {
+				...prevOptions.yaxis,
+				...(Array.isArray(prevOptions.yaxis)
+					? {}
+					: {
+							labels: {
+								...prevOptions.yaxis?.labels,
+								style: {
+									colors: isDarkMode ? colors.zinc['200'] : colors.zinc['700'],
+								},
+							},
+						}),
+			},
+			tooltip: {
+				...prevOptions.tooltip,
+				theme: isDarkMode ? 'dark' : 'light', // Update tooltip theme
+			},
+		}));
+	}, [isDarkMode, categories]); // Re-run if isDarkMode or categories change
+
 	return (
 		<Card className='h-full'>
 			<CardHeader>
@@ -95,8 +202,8 @@ const ChartPartial = ({
 			</CardHeader>
 			<CardBody>
 				<ReactApexChart
-					options={state.options}
-					series={state.series}
+					options={chartOptions} // Use the state variable for options
+					series={series} // Series can remain as a prop if it doesn't change with theme
 					type='line'
 					height={400}
 				/>

@@ -11,6 +11,7 @@ import Icon from '../../../components/icon/Icon';
 import Validation from '../../../components/form/Validation';
 import SignUpWithGoogle from './SignupPage/_partial/SignUpWithGoogle';
 import SignUpWitLinkedIn from './SignupPage/_partial/SignUpWithLinkedIn';
+import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
 
 type TValues = {
 	email: string;
@@ -83,7 +84,10 @@ const SignupPage = () => {
 	);
 
 	return (
-		<div className='grid h-screen grid-cols-2 bg-white dark:bg-zinc-800'>
+		<PageWrapper
+			isProtectedRoute={false}
+			name='Sign Up'
+			className='!grid !h-screen !grid-cols-2 bg-white dark:bg-inherit'>
 			<div className='py-16 max-md:hidden'>
 				<div className="relative ml-auto h-full w-8/12 overflow-visible rounded-2xl bg-[url('/images/bear-bg.png')] bg-cover bg-center px-8">
 					<img
@@ -102,15 +106,15 @@ const SignupPage = () => {
 				</div>
 			</div>
 			<div className='mx-auto flex h-full items-center justify-center max-md:col-span-2  max-md:mx-auto'>
-				<div className='mr-auto flex max-w-sm flex-col gap-8'>
-					<div>
-						<LogoTemplate className='h-12' />
-					</div>
-					<div>
-						<span className='text-4xl font-semibold'>Sign Up</span>
-					</div>
-					<div>
-						<span>Get started for effortless recruitment</span>
+				<div className='mr-auto flex max-w-sm flex-col gap-4'>
+					<div className='space-y-2'>
+						<div>
+							<LogoTemplate className='h-10' />
+						</div>
+						<div className='flex flex-col gap-2'>
+							<h1 className='text-4xl  font-semibold'>Sign Up</h1>
+							<span>Get started for effortless recruitment</span>
+						</div>
 					</div>
 					<form className='flex w-96 flex-col gap-4' noValidate>
 						<div
@@ -263,19 +267,19 @@ const SignupPage = () => {
 						<SignUpWithGoogle />
 						<SignUpWitLinkedIn />
 					</div>
-					<div>
-						<span className='flex gap-2 text-sm'>
-							<span className='text-zinc-400 dark:text-zinc-600'>
+					<div className='text-center '>
+						<span className='flex justify-center text-center gap-2 text-sm'>
+							<span className='text-zinc-400  dark:text-zinc-600'>
 								Already have an account?
 							</span>
-							<Link to='/signin' className='hover:text-inherit'>
-								Sign In
+							<Link to='/signin' className='text-blue-500 font-semibold'>
+								Log In
 							</Link>
 						</span>
 					</div>
 				</div>
 			</div>
-		</div>
+		</PageWrapper>
 	);
 };
 
