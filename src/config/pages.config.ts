@@ -78,7 +78,7 @@ export const appPages = {
 				},
 				subcriptionAppPages: {
 					id: 'subcriptionApp',
-					to: '/setting/subcription',
+					to: '/setting/subscription',
 					text: 'Subscription',
 					icon: 'HeroCreditCard',
 				},

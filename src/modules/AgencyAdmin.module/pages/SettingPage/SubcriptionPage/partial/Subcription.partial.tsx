@@ -28,8 +28,8 @@ export const SubcriptionSectionPartial = () => {
 	};
 
 	return (
-		<Card>
-			<CardHeader className='rounded-t-xl bg-white dark:!bg-zinc-900'>
+		<Card className='dark:bg-zinc-800 border-0'>
+			<CardHeader className='rounded-xl bg-white dark:!bg-zinc-900'>
 				<CardHeaderChild>
 					<div>
 						<div className='mb-2 flex items-center gap-2'>
@@ -41,11 +41,11 @@ export const SubcriptionSectionPartial = () => {
 								Monthly
 							</Badge>
 						</div>
-						<p>Perfect for small to medium-sized businesses.</p>
+						<p className='dark:text-white'>Perfect for small to medium-sized businesses.</p>
 					</div>
 				</CardHeaderChild>
 				<CardHeaderChild>
-					<CardTitle className='text-5xl max-2xl:text-4xl max-xl:text-3xl'>
+					<CardTitle className='text-5xl max-2xl:text-4xl max-xl:text-3xl dark:text-white'>
 						{data.invoices[0]?.amount}{' '}
 						<sub className='text-sm font-normal'>per month</sub>
 					</CardTitle>

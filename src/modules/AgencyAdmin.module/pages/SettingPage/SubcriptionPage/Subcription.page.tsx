@@ -23,12 +23,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { useEffect } from 'react';
-import { getSubscriptionPlan, getUserSubscription } from '../../../../../store/slices/Subcription.slice';
-import {  TSubcriptionPlan } from '../../../../../types/slices.type/subcription.slice.type';
+import {
+	getSubscriptionPlan,
+	getUserSubscription,
+} from '../../../../../store/slices/Subcription.slice';
+import { TSubcriptionPlan } from '../../../../../types/slices.type/subcription.slice.type';
 
 const SubcriptionPage = () => {
-
-	const dispatch:AppDispatch = useDispatch();
+	const dispatch: AppDispatch = useDispatch();
 
 	const { loading, data, error } = useSelector(
 		(state: RootState) => state.subscription.userSubscription,
@@ -39,12 +41,11 @@ const SubcriptionPage = () => {
 		error: spError,
 	} = useSelector((state: RootState) => state.subscription.subscriptionPlans);
 
-	useEffect(()=>{
+	useEffect(() => {
 		dispatch(getUserSubscription());
 		dispatch(getSubscriptionPlan());
-	},[])
+	}, []);
 
-	
 	return (
 		<>
 			<Header>
@@ -64,19 +65,19 @@ const SubcriptionPage = () => {
 						<Card className='col-span-12 !grid flex-1 !grid-cols-10 gap-4  p-4'>
 							<SettingAside />
 							<Card className='col-span-8 gap-4 !bg-zinc-100 p-4 dark:!bg-zinc-950 max-md:col-span-12 '>
-								{
-									data.subscription ?
-								<SubcriptionSectionPartial />:
-								<section className='grid grid-cols-2 gap-4'>
+								{data.subscription ? (
 
-									{
-										spData.map((subcriptionPlan:TSubcriptionPlan) => (
-											<SubcriptionCardPartial subcriptionPlan={subcriptionPlan} key={subcriptionPlan.id} />
-										))
-									}
-									
-								</section>
-								}
+									<SubcriptionSectionPartial />
+								) : (
+									<section className='grid grid-cols-2 gap-4'>
+										{spData.map((subcriptionPlan: TSubcriptionPlan) => (
+											<SubcriptionCardPartial
+												subcriptionPlan={subcriptionPlan}
+												key={subcriptionPlan.id}
+											/>
+										))}
+									</section>
+								)}
 
 								<Card className='!bg-transparent'>
 									<CardHeader>

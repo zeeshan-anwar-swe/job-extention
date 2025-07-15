@@ -32,7 +32,7 @@ export const SubcriptionCardPartial = ({
 	};
 
 	return (
-		<Card>
+		<Card >
 			<CardHeader>
 				<ImageLoaderWraper loading={loading} height='h-14'>
 					<img

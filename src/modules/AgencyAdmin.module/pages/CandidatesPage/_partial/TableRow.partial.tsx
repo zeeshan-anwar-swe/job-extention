@@ -1,6 +1,5 @@
 import { Td, Tr } from '../../../../../components/ui/Table';
 import TableDataProfilePartial from './TableDataProfile.partial';
-import TableDataPositionPartial from './TableDataPosition.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataSourcePartial from './TableDataSource.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
@@ -43,9 +42,9 @@ const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
 			{selectedJob ? (
 				<>
 					<Td>
-						{selectedJob?.job?.client?.clientUser.firstName +
+						{selectedJob?.job?.client?.clientUser.firstName ?? '' +
 							' ' +
-							selectedJob?.job?.client?.clientUser.lastName}
+							selectedJob?.job?.client?.clientUser.lastName ??''}
 					</Td>
 					<Td>
 						<TableDataFeedbackPartial title={formatString(selectedJob?.status ?? '')} />

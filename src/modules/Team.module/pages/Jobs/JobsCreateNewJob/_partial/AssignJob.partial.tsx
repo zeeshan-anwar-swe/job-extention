@@ -15,7 +15,7 @@ import {
 	setClientSearch,
 } from '../../../../../../store/slices/Agency/Client.slice';
 import PageLoader from '../../../../../../templates/layouts/main/PageLoader';
-import SearchPartial from '../../../../common/Search.partial';
+// import SearchPartial from '../../../../common/Search.partial';
 import Pagination from '../../../../../../components/ui/Pagination';
 
 const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
@@ -32,13 +32,13 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 			<ModalHeader>
 				<CardHeader>Assign a client</CardHeader>
 			</ModalHeader>
-			<div className='p-4'>
+			{/* <div className='p-4'>
 				<SearchPartial
 					searchLimit={10}
 					searchListAction={getPaginatedAgencyClientsList}
 					setSearchActionForPagination={setClientSearch}
 				/>
-			</div>
+			</div> */}
 
 			<ModalBody className='h-96 overflow-y-scroll'>
 				<PageLoader data={clientsList} loading={pageLoading} error={error}>

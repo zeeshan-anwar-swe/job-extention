@@ -260,7 +260,7 @@ const ReusableChatPage = ({
 								<h1>{receiverName}</h1>
 								<span
 									className={`h-2 w-2 rounded-full ${
-										isUserOnline(userId) ? 'bg-green-500' : 'bg-gray-400'
+										isUserOnline(userId) ? 'bg-green-500' : 'bg-blue-100'
 									}`}></span>
 							</div>
 							<div className='flex items-center gap-2'>
@@ -284,7 +284,7 @@ const ReusableChatPage = ({
 										key={index}
 										className={`flex ${msg.senderId === userData.id ? 'justify-end ' : 'justify-start'}`}>
 										<div
-											className={`max-w-[70%] rounded-md ${msg.senderId === userData.id ? 'bg-blue-100 ' : 'bg-zinc-100'} p-3 shadow-md`}>
+											className={`max-w-[70%] rounded-md ${msg.senderId === userData.id ? 'bg-blue-100 dark:bg-zinc-800 ' : 'bg-zinc-100 dark:bg-zinc-700'} p-3 shadow-md`}>
 											<strong>
 												{msg.senderId === userData.id
 													? 'You'
@@ -357,7 +357,7 @@ const ReusableChatPage = ({
 								onChange={(e) => setText(e.target.value)}
 								onKeyDown={handleKeyPress}
 								placeholder='Type a message...'
-								className='w-full rounded-full border p-2'
+								className='w-full bg-transparent rounded-full border p-2'
 							/>
 						</CardFooterChild>
 						<CardFooterChild>
@@ -371,6 +371,7 @@ const ReusableChatPage = ({
 									</Alert>
 								)}
 								<input
+									
 									id='chatFile'
 									className='hidden'
 									type='file'

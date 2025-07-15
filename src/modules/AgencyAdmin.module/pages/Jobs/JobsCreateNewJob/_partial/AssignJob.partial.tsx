@@ -50,7 +50,7 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 				</PageLoader>
 			</ModalBody>
 			<ModalFooter className='flex flex-col items-end'>
-				<ModalFooterChild>
+				<ModalFooterChild className='ml-auto'>
 					<Pagination
 						count={paginationCount}
 						search={clentSearch}
@@ -71,13 +71,13 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
 						Done
 					</Button>
-					<Button
+					{/* <Button
 						rightIcon='HeroPaperAirplane'
 						onClick={() => setModal(false)}
 						className='w-full'
 						variant='solid'>
 						Invite as client
-					</Button>
+					</Button> */}
 				</ModalFooterChild>
 			</ModalFooter>
 		</Modal>

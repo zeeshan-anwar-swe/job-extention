@@ -14,22 +14,18 @@ import Card, {
 } from '../../../../../components/ui/Card';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import LabelTitlepartial from './_partial/LabelTitle.partial';
-import { NavSeparator } from '../../../../../components/layouts/Navigation/Nav';
-import {
-	profileImageUrlValidationCheck,
-	textValidationCheck,
-	urlValidationCheck,
-} from '../../../../../utils/validationCheck';
+import { textValidationCheck, urlValidationCheck } from '../../../../../utils/validationCheck';
 import Alert from '../../../../../components/ui/Alert';
 import HeaderPartial from './_partial/Header.partial';
 import Label from '../../../../../components/form/Label';
-import Badge from '../../../../../components/ui/Badge';
 import LabelTextareaPartial from './_partial/LabelTextarea.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
 import { useEffect } from 'react';
 import { getCandidateProfile } from '../../../../../store/slices/Candiates.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
+import { JobCardPartial } from './_partial/JobCard.partial';
+import { AssignedJob } from '../../../../../types/slices.type/candidate.slice.type';
 
 const CandidatesProfilePage = () => {
 	const { state } = useLocation();
@@ -39,11 +35,12 @@ const CandidatesProfilePage = () => {
 	const { pageLoading, cadnidateProfile, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
- 
 
 	useEffect(() => {
 		if (state) {
-			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
+			dispatch(
+				getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }),
+			);
 		} else {
 			navigateTo('/candidates');
 		}
@@ -84,9 +81,7 @@ const CandidatesProfilePage = () => {
 									<div className='flex items-center gap-4 '>
 										<LabelTextareaPartial
 											label='About'
-											detail={textValidationCheck(
-												cadnidateProfile?.about,
-											)}
+											detail={textValidationCheck(cadnidateProfile?.about)}
 										/>
 									</div>
 
@@ -95,11 +90,14 @@ const CandidatesProfilePage = () => {
 											label='Roles'
 											detail={
 												cadnidateProfile?.roles
-													? cadnidateProfile?.roles?.join(', ')
+													? cadnidateProfile.roles.join(', ')
 													: ''
 											}
 										/>
-										<LabelTitlepartial label='Location' detail={cadnidateProfile?.location} />
+										<LabelTitlepartial
+											label='Location'
+											detail={cadnidateProfile?.location}
+										/>
 									</div>
 									<div className='flex items-center gap-4 max-md:flex-col'>
 										<LabelTitlepartial
@@ -112,7 +110,10 @@ const CandidatesProfilePage = () => {
 										/>
 									</div>
 									<div className='flex flex-col items-center'>
-										<LabelTitlepartial label='Availability' detail={cadnidateProfile?.availabilty}/>
+										<LabelTitlepartial
+											label='Availability'
+											detail={cadnidateProfile?.availabilty}
+										/>
 									</div>
 									<LabelTitlepartial
 										label='Top Skills'
@@ -132,30 +133,28 @@ const CandidatesProfilePage = () => {
 										</CardHeaderChild>
 									</CardHeader>
 
-									<CardBody className='mx-4 flex flex-col gap-4 rounded-xl bg-zinc-100 py-4 dark:bg-zinc-800'>
-										<CardTitle>Product Designer</CardTitle>
-										<Label htmlFor='description'>
-											Product Designer with 3 years of experience. Full time
-											On site Job.
-										</Label>
-										<NavSeparator />
+									<CardBody className='!flex !flex-col !gap-4 rounded-xl bg-white py-4 dark:bg-zinc-800'>
+										{/* Filter the shortlisted jobs first */}
+										{(() => {
+											const short_listed_jobs =
+												cadnidateProfile?.assignedJobs.filter(
+													(job: AssignedJob) =>
+														job.status === 'short_listed',
+												);
 
-										<div className='flex items-center gap-4'>
-											<img
-												className='aspect-square w-10'
-												src={profileImageUrlValidationCheck(null)}
-												alt='profile'
-											/>
-											<h5>Phoenix Baker</h5>
-											<p className='m-0 p-0 font-light'>1:22PM Yesterday </p>
-										</div>
-										<Badge
-											className='w-fit text-blue-600'
-											colorIntensity='100'
-											variant='solid'>
-											In Review
-										</Badge>
-										<p>Excellent problem-solving abilities, very impressed!</p>
+											// Conditionally render based on the length of short_listed_jobs
+											if (short_listed_jobs && short_listed_jobs.length > 0) {
+												return short_listed_jobs.map((job: AssignedJob) => (
+													<JobCardPartial key={job.title} job={job} />
+												));
+											} else {
+												return (
+													<div className='p-4 text-center text-zinc-500 dark:text-zinc-400'>
+														Not shortlisted for any job.
+													</div>
+												);
+											}
+										})()}
 									</CardBody>
 								</Card>
 								<Card className='h-fit p-4'>
@@ -166,9 +165,7 @@ const CandidatesProfilePage = () => {
 
 									<Link
 										target='_blank'
-										to={urlValidationCheck(
-											cadnidateProfile?.resumeLink,
-										)}
+										to={urlValidationCheck(cadnidateProfile?.resumeLink)}
 										className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
 										<Button className='h-fit' icon='HeroPdf' color='zinc'>
 											FluerCook.pdf

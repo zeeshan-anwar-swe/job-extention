@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
-import { TCandidateListItem } from '../../types/slices.type/candidate.slice.type';
+import { CandidateProfile, TCandidateListItem } from '../../types/slices.type/candidate.slice.type';
 
 export interface FilterOptionsType {
 	location: string;

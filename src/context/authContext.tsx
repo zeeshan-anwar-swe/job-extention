@@ -197,8 +197,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	};
 	// call this function to sign out logged-in user
 	const onLogout = async () => {
-		await localStorage.removeItem('token');
-		await setDarkModeStatus("system");
+		await localStorage.clear();
 		navigate('/signin');
 	};
 

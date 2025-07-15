@@ -36,3 +36,51 @@ export interface TCandidateListItem {
   image: string;
   jobProfiles: TCandidateJobProfile[];
 }
+
+
+
+
+
+
+
+
+
+export interface FeedbackBy {
+    feedback: string;
+    createdAt: string;
+    name: string;
+    image: string | null;
+}
+
+export interface AssignedJob {
+    title: string;
+    experience: string;
+    type: string; // Assuming these are the only possible values
+    status: string; // Assuming these are the only possible values
+    feedbackBy: FeedbackBy;
+}
+
+export interface CandidateInfo {
+    name: string;
+    email: string;
+    image: string;
+}
+
+export interface CandidateProfile {
+    id: string;
+    candidateId: string;
+    jobId: string;
+    status:  string; 
+    education: string;
+    about: string | null;
+    cv: string | null;
+    skills: string[];
+    roles: string[] | null;
+    experience: number;
+    resumeLink: string;
+    socialProfiles: string[];
+    candidate: CandidateInfo;
+    location: string;
+    availabilty: string;
+    assignedJobs: AssignedJob[];
+}
