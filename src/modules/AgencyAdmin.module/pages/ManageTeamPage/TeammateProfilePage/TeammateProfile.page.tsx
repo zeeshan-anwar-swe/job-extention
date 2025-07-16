@@ -59,7 +59,7 @@ const TeammateProfilePage = () => {
 						<DefaultHeaderRightCommon />
 					</HeaderRight>
 				</Header>
-				<PageWrapper name='Candidates'>
+				<PageWrapper name='Team Profile'>
 					<Subheader>
 						<SubheaderLeft>
 							<Link to='/manage-team'>
@@ -147,6 +147,7 @@ const TeammateProfilePage = () => {
 								<div className='flex items-center gap-4 '>
 									<LabelTitleTextAreapartial
 										label='About'
+										placeholder='Enter About'
 										detail={teamMemberProfile?.team?.about}
 									/>
 								</div>

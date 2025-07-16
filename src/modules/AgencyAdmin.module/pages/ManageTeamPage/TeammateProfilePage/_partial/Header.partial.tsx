@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { RootState } from '../../../../../../store';
 import Card from '../../../../../../components/ui/Card';
 import Badge from '../../../../../../components/ui/Badge';
 import Button from '../../../../../../components/ui/Button';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
-import { assignJobToTeamMember } from '../../../../../../store/slices/Team.slice';
+import { assignJobToTeamMember, unAssignJobToTeamMember } from '../../../../../../store/slices/Team.slice';
 
 const HeaderPartial = ({ state }: any) => {
 	const [modal, setModal] = useState<boolean>(false);
 
 	const { teamMemberProfile } = useSelector((state: RootState) => state.team);
-	console.log('teamMemberProfile', teamMemberProfile);
 
 	return (
 		<Card className='!col-span-12 flex'>
@@ -46,6 +44,7 @@ const HeaderPartial = ({ state }: any) => {
 				title={`Assign Jobs to team member: ${teamMemberProfile?.team?.firstName ?? ''}`}
 				assignToModule='teamMember'
 				jobAssignAction={assignJobToTeamMember}
+				unAssignAction={unAssignJobToTeamMember}
 				assignTo={state.id}
 				setModal={setModal}
 				modal={modal}

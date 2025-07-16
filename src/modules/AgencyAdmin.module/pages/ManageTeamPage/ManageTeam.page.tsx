@@ -36,7 +36,7 @@ const ManageTeamPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Manage Team'>
 				<Subheader>
 					<SubheaderLeft >
 						<CustomSearchComponent

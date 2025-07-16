@@ -127,8 +127,9 @@ const userSlice = createSlice({
 				state.passwordChangeLoading = true;
 				state.passwordError = null;
 			})
-			.addCase(changeUserPassword.fulfilled, (state) => {
+			.addCase(changeUserPassword.fulfilled, (state, action) => {
 				state.passwordChangeLoading = false;
+				localStorage.setItem('token', JSON.stringify(action.payload.token));
 				toast.success('Password updated successfully');
 			})
 			.addCase(changeUserPassword.rejected, (state, action) => {
