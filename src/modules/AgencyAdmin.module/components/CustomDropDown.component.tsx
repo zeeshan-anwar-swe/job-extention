@@ -12,14 +12,21 @@ const CustomDropDown = ({
 	icon = '',
 	rounded = 'rounded-full',
 	items = [],
+	setItem,
 }: {
 	title?: string;
 	children?: React.ReactNode;
 	icon?: string;
 	rounded?: TRounded;
 	items?: string[];
+	setItem?: any;
 }) => {
 	const [filter, setFilter] = useState<string>(title);
+
+	const handleChange = (item: string) => {
+		setFilter(item);
+		setItem && setItem(item);
+	};
 
 	return (
 		<Dropdown>
@@ -31,7 +38,7 @@ const CustomDropDown = ({
 			<DropdownMenu>
 				{items.map((item, index) => (
 					<DropdownItem
-						onClick={() => setFilter(item)}
+						onClick={() => handleChange(item)}
 						icon='HeroChevronRight'
 						key={index}>
 						{item}

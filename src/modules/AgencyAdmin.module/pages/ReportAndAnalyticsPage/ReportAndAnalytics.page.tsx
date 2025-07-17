@@ -44,6 +44,9 @@ const ReportAndAnalyticsPage = () => {
 	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
 
 	useEffect(() => {
+		if(activeTab === PERIOD.RANGE){
+			if(!dateRange.startDate || !dateRange.endDate) return
+		}
 		dispatch(
 			getStatics({
 				startDate: dateRange.startDate,
@@ -73,7 +76,7 @@ const ReportAndAnalyticsPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Sales Dashboard'>
+			<PageWrapper name='Report and Analytics'>
 				<PeriodAndDateRange
 					activeTab={activeTab}
 					setActiveTab={setActiveTab}

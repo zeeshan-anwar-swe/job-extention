@@ -15,6 +15,7 @@ import {
 } from '../../../../../types/slices.type/agency/taskboard.slice.type';
 import Pagination from '../../../../../components/ui/Pagination';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
+import { cn } from '../../../../../utils/cn';
 
 const TaskSectionCardPartial = ({
 	cardType,
@@ -23,6 +24,7 @@ const TaskSectionCardPartial = ({
 	jobList,
 	ListLimit,
 	getJobListAction,
+	sortBy,
 }: {
 	cardType: string;
 	lineColor?: string;
@@ -30,6 +32,7 @@ const TaskSectionCardPartial = ({
 	jobList: TaskBoardListType;
 	getJobListAction: any;
 	ListLimit: number;
+	sortBy?: string;
 }) => {
 	return (
 		<Card className='bg-zinc-100 max-2xl:col-span-2 max-lg:col-span-4'>
@@ -62,7 +65,11 @@ const TaskSectionCardPartial = ({
 				color='zinc'
 				variant='outline'
 				icon='HeroPlus'></Button>
-			<CardBody className='mt-4 flex h-[450px] flex-col gap-4 overflow-y-scroll'>
+			<CardBody
+				className={cn(
+					'mt-4 flex h-[450px] flex-col gap-4 overflow-y-scroll',
+					sortBy === 'Descending' && 'flex-col-reverse',
+				)}>
 				<PageLoader loading={jobList.loading} error={jobList.error} data={jobList.rows}>
 					{jobList.rows.map((job: TaskBoardJobType) => (
 						<TableDataProfilePartial

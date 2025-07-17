@@ -6,7 +6,6 @@ import Subheader, {
 } from '../../../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import Card, {
 	CardHeader,
@@ -14,14 +13,7 @@ import Card, {
 	CardSubTitle,
 	CardTitle,
 } from '../../../../components/ui/Card';
-import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
-import { DateRangePicker, Range } from 'react-date-range';
-import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import dayjs from 'dayjs';
-import colors from 'tailwindcss/colors';
-import themeConfig from '../../../../config/theme.config';
 import TaskSectionCardPartial from './_partial/TaskSectionCard.partial';
 import CustomDropDown from '../../components/CustomDropDown.component';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,17 +26,46 @@ import {
 	getTaskBoardInReviewJobs,
 } from '../../../../store/slices/Agency/Taskboard.slice';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import dayjs from 'dayjs';
+import { cn } from '../../../../utils/cn';
 
 const TaskboardPage = () => {
-
-	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
+	const [showJobs, setShowJobs] = useState<string>('All Projects');
+	const [sortBy, setSortBy] = useState<string>('');
+	const [dateRange, setDateRange] = useState<any>({
+		startDate: dayjs().format('YYYY-MM-DD'),
+		endDate: '',
+	});
+	const dispatch: AppDispatch = useDispatch();
 
 	const { backlogJobs, inProgressJobs, inReviewJobs, completedJobs } = useSelector(
 		(state: RootState) => state.taskBoard,
 	);
 
+	useEffect(() => {
+		// Define common payload for API calls
+		const payload = {
+			limit: 10,
+			page: 1,
+			startDate: dateRange.startDate,
+			endDate: dateRange.endDate,
+		};
 
-
+		if (showJobs === 'All Projects') {
+			dispatch(getTaskBoardBackLogJobs(payload));
+			dispatch(getTaskBoardInProgressJobs(payload));
+			dispatch(getTaskBoardInReviewJobs(payload));
+			dispatch(getTaskBoardCompletedJobs(payload));
+		} else if (showJobs === 'Backlog') {
+			dispatch(getTaskBoardBackLogJobs(payload));
+		} else if (showJobs === 'In Progress') {
+			dispatch(getTaskBoardInProgressJobs(payload));
+		} else if (showJobs === 'In Review') {
+			dispatch(getTaskBoardInReviewJobs(payload));
+		} else if (showJobs === 'Completed') {
+			dispatch(getTaskBoardCompletedJobs(payload));
+		}
+	}, [dateRange, showJobs, dispatch]); // Add showJobs to the dependency array
 
 	return (
 		<>
@@ -56,10 +77,11 @@ const TaskboardPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Jobs'>
+			<PageWrapper name='Task Board'>
 				<Subheader>
 					<SubheaderLeft>
 						<CustomDropDown
+							setItem={setShowJobs}
 							items={[
 								'All Projects',
 								'Backlog',
@@ -72,6 +94,7 @@ const TaskboardPage = () => {
 						/>
 
 						<CustomDropDown
+							setItem={setSortBy}
 							items={['Assending', 'Descending']}
 							title='Sort By'
 							icon='HeroArrowsUpDown'
@@ -90,14 +113,16 @@ const TaskboardPage = () => {
 						/>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<PeriodAndDateRange
-							setDateRange={setDateRange}
-						/>
+						<PeriodAndDateRange setDateRange={setDateRange} />
 					</SubheaderRight>
 				</Subheader>
 				<Container className='grid grid-cols-4 gap-4 '>
-					<Card className='col-span-4 grid grid-cols-4 gap-4  p-4 '>
-						<Card className='col-span-4 '>
+					<Card
+						className={cn(
+							'col-span-4 grid gap-4 p-4',
+							showJobs === 'All Projects' ? 'grid-cols-4' : 'grid-cols-1',
+						)}>
+						<Card className='col-span-full'>
 							<CardHeader className='w-full'>
 								<CardHeaderChild className='!block'>
 									<CardTitle>Jobs</CardTitle>
@@ -107,38 +132,94 @@ const TaskboardPage = () => {
 								</CardHeaderChild>
 							</CardHeader>
 						</Card>
-						<TaskSectionCardPartial
-							ListLimit={10}
-							getJobListAction={getTaskBoardBackLogJobs}
-							jobList={backlogJobs}
-							color='amber'
-							lineColor='!border-amber-500'
-							cardType={JobStatus.BACKLOG}
-						/>
-						<TaskSectionCardPartial
-							ListLimit={10}
-							getJobListAction={getTaskBoardInProgressJobs}
-							jobList={inProgressJobs}
-							color='blue'
-							lineColor='!border-blue-500'
-							cardType={JobStatus.IN_PROGRESS}
-						/>
-						<TaskSectionCardPartial
-							ListLimit={10}
-							getJobListAction={getTaskBoardInReviewJobs}
-							jobList={inReviewJobs}
-							color='violet'
-							lineColor='!border-violet-500'
-							cardType={JobStatus.IN_REVIEW}
-						/>
-						<TaskSectionCardPartial
-							ListLimit={10}
-							getJobListAction={getTaskBoardCompletedJobs}
-							jobList={completedJobs}
-							color='emerald'
-							lineColor='!border-emerald-500'
-							cardType={JobStatus.COMPLETED}
-						/>
+						{showJobs === 'All Projects' && (
+							<>
+								<TaskSectionCardPartial
+									sortBy={sortBy}
+									ListLimit={10}
+									getJobListAction={getTaskBoardBackLogJobs}
+									jobList={backlogJobs}
+									color='amber'
+									lineColor='!border-amber-500'
+									cardType={JobStatus.BACKLOG}
+								/>
+								<TaskSectionCardPartial
+									sortBy={sortBy}
+									ListLimit={10}
+									getJobListAction={getTaskBoardInProgressJobs}
+									jobList={inProgressJobs}
+									color='blue'
+									lineColor='!border-blue-500'
+									cardType={JobStatus.IN_PROGRESS}
+								/>
+								<TaskSectionCardPartial
+									sortBy={sortBy}
+									ListLimit={10}
+									getJobListAction={getTaskBoardInReviewJobs}
+									jobList={inReviewJobs}
+									color='violet'
+									lineColor='!border-violet-500'
+									cardType={JobStatus.IN_REVIEW}
+								/>
+								<TaskSectionCardPartial
+									sortBy={sortBy}
+									ListLimit={10}
+									getJobListAction={getTaskBoardCompletedJobs}
+									jobList={completedJobs}
+									color='emerald'
+									lineColor='!border-emerald-500'
+									cardType={JobStatus.COMPLETED}
+								/>
+							</>
+						)}
+
+						{showJobs === 'Backlog' && (
+							<TaskSectionCardPartial
+								sortBy={sortBy}
+								ListLimit={10}
+								getJobListAction={getTaskBoardBackLogJobs}
+								jobList={backlogJobs}
+								color='amber'
+								lineColor='!border-amber-500'
+								cardType={JobStatus.BACKLOG}
+							/>
+						)}
+
+						{showJobs === 'In Progress' && (
+							<TaskSectionCardPartial
+								sortBy={sortBy}
+								ListLimit={10}
+								getJobListAction={getTaskBoardInProgressJobs}
+								jobList={inProgressJobs}
+								color='blue'
+								lineColor='!border-blue-500'
+								cardType={JobStatus.IN_PROGRESS}
+							/>
+						)}
+
+						{showJobs === 'In Review' && (
+							<TaskSectionCardPartial
+								sortBy={sortBy}
+								ListLimit={10}
+								getJobListAction={getTaskBoardInReviewJobs}
+								jobList={inReviewJobs}
+								color='violet'
+								lineColor='!border-violet-500'
+								cardType={JobStatus.IN_REVIEW}
+							/>
+						)}
+
+						{showJobs === 'Completed' && (
+							<TaskSectionCardPartial
+								sortBy={sortBy}
+								ListLimit={10}
+								getJobListAction={getTaskBoardCompletedJobs}
+								jobList={completedJobs}
+								color='emerald'
+								lineColor='!border-emerald-500'
+								cardType={JobStatus.COMPLETED}
+							/>
+						)}
 					</Card>
 				</Container>
 			</PageWrapper>
