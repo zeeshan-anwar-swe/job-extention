@@ -67,7 +67,7 @@ const JobsViewCandidatesPage = () => {
 					</SubheaderLeft>
 				</Subheader>
 				<PageLoader loading={pageLoading} error={error} data={jobDetails}>
-					<Container className='grid grid-cols-12 gap-4'>
+					<Container className='grid grid-cols-12 gap-4 '>
 						<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
 							<CardHeader>
 								<CardHeaderChild className='!flex-col !items-start '>
@@ -77,9 +77,9 @@ const JobsViewCandidatesPage = () => {
 									</CardSubTitle>
 								</CardHeaderChild>
 								<CardHeaderChild>
-									<Button size='xl' variant='solid' rightIcon='HeroEnvelope'>
+									{/* <Button size='xl' variant='solid' rightIcon='HeroEnvelope'>
 										Email
-									</Button>
+									</Button> */}
 									<Button
 										onClick={() => setModal(true)}
 										size='xl'
@@ -94,7 +94,7 @@ const JobsViewCandidatesPage = () => {
 									/>
 								</CardHeaderChild>
 							</CardHeader>
-							<CardBody className=' overflow-scroll'>
+							<CardBody className='overflow-y-scroll max-h-[500px]'>
 								<TablePartial />
 								<NavSeparator className='mt-8' />
 							</CardBody>

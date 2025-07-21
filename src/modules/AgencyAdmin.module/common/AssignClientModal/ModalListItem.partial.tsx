@@ -14,7 +14,7 @@ import Card, {
 } from '../../../../components/ui/Card';
 import useImageValidation from '../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
-import { assignClientToCandidate } from '../../../../store/slices/Candiates.slice';
+import { assignClientToCandidate, getAllCandidatesList } from '../../../../store/slices/Candiates.slice';
 import {
 	TCandidateJobProfile,
 	TClientWithJobs,
@@ -22,6 +22,7 @@ import {
 } from '../../../../types/slices.type/clients.slice.type';
 import Select from '../../../../components/form/Select';
 import SelectReact from '../../../../components/form/SelectReact';
+import { getAgencyClientsWithJobs } from '../../../../store/slices/Agency/Client.slice';
 
 export const AssignClientModalListItemPartial = ({
 	client,
@@ -42,7 +43,9 @@ export const AssignClientModalListItemPartial = ({
 	const { loading: loadingImage, imageUrl } = useImageValidation(client.clientUser.image);
 
 	const handleAssignTeamToClient = async () => {
+		
 		await dispatch(assignClientToCandidate({ clientId: selectedJob.id, assignTo }));
+		await dispatch(getAgencyClientsWithJobs({ page: 1, limit: 10 }));
 	};
 
 	useEffect(()=>{

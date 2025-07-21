@@ -187,6 +187,7 @@ export const unAssignJobToCandidate = createAsyncThunk(
 export const assignClientToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ clientId, assignTo }: { clientId: string; assignTo: string }, { rejectWithValue }) => {
+		
 		try {
 			const response = await axiosInstance.post('/candidate/assign-job', {
 				jobId:clientId,

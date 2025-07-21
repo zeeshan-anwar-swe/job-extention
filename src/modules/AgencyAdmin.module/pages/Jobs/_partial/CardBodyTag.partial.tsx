@@ -3,7 +3,7 @@ import { textValidationCheck } from '../../../../../utils/validationCheck';
 
 const CardBodyTagPartial = ({ title, value }: { title: string; value: string }) => {
 	return (
-		<Button variant='outline' color='zinc' className='gap-2 max-md:!w-full'>
+		<Button variant='outline' color='zinc' className='gap-2 max-md:!w-full !cursor-default hover:!cursor-default'>
 			<span>{textValidationCheck(title)}</span>
 			<h5>{textValidationCheck(value)}</h5>
 		</Button>

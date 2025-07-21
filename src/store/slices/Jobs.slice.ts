@@ -58,12 +58,12 @@ const initialState: InitialStateType = {
 export const getJobsList = createAsyncThunk(
 	'jobs/getJobsList',
 	async (
-		{ page, limit, search = '', searchBy='' }: { page: number; limit: number; search?: string; searchBy?: string },
+		{ page, limit, search = '', searchBy='', startDate = '', endDate = '' }: { page: number; limit: number; search?: string; searchBy?: string; startDate?: string; endDate?: string },
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.get(
-				`/job/recruiter/list?page=${page}&limit=${limit}&search=${search}${searchBy &&`&searchBy=${searchBy}`}`,
+				`/job/recruiter/list?page=${page}&limit=${limit}&search=${search}&startDate=${startDate}&endDate=${endDate}${searchBy &&`&searchBy=${searchBy} `}`,
 			);
 			return response.data.data;
 		} catch (error: any) {

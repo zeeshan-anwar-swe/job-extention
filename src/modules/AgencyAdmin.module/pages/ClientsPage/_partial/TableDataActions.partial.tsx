@@ -10,7 +10,7 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 	const [modal, setModal] = useState<boolean>(false);
 	const [teamModal, setTeamModal] = useState<boolean>(false);
 	return (
-		<div className='flex no-scrollbar overflow-x-scroll text-nowrap justify-center break-all max-lg:flex-col'>
+		<div className='flex no-scrollbar overflow-x-scroll text-nowrap'>
 			<Link to={`/clients/jobs`} state={client}>
 				<Button color='blue'>View Jobs</Button>
 			</Link>

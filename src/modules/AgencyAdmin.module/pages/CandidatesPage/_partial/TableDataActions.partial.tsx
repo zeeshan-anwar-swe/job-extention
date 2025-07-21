@@ -13,10 +13,17 @@ import ConfirmationModal from '../../../../../components/modal/ConfirmationModal
 import { AssignClientModalPartial } from '../../../common/AssignClientModal/Modal.partial';
 import { TCandidateJobProfile } from '../../../../../types/slices.type/candidate.slice.type';
 
-const TableDataActionsPartial = ({ candidate, selectedJob }: { candidate: any; selectedJob :TCandidateJobProfile }) => {
+const TableDataActionsPartial = ({
+	candidate,
+	selectedJob,
+}: {
+	candidate: any;
+	selectedJob: TCandidateJobProfile;
+}) => {
 	const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
+				console.log("TableDataActionsPartial",{candidate});
 	
 
 	return (
@@ -38,14 +45,14 @@ const TableDataActionsPartial = ({ candidate, selectedJob }: { candidate: any; s
 					action={removeAgencyCandidate(selectedJob.id)}
 				/>
 			</div>
-			{/* {assignClientModal && ( */}
+			{assignClientModal && (
 				<AssignClientModalPartial
 					title={`Assign Client to Candiate: ${candidate?.name ?? ''}`}
-					assignTo={candidate.candidateId}
+					assignTo={candidate.id}
 					modal={assignClientModal}
 					setModal={setAssignClientModal}
 				/>
-			{/* )} */}
+			)}
 		</>
 	);
 };

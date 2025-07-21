@@ -12,7 +12,6 @@ const { RangePicker } = DatePicker;
 
 const PeriodAndDateRange = ({ activeTab, setActiveTab, setDateRange }: any) => {
 	const onChange = (date: any, dateString: any) => {
-		console.log({ date, dateString });
 		typeof setActiveTab === 'function' && setActiveTab(PERIOD.RANGE);
 		setDateRange({ startDate: dateString[0], endDate: dateString[1] });
 	};

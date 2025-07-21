@@ -74,7 +74,7 @@ const ClientsPage = () => {
 				</Subheader>
 
 				<PageLoader loading={pageLoading} error={error} data={paginatedClients}>
-					<Container>
+					<Container className='!overflow-x-scroll'>
 						<div className='relative mb-4 flex items-center'>
 							<h6>Sort By</h6>
 							<Dropdown>

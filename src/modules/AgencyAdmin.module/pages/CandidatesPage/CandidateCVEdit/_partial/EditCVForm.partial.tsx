@@ -199,6 +199,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 							invalidFeedback={formik.errors.cvText}
 							validFeedback=''>
 							<Textarea
+								className='max-h-72 min-h-48'
 								rows={5}
 								dimension='lg'
 								id='cvText'

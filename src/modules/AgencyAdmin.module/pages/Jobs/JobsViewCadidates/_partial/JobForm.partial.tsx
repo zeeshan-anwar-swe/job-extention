@@ -74,7 +74,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 	};
 
 	return (
-		<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+		<Card className='col-span-4 !h-fit flex flex-col gap-2  p-4 max-lg:col-span-12'>
 			<CardHeader>
 				<CardHeaderChild className='!block'>
 					<CardTitle>Jobs Details</CardTitle>
@@ -139,7 +139,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					label='Location'
 					detail={formData.location}
 				/>
-				'
+				
 				<LabelSelectPartial
 					label='Job Type'
 					formData={formData}

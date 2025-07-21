@@ -9,12 +9,10 @@ import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
 import JobsPageCardPartial from './_partial/JobsPageCard.partial';
-import { Range } from 'react-date-range';
-import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../store';
 import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
@@ -24,77 +22,34 @@ import { Link } from 'react-router-dom';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 
 const JobsPage = () => {
-	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
+	const dispatch: AppDispatch = useDispatch();
+
+	const [dateRange, setDateRange] = useState<any>({
+		startDate: dayjs().format('YYYY-MM-DD'),
+		endDate: '',
+	});
 
 	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
 
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
-
-	const [selectedDate, setSelectedDate] = useState<Range[]>([
-		{
-			startDate: dayjs().startOf('month').add(-1, 'month').toDate(),
-			endDate: dayjs().endOf('month').toDate(),
-			key: 'selection',
-		},
-	]);
-
 	useEffect(() => {
-		if (activeTab === PERIOD.DAY) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('day').toDate(),
-					endDate: dayjs().endOf('day').toDate(),
-					key: 'selection',
-				},
-			]);
+		console.log('dateRange', dateRange);
+		if (dateRange.endDate !== '') {
+			dispatch(
+				getJobsList({
+					page: 1,
+					limit: 9,
+					search,
+					startDate: dateRange.startDate,
+					endDate: dateRange.endDate,
+				}),
+			);
 		}
-		if (activeTab === PERIOD.WEEK) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('week').toDate(),
-					endDate: dayjs().endOf('week').toDate(),
-					key: 'selection',
-				},
-			]);
+		if (dateRange.startDate === '') {
+			dispatch(getJobsList({ page: 1, limit: 9, search }));
 		}
-		if (activeTab === PERIOD.MONTH) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('month').toDate(),
-					endDate: dayjs().endOf('month').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		return () => {};
-	}, [activeTab]);
-
-	useEffect(() => {
-		const selectedStart = dayjs(selectedDate[0].startDate).format('LL');
-		const selectedEnd = dayjs(selectedDate[0].endDate).format('LL');
-
-		if (
-			selectedStart === dayjs().startOf('day').format('LL') &&
-			selectedEnd === dayjs().endOf('day').format('LL')
-		) {
-			setActiveTab(PERIOD.DAY);
-		}
-		if (
-			selectedStart === dayjs().startOf('week').format('LL') &&
-			selectedEnd === dayjs().endOf('week').format('LL')
-		) {
-			setActiveTab(PERIOD.WEEK);
-		}
-		if (
-			selectedStart === dayjs().startOf('month').format('LL') &&
-			selectedEnd === dayjs().endOf('month').format('LL')
-		) {
-			setActiveTab(PERIOD.MONTH);
-		}
-		return () => {};
-	}, [selectedDate]);
+	}, [dateRange]);
 
 	return (
 		<>
@@ -125,9 +80,7 @@ const JobsPage = () => {
 						/>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<PeriodAndDateRange
-							setDateRange={setDateRange}
-						/>
+						<PeriodAndDateRange setDateRange={setDateRange} />
 					</SubheaderRight>
 				</div>
 				<Subheader>

@@ -13,7 +13,7 @@ const TablePartial = ({sortBy}:{sortBy:string}) => {
         : paginatedClients;
 
     return (
-        <Table className='table-fixed max-md:min-w-[70rem]'>
+        <Table className='table-fixed'>
             <THead>
                 <Tr>
                     <Th>NAME</Th>

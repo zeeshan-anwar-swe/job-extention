@@ -21,6 +21,7 @@ const Pagination = ({
 		page,
 		limit,
 		search,
+				
 	}: {
 		page: number;
 		limit: number;
