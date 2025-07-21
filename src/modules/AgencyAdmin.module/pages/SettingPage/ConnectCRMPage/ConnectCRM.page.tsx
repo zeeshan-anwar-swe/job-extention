@@ -21,7 +21,7 @@ const ConnectCRMPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Connect CRM'>
 				<Container className='!grid flex-1 !grid-cols-12 !gap-4'>
 					<Card className='col-span-12 !grid flex-1 !grid-cols-10 gap-4 overflow-hidden p-4'>
 						<SettingAside />

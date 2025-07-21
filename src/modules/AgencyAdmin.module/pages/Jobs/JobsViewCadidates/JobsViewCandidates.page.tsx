@@ -56,7 +56,7 @@ const JobsViewCandidatesPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Job Details'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/jobs'>

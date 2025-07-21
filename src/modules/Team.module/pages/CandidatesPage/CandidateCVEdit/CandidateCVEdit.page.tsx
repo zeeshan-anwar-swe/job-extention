@@ -150,7 +150,7 @@ const TeamCandidateCVEditPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Edit CV'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/candidates'>

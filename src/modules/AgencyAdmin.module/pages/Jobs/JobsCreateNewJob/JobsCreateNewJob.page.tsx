@@ -36,7 +36,7 @@ const JobsCreateNewJobPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Create Job'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/jobs'>

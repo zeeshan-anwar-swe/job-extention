@@ -10,7 +10,7 @@ import InputWithIconPartial from './partial/InputWithIcon.partial';
 
 const PaymentPage = () => {
 	return (
-		<PageWrapper name='Candidates'>
+		<PageWrapper name='Payment'>
 			<Container className='!grid !w-full flex-1 !grid-cols-12 gap-4 py-16'>
 				{/* Left Side start */}
 				<Card className=' col-span-6 px-16 max-md:col-span-12 max-md:px-10 max-sm:px-4'>

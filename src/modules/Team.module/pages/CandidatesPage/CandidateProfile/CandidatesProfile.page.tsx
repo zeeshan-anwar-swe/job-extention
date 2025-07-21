@@ -58,7 +58,7 @@ const TeamCandidatesProfilePage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Candidate Profile'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/candidates'>

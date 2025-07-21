@@ -44,7 +44,7 @@ const ClientJobsPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Client Jobs'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/clients'>

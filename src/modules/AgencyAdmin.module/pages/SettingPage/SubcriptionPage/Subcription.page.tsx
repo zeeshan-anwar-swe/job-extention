@@ -56,7 +56,7 @@ const SubcriptionPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Subscription'>
 				<PageLoader
 					loading={loading || spLoading}
 					error={error || spError}

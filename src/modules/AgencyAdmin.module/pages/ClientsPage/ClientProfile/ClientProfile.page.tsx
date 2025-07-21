@@ -49,7 +49,7 @@ const ClientProfilePage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Client Profile'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/clients'>

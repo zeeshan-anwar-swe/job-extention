@@ -58,7 +58,7 @@ const TeammateProfilePage = () => {
 						<DefaultHeaderRightCommon />
 					</HeaderRight>
 				</Header>
-				<PageWrapper name='Candidates'>
+				<PageWrapper name='Teammate Profile'>
 					<Subheader>
 						<SubheaderLeft>
 							<Link to='/manage-team'>

@@ -45,7 +45,7 @@ const ClientsPage = () => {
 				</HeaderRight>
 			</Header>
 
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Clients'>
 				<Subheader>
 					<SubheaderLeft>
 						<CustomSearchComponent

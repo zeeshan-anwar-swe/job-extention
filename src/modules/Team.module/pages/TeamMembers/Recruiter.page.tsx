@@ -35,7 +35,7 @@ const RecruitersPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Manage Team'>
 				<Subheader>
 					<SubheaderLeft>
 						<Button
