@@ -69,8 +69,6 @@ const AssignCandidatesModalPartial = ({
 				/>
 			</div>
 
-			
-
 			<ModalBody className='!flex max-h-96 !w-full !flex-col !gap-4'>
 				{allCadidateList.map((candidate) => (
 					<AssignCandidatesModalListItemPartial
@@ -79,6 +77,7 @@ const AssignCandidatesModalPartial = ({
 					/>
 				))}
 			</ModalBody>
+
 			<ModalFooter className='!block'>
 				<ModalFooterChild>
 					<Pagination
