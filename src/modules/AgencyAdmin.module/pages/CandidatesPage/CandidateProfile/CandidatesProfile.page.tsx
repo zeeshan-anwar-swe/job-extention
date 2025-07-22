@@ -26,6 +26,7 @@ import { getCandidateProfile } from '../../../../../store/slices/Candiates.slice
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { JobCardPartial } from './_partial/JobCard.partial';
 import { AssignedJob } from '../../../../../types/slices.type/candidate.slice.type';
+import { getCandidateCV } from '../../../services/candidates';
 
 const CandidatesProfilePage = () => {
 	const { state } = useLocation();
@@ -45,6 +46,18 @@ const CandidatesProfilePage = () => {
 			navigateTo('/candidates');
 		}
 	}, [state]);
+	const handleDownloadCV = async () => {
+		const response = await getCandidateCV(state.selectedJob.id);
+		const url = window.URL.createObjectURL(response.data);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `${state.selectedJob.id}.pdf`;
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		window.URL.revokeObjectURL(url);
+	};
+
 	return (
 		<>
 			<Header>
@@ -163,15 +176,14 @@ const CandidatesProfilePage = () => {
 										<p className='font-light'>Download or view Candidate CV</p>
 									</div>
 
-									<Link
-										target='_blank'
-										to={urlValidationCheck(cadnidateProfile?.resumeLink)}
+									<div
+										onClick={handleDownloadCV}
 										className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
 										<Button className='h-fit' icon='HeroPdf' color='zinc'>
 											FluerCook.pdf
 										</Button>
 										<Alert icon='HeroArrowDown'>{''}</Alert>
-									</Link>
+									</div>
 								</Card>
 
 								<Card className='h-fit p-4'>

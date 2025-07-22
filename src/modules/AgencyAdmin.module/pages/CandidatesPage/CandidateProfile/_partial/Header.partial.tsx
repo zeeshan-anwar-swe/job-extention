@@ -11,16 +11,18 @@ import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.p
 import { assignJobToCandidate, unAssignJobToCandidate } from '../../../../../../store/slices/Candiates.slice';
 
 const HeaderPartial = ({ state }: any) => {
+	console.log({ state });
+	
 	const [modal, setModal] = useState<boolean>(false);
 	const [clientModal, setClientModal] = useState<boolean>(false);
 	const navgiateTo = useNavigate();
 
 	const handleDownloadCV = async () => {
-		const response = await getCandidateCV(state.id);
+		const response = await getCandidateCV(state.selectedJob.id);
 		const url = window.URL.createObjectURL(response.data);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = `${state.id}.pdf`;
+		a.download = `${state.selectedJob.id}.pdf`;
 		document.body.appendChild(a);
 		a.click();
 		a.remove();
@@ -50,12 +52,12 @@ const HeaderPartial = ({ state }: any) => {
 						variant='solid'>
 						Assign to a job
 					</Button>
-					<Button
+					{/* <Button
 						rightIcon='HeroPaperAirplane'
 						className='h-fit max-sm:w-full'
 						variant='solid'>
 						Send To ATS
-					</Button>
+					</Button> */}
 					<Button
 						onClick={() => navgiateTo('/candidates/cv-edit', { state: state })}
 						rightIcon='HeroPencilSquare'

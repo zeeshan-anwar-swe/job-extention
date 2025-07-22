@@ -13,9 +13,8 @@ import Card, {
 	CardHeader,
 } from '../../../../../components/ui/Card';
 import { useNavigate } from 'react-router-dom';
-import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
-import AssignCandidatesModalPartial from '../../../common/assignCandidateModal/AssignCandiatesModal.partial';
 import { useState } from 'react';
+import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
 
 const JobsPageCardPartial = ({ item }: any) => {
 	const navigateTo = useNavigate();

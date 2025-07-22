@@ -5,17 +5,19 @@ import Modal, {
 	ModalFooterChild,
 	ModalHeader,
 } from '../../../../components/ui/Modal';
-import SearchPartial from './Search.partial';
+import SearchPartial from '../Search.partial';
 import { AppDispatch, RootState } from '../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { AssignCandidatesModalListItemPartial } from './AssignCandidatesModalList';
 import {
 	assignManyCandidatesToJob,
-	getJobDetails,
 	setAssignedCandidatesWhileUpdatingJob,
 } from '../../../../store/slices/Jobs.slice';
 import { useEffect } from 'react';
-import { getAllCandidatesList } from '../../../../store/slices/Candiates.slice';
+import {
+	getAllCandidatesList,
+	setCandidatesSearch,
+} from '../../../../store/slices/Candiates.slice';
 import Pagination from '../../../../components/ui/Pagination';
 
 const AssignCandidatesModalPartial = ({
@@ -32,6 +34,7 @@ const AssignCandidatesModalPartial = ({
 	const { allCadidateList, paginationCount, pageLoading } = useSelector(
 		(state: RootState) => state.candidates,
 	);
+
 	const dispatch: AppDispatch = useDispatch();
 
 	const { assignedCandidatesWhileUpdatingJob } = useSelector(
@@ -57,12 +60,18 @@ const AssignCandidatesModalPartial = ({
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>Assign candidates to “{jobTitle ?? ''}” job</ModalHeader>
+			<ModalHeader>Assign candidates to job: “{jobTitle ?? ''}” </ModalHeader>
 			<div className='p-4'>
-				<SearchPartial />
+				<SearchPartial
+					placeholder='Search candidates...'
+					searchListAction={getAllCandidatesList}
+					setSearchActionForPagination={setCandidatesSearch}
+				/>
 			</div>
 
-			<ModalBody className='!flex max-h-72 !w-full !flex-col !gap-4'>
+			
+
+			<ModalBody className='!flex max-h-96 !w-full !flex-col !gap-4'>
 				{allCadidateList.map((candidate) => (
 					<AssignCandidatesModalListItemPartial
 						candidate={candidate}

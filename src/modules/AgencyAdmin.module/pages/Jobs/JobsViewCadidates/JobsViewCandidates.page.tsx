@@ -23,14 +23,13 @@ import { AppDispatch, RootState } from '../../../../../store';
 import { getJobDetails } from '../../../../../store/slices/Jobs.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import JobFormPartial from './_partial/JobForm.partial';
-import AssignCandidatesModalPartial from './_partial/AssignCandiatesModal.partial';
 import { filterAndExtract } from '../../../../../utils/helper';
+import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
 
 const JobsViewCandidatesPage = () => {
 	const [modal, setModal] = useState<boolean>(false);
 	const params = useLocation();
 	const { state } = params;
-
 
 	const { jobDetails, pageLoading, error } = useSelector((state: RootState) => state.jobsSlice);
 	const hiredCandidates = filterAndExtract({
@@ -87,14 +86,17 @@ const JobsViewCandidatesPage = () => {
 										rightIcon='HeroPlus'>
 										Assign to Candidate
 									</Button>
-									<AssignCandidatesModalPartial
-										jobTitle={jobDetails?.title}
-										modal={modal}
-										setModal={setModal}
-									/>
+									{jobDetails && (
+										<AssignCandidatesModalPartial
+											jobId={jobDetails.id}
+											jobTitle={jobDetails?.title}
+											modal={modal}
+											setModal={setModal}
+										/>
+									)}
 								</CardHeaderChild>
 							</CardHeader>
-							<CardBody className='overflow-y-scroll max-h-[500px]'>
+							<CardBody className='max-h-[500px] overflow-y-scroll'>
 								<TablePartial />
 								<NavSeparator className='mt-8' />
 							</CardBody>

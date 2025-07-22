@@ -10,7 +10,6 @@ import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_com
 import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
-import SearchPartial from './_partial/Search.partial';
 import {
 	getAgencyCandidatesList,
 	setCandidatesSearch,
@@ -19,7 +18,6 @@ import { RootState } from '../../../../store';
 import { useSelector } from 'react-redux';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
-import DownloadCsvComponent from './_partial/CSVDownload.partial';
 import DownloadCsvModal from './_partial/CSVDownload.partial';
 import { useState } from 'react';
 import CustomSearchComponent from '../../components/CustomSearch.component';
@@ -42,14 +40,21 @@ const CandidatesPage = () => {
 			</Header>
 
 			<PageWrapper name='Candidates'>
-
-				<Subheader >
-					<SubheaderLeft >
+				
+				<Subheader>
+					<SubheaderLeft>
 						<CustomSearchComponent
 							setSearchActionForPagination={setCandidatesSearch}
 							searchListAction={getAgencyCandidatesList}
 							searchLimit={10}
-							searchByFilterOptions={ ['name', 'email', 'status', 'jobTitle', 'clientName', 'clientEmail']}
+							searchByFilterOptions={[
+								'name',
+								'email',
+								'status',
+								'jobTitle',
+								'clientName',
+								'clientEmail',
+							]}
 							placeholder='Search Candidates...'
 						/>
 					</SubheaderLeft>
@@ -57,6 +62,7 @@ const CandidatesPage = () => {
 						<div></div>
 					</SubheaderRight>
 				</Subheader>
+
 				<Subheader className='!-z-0'>
 					<SubheaderLeft className='!block'>
 						<CardTitle>Candidates</CardTitle>
@@ -69,7 +75,6 @@ const CandidatesPage = () => {
 						<DownloadCsvModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
 					</SubheaderRight>
 				</Subheader>
-
 
 				<PageLoader
 					loading={pageLoading}
@@ -86,7 +91,6 @@ const CandidatesPage = () => {
 					getListAction={getAgencyCandidatesList}
 					count={paginationCount}
 					limit={10}
-					
 				/>
 			</PageWrapper>
 		</>
