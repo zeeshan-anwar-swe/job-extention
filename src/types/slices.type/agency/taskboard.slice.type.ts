@@ -16,6 +16,7 @@ export interface TaskBoardJobType {
 }
 
 export interface TaskBoardListType {
+	search?: string;
 	loading: boolean;
 	count: number;
 	rows: TaskBoardJobType[];
@@ -24,10 +25,12 @@ export interface TaskBoardListType {
 
 export interface TaskBoardInitialStateType {
 	error: null | Error;
+	search: string;
 	backlogJobs: TaskBoardListType;
 	inProgressJobs: TaskBoardListType;
 	inReviewJobs: TaskBoardListType;
 	completedJobs: TaskBoardListType;
+	modalJobs: TaskBoardListType;
 	pageLoading: boolean;
 	modalLoading: boolean;
 	componentLoading: boolean;

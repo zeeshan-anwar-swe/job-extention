@@ -12,6 +12,7 @@ import {
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
 import { ClientJobsStateType, JobDetailsType } from '../../types/slices.type/jobs.slice.type';
+import { JobStatus } from '../../types/enums/jobStatus.enum';
 
 interface InitialStateType {
 	search: string;
@@ -71,6 +72,8 @@ export const getJobsList = createAsyncThunk(
 		}
 	},
 );
+
+
 
 export const getAllJobsList = createAsyncThunk(
 	'jobs/getAllJobsList',

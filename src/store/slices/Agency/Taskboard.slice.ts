@@ -6,11 +6,13 @@ import { TaskBoardInitialStateType } from '../../../types/slices.type/agency/tas
 import { JobStatus } from '../../../types/enums/jobStatus.enum';
 
 const initialState: TaskBoardInitialStateType = {
+	search: '',
 	error: null,
 	backlogJobs: { loading: false, error: null, count: 0, rows: [] },
 	inProgressJobs: { loading: false, error: null, count: 0, rows: [] },
 	inReviewJobs: { loading: false, error: null, count: 0, rows: [] },
 	completedJobs: { loading: false, error: null, count: 0, rows: [] },
+	modalJobs: { loading: false, error: null, count: 0, rows: [], search: '' },
 	pageLoading: false,
 	modalLoading: false,
 	componentLoading: false,
@@ -79,10 +81,59 @@ export const getTaskBoardCompletedJobs = createAsyncThunk(
 	},
 );
 
+export const getJobsListExceptStatus = createAsyncThunk(
+	'jobs/getJobsListExceptStatus',
+	async (
+		{
+			exceptStatus,
+			page,
+			limit,
+			search = '',
+		}: {
+			exceptStatus: JobStatus;
+			page: number;
+			limit: number;
+			search?: string;
+			searchBy?: string;
+			startDate?: string;
+			endDate?: string;
+		},
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.get(
+				`/agency/taskboard-status?page=${page}&limit=${limit}&status=${exceptStatus}&isRequired=true&search=${search}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const changeMultipleJobsStatus = createAsyncThunk(
+	'taskBoard/changeMultipleJobsStatus',
+	async ({ jobIds, status }: { jobIds: string[]; status: JobStatus }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.put(`/job/bulk-status-update`, {
+				jobIds,
+				status,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const taskBoardSlice = createSlice({
 	name: 'taskBoard',
 	initialState,
-	reducers: {},
+	reducers: {
+		setTaskboardJobsSearch: (state, action) => {
+			state.modalJobs.search = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getTaskBoardBackLogJobs.pending, (state) => {
@@ -155,7 +206,27 @@ export const taskBoardSlice = createSlice({
 				toast.error((action.payload.message as string) || 'Unknown error occurred ');
 				state.completedJobs.loading = false;
 			});
+
+		builder
+			.addCase(getJobsListExceptStatus.pending, (state) => {
+				state.modalJobs.loading = true;
+				state.modalJobs.error = null;
+			})
+			.addCase(getJobsListExceptStatus.fulfilled, (state, action) => {
+				state.modalJobs.rows = action.payload.rows;
+				state.modalJobs.count = action.payload.count;
+				state.modalJobs.loading = false;
+			})
+			.addCase(getJobsListExceptStatus.rejected, (state, action: any) => {
+				state.modalJobs.error = action.payload || {
+					message: 'Unknown error occurred ',
+				};
+				toast.error((action.payload.message as string) || 'Unknown error occurred ');
+				state.modalJobs.loading = false;
+			});
 	},
 });
 
 export default taskBoardSlice.reducer;
+
+export const { setTaskboardJobsSearch } = taskBoardSlice.actions;

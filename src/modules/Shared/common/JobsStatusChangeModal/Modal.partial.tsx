@@ -1,23 +1,27 @@
+import { useCallback, useState } from 'react';
 import Search from '../Search.partial';
 import Button from '../../../../components/ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store';
-import Pagination from '../../../../components/ui/Pagination';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
-import {  JobsStatusChangeModalListItem } from './ModalListItem.partial';
+import { JobsStatusChangeModalListItem } from './ModalListItem.partial';
 import {
-	getAgencyClientsWithJobs,
-	getPaginatedAgencyClientsList,
-	setClientSearch,
-} from '../../../../store/slices/Agency/Client.slice';
+	setTaskboardJobsSearch,
+	getJobsListExceptStatus,
+	changeMultipleJobsStatus,
+	getTaskBoardBackLogJobs,
+	getTaskBoardInProgressJobs,
+	getTaskBoardInReviewJobs,
+	getTaskBoardCompletedJobs,
+} from '../../../../store/slices/Agency/Taskboard.slice';
 import Modal, {
 	ModalBody,
 	ModalFooter,
 	ModalFooterChild,
 	ModalHeader,
 } from '../../../../components/ui/Modal';
-import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import { JobStatus } from '../../../../types/enums/jobStatus.enum';
+import Pagination from '../../../../components/ui/Pagination';
 
 export const JobStatusChangeModalPartial = ({
 	modal,
@@ -30,43 +34,80 @@ export const JobStatusChangeModalPartial = ({
 	setModal: any;
 	changeStatusTo: JobStatus;
 }) => {
-	const { jobsList, pageLoading,  error } = useSelector(
-		(state: RootState) => state.jobsSlice,
+	const dispatch: AppDispatch = useDispatch();
+
+	const { rows, loading, error, count, search } = useSelector(
+		(state: RootState) => state.taskBoard.modalJobs,
 	);
 
-	const handleDone = () => {
+	const { loading: backlogLoading } = useSelector(
+		(state: RootState) => state.taskBoard.backlogJobs,
+	);
+
+	const { loading: inProgessLoading } = useSelector(
+		(state: RootState) => state.taskBoard.inProgressJobs,
+	);
+
+	const { loading: inReviewLoading } = useSelector(
+		(state: RootState) => state.taskBoard.inReviewJobs,
+	);
+
+	const { loading: completedLoading } = useSelector(
+		(state: RootState) => state.taskBoard.completedJobs,
+	);
+
+	const [jobIds, setJobIds] = useState<string[]>([]);
+
+	const getListAction = useCallback(
+		({ page, limit, search }: { page: number; limit: number; search?: string }) => {
+			return getJobsListExceptStatus({ exceptStatus: changeStatusTo, page, limit, search });
+		},
+		[changeStatusTo],
+	);
+
+	const handleDone = async () => {
+		dispatch(changeMultipleJobsStatus({ jobIds, status: changeStatusTo }));
+		dispatch(getTaskBoardBackLogJobs({ page: 1, limit: 10 }));
+		dispatch(getTaskBoardInProgressJobs({ page: 1, limit: 10 }));
+		dispatch(getTaskBoardInReviewJobs({ page: 1, limit: 10 }));
+		await dispatch(getTaskBoardCompletedJobs({ page: 1, limit: 10 }));
 		setModal(false);
 	};
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>{title}</ModalHeader>
-			{/* <NavSeparator /> */}
 			<div className='p-4'>
 				<Search
 					searchLimit={10}
-					setSearchActionForPagination={setClientSearch}
-					searchListAction={getPaginatedAgencyClientsList}
+					setSearchActionForPagination={setTaskboardJobsSearch}
+					searchListAction={getListAction}
 					placeholder='Search Client...'
 				/>
 			</div>
-			<NavSeparator />
 
 			<ModalBody className='flex h-96 w-full flex-col gap-4 overflow-y-scroll'>
-				<PageLoader data={jobsList} loading={pageLoading} error={error}>
-					<JobsStatusChangeModalListItem/>
+				<PageLoader data={rows} loading={loading} error={error}>
+					{rows.map((job: any) => (
+						<JobsStatusChangeModalListItem
+							setJobIds={setJobIds}
+							jobIds={jobIds}
+							job={job}
+							key={job.id}
+						/>
+					))}
 				</PageLoader>
 			</ModalBody>
-			<NavSeparator />
 
 			<ModalFooter className='flex-col !items-end'>
-				{/* <ModalFooterChild>
+				<ModalFooterChild>
 					<Pagination
 						count={count}
 						limit={10}
-						getListAction={getAgencyClientsWithJobs}
+						search={search}
+						getListAction={getListAction}
 					/>
-				</ModalFooterChild> */}
+				</ModalFooterChild>
 				<ModalFooterChild className='w-full'>
 					<Button
 						onClick={() => setModal(false)}
@@ -75,7 +116,17 @@ export const JobStatusChangeModalPartial = ({
 						color='zinc'>
 						Cancel
 					</Button>
-					<Button onClick={handleDone} className='w-full' variant='solid'>
+					<Button
+						isDisable={jobIds.length < 1}
+						isLoading={
+							backlogLoading ||
+							inProgessLoading ||
+							inReviewLoading ||
+							completedLoading
+						}
+						onClick={handleDone}
+						className='w-full'
+						variant='solid'>
 						Done
 					</Button>
 				</ModalFooterChild>
