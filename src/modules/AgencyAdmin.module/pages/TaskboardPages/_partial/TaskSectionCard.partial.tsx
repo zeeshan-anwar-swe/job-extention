@@ -16,6 +16,9 @@ import {
 import Pagination from '../../../../../components/ui/Pagination';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { cn } from '../../../../../utils/cn';
+import { JobStatusChangeModalPartial } from '../../../../Shared/common/JobsStatusChangeModal/Modal.partial';
+import { useState } from 'react';
+import { JobStatus } from '../../../../../types/enums/jobStatus.enum';
 
 const TaskSectionCardPartial = ({
 	cardType,
@@ -26,7 +29,7 @@ const TaskSectionCardPartial = ({
 	getJobListAction,
 	sortBy,
 }: {
-	cardType: string;
+	cardType: JobStatus;
 	lineColor?: string;
 	color: TColors;
 	jobList: TaskBoardListType;
@@ -34,6 +37,8 @@ const TaskSectionCardPartial = ({
 	ListLimit: number;
 	sortBy?: string;
 }) => {
+	const [modal, setModal] = useState<boolean>(false);
+
 	return (
 		<Card className='bg-zinc-100 max-2xl:col-span-2 max-lg:col-span-4'>
 			<CardHeader>
@@ -60,11 +65,18 @@ const TaskSectionCardPartial = ({
 			</CardHeader>
 			<NavSeparator className={`!mx-4 !border-b-2 ${lineColor}`} />
 			<Button
+				onClick={() => setModal(true)}
 				iconSize='text-8xl'
 				className='mx-4 mt-2 max-w-full border-dashed'
 				color='zinc'
 				variant='outline'
 				icon='HeroPlus'></Button>
+			<JobStatusChangeModalPartial
+				modal={modal}
+				setModal={setModal}
+				title={'Add Jobs to ' + cardType}
+				changeStatusTo={cardType}
+			/>
 			<CardBody
 				className={cn(
 					'mt-4 flex h-[450px] flex-col gap-4 overflow-y-scroll',
