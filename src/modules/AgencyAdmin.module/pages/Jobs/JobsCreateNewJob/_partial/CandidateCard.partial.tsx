@@ -18,8 +18,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../../store';
 import { assignCandidateWhileCreatingJob } from '../../../../../../store/slices/Jobs.slice';
 import { objectExistsInArray } from '../../../../../../utils/helper';
+import { LinkedInProfile } from '../../../../../../store/slices/Candiates.slice';
 
-const CandidateCardPartial = ({ candidate }: { candidate: any }) => {
+const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const { assignedCandidatesWhileCreatingJob } = useSelector(
 		(state: RootState) => state.jobsSlice,
@@ -37,24 +38,24 @@ const CandidateCardPartial = ({ candidate }: { candidate: any }) => {
 					alt='profile-image'
 				/>
 				<div className='flex-1'>
-					<h5>{textValidationCheck(candidate?.name)}</h5>
-					<p>{textValidationCheck(candidate?.email)}</p>
+					<h5>{textValidationCheck(candidate.name)}</h5>
+					<p>{textValidationCheck(candidate.headline)}</p>
 				</div>
-				<CardHeaderChild>
-					{candidate?.linkedIn && <Alert className='!p-0' icon='HeroGitHub' />}
-					{candidate?.gitHub && <Alert className='!p-0' icon='HeroLinkedIn' />}
-				</CardHeaderChild>
+				{/* <CardHeaderChild>
+					{candidate. && <Alert className='!p-0' icon='HeroLinkedIn' />}
+					{candidate?.gitHub && <Alert className='!p-0' icon='HeroGitHub' />}
+				</CardHeaderChild> */}
 			</CardHeader>
 
 			<CardBody className='!flex flex-wrap !gap-4 max-md:flex-col'>
 				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
-					Experience: <b>{textValidationCheck(candidate?.experience)}</b>
+					Experience: <b>{textValidationCheck(candidate.workExperience)}</b>
 				</Button>
 				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
 					location: <b>{textValidationCheck(candidate?.location)}</b>
 				</Button>
 				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
-					Availability: <b>{textValidationCheck(candidate?.availability)}</b>
+					Availability: <b>{textValidationCheck(candidate.canSendInmail)}</b>
 				</Button>
 			</CardBody>
 			<NavSeparator className='!mx-4 !mb-4' />

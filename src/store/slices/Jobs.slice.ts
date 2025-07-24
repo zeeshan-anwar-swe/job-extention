@@ -13,6 +13,7 @@ import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandl
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
 import { ClientJobsStateType, JobDetailsType } from '../../types/slices.type/jobs.slice.type';
 import { JobStatus } from '../../types/enums/jobStatus.enum';
+import { LinkedInProfile } from './Candiates.slice';
 
 interface InitialStateType {
 	search: string;
@@ -26,7 +27,7 @@ interface InitialStateType {
 	teamListForJob: [];
 	paginationCount: number;
 	locallySearchedJobs: any[];
-	assignedCandidatesWhileCreatingJob: any[];
+	assignedCandidatesWhileCreatingJob: LinkedInProfile[];
 	assignedCandidatesWhileUpdatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
 	jobDetails: JobDetailsType | null;
@@ -202,7 +203,7 @@ export const jobsSlice = createSlice({
 				action.payload,
 			);
 		},
-		setAssignedCandidatesWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
+		setAssignedCandidatesWhileCreatingJob: (state, action: PayloadAction<LinkedInProfile[]>) => {
 			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
 
@@ -214,7 +215,7 @@ export const jobsSlice = createSlice({
 			state.assignedClientWhileCreatingJob = action.payload;
 		},
 
-		assignCandidateWhileCreatingJob: (state, action: PayloadAction<any[]>) => {
+		assignCandidateWhileCreatingJob: (state, action: PayloadAction<LinkedInProfile>) => {
 			state.assignedCandidatesWhileCreatingJob = addOrRemoveObject(
 				state.assignedCandidatesWhileCreatingJob,
 				action.payload,

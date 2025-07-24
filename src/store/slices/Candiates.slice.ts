@@ -4,10 +4,126 @@ import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { CandidateProfile, TCandidateListItem } from '../../types/slices.type/candidate.slice.type';
 
+interface FilterOptionLocation {
+	id: string;
+	title: string;
+}
+
+interface FilterOptionTenure {
+	min: number;
+	max: number;
+}
+
 export interface FilterOptionsType {
-	location: string;
-	experiences: number[];
+	keywords?: string;
+	location?: FilterOptionLocation;
+	tenure: FilterOptionTenure;
 	skills: string[];
+}
+
+interface LocationType {
+	object: string;
+	title: string;
+	id: string;
+}
+
+
+
+export interface LinkedInProfile {
+  id: string;
+  recordId: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  headline: string;
+  location: string;
+  industry: string;
+  profileUrl: string;
+  publicProfileUrl: string;
+  profilePictureUrl: string;
+  profilePictureUrlLarge: string;
+  connectionsCount: number;
+  networkDistance: string;
+  canSendInmail: boolean;
+  recruiterCandidateId: string;
+  hiddenCandidate: null;
+  interestLikelihood: null;
+  summary: string;
+  privacySettings: null;
+  skills: {
+    name: string;
+    endorsement_count: number;
+  }[];
+  languages: any[]; // Could be more specific if language structure is known
+  projects: any[]; // Could be more specific if project structure is known
+  certifications: {
+    end: {
+      year: number;
+      month: number;
+    };
+    name: string;
+    start: {
+      year: number;
+      month: number;
+    };
+    organization: string;
+    organization_id: string;
+    url?: string;
+  }[];
+  createdAt: string;
+  updatedAt: string;
+  education: {
+    id: string;
+    linkedinId: string;
+    degree: string;
+    school: string;
+    schoolId: string;
+    fieldOfStudy: string;
+    start: null | {
+      year: number;
+      month: number;
+    };
+    end: null | {
+      year: number;
+      month: number;
+    };
+    schoolDetails: {
+      url: string;
+      logo: string;
+      name: string;
+      location: string;
+      description: string;
+      employeeCount: number;
+    };
+    createdAt: string;
+    updatedAt: string;
+  }[];
+  workExperience: {
+    id: string;
+    linkedinId: string;
+    company: string;
+    companyId: string | null;
+    companyUrl: string | null;
+    industry: string | null;
+    location: string | null;
+    role: string;
+    start: {
+      year: number;
+      month: number;
+    };
+    end: {
+      year: number;
+      month: number;
+    } | null;
+    description: string | null;
+    skills: {
+      name: string;
+      endorsement_count: number;
+    }[];
+    logo: string | null;
+    createdAt: string;
+    updatedAt: string;
+  }[];
 }
 
 interface InitialStateType {
@@ -16,7 +132,12 @@ interface InitialStateType {
 	candidatesList: TCandidateListItem[];
 	filteredCandidate: any[];
 	csvData: any[];
-	allCadidateList: any[];
+	location: {
+		loading: boolean;
+		rows: LocationType[];
+		error: null | Error | any;
+	};
+	allCadidateList: LinkedInProfile[];
 	pageLoading: boolean;
 	modalLoading: boolean;
 	paginationCount: number;
@@ -27,10 +148,17 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	search: '',
+
 	filterOptions: {
+		keywords: '',
 		skills: [],
-		location: '',
-		experiences: [],
+		location: { title: '', id: '' },
+		tenure: { min: 0, max: 0 },
+	},
+	location: {
+		rows: [],
+		error: null,
+		loading: false,
 	},
 	allCadidateList: [],
 	filteredCandidate: [],
@@ -47,12 +175,31 @@ const initialState: InitialStateType = {
 export const getAgencyCandidatesList = createAsyncThunk(
 	'candidates/getAgencyCandidatesList',
 	async (
-		{ page, limit, search = '', searchBy = '' }: { page: number; limit: number; search?: string; searchBy?: string },
+		{
+			page,
+			limit,
+			search = '',
+			searchBy = '',
+		}: { page: number; limit: number; search?: string; searchBy?: string },
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.get(
 				`/agency/test/candidates?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+const getLocationForCandidatesFilters = createAsyncThunk(
+	'candidates/getLocation',
+	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.get(
+				`/unipile-linkedin/location?page=${page}&limit=${limit}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -96,24 +243,27 @@ export const getFilteredCandidates = createAsyncThunk(
 		{
 			page = 1,
 			limit = 10,
-			location = '',
-			experiences = [],
+			location = [],
+			tenure = { min: 0, max: 0 },
 			skills = [],
+			keywords = '',
 		}: {
 			page?: number;
 			limit?: number;
-			location?: string;
-			experiences?: number[];
+			location?: FilterOptionLocation[];
+			tenure?: FilterOptionTenure;
 			skills?: string[];
+			keywords?: string;
 		},
 		{ rejectWithValue },
 	) => {
 		try {
 			const response = await axiosInstance.post(
-				`/candidate/list?page=${page}&limit=${limit}`,
+				`/unipile-linkedin/search?page=${page}&limit=${limit}`,
 				{
 					location,
-					experiences,
+					keywords,
+					tenure,
 					skills,
 				},
 			);
@@ -144,7 +294,10 @@ export const getAllCandidatesList = createAsyncThunk(
 	) => {
 		try {
 			const response = await axiosInstance.post(
-				`/candidate/list?page=${page}&limit=${limit}&search=${search}`,
+				`/unipile-linkedin/search?page=${page}&limit=${limit}`,
+				{
+					keywords:search
+				}
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -183,14 +336,12 @@ export const unAssignJobToCandidate = createAsyncThunk(
 	},
 );
 
-
 export const assignClientToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ clientId, assignTo }: { clientId: string; assignTo: string }, { rejectWithValue }) => {
-		
 		try {
 			const response = await axiosInstance.post('/candidate/assign-job', {
-				jobId:clientId,
+				jobId: clientId,
 				candidateId: assignTo,
 			});
 			return response.data.data;
@@ -275,6 +426,21 @@ export const candidatesSlice = createSlice({
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
+			})
+
+			.addCase(getLocationForCandidatesFilters.pending, (state) => {
+				state.location.loading = true;
+				state.location.error = null;
+			})
+			.addCase(getLocationForCandidatesFilters.fulfilled, (state, action) => {
+				state.location.rows = action.payload.rows;
+				state.location.loading = false;
+			})
+			.addCase(getLocationForCandidatesFilters.rejected, (state, action) => {
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				state.location.loading = false;
 			})
 
 			.addCase(getSearchedAgencyCandidatesList.pending, (state) => {
