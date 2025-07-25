@@ -9,6 +9,7 @@ import { AppDispatch } from '../store';
 import { useDispatch } from 'react-redux';
 import { Roles, RolesType } from '../constants/role.enums';
 import useDarkMode from '../hooks/useDarkMode';
+import { log } from 'console';
 
 export interface IAuthContextProps {
 	userTokenStorage: string | null;
@@ -47,7 +48,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	const selectedEmail = useRef('');
 	const resetToken = useRef('');
 
-	const {setDarkModeStatus} = useDarkMode();
+	const { setDarkModeStatus } = useDarkMode();
 
 	const [userTokenStorage, setUserToken] = useLocalStorage('token', null);
 	const [userStorage, setUser] = useLocalStorage('user', null);
@@ -61,13 +62,20 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			});
 
 			if (response.data.success) {
-				if (typeof setUser === 'function') {
-					await setUser(response.data.data.user);
-				}
-				if (typeof setUserToken === 'function') {
-					await setUserToken(response.data.data.token);
-					toast.success('Login Successfully');
-					navigate('/');
+				console.log(response.data);
+
+				if (response.data.data.user.role === Roles.CLIENT) {
+					toast.error("Client Don't have permission to login here");
+					
+				} else {
+					if (typeof setUser === 'function') {
+						await setUser(response.data.data.user);
+					}
+					if (typeof setUserToken === 'function') {
+						await setUserToken(response.data.data.token);
+						toast.success('Login Successfully');
+						navigate('/');
+					}
 				}
 			}
 		} catch (e: any) {
