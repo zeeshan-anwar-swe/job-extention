@@ -10,7 +10,7 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 } from '../../../../components/ui/Card';
-import SearchPartial from './_partial/Search.partial';
+import ChatSearchPartial from './_partial/Search.partial';
 import Button from '../../../../components/ui/Button';
 import { NavSeparator } from '../../../../components/layouts/Navigation/Nav';
 import Label from '../../../../components/form/Label';
@@ -19,8 +19,7 @@ import Alert from '../../../../components/ui/Alert';
 import { formatIsoTimeString } from '../../../../utils/helper';
 import { ViewableImagePartial } from './_partial/Image.partial';
 import { useSocket } from '../../../../context/socketContext'; // Import useSocket
-import { Divider } from 'antd';
-import { useParams } from 'react-router-dom';
+
 
 // Define TypeScript Interfaces
 interface Media {
@@ -62,6 +61,7 @@ const ReusableChatPage = ({
 	const { socket } = useSocket(); // Get socket from context
 	// const { userId } = useParams<{ userId: string }>();
 	const [chat, setChat] = useState<ChatMessage[]>([]);
+	const [isSearched, setIsSearched] = useState<boolean>(false)
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [loadingMore, setLoadingMore] = useState(false);
@@ -213,6 +213,7 @@ const ReusableChatPage = ({
 	};
 
 	const handleScroll = () => {
+		if(isSearched) return; 
 		if (chatContainerRef.current?.scrollTop === 0 && hasMore && !loadingMore) {
 			loadMoreMessages();
 		}
@@ -260,11 +261,11 @@ const ReusableChatPage = ({
 								<h1>{receiverName}</h1>
 								<span
 									className={`h-2 w-2 rounded-full ${
-										isUserOnline(userId) ? 'bg-green-500' : 'bg-blue-100'
+										isUserOnline(userId) ? 'bg-green-500' : 'bg-slate-200'
 									}`}></span>
 							</div>
 							<div className='flex items-center gap-2'>
-								<SearchPartial />
+								<ChatSearchPartial setIsSearched={setIsSearched} receiverId={userId} setChat={setChat} />
 								<Button variant='outline' onClick={() => setChat([])}>
 									Clear Chat
 								</Button>
@@ -279,6 +280,7 @@ const ReusableChatPage = ({
 							onScroll={handleScroll}
 							className='flex flex-1 flex-col gap-4 overflow-y-auto'>
 							<CardBody className='flex flex-col gap-4'>
+								
 								{chat.map((msg, index) => (
 									<div
 										key={index}

@@ -16,6 +16,7 @@ import MainLoader from '../../../../../../templates/layouts/main/MainLoader';
 import {
 	getAllCandidatesList,
 	getFilteredCandidates,
+	LinkedInProfile,
 } from '../../../../../../store/slices/Candiates.slice';
 import Pagination from '../../../../../../components/ui/Pagination';
 
@@ -31,6 +32,9 @@ const CreateJobRightSidePartial = () => {
 	} = useSelector((state: RootState) => state.candidates);
 
 	const isFiltered = filteredCandidate?.length > 0;
+
+	console.log({filteredCandidate, allCadidateList});
+	
 
 	return (
 		<Card className='relative col-span-4 flex flex-col gap-2 max-lg:col-span-12'>
@@ -51,7 +55,7 @@ const CreateJobRightSidePartial = () => {
 					loading={pageLoading}
 					error={error}
 					data={isFiltered ? filteredCandidate : allCadidateList}>
-					{(!isFiltered ? allCadidateList : filteredCandidate).map((candidate) => (
+					{(!isFiltered ? allCadidateList : filteredCandidate).map((candidate:LinkedInProfile) => (
 						<CandidateCardPartial key={candidate.id} candidate={candidate} />
 					))}
 				</MainLoader>

@@ -19,6 +19,8 @@ import { AppDispatch, RootState } from '../../../../../../store';
 import { assignCandidateWhileCreatingJob } from '../../../../../../store/slices/Jobs.slice';
 import { objectExistsInArray } from '../../../../../../utils/helper';
 import { LinkedInProfile } from '../../../../../../store/slices/Candiates.slice';
+import useImageValidation from '../../../../../../hooks/useImageValidation';
+import { calculateTotalExperience } from '../../../../../../utils/linkedin.util';
 
 const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -27,6 +29,8 @@ const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => 
 	);
 	const dispatch: AppDispatch = useDispatch();
 
+	const {loading, imageUrl} = useImageValidation(candidate.profilePictureUrl);
+
 	const isAssigned = objectExistsInArray(assignedCandidatesWhileCreatingJob, candidate);
 
 	return (
@@ -34,7 +38,7 @@ const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => 
 			<CardHeader className='gap-4'>
 				<img
 					className='aspect-square w-14 rounded-xl border'
-					src={profileImageUrlValidationCheck('')}
+					src={imageUrl}
 					alt='profile-image'
 				/>
 				<div className='flex-1'>
@@ -49,15 +53,15 @@ const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => 
 
 			<CardBody className='!flex flex-wrap !gap-4 max-md:flex-col'>
 				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
-					Experience: <b>{textValidationCheck(candidate.workExperience)}</b>
+					Experience: <b>{calculateTotalExperience(candidate.workExperience)}</b>
 				</Button>
-				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
+				 <Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
 					location: <b>{textValidationCheck(candidate?.location)}</b>
 				</Button>
 				<Button borderWidth='border' className='gap-2 !p-1' variant='outline' color='zinc'>
-					Availability: <b>{textValidationCheck(candidate.canSendInmail)}</b>
+					Availability: <b>{candidate.canSendInmail? 'Yes' : 'No'}</b>
 				</Button>
-			</CardBody>
+			</CardBody> 
 			<NavSeparator className='!mx-4 !mb-4' />
 			<CardFooter className='!justify-start max-md:!justify-center'>
 				<Button
@@ -69,7 +73,7 @@ const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => 
 					}}>
 					{isAssigned ? 'Assigned' : 'Assign'}
 				</Button>
-				<Link to={'/candidates/profile/10'}>
+				<Link target='_blank' to={candidate.profileUrl}>
 					<Button variant='outline' borderWidth='border' color='zinc'>
 						View Profile
 					</Button>

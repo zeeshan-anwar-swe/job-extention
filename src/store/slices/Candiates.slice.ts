@@ -267,7 +267,7 @@ export const getFilteredCandidates = createAsyncThunk(
 					skills,
 				},
 			);
-			if (response.data.data.rows.length < 1) {
+			if (response.data.data.data.length < 1) {
 				toast.error('No candidates found');
 			}
 			return response.data.data;
@@ -299,6 +299,7 @@ export const getAllCandidatesList = createAsyncThunk(
 					keywords:search
 				}
 			);
+			
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -480,7 +481,7 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getFilteredCandidates.fulfilled, (state, action) => {
 				state.allCadidateList = [];
-				state.filteredCandidate = action.payload.rows;
+				state.filteredCandidate = action.payload.data;
 				state.paginationCount = action.payload.count;
 				state.pageLoading = false;
 			})
@@ -497,7 +498,7 @@ export const candidatesSlice = createSlice({
 			})
 			.addCase(getAllCandidatesList.fulfilled, (state, action) => {
 				state.filteredCandidate = [];
-				state.allCadidateList = action.payload.rows;
+				state.allCadidateList = action.payload.data;
 				state.paginationCount = action.payload.count;
 				state.pageLoading = false;
 			})
