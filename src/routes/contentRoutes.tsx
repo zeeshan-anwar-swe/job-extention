@@ -16,7 +16,6 @@ import ReportAndAnalyticsPage from '../modules/AgencyAdmin.module/pages/ReportAn
 import ManageTeamPage from '../modules/AgencyAdmin.module/pages/ManageTeamPage/ManageTeam.page';
 import TeammateProfilePage from '../modules/AgencyAdmin.module/pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page';
 import ChatPage from '../modules/AgencyAdmin.module/pages/ManageTeamPage/ChatPage/Chat.page';
-import CommonChatPage from '../modules/Shared/pages/ChatPage/Chat.page';
 import SettingPage from '../modules/AgencyAdmin.module/pages/SettingPage/Setting.page';
 import ConnectCRMPage from '../modules/AgencyAdmin.module/pages/SettingPage/ConnectCRMPage/ConnectCRM.page';
 import SubcriptionPage from '../modules/AgencyAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
@@ -24,12 +23,10 @@ import PaymentPage from '../modules/AgencyAdmin.module/pages/PaymentPage/Payment
 import SSOWaitingPage from '../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWaiting.page';
 import RecruitersPage from '../modules/Team.module/pages/TeamMembers/Recruiter.page';
 import ChatWithRecruiterPage from '../modules/Team.module/pages/ChatPage/Chat.page';
-import TestPage from '../modules/Shared/pages/TestPage/Test.page';
 import ClientJobsPage from '../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page';
 import  ChatMain  from '../modules/Shared/pages/ChatPage2/ChatMain';
 import TeamDashboardPage from '../modules/Team.module/pages/DashboardPage/Dashboard.page';
 import TeamCandidatesPage from '../modules/Team.module/pages/CandidatesPage/Candidates.page';
-import TeamCandidateCVEditPage from '../modules/Team.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
 import TeamCandidatesProfilePage from '../modules/Team.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import TeamJobsPage from '../modules/Team.module/pages/Jobs/Jobs.page';
 import TeamJobDetailsPage from '../modules/Team.module/pages/Jobs/JobsViewCadidates/TeamJobDetails.page';
@@ -171,7 +168,6 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
-		{path:'test', element: <TestPage />},
 
 		{ path: '*', element: <NotFoundPage /> },
 	],

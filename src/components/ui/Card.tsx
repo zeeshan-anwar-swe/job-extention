@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, ReactNode, forwardRef } from 'react';
+import { FC, HTMLAttributes, ReactNode, forwardRef } from 'react';
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TRounded } from '../../types/rounded.type';

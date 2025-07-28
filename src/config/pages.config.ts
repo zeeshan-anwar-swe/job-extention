@@ -1,4 +1,4 @@
-import { Roles } from "../constants/role.enums";
+import { Roles } from '../constants/role.enums';
 
 export const examplePages = {
 	examplesPage: {
@@ -430,7 +430,7 @@ export const appPages = {
 			text: 'Dashboard',
 			icon: 'HeroSquares2X2',
 		},
-		
+
 		jobsPages: {
 			id: 'jobsApp',
 			to: '/jobs',
@@ -458,7 +458,6 @@ export const appPages = {
 			},
 		},
 
-
 		chatAppPages: {
 			id: 'chatApp',
 			to: '/chat',
@@ -473,7 +472,7 @@ export const appPages = {
 			icon: 'HeroChatBubbleLeftRight',
 		},
 
-		candidatesPage:{
+		candidatesPage: {
 			id: 'candidatesApp',
 			to: '/candidates',
 			text: 'Candidates',
@@ -520,8 +519,6 @@ export const appPages = {
 				},
 			},
 		},
-		
-		
 	},
 	[Roles.ADMIN]: {
 		dashboardAppPages: {
@@ -531,18 +528,122 @@ export const appPages = {
 			icon: 'HeroSquares2X2',
 		},
 
+		settingAppPages: {
+			id: 'SettingApp',
+			to: '/setting',
+			text: 'Setting',
+			icon: 'HeroCog6Tooth',
+			subPages: {
+				editProfileAppPages: {
+					id: 'editProfileApp',
+					to: '/setting',
+					text: 'Edit Profile',
+					icon: 'HeroUser',
+				},
+				deleteAppPages: {
+					id: 'connectCRMApp',
+					to: '/setting/delete-account',
+					text: 'Delete Account',
+					icon: 'HeroTrash',
+				},
+				subcriptionAppPages: {
+					id: 'subcriptionApp',
+					to: '/setting/subcription',
+					text: 'Subscription',
+					icon: 'HeroCreditCard',
+				},
+			},
+		},
+
+		pamentAppPages: {
+			id: 'pamentApp',
+			to: '/payment',
+			text: 'Payment',
+			icon: 'HeroCreditCard',
+		},
+
+		candidatesAppPages: {
+			id: 'candidatesApp',
+			to: '/candidates',
+			text: 'Candidates',
+			icon: 'HeroUsers',
+			subPages: {
+				cadidateProfileAppPage: {
+					id: 'cadidateProfileApp',
+					to: 'candidates/profile',
+					text: 'Candidate Profile',
+					icon: 'HeroIdentification',
+				},
+				candidateCVEditAppPage: {
+					id: 'cadidateProfileApp',
+					to: 'candidates/cv-edit',
+					text: 'Candidate Profile',
+					icon: 'HeroPencilSquare',
+				},
+			},
+		},
+		jobsAppPages: {
+			id: 'jobsApp',
+			to: '/jobs',
+			text: 'Jobs',
+			icon: 'HeroDocumentText',
+			subPages: {
+				rootPage: {
+					id: 'jobsApp',
+					to: '/jobs',
+					text: 'Jobs',
+					icon: 'HeroDocumentText',
+				},
+				viewJobAppPages: {
+					id: 'viewJobApp',
+					to: '/jobs/view-job',
+					text: 'View Job',
+					icon: 'HeroUser',
+				},
+			},
+		},
+
+		clientsAppPages: {
+			id: 'clientsApp',
+			to: '/clients',
+			text: 'Clients',
+			icon: 'HeroBriefcase',
+			subPages: {
+				clientProfileAppPages: {
+					id: 'clientProfileApp',
+					to: '/clients/profile',
+					text: 'Client Profile',
+					icon: 'HeroIdentification',
+				},
+			},
+		},
+
+		adminAppPages: {
+			id: 'clientsApp',
+			to: '/admin',
+			text: 'Admin',
+			icon: 'HeroBriefcase',
+			subPages: {
+				rootPage: {
+					id: 'clientsApp',
+					to: '/admin',
+					text: 'Admin',
+					icon: 'HeroUserCircle',
+				},
+			},
+		},
 
 		recruiterAppPages: {
 			id: 'recruiterApp',
 			to: '/recruiter',
 			text: 'Recruiter',
-			icon: 'HeroBriefcase',
+			icon: 'HeroScan',
 			subPages: {
 				recruiterPage: {
 					id: 'recruiterPage',
 					to: '/recruiter',
 					text: 'Recruiter',
-					icon: 'HeroBriefcase',
+					icon: 'HeroScan',
 				},
 				recruiterProfilePage: {
 					id: 'recruitmentProfileApp',
@@ -552,12 +653,55 @@ export const appPages = {
 				},
 			},
 		},
-		
-		chatAppPages: {
-			id: 'chatApp',
-			to: '/chat',
-			text: 'Chat',
+
+		taskBoardAppPages: {
+			id: 'taskBoardApp',
+			to: '/task-board',
+			text: 'Task Board',
+			icon: 'HeroTableCells',
+		},
+
+		reportAndAnalyticsAppPages: {
+			id: 'reportAndAnalyticsApp',
+			to: '/report-and-analytics',
+			text: 'Report & Analytics',
+			icon: 'HeroPresentationChartBar',
+		},
+
+		aiInterviewAppPages: {
+			id: 'aiInterviewApp',
+			to: '/ai-interview',
+			text: 'AI Interview',
 			icon: 'HeroChatBubbleLeftRight',
+		},
+
+		KoalaByteAssistantAppPages: {
+			id: 'KoalaByteAssistantApp',
+			to: '/koalabyte-assistant',
+			text: 'KoalaByte Assistant',
+			icon: 'HeroChatBubbleLeftRight',
+		},
+
+		manageTeamAppPages: {
+			id: 'manageTeamApp',
+			to: '/manage-team',
+			text: 'Manage Team',
+			icon: 'HeroUsers',
+			rightIcon: 'HeroArrowUpRight',
+			subPages: {
+				teammateProfileAppPages: {
+					id: 'teammateProfileApp',
+					to: '/manage-team/profile',
+					text: 'Teammate Profile',
+					icon: 'HeroUserGroup',
+				},
+				chatAppPage: {
+					id: 'chatApp',
+					to: '/manage-team/chat',
+					text: 'Chat Page',
+					icon: 'HeroChatBubbleLeftEllipsis',
+				},
+			},
 		},
 	},
 
@@ -569,7 +713,6 @@ export const appPages = {
 			icon: 'HeroSquares2X2',
 		},
 
-
 		recruiterAppPages: {
 			id: 'recruiterApp',
 			to: '/recruiter',
@@ -590,7 +733,7 @@ export const appPages = {
 				},
 			},
 		},
-		
+
 		chatAppPages: {
 			id: 'chatApp',
 			to: '/chat',
