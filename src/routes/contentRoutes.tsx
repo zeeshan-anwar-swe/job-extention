@@ -1,6 +1,5 @@
 import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
-import LoginPage from '../modules/AgencyAdmin.module/pages/LoginPage/Login.page';
 import SignupPage from '../modules/AgencyAdmin.module/pages/Signup.page';
 import NotFoundPage from '../modules/AgencyAdmin.module/pages/NotFound.page';
 import { appPages, authPages } from '../config/pages.config';
@@ -44,6 +43,7 @@ import SuperAdminCandidatesProfilePage from '../modules/SuperAdmin.module/pages/
 import SuperAdminViewJobPage from '../modules/SuperAdmin.module/pages/Jobs/ViewJobPage/ViewJob.page';
 import SuperAdminClientProfilePage from '../modules/SuperAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page';
 import SuperAdminSubcriptionPage from '../modules/SuperAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
+import LoginPage from '../modules/Shared/pages/LoginPage/Login.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -178,9 +178,7 @@ const contentRoutes: ContentRoutesType = {
 
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
-
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
-
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	Client: [
@@ -448,7 +446,6 @@ const contentRoutes: ContentRoutesType = {
 
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
-
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 
 		{ path: '*', element: <NotFoundPage /> },
@@ -528,7 +525,8 @@ const contentRoutes: ContentRoutesType = {
 			path: appPages.SuperAdmin.settingAppPages.to,
 			element: <SuperAdminSettingPage />,
 		},
-
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		
 		{ path: '*', element: <NotFoundPage /> },
 	],
 };

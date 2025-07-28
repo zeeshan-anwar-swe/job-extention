@@ -90,13 +90,13 @@ const SuperAdminKoolabyteAssistantPage = () => {
 		<>
 			<Header>
 				<HeaderLeft>
-					<Breadcrumb path='Pages / Dashboard' currentPage='Recruitment Dashboard' />
+					<Breadcrumb path='Pages / Assistant' currentPage='Koolabyte Assistant' />
 				</HeaderLeft>
 				<HeaderRight>
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Sales Dashboard'>
+			<PageWrapper name='Assistant'>
 				<Subheader>
 					<SubheaderLeft>
 						<PeriodButtonsPartial activeTab={activeTab} setActiveTab={setActiveTab} />

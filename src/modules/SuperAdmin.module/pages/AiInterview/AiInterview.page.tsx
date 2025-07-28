@@ -99,7 +99,7 @@ const SuperAdminAiInterviewPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Jobs'>
+			<PageWrapper name='Ai Interview'>
 				<Subheader>
 					<SubheaderLeft>
 						<SearchPartial />

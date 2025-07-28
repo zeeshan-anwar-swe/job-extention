@@ -5,18 +5,14 @@ import LogoAndAsideTogglePart from './_parts/LogoAndAsideToggle.part';
 import DarkModeSwitcherPart from './_parts/DarkModeSwitcher.part';
 import { appPages } from '../../../config/pages.config';
 import Nav, {
-	NavButton,
-	NavCollapse,
 	NavItem,
 	NavSeparator,
 	NavTitle,
-	NavUser,
 } from '../../../components/layouts/Navigation/Nav';
 import Badge from '../../../components/ui/Badge';
 import UserTemplate from '../User/User.template';
 
 const DefaultAsideTemplate = () => {
-	const navigate = useNavigate();
 
 	return (
 		<Aside>

@@ -1,10 +1,10 @@
 import Badge from '../../../components/ui/Badge';
-import UserTemplate from '../User/User.template';
 import { appPages } from '../../../config/pages.config';
 import DarkModeSwitcherPart from './_parts/DarkModeSwitcher.part';
 import LogoAndAsideTogglePart from './_parts/LogoAndAsideToggle.part';
 import Nav, { NavItem, NavTitle } from '../../../components/layouts/Navigation/Nav';
 import Aside, { AsideBody, AsideFooter, AsideHead } from '../../../components/layouts/Aside/Aside';
+import UserTemplate from '../User/User.template';
 
 const SuperAdminAsideTemplate = () => {
 	return (
