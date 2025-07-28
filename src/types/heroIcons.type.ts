@@ -8,6 +8,7 @@ export type THeroIcons =
 	| 'HeroLinkedIn'
 	| 'HeroTwitterX'
 	| 'HeroPdf'
+	| 'HeroScan'
 	| 'HeroGitHub'
 	| 'HeroTwiceCheck'
 	| 'HeroArrowDownCircle'

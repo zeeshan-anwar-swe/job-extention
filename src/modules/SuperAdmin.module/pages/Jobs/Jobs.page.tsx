@@ -26,7 +26,7 @@ import colors from 'tailwindcss/colors';
 import themeConfig from '../../../../config/theme.config';
 import PeriodButtonsPartial from './_partial/PeriodButtons.partial';
 
-const JobsPage = () => {
+const SuperAdminJobsPage = () => {
 	const { i18n } = useTranslation();
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -168,4 +168,4 @@ const JobsPage = () => {
 	);
 };
 
-export default JobsPage;
+export default SuperAdminJobsPage;

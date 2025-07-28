@@ -14,10 +14,7 @@ const SettingAside = () => {
 					className='max-md:!w-fit'
 					{...appPages.Admin.settingAppPages.subPages.subcriptionAppPages}
 				/>
-				<NavItem
-					className='max-md:!w-fit'
-					{...appPages.Admin.settingAppPages.subPages.deleteAppPages}
-				/>
+				
 			</Nav>
 		</aside>
 	);

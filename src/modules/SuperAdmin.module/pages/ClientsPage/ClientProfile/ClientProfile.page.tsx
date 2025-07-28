@@ -19,7 +19,7 @@ import HeaderPartial from './_partial/Header.partial';
 import LabelTitleTextAreapartial from './_partial/LabelTitleTextArea.partial';
 import ClientProfilePageCardPartial from './_partial/ClientProfilePageCard.partial';
 
-const ClientProfilePage = () => {
+const SuperAdminClientProfilePage = () => {
 	return (
 		<>
 			<Header>
@@ -124,4 +124,4 @@ const ClientProfilePage = () => {
 	);
 };
 
-export default ClientProfilePage;
+export default SuperAdminClientProfilePage;

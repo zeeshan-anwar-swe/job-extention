@@ -25,13 +25,13 @@ const AdminPage = () => {
 		<>
 			<Header>
 				<HeaderLeft>
-					<Breadcrumb path='Pages / Admin' currentPage='Manage Admin' />
+					<Breadcrumb path='Pages / Admin' currentPage='Manage Admins' />
 				</HeaderLeft>
 				<HeaderRight>
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Admins'>
 				<Subheader>
 					<SubheaderLeft>
 						<SearchPartial />
@@ -60,9 +60,9 @@ const AdminPage = () => {
 							<CardHeader>
 								<CardHeaderChild className=''>
 									<div>
-										<CardTitle>Clients</CardTitle>
+										<CardTitle>Admins</CardTitle>
 										<CardSubTitle>
-											View and manage your client relationships.
+											View and manage  Admin relationships.
 										</CardSubTitle>
 									</div>
 								</CardHeaderChild>

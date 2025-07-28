@@ -17,7 +17,7 @@ import Card, {
 } from '../../../../components/ui/Card';
 import Dropdown, { DropdownItem, DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
 
-const ClientsPage = () => {
+const SuperAdminClientsPage = () => {
 	const [sortBy, setSortBy] = useState<string>('Sort By');
 	return (
 		<>
@@ -29,7 +29,7 @@ const ClientsPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Clients'>
 				<Subheader>
 					<SubheaderLeft>
 						<SearchPartial />
@@ -97,4 +97,4 @@ const ClientsPage = () => {
 	);
 };
 
-export default ClientsPage;
+export default SuperAdminClientsPage;

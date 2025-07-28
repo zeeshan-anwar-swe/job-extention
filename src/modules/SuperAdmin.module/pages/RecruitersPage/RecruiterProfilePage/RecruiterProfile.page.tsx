@@ -19,7 +19,7 @@ import LabelTitleTextAreapartial from './_partial/LabelTitleTextArea.partial';
 import SortDropdownPartial from './_partial/SortDropdown.partial';
 import Badge from '../../../../../components/ui/Badge';
 
-const RecruiterProfilePage = () => {
+const SuperAdminRecruiterProfilePage = () => {
 	return (
 		<>
 			<Header>
@@ -30,7 +30,7 @@ const RecruiterProfilePage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Recruiter Profile'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/manage-team'>
@@ -160,4 +160,4 @@ const RecruiterProfilePage = () => {
 	);
 };
 
-export default RecruiterProfilePage;
+export default SuperAdminRecruiterProfilePage;

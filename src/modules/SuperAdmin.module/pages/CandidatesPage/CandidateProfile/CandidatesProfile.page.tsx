@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
+import Button from '../../../../../components/ui/Button';
 import Container from '../../../../../components/layouts/Container/Container';
 import PageWrapper from '../../../../../components/layouts/PageWrapper/PageWrapper';
 import Subheader, { SubheaderLeft } from '../../../../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import Button from '../../../../../components/ui/Button';
 import Breadcrumb from '../../../../../components/layouts/Breadcrumb/Breadcrumb';
 import Card, {
 	CardBody,
@@ -12,10 +13,8 @@ import Card, {
 	CardSubTitle,
 	CardTitle,
 } from '../../../../../components/ui/Card';
-import { Link } from 'react-router-dom';
-import LabelTitlepartial from './_partial/LabelTitle.partial';
-
 import HeaderPartial from './_partial/Header.partial';
+import LabelTitlepartial from './_partial/LabelTitle.partial';
 import LabelTextareapartial from './_partial/LabelTextarea.partial';
 import Alert from '../../../../../components/ui/Alert';
 import Badge from '../../../../../components/ui/Badge';
@@ -23,7 +22,7 @@ import Label from '../../../../../components/form/Label';
 import { NavSeparator } from '../../../../../components/layouts/Navigation/Nav';
 import { profileImageUrlValidationCheck } from '../../../../../utils/validationCheck';
 
-const CandidatesProfilePage = () => {
+const SuperAdminCandidatesProfilePage = () => {
 	return (
 		<>
 			<Header>
@@ -34,7 +33,7 @@ const CandidatesProfilePage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Candidates Profile'>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/candidates'>
@@ -194,4 +193,4 @@ const CandidatesProfilePage = () => {
 	);
 };
 
-export default CandidatesProfilePage;
+export default SuperAdminCandidatesProfilePage;

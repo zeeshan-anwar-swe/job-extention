@@ -12,7 +12,7 @@ const JobsPageCardPartial = () => {
 			<CardBody className='relative flex flex-col gap-4 !p-0'>
 				<img
 					className='aspect-video w-full object-cover'
-					src={profileImageUrlValidationCheck('')}
+					src={profileImageUrlValidationCheck('http://localhost:7112/src/assets/svg-images/dummy-image.png')}
 					alt=''
 				/>
 
@@ -37,7 +37,7 @@ const JobsPageCardPartial = () => {
 						rounded='rounded-full'>
 						<img
 							className='aspect-square w-6'
-							src={profileImageUrlValidationCheck('')}
+							src={profileImageUrlValidationCheck("")}
 							alt='profile'
 						/>
 						<h6>Butlar Doe</h6>

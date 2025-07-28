@@ -9,14 +9,14 @@ import Card, {
 	CardFooterChild,
 	CardHeader,
 } from '../../../../../components/ui/Card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const JobsPageCardPartial = () => {
+	const  navigate = useNavigate();
 	return (
 		<Card
 			color='zinc'
 			className='col-span-4 flex flex-col gap-2  border border-zinc-300 dark:bg-zinc-950 max-2xl:col-span-6 max-lg:col-span-12'>
-			<Link className='' to='/jobs/view-job/123'>
 				<CardHeader className='gap-4 max-md:!flex-col-reverse'>
 					<Alert icon='HeroFolder' variant='solid' />
 					<div className='flex-1'>
@@ -49,10 +49,11 @@ const JobsPageCardPartial = () => {
 						<CardBodyTagPartial title='Job Type:' value='Full Time, On Site' />
 					</div>
 				</CardBody>
-			</Link>
 			<CardFooter className='border-t-2 !py-2'>
 				<CardFooterChild>
 					<Button
+							onClick={() => navigate('/Jobs/view-job')}
+
 						size='lg'
 						className='!px-0 !text-xl !font-bold'
 						rightIcon='HeroArrowUpRight'>

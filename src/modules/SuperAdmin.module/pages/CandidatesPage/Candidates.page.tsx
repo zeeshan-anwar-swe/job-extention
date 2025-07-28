@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { Range } from 'react-date-range';
 import Container from '../../../../components/layouts/Container/Container';
@@ -19,7 +18,7 @@ import SearchPartial from './_partial/Search.partial';
 import SortDropdownPartial from './_partial/SortDropdown.partial';
 import StatusDropdownPartial from './_partial/StatusDropdown.partial';
 
-const CandidatesPage = () => {
+const SuperAdminCandidatesPage = () => {
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 	const [selectedDate, setSelectedDate] = useState<Range[]>([
 		{
@@ -141,4 +140,4 @@ const CandidatesPage = () => {
 	);
 };
 
-export default CandidatesPage;
+export default SuperAdminCandidatesPage;

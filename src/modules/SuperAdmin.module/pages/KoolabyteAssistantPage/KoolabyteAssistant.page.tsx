@@ -18,7 +18,7 @@ import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_com
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import ApexLineChartPartial from './_partial/ApexLineChart.partial';
 
-const KoolabyteAssistantPage = () => {
+const SuperAdminKoolabyteAssistantPage = () => {
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
 
@@ -139,4 +139,4 @@ const KoolabyteAssistantPage = () => {
 	);
 };
 
-export default KoolabyteAssistantPage;
+export default SuperAdminKoolabyteAssistantPage;

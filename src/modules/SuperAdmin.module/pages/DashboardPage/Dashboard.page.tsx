@@ -25,7 +25,7 @@ import CommentPartial from './_partial/Comment.partial';
 import ApexLineChartPartial from './_partial/ApexLineChart.partial';
 import TablePartial from './_partial/Table.partial';
 
-const DashboardPage = () => {
+const SuperAdminDashboardPage = () => {
 	const { i18n } = useTranslation();
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -102,7 +102,7 @@ const DashboardPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Sales Dashboard'>
+			<PageWrapper name='Dashboard'>
 				<Subheader>
 					<SubheaderLeft>
 						<PeriodButtonsPartial activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -177,4 +177,4 @@ const DashboardPage = () => {
 	);
 };
 
-export default DashboardPage;
+export default SuperAdminDashboardPage;

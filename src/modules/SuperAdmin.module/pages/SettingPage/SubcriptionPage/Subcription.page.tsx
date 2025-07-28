@@ -17,7 +17,7 @@ import TablePartial from './partial/Table.partial';
 import SubscriptionModalPartial from './partial/SubscriptionModal.partial';
 import SettingAside from '../partial/Asides/DefaultAside.template';
 
-const SubcriptionPage = () => {
+const SuperAdminSubcriptionPage = () => {
 	return (
 		<>
 			<Header>
@@ -28,7 +28,7 @@ const SubcriptionPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Subscription'>
 				<Container className='!grid flex-1 !grid-cols-12 !gap-4'>
 					<Card className='col-span-12 !grid flex-1 !grid-cols-10 gap-4 overflow-hidden p-4'>
 						<SettingAside />
@@ -113,4 +113,4 @@ const SubcriptionPage = () => {
 	);
 };
 
-export default SubcriptionPage;
+export default SuperAdminSubcriptionPage;

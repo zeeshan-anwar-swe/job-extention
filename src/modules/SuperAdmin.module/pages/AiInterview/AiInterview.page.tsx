@@ -21,7 +21,7 @@ import colors from 'tailwindcss/colors';
 import themeConfig from '../../../../config/theme.config';
 import SortDropdownPartial from './_partial/SortDropdown.partial';
 
-const AiInterviewPage = () => {
+const SuperAdminAiInterviewPage = () => {
 	const { i18n } = useTranslation();
 
 	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
@@ -190,4 +190,4 @@ const AiInterviewPage = () => {
 	);
 };
 
-export default AiInterviewPage;
+export default SuperAdminAiInterviewPage;

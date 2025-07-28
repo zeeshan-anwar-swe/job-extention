@@ -10,7 +10,7 @@ import Card, { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../..
 import SearchPartial from './_partial/Search.partial';
 import SortDropdownPartial from './_partial/SortDropdown.partial';
 
-const RecruitersPage = () => {
+const SuperAdminRecruitersPage = () => {
 	return (
 		<>
 			<Header>
@@ -21,7 +21,7 @@ const RecruitersPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Candidates'>
+			<PageWrapper name='Recruiters'>
 				<Subheader>
 					<SubheaderLeft>
 						<SearchPartial />
@@ -70,4 +70,4 @@ const RecruitersPage = () => {
 	);
 };
 
-export default RecruitersPage;
+export default SuperAdminRecruitersPage;

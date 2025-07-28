@@ -12,7 +12,7 @@ import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Card, { CardBody, CardFooter, CardFooterChild } from '../../../../components/ui/Card';
 
-const SettingPage = () => {
+const SuperAdminSettingPage = () => {
 	return (
 		<>
 			<Header>
@@ -123,4 +123,4 @@ const SettingPage = () => {
 	);
 };
 
-export default SettingPage;
+export default SuperAdminSettingPage;

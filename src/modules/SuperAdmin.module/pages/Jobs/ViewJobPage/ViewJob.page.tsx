@@ -21,7 +21,7 @@ import { profileImageUrlValidationCheck } from '../../../../../utils/validationC
 import TablePartial from './_partial/Table.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 
-const ViewJobPage = () => {
+const SuperAdminViewJobPage = () => {
 	return (
 		<>
 			<Header>
@@ -142,4 +142,4 @@ const ViewJobPage = () => {
 	);
 };
 
-export default ViewJobPage;
+export default SuperAdminViewJobPage;
