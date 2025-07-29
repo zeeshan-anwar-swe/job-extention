@@ -37,7 +37,7 @@ import SuperAdminJobsPage from '../modules/SuperAdmin.module/pages/Jobs/Jobs.pag
 import SuperAdminClientsPage from '../modules/SuperAdmin.module/pages/ClientsPage/Clients.page';
 import SuperAdminAiInterviewPage from '../modules/SuperAdmin.module/pages/AiInterview/AiInterview.page';
 import SuperAdminKoolabyteAssistantPage from '../modules/SuperAdmin.module/pages/KoolabyteAssistantPage/KoolabyteAssistant.page';
-import SuperAdminSettingPage from '../modules/SuperAdmin.module/pages/SettingPage/Setting.page';
+import SuperAdminSettingPage from '../modules/Shared/pages/SettingPage/Setting.page';
 import SuperAdminRecruiterProfilePage from '../modules/SuperAdmin.module/pages/RecruitersPage/RecruiterProfilePage/RecruiterProfile.page';
 import SuperAdminCandidatesProfilePage from '../modules/SuperAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import SuperAdminViewJobPage from '../modules/SuperAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';

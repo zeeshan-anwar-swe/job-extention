@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import Card from '../../../../../../components/ui/Card';
 import Badge from '../../../../../../components/ui/Badge';
-import Button from '../../../../../../components/ui/Button';
 import useImageValidation from '../../../../../../hooks/useImageValidation';
 import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { ClientDetailsType } from '../../../../../../types/slices.type/clients.slice.type';
-// import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
+import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
 import { assignJobToClient } from '../../../../../../store/slices/Agency/Client.slice';
 
 const HeaderPartial = ({
@@ -19,7 +18,6 @@ const HeaderPartial = ({
 	const [modal, setModal] = useState<boolean>(false);
 	const { loading, imageUrl } = useImageValidation(clientDetails?.clientUser.image);
 
-	console.log('clientDetails', clientDetails);
 
 	return (
 		<Card className='!col-span-12 flex'>
@@ -42,25 +40,25 @@ const HeaderPartial = ({
 						variant='solid'
 						color='amber'
 						colorIntensity='300'
-						className='!text-amber-950 max-md:p-2  max-sm:w-full'>
+						className='!text-amber-950 !p-2  max-sm:w-full'>
 						{Number(state?.hiringRate)}% Hiring Percentage
 					</Badge>
-					<Button
+					{/* <Button
 						onClick={() => setModal(true)}
 						className='h-fit max-sm:w-full'
 						variant='solid'>
 						Assign a job
-					</Button>
+					</Button> */}
 				</div>
 			</div>
-			{/* <AssignJobModalPartial
+			<AssignJobModalPartial
 				title={`Assign Jobs to client: ${clientDetails?.clientUser?.firstName ?? ''}`}
 				assignToModule='client'
 				modal={modal}
 				setModal={setModal}
 				assignTo={clientDetails?.id}
 				jobAssignAction={assignJobToClient}
-			/> */}
+			/>
 		</Card>
 	);
 };

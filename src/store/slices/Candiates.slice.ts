@@ -311,7 +311,7 @@ export const assignJobToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ jobId, assignTo }: { jobId: string; assignTo: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.post('/candidate/assign-job', {
+			const response = await axiosInstance.post('/linkedin-candidate/assign-job', {
 				jobId,
 				candidateId: assignTo,
 			});
@@ -326,7 +326,7 @@ export const unAssignJobToCandidate = createAsyncThunk(
 	'candidates/unAssignJobToCandidate',
 	async ({ jobId, unAssignTo }: { jobId: string; unAssignTo: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.post('/candidate/unassign-job', {
+			const response = await axiosInstance.post('/linkedin-candidate/unassign-job', {
 				jobId,
 				candidateId: unAssignTo,
 			});
@@ -341,7 +341,7 @@ export const assignClientToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ clientId, assignTo }: { clientId: string; assignTo: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.post('/candidate/assign-job', {
+			const response = await axiosInstance.post('/linkedin-candidate/assign-job', {
 				jobId: clientId,
 				candidateId: assignTo,
 			});
@@ -370,7 +370,7 @@ export const removeAgencyCandidate = createAsyncThunk(
 	'candidates/removeAgencyCandidate',
 	async (candidateId: string, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.delete('candidate/remove/' + candidateId);
+			const response = await axiosInstance.delete('linkedin-candidate/remove/' + candidateId);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -386,7 +386,7 @@ export const updateCandidateProfile = createAsyncThunk(
 	) => {
 		try {
 			const response = await axiosInstance.put(
-				'candidate/profile/edit/' + candidateId,
+				'linkedin-candidate/profile/edit/' + candidateId,
 				payload,
 			);
 			return response.data.data;

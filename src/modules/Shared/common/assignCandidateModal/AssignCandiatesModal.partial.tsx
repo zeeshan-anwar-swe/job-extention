@@ -19,6 +19,8 @@ import {
 	setCandidatesSearch,
 } from '../../../../store/slices/Candiates.slice';
 import Pagination from '../../../../components/ui/Pagination';
+import PageLoader from '../../../../templates/layouts/main/PageLoader';
+import { cn } from '../../../../utils/cn';
 
 const AssignCandidatesModalPartial = ({
 	jobId,
@@ -31,7 +33,7 @@ const AssignCandidatesModalPartial = ({
 	setModal: any;
 	jobTitle?: string;
 }) => {
-	const { allCadidateList, paginationCount, pageLoading } = useSelector(
+	const { allCadidateList, paginationCount, pageLoading, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
@@ -69,13 +71,19 @@ const AssignCandidatesModalPartial = ({
 				/>
 			</div>
 
-			<ModalBody className='!flex max-h-96 !w-full !flex-col !gap-4'>
-				{allCadidateList.map((candidate) => (
-					<AssignCandidatesModalListItemPartial
-						candidate={candidate}
-						key={candidate.id}
-					/>
-				))}
+			<ModalBody
+				className={cn(
+					'!flex !w-full !flex-col !gap-4',
+					pageLoading || error || allCadidateList.length === 0 ? 'min-h-96 justify-center' : 'max-h-96',
+				)}>
+				<PageLoader data={allCadidateList} loading={pageLoading} error={error}>
+					{allCadidateList.map((candidate) => (
+						<AssignCandidatesModalListItemPartial
+							candidate={candidate}
+							key={candidate.id}
+						/>
+					))}
+				</PageLoader>
 			</ModalBody>
 
 			<ModalFooter className='!block'>

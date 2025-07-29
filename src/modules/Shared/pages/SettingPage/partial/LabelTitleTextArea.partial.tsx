@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { textValidationCheck } from '../../../../../../utils/validationCheck';
+import { textValidationCheck } from '../../../../../utils/validationCheck';
 
 const LabelTitleTextAreapartial = ({
 	label,
@@ -19,7 +19,7 @@ const LabelTitleTextAreapartial = ({
 
 			<textarea
 				className={
-					'w-full rounded-xl bg-zinc-100 p-4 font-medium dark:bg-zinc-800 ' +
+					'w-full rounded-xl bg-white p-4 font-medium outline-none dark:bg-zinc-900 ' +
 					inputClassName
 				}
 				name=''

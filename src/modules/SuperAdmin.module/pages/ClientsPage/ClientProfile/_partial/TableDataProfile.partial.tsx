@@ -1,18 +1,21 @@
-import { profileImageUrlValidationCheck, textValidationCheck } from '../../../../../../utils/validationCheck';
+import {
+	profileImageUrlValidationCheck,
+	textValidationCheck,
+} from '../../../../../../utils/validationCheck';
 
 const TableDataProfilePartial = ({
 	imageUrl,
 	title,
 	subTitle,
-	className
+	className,
 }: {
 	imageUrl?: string;
 	title?: string;
 	subTitle?: string;
-	className?:string;
+	className?: string;
 }) => {
 	return (
-		<div className={'flex items-center justify-center gap-x-6 '+className}>
+		<div className={'flex items-center justify-center gap-x-6 ' + className}>
 			<img
 				className='aspect-square w-14 rounded-full'
 				src={profileImageUrlValidationCheck(imageUrl)}

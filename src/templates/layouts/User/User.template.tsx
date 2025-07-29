@@ -36,7 +36,6 @@ const UserTemplate = () => {
 			}>
 			<NavSeparator />
 			<NavItem {...appPages.AgencyAdmin.settingAppPages.subPages.settingPage} />
-
 			<NavItem text='Logout' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
 		</User>
 	);

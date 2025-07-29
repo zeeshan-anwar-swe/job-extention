@@ -1,31 +1,25 @@
-import { CardSubTitle, CardTitle } from '../../../../../components/ui/Card';
-import {
-	profileImageUrlValidationCheck,
-	textValidationCheck,
-} from '../../../../../utils/validationCheck';
+import { Link } from 'react-router-dom';
+import { textValidationCheck } from '../../../../../utils/validationCheck';
+import {  ClientListItemTypeSuperAdmin } from '../../../../../types/slices.type/clients.slice.type';
+import useImageValidation from '../../../../../hooks/useImageValidation';
+import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
+import { cn } from '../../../../../utils/cn';
 
-const TableDataProfilePartial = ({
-	imageUrl,
-	title,
-	subTitle,
-}: {
-	imageUrl?: string;
-	title?: string;
-	subTitle?: string;
-}) => {
+const TableDataProfilePartial = ({ client, inviteBy }: { client?: ClientListItemTypeSuperAdmin; inviteBy?: ClientListItemTypeSuperAdmin }) => {
+	const { loading, imageUrl } = useImageValidation(inviteBy? inviteBy.invitedBy.image : client?.clientUser.image);
 	return (
-		<div className='flex items-center justify-center gap-x-4'>
-			<img
-				className='aspect-square w-12 rounded-full'
-				src={profileImageUrlValidationCheck(imageUrl)}
-				alt='cadidate-image'
-			/>
-
+		<div
+			className={cn('flex items-center gap-x-6 max-lg:flex-col', inviteBy ? 'justify-center' : 'justify-start')}>
+			<ImageLoaderWraper height='h-14' loading={loading}>
+				<img
+					className='aspect-square w-14 rounded-full object-cover'
+					src={imageUrl}
+					alt='cadidate-image'
+				/>
+			</ImageLoaderWraper>
 			<div>
-				<CardTitle className='text-base font-medium'>
-					{textValidationCheck(title)}
-				</CardTitle>
-				{subTitle && <CardSubTitle>{textValidationCheck(subTitle)}</CardSubTitle>}
+				<h5 className='break-all'>{textValidationCheck(inviteBy? inviteBy.invitedBy.firstName +" "+inviteBy.invitedBy.lastName  : client?.clientUser?.firstName +" "+client?.clientUser?.lastName)}</h5>
+				{!inviteBy &&<p className='break-all'>{textValidationCheck(client?.clientUser.email)}</p>}
 			</div>
 		</div>
 	);

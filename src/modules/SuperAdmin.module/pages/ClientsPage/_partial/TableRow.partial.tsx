@@ -1,28 +1,41 @@
 import { Td, Tr } from '../../../../../components/ui/Table';
-import TableDataProfilePartial from './TableDataProfile.partial';
+import { textValidationCheck } from '../../../../../utils/validationCheck';
+import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
-import Button from '../../../../../components/ui/Button';
+import {  ClientListItemTypeSuperAdmin } from '../../../../../types/slices.type/clients.slice.type';
+import TableDataProfilePartial from './TableDataProfile.partial';
 
-const TableRowPartial = () => {
+const TableRowPartial = ({ client }: { client: ClientListItemTypeSuperAdmin }) => {
 	return (
-		<Tr className='font-medium'>
+		<Tr>
 			<Td>
-				<TableDataProfilePartial title='Alina Jourge' subTitle='alina@gmail.com' />
+				<TableDataProfilePartial client={client} />
 			</Td>
-			<Td className='text-center'>12-Feb-2024</Td>
+
 			<Td>
-				<div className='flex items-center justify-center'>
-					<Button iconSize='text-3xl' icon='HeroLinkedIn' />
+				<TableDataFeedbackPartial client={client} />
+			</Td>
+			<Td>
+				<div className='mx-auto flex w-fit'>
+					<h4>{textValidationCheck(client?.jobCount)}</h4>
 				</div>
 			</Td>
-			<Td className='text-center'>IT</Td>
-			<Td className='text-center'>10</Td>
 			<Td>
-				<TableDataProfilePartial title='Alina Jourge' />
+				<div className='mx-auto flex w-fit'>
+					<h4>{textValidationCheck(client?.jobCount)}</h4>
+				</div>
 			</Td>
-
-			<Td colSpan={2}>
-				<TableDataActionsPartial />
+			<Td>
+				<div className='mx-auto flex w-fit'>
+					<h4>{textValidationCheck(client?.jobCount)}</h4>
+				</div>
+			</Td>
+			<Td>
+				<TableDataProfilePartial inviteBy={client} />
+				
+			</Td>
+			<Td >
+				<TableDataActionsPartial client={client} />
 			</Td>
 		</Tr>
 	);

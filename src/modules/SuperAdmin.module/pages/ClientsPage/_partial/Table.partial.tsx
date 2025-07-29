@@ -1,35 +1,47 @@
-import Table, { TBody, Td, TFoot, Th, THead, Tr } from '../../../../../components/ui/Table';
 import TableRowPartial from './TableRow.partial';
+import Table, { TBody, TFoot, Th, THead, Tr } from '../../../../../components/ui/Table';
+import { RootState } from '../../../../../store';
+import { useSelector } from 'react-redux';
+import {
+	ClientListItemType,
+	ClientListItemTypeSuperAdmin,
+} from '../../../../../types/slices.type/clients.slice.type';
 
-const TablePartial = () => {
+const TablePartial = ({ sortBy }: { sortBy: string }) => {
+	const { paginatedClients } = useSelector((state: RootState) => state.SuperAdminClients);
+
+	// Create a copy and conditionally reverse it
+	const clientsToRender =
+		sortBy === 'Desending' ? [...paginatedClients].reverse() : paginatedClients;
+
 	return (
-		<Table className='table-fixed max-md:min-w-[70rem]'>
+		<Table className='table-auto'>
 			<THead>
-				<Tr>
-					<Th>CLIENT NAME</Th>
+				<Tr className='uppercase'>
+					<Th>NAME</Th>
 					<Th>JOINED ON</Th>
-					<Th>SOCIAL</Th>
-					<Th>INDUSTRY</Th>
-					<Th>ACTIVE JOBS</Th>
-					<Th>INVITED BY</Th>
-					<Th colSpan={2}>Action</Th>
+					<Th>Social</Th>
+					<Th>Industry</Th>
+					<Th>Active Jobs</Th>
+					<Th>Invited By</Th>
+					<Th>Action</Th>
 				</Tr>
 			</THead>
 			<TBody>
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
+				{/* Map over the potentially reversed list */}
+				{clientsToRender.map((client: ClientListItemTypeSuperAdmin) => (
+					<TableRowPartial client={client} key={client.id} />
+				))}
 			</TBody>
 			<TFoot>
-				<Tr>
-					<Th>CLIENT NAME</Th>
+				<Tr className='uppercase'>
+					<Th>NAME</Th>
 					<Th>JOINED ON</Th>
-					<Th>SOCIAL</Th>
-					<Th>INDUSTRY</Th>
-					<Th>ACTIVE JOBS</Th>
-					<Th>INVITED BY</Th>
-					<Th colSpan={2}>Action</Th>
+					<Th>Social</Th>
+					<Th>Industry</Th>
+					<Th>Active Jobs</Th>
+					<Th>Invited By</Th>
+					<Th>Action</Th>
 				</Tr>
 			</TFoot>
 		</Table>

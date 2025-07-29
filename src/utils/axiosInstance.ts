@@ -14,6 +14,7 @@ axiosInstance.interceptors.request.use(
 		if (token) {
 			const parsedToken = await JSON.parse(token);
 			config.headers.Authorization = `Bearer ${parsedToken}`;
+			 config.headers["ngrok-skip-browser-warning"] = true;
 		} else {
 			// If there's no token, redirect to login
 			toast.error('No token found. Please log in.');

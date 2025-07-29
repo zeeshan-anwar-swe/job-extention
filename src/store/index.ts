@@ -15,6 +15,7 @@ import teamCandidates from './slices/Team/Candidates.slice';
 import teamDashboard from './slices/Team/TeamDashboard.slice';
 import forgotPasswordSlice from './slices/ForgotPassword.slice';
 import reportsAndAnalytics from './slices/Agency/ReportsAndAnalytics.slice';
+import SuperAdminClients from './slices/SuperAdmin/SuperAdminClients.slice';
 
 export const store = configureStore({
 	reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
 		team,
 		clients,
 		teamChat,
+		teamJobs,
 		jobsSlice,
 		taskBoard,
 		recruiters,
@@ -30,10 +32,10 @@ export const store = configureStore({
 		subscription,
 		agencyStatics,
 		teamDashboard,
+		teamCandidates,
 		forgotPasswordSlice,
 		reportsAndAnalytics,
-		teamCandidates,
-		teamJobs,
+		SuperAdminClients,
 	},
 });
 

@@ -1,11 +1,16 @@
 import Button from '../../../../../../components/ui/Button';
-import TableDataSourcePartial from './TableDataSource.partial';
-import TableDataActionsPartial from './TableDataActions.partial';
+import Table, { TBody, Td, TFoot, Th, THead, Tr } from '../../../../../../components/ui/Table';
+import {
+	CardBody,
+	CardHeader,
+	CardHeaderChild,
+	CardTitle,
+} from '../../../../../../components/ui/Card';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import TableDataPositionPartial from './TableDataPosition.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';
-import Table, { TBody, Td, TFoot, Th, THead, Tr } from '../../../../../../components/ui/Table';
-import { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../../../../../components/ui/Card';
+import TableDataActionsPartial from './TableDataActions.partial';
+import TableDataSourcePartial from './TableDataSource.partial';
 
 const TablePartial = () => {
 	return (

@@ -1,13 +1,47 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import Button from '../../../../../components/ui/Button';
+import {
+	ClientListItemType,
+	ClientListItemTypeSuperAdmin,
+} from '../../../../../types/slices.type/clients.slice.type';
+// import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
+import {
+	assignJobToClient,
+	unAssignJobToClient,
+} from '../../../../../store/slices/Agency/Client.slice';
+// import { AssignTeamModalPartial } from '../../../common/AssignTeamModal/Modal.partial';
+import { Link } from 'react-router-dom';
 
-const TableDataActionsPartial = () => {
+const TableDataActionsPartial = ({ client }: { client: ClientListItemTypeSuperAdmin }) => {
+	const [modal, setModal] = useState<boolean>(false);
+	const [teamModal, setTeamModal] = useState<boolean>(false);
 	return (
-		<div className='flex justify-center'>
-			<Button color='blue'>Remove</Button>
-			<Link to={'/clients/profile'}>
-				<Button>View Profile</Button>
+		<div className='no-scrollbar flex font-medium justify-center text-nowrap'>
+			<Button>Remove Client</Button>
+			<Link to={`/clients/profile`} state={client}>
+				<Button color='blue'>View Profile</Button>
 			</Link>
+			{/* <Link to={`/chat/${client.id}`} state={{userName: client?.clientUser.firstName, userId: client?.id}}>
+				<Button color='blue'>Message</Button>
+				</Link>
+				<Button onClick={() => setModal(true)}>Assign A job</Button>
+				<Button onClick={() => setTeamModal(true)}>Assign to a Team Member</Button> */}
+			{/* <AssignJobModalPartial
+				title={`Assign Jobs to a client: ${client?.name ?? ''}`}
+				assignToModule='client'
+				modal={modal}
+				setModal={setModal}
+				assignTo={client.id}
+				jobAssignAction={assignJobToClient}
+				unAssignAction={unAssignJobToClient}
+			/>
+			<AssignTeamModalPartial
+				modal={teamModal}
+				assignTo={client.id}
+				assignToModule='client'
+				setModal={setTeamModal}
+				jobAssignAction={assignJobToClient}
+			/> */}
 		</div>
 	);
 };

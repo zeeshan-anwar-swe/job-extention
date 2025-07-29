@@ -1,6 +1,8 @@
 import Badge from '../../../../../components/ui/Badge';
+import { ClientListItemType, ClientListItemTypeSuperAdmin } from '../../../../../types/slices.type/clients.slice.type';
 
-const TableDataFeedbackPartial = ({ percentage }: { percentage: number }) => {
+const TableDataFeedbackPartial = ({ client }: { client: ClientListItemTypeSuperAdmin }) => {
+	const percentage = +client.jobCount;
 	const badgeColor = (() => {
 		if (percentage >= 80) {
 			return 'emerald'; // Green for 80-100%

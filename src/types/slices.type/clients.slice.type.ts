@@ -8,6 +8,24 @@ export interface ClientListItemType {
 	userId?: string;
 }
 
+export interface ClientListItemTypeSuperAdmin {
+  id: string;
+  invitedBy: {
+    firstName: string;
+    lastName: string;
+    image: string;
+  };
+  clientUser: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    image: string | null;
+  };
+  jobCount: number;
+}
+
+
 interface Job {
 	id: string;
 	title: string;
@@ -71,3 +89,6 @@ export interface TClientWithJobInitialState {
 	error: Error | null;
 	rows: TClientWithJobs[];
 }
+
+
+
