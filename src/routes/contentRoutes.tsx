@@ -40,7 +40,7 @@ import SuperAdminKoolabyteAssistantPage from '../modules/SuperAdmin.module/pages
 import SuperAdminSettingPage from '../modules/SuperAdmin.module/pages/SettingPage/Setting.page';
 import SuperAdminRecruiterProfilePage from '../modules/SuperAdmin.module/pages/RecruitersPage/RecruiterProfilePage/RecruiterProfile.page';
 import SuperAdminCandidatesProfilePage from '../modules/SuperAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
-import SuperAdminViewJobPage from '../modules/SuperAdmin.module/pages/Jobs/ViewJobPage/ViewJob.page';
+import SuperAdminViewJobPage from '../modules/SuperAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
 import SuperAdminClientProfilePage from '../modules/SuperAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page';
 import SuperAdminSubcriptionPage from '../modules/SuperAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
 import LoginPage from '../modules/Shared/pages/LoginPage/Login.page';

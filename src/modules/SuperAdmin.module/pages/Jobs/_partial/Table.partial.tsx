@@ -1,6 +1,11 @@
 import Button from '../../../../../components/ui/Button';
 import Table, { TBody, Td, TFoot, Th, THead, Tr } from '../../../../../components/ui/Table';
-import { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../../../../components/ui/Card';
+import {
+	CardBody,
+	CardHeader,
+	CardHeaderChild,
+	CardTitle,
+} from '../../../../../components/ui/Card';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import TableDataPositionPartial from './TableDataPosition.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';

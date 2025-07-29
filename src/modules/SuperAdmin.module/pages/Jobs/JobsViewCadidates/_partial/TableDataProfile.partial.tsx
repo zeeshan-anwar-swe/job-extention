@@ -21,7 +21,7 @@ const TableDataProfilePartial = ({
 				src={profileImageUrlValidationCheck(imageUrl)}
 				alt='cadidate-image'
 			/>
-			<div>
+			<div className='break-all'>
 				<h5>{textValidationCheck(title)}</h5>
 				<p>{textValidationCheck(subTitle)}</p>
 			</div>

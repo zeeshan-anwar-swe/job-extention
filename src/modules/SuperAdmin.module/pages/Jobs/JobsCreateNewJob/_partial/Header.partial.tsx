@@ -11,7 +11,7 @@ const HeaderPartial = () => {
 			<div className='flex items-center justify-between px-4 py-2'>
 				<TableDataProfilePartial title='Dalia Benz' subTitle='dali@hotmail.com' />
 				<div className='flex justify-end gap-x-4'>
-					<Button onClick={()=> setModal(true)} className='h-fit' variant='solid'>
+					<Button onClick={() => setModal(true)} className='h-fit' variant='solid'>
 						Assign to a job
 					</Button>
 					<Button rightIcon='HeroPaperAirplane' className='h-fit' variant='solid'>

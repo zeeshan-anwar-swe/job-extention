@@ -10,7 +10,7 @@ const DefaultHeaderRightCommon = () => {
 			<MessagesPartial />
 			<NotificationPartial />
 			<SettingsPartial />
-			<LanguageSelectorPartial />
+			{/* <LanguageSelectorPartial /> */}
 		</div>
 	);
 };

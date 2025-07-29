@@ -1,9 +1,8 @@
 import { ChangeEvent } from 'react';
-import { textValidationCheck } from '../../../../../utils/validationCheck';
-import Label from '../../../../../components/form/Label';
-import FieldWrap from '../../../../../components/form/FieldWrap';
-import Input from '../../../../../components/form/Input';
-import { TInputTypes } from '../../../../../types/input.type';
+import { textValidationCheck } from '../../../../../../utils/validationCheck';
+import Label from '../../../../../../components/form/Label';
+import FieldWrap from '../../../../../../components/form/FieldWrap';
+import Textarea from '../../../../../../components/form/Textarea';
 
 interface FormData {
 	title: string;
@@ -24,25 +23,23 @@ type AllowedId =
 	| 'positions'
 	| 'skills';
 
-const LabelTitlepartial = ({
+const LabelTitleTextareaPartial = ({
 	label,
 	id,
 	formData,
 	setFormData,
-	inputType,
 }: {
 	label?: string;
 	id: AllowedId;
 	detail?: string;
 	formData: FormData;
 	setFormData: any;
-	inputType?: TInputTypes;
 }) => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setFormData({
 			...formData,
-			[name]: inputType === 'number' ? +value : value,
+			[name]: value,
 		});
 	};
 	return (
@@ -52,13 +49,9 @@ const LabelTitlepartial = ({
 			</Label>
 
 			<FieldWrap>
-				<Input
-					defaultValue={1}
-					type={inputType ?? 'text'}
-					dimension='lg'
+				<Textarea
+					rows={6}
 					id={id}
-					min={1}
-					autoComplete='name'
 					name={id}
 					value={formData[id]}
 					placeholder={label ?? ''}
@@ -69,4 +62,4 @@ const LabelTitlepartial = ({
 	);
 };
 
-export default LabelTitlepartial;
+export default LabelTitleTextareaPartial;

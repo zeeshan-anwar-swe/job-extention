@@ -331,3 +331,29 @@ export const hasUnreadNotifications = (notifications: any[]): boolean => {
   // If the loop completes, it means all notifications were read.
   return false;
 };
+
+
+// export const formatString = (inputString: string | null | undefined): string => {
+//   if (inputString === null || inputString === undefined) {
+//     return "";
+//   }
+
+//   const trimmedString = inputString.trim();
+
+//   if (trimmedString === "") {
+//     return "";
+//   }
+
+//   const words = trimmedString
+//     .replace(/[_-\s]+/g, ' ')
+//     .split(' ');
+
+//   const formattedWords = words.map(word => {
+//     if (word.length === 0) {
+//       return "";
+//     }
+//     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+//   });
+
+//   return formattedWords.join(' ');
+// };

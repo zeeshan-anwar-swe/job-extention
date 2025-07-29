@@ -27,7 +27,7 @@ const TableDataFeedbackPartial = ({
 		}
 	})();
 	return (
-		<div className={'mx-auto flex w-fit items-center gap-2 ' + className}>
+		<div className={`mx-auto w-fit ${className}`}>
 			<Badge variant='outline' borderWidth='border-0' color={badgeColor}>
 				{textValidationCheck(title)}
 			</Badge>

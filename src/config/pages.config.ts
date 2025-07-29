@@ -781,7 +781,7 @@ export const appPages = {
 				},
 				viewJobAppPages: {
 					id: 'viewJobApp',
-					to: '/jobs/view-job',
+					to: '/jobs/view-job-details',
 					text: 'View Job',
 					icon: 'HeroUser',
 				},

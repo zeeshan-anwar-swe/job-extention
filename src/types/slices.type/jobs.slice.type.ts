@@ -1,3 +1,5 @@
+import { LinkedInProfile } from "../../store/slices/Candiates.slice";
+
 interface User {
 	id: string;
 	email: string;
@@ -103,3 +105,22 @@ export interface ClientJobsStateType {
   loading: boolean;
   error: Error | null;
 };
+
+
+interface TeamOrClient {
+  firstName: string;
+  lastName: string;
+  image: string | null;
+}
+
+export interface SuperAdminJob {
+  id: string;
+  title: string;
+  location: string;
+  experience: string;
+  type: "REMOTE" | "ONSITE" | "HYBRID"; // Assuming these are the possible values
+  positions: number;
+  team: TeamOrClient;
+  client: TeamOrClient;
+  candidates: LinkedInProfile[]; // Or define a more specific interface if you know the structure of candidates
+}

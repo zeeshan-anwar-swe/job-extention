@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import FieldWrap from '../../../../../components/form/FieldWrap';
-import Icon from '../../../../../components/icon/Icon';
-import Input from '../../../../../components/form/Input';
+import FieldWrap from '../../../../../../components/form/FieldWrap';
+import Icon from '../../../../../../components/icon/Icon';
+import Input from '../../../../../../components/form/Input';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../../store';
-import { setSearchedTeamListForJob } from '../../../../../store/slices/Jobs.slice';
+import { AppDispatch } from '../../../../../../store';
+import { setSearchedTeamListForJob } from '../../../../../../store/slices/Jobs.slice';
 
 const DropdownSearchPartial = () => {
 	const [searchValue, setSearchValue] = useState<string>('');

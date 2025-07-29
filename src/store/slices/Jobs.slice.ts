@@ -11,7 +11,7 @@ import {
 } from '../../utils/helper';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
-import { ClientJobsStateType, JobDetailsType } from '../../types/slices.type/jobs.slice.type';
+import { ClientJobsStateType, JobDetailsType, SuperAdminJob } from '../../types/slices.type/jobs.slice.type';
 import { JobStatus } from '../../types/enums/jobStatus.enum';
 import { LinkedInProfile } from './Candiates.slice';
 
@@ -32,12 +32,14 @@ interface InitialStateType {
 	assignedClientWhileCreatingJob: any | null;
 	jobDetails: JobDetailsType | null;
 	clientJobs: ClientJobsStateType;
+	superAdminJobsList: SuperAdminJob[];
 }
 
 const initialState: InitialStateType = {
 	search: '',
 	jobsList: [],
 	paginatedList: [],
+	superAdminJobsList: [],
 	currentListPage: 1,
 	paginationCount: 0,
 	teamListForJob: [],
@@ -74,7 +76,22 @@ export const getJobsList = createAsyncThunk(
 	},
 );
 
-
+export const getSuperAdminJobsList = createAsyncThunk(
+	'jobs/getSuperAdminJobsList',
+	async (
+		{ page, limit, search = '', searchBy='', startDate = '', endDate = '' }: { page: number; limit: number; search?: string; searchBy?: string; startDate?: string; endDate?: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.get(
+				`/job/?page=${page}&limit=${limit}&search=${search}&startDate=${startDate}&endDate=${endDate}${searchBy &&`&searchBy=${searchBy} `}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
 
 export const getAllJobsList = createAsyncThunk(
 	'jobs/getAllJobsList',
@@ -267,6 +284,25 @@ export const jobsSlice = createSlice({
 				};
 				toast.error(action.payload.message);
 			});
+
+
+		builder
+			.addCase(getSuperAdminJobsList.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getSuperAdminJobsList.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.superAdminJobsList = action.payload.rows;
+				state.paginationCount = action.payload.count;
+			})
+			.addCase(getSuperAdminJobsList.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+			});	
 
 		builder
 			.addCase(getJobsByClientId.pending, (state) => {
