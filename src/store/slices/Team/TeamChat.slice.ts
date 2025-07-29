@@ -13,8 +13,6 @@ export const getRecruiter = createAsyncThunk(
 	async (_, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(`/team/agency-admin`);
-			console.log({response});
-			
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);

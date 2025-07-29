@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store';
-import { getJobsList, setJobSearch } from '../../../../store/slices/Jobs.slice';
+import { getJobsList, getTeamlistForJobs, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
@@ -50,6 +50,10 @@ const JobsPage = () => {
 			dispatch(getJobsList({ page: 1, limit: 9, search }));
 		}
 	}, [dateRange]);
+
+	useEffect(() => {
+		dispatch(getTeamlistForJobs());
+	}, []);
 
 	return (
 		<>

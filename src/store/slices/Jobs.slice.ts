@@ -357,7 +357,6 @@ export const jobsSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(assignTeamMemberToJob.fulfilled, (state, action) => {
-				toast.success('Team Member Assigned Successfully');
 				const someVariable = action.payload.id;
 				state.jobDetails && (state.jobDetails.team.id = someVariable);
 				state.jobsList = updateJobTeam(
@@ -365,7 +364,9 @@ export const jobsSlice = createSlice({
 					state.jobsList,
 					action.payload,
 				);
+				
 				state.componentLoading = false;
+				toast.success('Team Member Assigned Successfully');
 			})
 			.addCase(assignTeamMemberToJob.rejected, (state, action: any) => {
 				state.error = action.payload || {

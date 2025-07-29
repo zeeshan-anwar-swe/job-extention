@@ -1,25 +1,29 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../../../../../components/icon/Icon';
 import Button from '../../../../../components/ui/Button';
 import { DropdownItem } from '../../../../../components/ui/Dropdown';
 import Tooltip from '../../../../../components/ui/Tooltip';
-import { AppDispatch } from '../../../../../store';
+import { AppDispatch, RootState } from '../../../../../store';
 import {
 	profileImageUrlValidationCheck,
 	textValidationCheck,
 } from '../../../../../utils/validationCheck';
-import { assignTeamMemberToJob } from '../../../../../store/slices/Jobs.slice';
+import { assignTeamMemberToJob, getJobsList, getTeamlistForJobs } from '../../../../../store/slices/Jobs.slice';
+import { useState } from 'react';
+import { set } from 'lodash';
 
 const DropDownITemUserMetaPartial = ({ teamMamber, job }: { teamMamber: any; job: any }) => {
-	const isAssigned: boolean = job?.team?.teamId === teamMamber?.id;
-
+	const isAssigned: boolean = job?.team?.id === teamMamber?.id;
 	const dispatch: AppDispatch = useDispatch();
 
-	const handleAssignClientToJob = () => {
+	const handleAssignClientToJob = async () => {
 		if (!isAssigned) {
-			dispatch(assignTeamMemberToJob({ teamId: teamMamber.id, jobId: job.id }));
+			await dispatch(assignTeamMemberToJob({ teamId: teamMamber.id, jobId: job.id }));
+			dispatch(getJobsList({ page: 1, limit: 9 }));
 		}
 	};
+
+	
 
 	return (
 		<DropdownItem className='group m-4 justify-between gap-2 rounded-md bg-zinc-100'>
