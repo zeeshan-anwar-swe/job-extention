@@ -19,22 +19,27 @@ import { RootState } from '../../../../../../store';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import useImageValidation from '../../../../../../hooks/useImageValidation';
 import { getCandidateCV } from '../../../../services/candidates';
+import Icon from '../../../../../../components/icon/Icon';
 
 export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { componentLoading, cadnidateProfile } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
+	console.log({ cadnidateProfile });
+
 	const { state } = useLocation();
 
-	const { loading, imageUrl } = useImageValidation(cadnidateProfile?.candidate?.image);
+	const { loading, imageUrl } = useImageValidation(
+		cadnidateProfile?.candidate?.profilePictureUrl,
+	);
 
 	const handleDownloadCV = async () => {
-		const response = await getCandidateCV(state.id);
+		const response = await getCandidateCV(cadnidateProfile.id);
 		const url = window.URL.createObjectURL(response.data);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = `${state.id}.pdf`;
+		a.download = `${cadnidateProfile.id}.pdf`;
 		document.body.appendChild(a);
 		a.click();
 		a.remove();
@@ -43,9 +48,14 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 
 	return (
 		<Card className='col-span-3 h-full w-full max-lg:col-span-12 '>
-			<CardHeader className='!block'>
-				<CardTitle>Preview</CardTitle>
-				<CardSubTitle onClick={handleDownloadCV} className='font-light cursor-pointer'>Download and Preview CV.</CardSubTitle>
+			<CardHeader onClick={handleDownloadCV} className='!items-start hover:cursor-pointer'>
+				<div>
+					<CardTitle>Preview</CardTitle>
+					<CardSubTitle className='cursor-pointer font-light'>
+						Download and Preview CV.
+					</CardSubTitle>
+				</div>
+				<Icon size='text-xl' icon='HeroArrowUpRight' color='blue' />
 			</CardHeader>
 			<CardBody>
 				<ImageLoaderWraper loading={loading} height='h-full'>

@@ -70,7 +70,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										name='name'
 										placeholder='Name'
 										value={formik.values.name}
-										onChange={() => {}}
+										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>

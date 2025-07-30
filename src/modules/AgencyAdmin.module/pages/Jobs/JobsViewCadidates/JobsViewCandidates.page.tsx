@@ -27,6 +27,7 @@ import { filterAndExtract } from '../../../../../utils/helper';
 import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
 
 const JobsViewCandidatesPage = () => {
+	
 	const [modal, setModal] = useState<boolean>(false);
 	const params = useLocation();
 	const { state } = params;

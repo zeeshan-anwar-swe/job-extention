@@ -21,14 +21,12 @@ interface JobsPageCardPartialProps {
 	item: SuperAdminJob;
 }
 
-const JobsPageCardPartial:FC<JobsPageCardPartialProps> = ({ item }) => {
+const JobsPageCardPartial: FC<JobsPageCardPartialProps> = ({ item }) => {
 	const navigateTo = useNavigate();
 	const [assignCandidateModal, setAssignCandidateModal] = useState(false);
 
-
-	
 	return (
-		<Card className='col-span-4 max-2xl:last:col-span-12 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
+		<Card className='col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-2xl:last:col-span-12 max-lg:col-span-12'>
 			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
@@ -89,7 +87,14 @@ const JobsPageCardPartial:FC<JobsPageCardPartialProps> = ({ item }) => {
 							// className='!bg-white dark:!bg-zinc-800 dark:text-white'
 							icon='HeroPlus'></Button>
 					</div>
-					{assignCandidateModal && <AssignCandidatesModalPartial modal={assignCandidateModal} setModal={setAssignCandidateModal} jobId={item?.id} jobTitle={item?.title} />}
+					{assignCandidateModal && (
+						<AssignCandidatesModalPartial
+							jobId={item.id}
+							jobTitle={item.title}
+							modal={assignCandidateModal}
+							setModal={setAssignCandidateModal}
+						/>
+					)}
 				</CardFooterChild>
 			</CardFooter>
 		</Card>

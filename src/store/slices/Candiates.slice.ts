@@ -357,7 +357,7 @@ export const getCandidateProfile = createAsyncThunk(
 	async ({ candidateId, id }: { candidateId: string; id: string }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(
-				`candidate/profile?id=${id}&candidateId=${candidateId}`,
+				`linkedin-candidate/profile?id=${id}&candidateId=${candidateId}`,
 			);
 			return response.data.data;
 		} catch (error: any) {

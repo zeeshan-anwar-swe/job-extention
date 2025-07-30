@@ -35,7 +35,7 @@ const TablePartial = () => {
 							<TableDataSourcePartial />
 						</Td>
 						<Td colSpan={2}>
-							<TableDataActionsPartial candidate={candidate} />
+							<TableDataActionsPartial selectedJob={jobDetails} candidate={candidate} />
 						</Td>
 					</Tr>
 				))}

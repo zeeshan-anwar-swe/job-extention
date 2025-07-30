@@ -25,6 +25,7 @@ import { cn } from '../../../../utils/cn';
 const AssignCandidatesModalPartial = ({
 	jobId,
 	modal,
+	
 	setModal,
 	jobTitle,
 }: {
@@ -36,7 +37,8 @@ const AssignCandidatesModalPartial = ({
 	const { allCadidateList, paginationCount, pageLoading, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
-
+	
+	
 	const dispatch: AppDispatch = useDispatch();
 
 	const { assignedCandidatesWhileUpdatingJob } = useSelector(

@@ -5,13 +5,13 @@ import { removeAgencyCandidate } from '../../../../../../store/slices/Candiates.
 import { getJobDetails } from '../../../../../../store/slices/Jobs.slice';
 import ConfirmationModal from '../../../../../../components/modal/ConfirmationModal';
 
-const TableDataActionsPartial = ({ candidate }: { candidate: any }) => {
+const TableDataActionsPartial = ({ candidate , selectedJob}: { candidate: any; selectedJob:any }) => {
 	const params = useLocation();
 	const { state } = params;
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 	return (
 		<div className='flex justify-center'>
-			<Link to={'/candidates/cv-edit'} state={candidate}>
+			<Link to={'/candidates/cv-edit'} state={{candidate, selectedJob}}>
 				<Button>Edit CV</Button>
 			</Link>
 			<Button onClick={() => setDeleteModal(true)}>Remove Candidate</Button>

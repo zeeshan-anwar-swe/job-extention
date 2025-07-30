@@ -40,7 +40,9 @@ const CandidateCVEditPage = () => {
 		(state: RootState) => state.candidates,
 	);
 
+
 	const { state } = useLocation();
+	
 	const formik = useFormik({
 		initialValues: {
 			name: '',
@@ -128,7 +130,7 @@ const CandidateCVEditPage = () => {
 
 	useEffect(() => {
 		if (state) {
-			console.log({state});
+			console.log("State before fetch", {state});
 			
 			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
 		} else {
