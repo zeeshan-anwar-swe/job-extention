@@ -27,8 +27,6 @@ interface LocationType {
 	id: string;
 }
 
-
-
 export interface LinkedInProfile {
   id: string;
   recordId: string;
