@@ -170,7 +170,7 @@ const JobFilterDropdownPartial = () => {
 	const clearAllFilters = async () => {
 		await dispatch(
 			setCandidatesFilterOptions({
-				location: { title: '', id: '' },
+				location: [],
 				tenure: { min: 0, max: 0 },
 				skills: [],
 			}),

@@ -5,7 +5,7 @@ import useImageValidation from '../../../../../../hooks/useImageValidation';
 import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { ClientDetailsType } from '../../../../../../types/slices.type/clients.slice.type';
-import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
+import { AssignJobModalPartial } from '../../../../../Shared/common/AssignJobModal/Modal.partial';
 import { assignJobToClient } from '../../../../../../store/slices/Agency/Client.slice';
 
 const HeaderPartial = ({
@@ -51,14 +51,14 @@ const HeaderPartial = ({
 					</Button> */}
 				</div>
 			</div>
-			<AssignJobModalPartial
+			{/* <AssignJobModalPartial
 				title={`Assign Jobs to client: ${clientDetails?.clientUser?.firstName ?? ''}`}
 				assignToModule='client'
 				modal={modal}
 				setModal={setModal}
 				assignTo={clientDetails?.id}
 				jobAssignAction={assignJobToClient}
-			/>
+			/> */}
 		</Card>
 	);
 };

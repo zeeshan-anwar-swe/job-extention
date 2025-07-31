@@ -15,7 +15,7 @@ import {
 	setClientSearch,
 } from '../../../../../../store/slices/Agency/Client.slice';
 import PageLoader from '../../../../../../templates/layouts/main/PageLoader';
-import SearchPartial from '../../../../common/Search.partial';
+import SearchPartial from '../../../../../Shared/common/Search.partial';
 import Pagination from '../../../../../../components/ui/Pagination';
 
 const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
