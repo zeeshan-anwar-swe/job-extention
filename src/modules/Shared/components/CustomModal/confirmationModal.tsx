@@ -27,7 +27,7 @@ export const ConfirmationModal = ({
 
 	const handleConfirmation = async () => {
 		setLoading(true);
-		dispatch(action);
+		await dispatch(action);
 		setLoading(false);
 	};
 

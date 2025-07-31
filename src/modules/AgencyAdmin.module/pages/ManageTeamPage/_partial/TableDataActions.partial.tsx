@@ -2,12 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../../components/ui/Button';
 import { useState } from 'react';
 import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
-import { assignJobToTeamMember, unAssignJobToTeamMember } from '../../../../../store/slices/Team.slice';
+import { assignJobToTeamMember, deleteTeamMember, unAssignJobToTeamMember } from '../../../../../store/slices/Team.slice';
+import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
+import { useAuth } from '../../../../../context/authContext';
 
 const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const [modal, setModal] = useState<boolean>(false);
+	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 	const navigateTo = useNavigate();
 	console.log({teamMember});
+
+	const {userStorage} = useAuth();
 	
 	return (
 		<div className='flex justify-center'>
@@ -15,7 +20,7 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 				Message
 			</Button>
 			<Button onClick={() => setModal(true)}>Assign Job</Button>
-			<Button>Remove Member</Button>
+			<Button onClick={() => setDeleteModal(true)}>Remove Member</Button>
 			<AssignJobModalPartial
 				title={`Assign Jobs to a team member: ${teamMember?.user.name ?? ''}`}
 				assignToModule='teamMember'
@@ -24,6 +29,13 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 				setModal={setModal}
 				assignTo={teamMember.id}
 				jobAssignAction={assignJobToTeamMember}
+			/>
+
+			<ConfirmationModal
+				modal={deleteModal}
+				setModal={setDeleteModal}
+				title='remove team member'
+				action={deleteTeamMember({teamId: teamMember.id, agencyId: userStorage.id, isDelete: true})}
 			/>
 		</div>
 	);

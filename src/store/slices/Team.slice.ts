@@ -38,6 +38,18 @@ export const getTeamlist = createAsyncThunk('team/getTeamlist', async (_, { reje
 	}
 });
 
+export const deleteTeamMember = createAsyncThunk('team/deleteTeamMember', async ({teamId,agencyId,isDelete}: {teamId:string;agencyId:string;isDelete:boolean}, { rejectWithValue }) => {
+	try {
+		const response = await axiosInstance.put('/team/delete',{
+			teamId,
+			
+		});
+		return response.data.data.rows;
+	} catch (error: any) {
+		return await withAsyncThunkErrorHandler(error, rejectWithValue);
+	}
+});
+
 export const getPaginatedTeamlist = createAsyncThunk(
 	'team/getPaginatedTeamlist',
 	async ({ page, limit, search='' , searchBy='' }: { page: number; limit: number, search?: string , searchBy?: string }, { rejectWithValue }) => {

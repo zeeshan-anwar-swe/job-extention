@@ -155,7 +155,6 @@ const JobFilterDropdownPartial = () => {
 				tenure,
 			}),
 		);
-		setDropdownOpen(false);
 	};
 
 	const clearAllFilters = async () => {
