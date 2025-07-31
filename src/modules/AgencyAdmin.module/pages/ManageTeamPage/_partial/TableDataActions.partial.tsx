@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
 import { assignJobToTeamMember, deleteTeamMember, unAssignJobToTeamMember } from '../../../../../store/slices/Team.slice';
 import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
-import { useAuth } from '../../../../../context/authContext';
 
 const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -12,7 +11,6 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const navigateTo = useNavigate();
 	console.log({teamMember});
 
-	const {userStorage} = useAuth();
 	
 	return (
 		<div className='flex justify-center'>
@@ -35,7 +33,7 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 				modal={deleteModal}
 				setModal={setDeleteModal}
 				title='remove team member'
-				action={deleteTeamMember({teamId: teamMember.id, agencyId: userStorage.id, isDelete: true})}
+				action={deleteTeamMember({teamId: teamMember.id})}
 			/>
 		</div>
 	);

@@ -38,7 +38,7 @@ export const getTeamlist = createAsyncThunk('team/getTeamlist', async (_, { reje
 	}
 });
 
-export const deleteTeamMember = createAsyncThunk('team/deleteTeamMember', async ({teamId,agencyId,isDelete}: {teamId:string;agencyId:string;isDelete:boolean}, { rejectWithValue }) => {
+export const deleteTeamMember = createAsyncThunk('team/deleteTeamMember', async ({teamId}: {teamId:string}, { rejectWithValue }) => {
 	try {
 		const response = await axiosInstance.put('/team/delete',{
 			teamId,
