@@ -12,7 +12,6 @@ import {
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { updateJobStatusByResponse } from '../../utils/rtkHelper/jobs.slice.helper';
 import { ClientJobsStateType, JobDetailsType, SuperAdminJob } from '../../types/slices.type/jobs.slice.type';
-import { JobStatus } from '../../types/enums/jobStatus.enum';
 import { LinkedInProfile } from './Candiates.slice';
 
 interface InitialStateType {
@@ -127,7 +126,8 @@ export const getJobDetails = createAsyncThunk(
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
-);
+); 
+
 
 export const createJobs = createAsyncThunk(
 	'jobs/create',

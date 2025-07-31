@@ -16,112 +16,112 @@ interface FilterOptionTenure {
 
 export interface FilterOptionsType {
 	keywords?: string;
-	location?: FilterOptionLocation;
+	location?: FilterOptionLocation[];
 	tenure: FilterOptionTenure;
 	skills: string[];
 }
 
-interface LocationType {
+export interface LocationType {
 	object: string;
 	title: string;
 	id: string;
 }
 
 export interface LinkedInProfile {
-  id: string;
-  recordId: string;
-  name: string;
-  firstName: string;
-  lastName: string;
-  headline: string;
-  location: string;
-  industry: string;
-  profileUrl: string;
-  publicProfileUrl: string;
-  profilePictureUrl: string;
-  profilePictureUrlLarge: string;
-  connectionsCount: number;
-  networkDistance: string;
-  canSendInmail: boolean;
-  recruiterCandidateId: string;
-  hiddenCandidate: null;
-  interestLikelihood: null;
-  summary: string;
-  privacySettings: null;
-  skills: {
-    name: string;
-    endorsement_count: number;
-  }[];
-  languages: any[]; // Could be more specific if language structure is known
-  projects: any[]; // Could be more specific if project structure is known
-  certifications: {
-    end: {
-      year: number;
-      month: number;
-    };
-    name: string;
-    start: {
-      year: number;
-      month: number;
-    };
-    organization: string;
-    organization_id: string;
-    url?: string;
-  }[];
-  createdAt: string;
-  updatedAt: string;
-  education: {
-    id: string;
-    linkedinId: string;
-    degree: string;
-    school: string;
-    schoolId: string;
-    fieldOfStudy: string;
-    start: null | {
-      year: number;
-      month: number;
-    };
-    end: null | {
-      year: number;
-      month: number;
-    };
-    schoolDetails: {
-      url: string;
-      logo: string;
-      name: string;
-      location: string;
-      description: string;
-      employeeCount: number;
-    };
-    createdAt: string;
-    updatedAt: string;
-  }[];
-  workExperience: {
-    id: string;
-    linkedinId: string;
-    company: string;
-    companyId: string | null;
-    companyUrl: string | null;
-    industry: string | null;
-    location: string | null;
-    role: string;
-    start: {
-      year: number;
-      month: number;
-    };
-    end: {
-      year: number;
-      month: number;
-    } | null;
-    description: string | null;
-    skills: {
-      name: string;
-      endorsement_count: number;
-    }[];
-    logo: string | null;
-    createdAt: string;
-    updatedAt: string;
-  }[];
+	id: string;
+	recordId: string;
+	name: string;
+	firstName: string;
+	lastName: string;
+	headline: string;
+	location: string;
+	industry: string;
+	profileUrl: string;
+	publicProfileUrl: string;
+	profilePictureUrl: string;
+	profilePictureUrlLarge: string;
+	connectionsCount: number;
+	networkDistance: string;
+	canSendInmail: boolean;
+	recruiterCandidateId: string;
+	hiddenCandidate: null;
+	interestLikelihood: null;
+	summary: string;
+	privacySettings: null;
+	skills: {
+		name: string;
+		endorsement_count: number;
+	}[];
+	languages: any[]; // Could be more specific if language structure is known
+	projects: any[]; // Could be more specific if project structure is known
+	certifications: {
+		end: {
+			year: number;
+			month: number;
+		};
+		name: string;
+		start: {
+			year: number;
+			month: number;
+		};
+		organization: string;
+		organization_id: string;
+		url?: string;
+	}[];
+	createdAt: string;
+	updatedAt: string;
+	education: {
+		id: string;
+		linkedinId: string;
+		degree: string;
+		school: string;
+		schoolId: string;
+		fieldOfStudy: string;
+		start: null | {
+			year: number;
+			month: number;
+		};
+		end: null | {
+			year: number;
+			month: number;
+		};
+		schoolDetails: {
+			url: string;
+			logo: string;
+			name: string;
+			location: string;
+			description: string;
+			employeeCount: number;
+		};
+		createdAt: string;
+		updatedAt: string;
+	}[];
+	workExperience: {
+		id: string;
+		linkedinId: string;
+		company: string;
+		companyId: string | null;
+		companyUrl: string | null;
+		industry: string | null;
+		location: string | null;
+		role: string;
+		start: {
+			year: number;
+			month: number;
+		};
+		end: {
+			year: number;
+			month: number;
+		} | null;
+		description: string | null;
+		skills: {
+			name: string;
+			endorsement_count: number;
+		}[];
+		logo: string | null;
+		createdAt: string;
+		updatedAt: string;
+	}[];
 }
 
 interface InitialStateType {
@@ -133,6 +133,7 @@ interface InitialStateType {
 	location: {
 		loading: boolean;
 		rows: LocationType[];
+		count: number;
 		error: null | Error | any;
 	};
 	allCadidateList: LinkedInProfile[];
@@ -150,11 +151,13 @@ const initialState: InitialStateType = {
 	filterOptions: {
 		keywords: '',
 		skills: [],
-		location: { title: '', id: '' },
+		location: [],
 		tenure: { min: 0, max: 0 },
 	},
+	
 	location: {
 		rows: [],
+		count: 0,
 		error: null,
 		loading: false,
 	},
@@ -169,6 +172,27 @@ const initialState: InitialStateType = {
 	candidatesList: [],
 	error: null,
 };
+
+export const getLocationForCandidates = createAsyncThunk(
+	'candidates/getLocationForCandidates',
+	async (
+		{ page, limit, keywords }: { page: number; limit: number; keywords: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.post(
+				`/unipile-linkedin/location?page=${page}&limit=${limit}`,
+				{ keywords },
+			);
+
+			console.log('response.data.data', response.data.data);
+
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
 
 export const getAgencyCandidatesList = createAsyncThunk(
 	'candidates/getAgencyCandidatesList',
@@ -192,19 +216,19 @@ export const getAgencyCandidatesList = createAsyncThunk(
 	},
 );
 
-const getLocationForCandidatesFilters = createAsyncThunk(
-	'candidates/getLocation',
-	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
-		try {
-			const response = await axiosInstance.get(
-				`/unipile-linkedin/location?page=${page}&limit=${limit}`,
-			);
-			return response.data.data;
-		} catch (error: any) {
-			return await withAsyncThunkErrorHandler(error, rejectWithValue);
-		}
-	},
-);
+// const getLocationForCandidatesFilters = createAsyncThunk(
+// 	'candidates/getLocation',
+// 	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+// 		try {
+// 			const response = await axiosInstance.get(
+// 				`/unipile-linkedin/location?page=${page}&limit=${limit}`,
+// 			);
+// 			return response.data.data;
+// 		} catch (error: any) {
+// 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+// 		}
+// 	},
+// );
 
 export const getSearchedAgencyCandidatesList = createAsyncThunk(
 	'candidates/getSearchedAgencyCandidatesList',
@@ -294,10 +318,10 @@ export const getAllCandidatesList = createAsyncThunk(
 			const response = await axiosInstance.post(
 				`/unipile-linkedin/search?page=${page}&limit=${limit}`,
 				{
-					keywords:search
-				}
+					keywords: search,
+				},
 			);
-			
+
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -398,6 +422,9 @@ export const candidatesSlice = createSlice({
 	name: 'candidates',
 	initialState,
 	reducers: {
+		setLoactionLoading: (state, action: PayloadAction<boolean>) => {
+			state.location.loading = action.payload;
+		},
 		setCandidatesFilterOptions: (state, action: PayloadAction<FilterOptionsType>) => {
 			state.filterOptions = action.payload;
 		},
@@ -427,15 +454,16 @@ export const candidatesSlice = createSlice({
 				};
 			})
 
-			.addCase(getLocationForCandidatesFilters.pending, (state) => {
+			.addCase(getLocationForCandidates.pending, (state) => {
 				state.location.loading = true;
 				state.location.error = null;
 			})
-			.addCase(getLocationForCandidatesFilters.fulfilled, (state, action) => {
-				state.location.rows = action.payload.rows;
+			.addCase(getLocationForCandidates.fulfilled, (state, action) => {
+				state.location.rows = action.payload.data;
+				state.location.count = action.payload.count;
 				state.location.loading = false;
 			})
-			.addCase(getLocationForCandidatesFilters.rejected, (state, action) => {
+			.addCase(getLocationForCandidates.rejected, (state, action) => {
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',
 				};
@@ -571,6 +599,10 @@ export const candidatesSlice = createSlice({
 	},
 });
 
-export const { setCandidateProfile, setCandidatesFilterOptions, setCandidatesSearch } =
-	candidatesSlice.actions;
+export const {
+	setCandidateProfile,
+	setLoactionLoading,
+	setCandidatesFilterOptions,
+	setCandidatesSearch,
+} = candidatesSlice.actions;
 export default candidatesSlice.reducer;

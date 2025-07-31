@@ -8,9 +8,7 @@ import Card, {
 	CardTitle,
 } from '../../../../../../components/ui/Card';
 import LabelSkillSelectPartial from './LabelSkillSelect.partial';
-import FieldWrap from '../../../../../../components/form/FieldWrap';
-import Input from '../../../../../../components/form/Input';
-import Icon from '../../../../../../components/icon/Icon';
+
 import { AppDispatch } from '../../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -30,16 +28,8 @@ interface ExperienceItem {
 
 const JobFilterDropdownPartial = () => {
 	const dispatch: AppDispatch = useDispatch();
+
 	const { filterOptions } = useSelector((state: RootState) => state.candidates);
-
-	const [formData, setFromData] = useState<any>({
-		skills: [],
-		location: '',
-		experiences: [],
-	});
-
-	console.log({ formData });
-
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 	const experience: ExperienceItem[] = [
 		{ title: '1 Year', value: 1 },
@@ -54,10 +44,6 @@ const JobFilterDropdownPartial = () => {
 		{ title: '10 Year', value: 10 },
 		{ title: '10+ Year', value: 11 },
 	];
-
-	const handleMouseEnter = () => {
-		setDropdownOpen(true);
-	};
 
 	const handleMouseLeave = () => {
 		setDropdownOpen(true);
@@ -126,7 +112,6 @@ const JobFilterDropdownPartial = () => {
 				// Let's choose to reset the range if a value strictly inside is clicked.
 				newMin = value;
 				newMax = 0;
-				
 			}
 		}
 
@@ -145,42 +130,44 @@ const JobFilterDropdownPartial = () => {
 		);
 	};
 
-	const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value } = event.target;
-		// dispatch(setCandidatesFilterOptions({ ...filterOptions, location: value }));
-	};
-
-	const handleSkillsChange = () => {
-		dispatch(setCandidatesFilterOptions({ ...filterOptions, skills: formData.skills }));
+	const handleSkillsChange = (skillChangeEvet: any) => {
+		console.log({ skillChangeEvet });
+		dispatch(setCandidatesFilterOptions(skillChangeEvet));
 	};
 
 	const applyFilter = () => {
 		const { location, tenure, skills, keywords } = filterOptions;
-		if(tenure.min>0){
-			if (tenure.max === 0){
-				toast.error("chose second number")
+
+		if (tenure.min > 0) {
+			if (tenure.max === 0) {
+				toast.error('chose second number');
 				return;
 			}
 		}
 
-		dispatch(getFilteredCandidates({ page: 1, limit: 10, skills, keywords, tenure }));
+		dispatch(
+			getFilteredCandidates({
+				page: 1,
+				limit: 10,
+				skills,
+				location,
+				keywords,
+				tenure,
+			}),
+		);
 		setDropdownOpen(false);
 	};
 
 	const clearAllFilters = async () => {
 		await dispatch(
 			setCandidatesFilterOptions({
-				location: { title: '', id: '' },
+				location: [],
 				tenure: { min: 0, max: 0 },
 				skills: [],
 			}),
 		);
 		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 	};
-
-	useEffect(() => {
-		// handleSkillsChange();
-	}, [formData.skills]);
 
 	return (
 		<div onMouseLeave={handleMouseLeave}>
@@ -230,9 +217,9 @@ const JobFilterDropdownPartial = () => {
 						</CardHeader>
 						<CardBody>
 							<LabelSkillSelectPartial
-								setFormData={setFromData}
+								setFormData={handleSkillsChange}
 								id='skills'
-								formData={formData}
+								formData={filterOptions}
 								label=''
 							/>
 						</CardBody>
