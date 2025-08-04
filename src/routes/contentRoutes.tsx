@@ -1,6 +1,5 @@
 import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
-import SignupPage from '../modules/AgencyAdmin.module/pages/Signup.page';
 import NotFoundPage from '../modules/AgencyAdmin.module/pages/NotFound.page';
 import { appPages, authPages } from '../config/pages.config';
 import CandidatesProfilePage from '../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
@@ -44,6 +43,10 @@ import SuperAdminViewJobPage from '../modules/SuperAdmin.module/pages/Jobs/JobsV
 import SuperAdminClientProfilePage from '../modules/SuperAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page';
 import SuperAdminSubcriptionPage from '../modules/SuperAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page';
 import LoginPage from '../modules/Shared/pages/LoginPage/Login.page';
+import ConfirmtionPage from '../modules/Shared/pages/SignupPage/Confirmation.page';
+import SignupPage from '../modules/Shared/pages/SignupPage/Signup.page';
+import SetUserPassword from '../modules/Shared/pages/user/SetUserPassword.page';
+import { UserVerificationPage } from '../modules/Shared/pages/user/UserVerify.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -59,6 +62,7 @@ interface ContentRoutesType {
 	AgencyAdmin: RouteProps[];
 	Client: RouteProps[];
 	Team: RouteProps[];
+	default: RouteProps[];
 }
 
 const contentRoutes: ContentRoutesType = {
@@ -179,6 +183,10 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
+		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
+		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
+
+		
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	Client: [
@@ -287,8 +295,9 @@ const contentRoutes: ContentRoutesType = {
 
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
-
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
+		
+		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 
 		{ path: '*', element: <NotFoundPage /> },
 	],
@@ -335,8 +344,8 @@ const contentRoutes: ContentRoutesType = {
 
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
-
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
+		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 
 		{ path: '*', element: <NotFoundPage /> },
 	],
@@ -447,7 +456,8 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
-
+		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
+		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	SuperAdmin: [
@@ -526,8 +536,22 @@ const contentRoutes: ContentRoutesType = {
 			element: <SuperAdminSettingPage />,
 		},
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
+		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
+		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 		
 		{ path: '*', element: <NotFoundPage /> },
 	],
+
+	default: [
+		{ path: authPages.loginPage.to, element: <LoginPage /> },
+		{ path: authPages.signupPage.to, element: <SignupPage /> },
+		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
+		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
+
+		{ path: '*', element: <NotFoundPage /> },
+	],
+
+	
 };
 export default contentRoutes;

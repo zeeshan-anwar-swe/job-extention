@@ -6,16 +6,23 @@ import { useAuth } from '../../context/authContext';
 import { Roles } from '../../constants/role.enums';
 
 const ContentRouter = () => {
-	const { userStorage } = useAuth();
-	return (
-		<Suspense fallback={<ShimmerEffectPageLoader />}>
-			<Routes>
-				{contentRoutes[userStorage.role].map((routeProps) => (
-					<Route key={routeProps.path} {...routeProps} />
-				))}
-			</Routes>
-		</Suspense>
-	);
+    const { userStorage } = useAuth();
+    
+	
+    // Determine the routes to use based on the user's role
+    const routesToRender = userStorage.role 
+        ? contentRoutes[userStorage.role] 
+        : contentRoutes["default"];
+
+    return (
+        <Suspense fallback={<ShimmerEffectPageLoader />}>
+            <Routes>
+                {routesToRender.map((routeProps) => (
+                    <Route key={routeProps.path} {...routeProps} />
+                ))}
+            </Routes>
+        </Suspense>
+    );
 };
 
 export default ContentRouter;

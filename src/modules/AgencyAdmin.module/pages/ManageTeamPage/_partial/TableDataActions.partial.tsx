@@ -2,14 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../../components/ui/Button';
 import { useState } from 'react';
 import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
-import { assignJobToTeamMember, deleteTeamMember, unAssignJobToTeamMember } from '../../../../../store/slices/Team.slice';
+import { assignJobToTeamMember, deleteTeamMember, getPaginatedTeamlist, unAssignJobToTeamMember } from '../../../../../store/slices/Team.slice';
 import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
 
 const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 	const navigateTo = useNavigate();
-	console.log({teamMember});
 
 	
 	return (
@@ -30,6 +29,7 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 			/>
 
 			<ConfirmationModal
+				onClose={getPaginatedTeamlist({ limit: 10, page: 1 })}
 				modal={deleteModal}
 				setModal={setDeleteModal}
 				title='remove team member'

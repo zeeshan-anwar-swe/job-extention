@@ -13,14 +13,22 @@ import Card, {
 	CardHeader,
 } from '../../../../../components/ui/Card';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../../store';
+import { getAllCandidatesList } from '../../../../../store/slices/Candiates.slice';
 
 const JobsPageCardPartial = ({ item }: any) => {
 	const navigateTo = useNavigate();
+	const dispatch: AppDispatch = useDispatch();
 	const [assignCandidateModal, setAssignCandidateModal] = useState(false);
 
-
+	// useEffect(() => {
+	// 	if(assignCandidateModal){
+	// 		dispatch(getAllCandidatesList({ page: 1, limit: 9 }));
+	// 	}
+	// }, [assignCandidateModal]);
 	
 	return (
 		<Card className='col-span-4 max-2xl:last:col-span-12 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
@@ -81,12 +89,15 @@ const JobsPageCardPartial = ({ item }: any) => {
 
 						<Button
 							variant='solid'
-							onClick={() => setAssignCandidateModal(true)}
+							onClick={() => {
+							navigateTo(`/jobs/view-job-details`, { state: item });
+						}}
+							// onClick={() => setAssignCandidateModal(true)}
 							rounded='rounded-full'
 							// className='!bg-white dark:!bg-zinc-800 dark:text-white'
 							icon='HeroPlus'></Button>
 					</div>
-					{assignCandidateModal && <AssignCandidatesModalPartial modal={assignCandidateModal} setModal={setAssignCandidateModal} jobId={item?.id} jobTitle={item?.title} />}
+					{/* {assignCandidateModal && <AssignCandidatesModalPartial modal={assignCandidateModal} setModal={setAssignCandidateModal} jobId={item?.id} jobTitle={item?.title} />} */}
 				</CardFooterChild>
 			</CardFooter>
 		</Card>

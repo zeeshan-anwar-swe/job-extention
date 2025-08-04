@@ -58,9 +58,9 @@ const AssignCandidatesModalPartial = ({
 		await dispatch(setAssignedCandidatesWhileUpdatingJob([]));
 	};
 
-	useEffect(() => {
-		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
+	// }, []);
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>

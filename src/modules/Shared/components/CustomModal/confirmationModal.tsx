@@ -15,11 +15,13 @@ export const ConfirmationModal = ({
 	setModal,
 	title = 'Assign Job',
 	action,
+	onClose,
 }: {
 	title: string;
 	modal: boolean;
 	setModal: any;
 	action: any;
+	onClose?: any;
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -29,6 +31,7 @@ export const ConfirmationModal = ({
 		setLoading(true);
 		await dispatch(action);
 		setLoading(false);
+		typeof onClose === 'function' &&  dispatch(onClose);
 	};
 
 	return (

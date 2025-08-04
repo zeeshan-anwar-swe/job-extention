@@ -27,6 +27,7 @@ export interface IAuthContextProps {
 	onOTPVerify: (otpCode: string) => void;
 	onResetPassword: (newPassword: string) => void;
 	onForgot: ({ email }: { email: string }) => void;
+	onPasswordSet: ({ password }: { password: string }) => Promise<void>;
 	onSignUp: (
 		firstName: string,
 		lastName: string,
@@ -66,7 +67,6 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 
 				if (response.data.data.user.role === Roles.CLIENT) {
 					toast.error("Client Don't have permission to login here");
-					
 				} else {
 					if (typeof setUser === 'function') {
 						await setUser(response.data.data.user);
@@ -159,11 +159,11 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			});
 
 			if (response.data.success) {
-				if (typeof setUserToken === 'function' && typeof setUser === 'function') {
-					setUserToken(response.data.data.token);
-					setUser(response.data.data.user);
-				}
-				navigate('/');
+				console.log('Signup successful:', response.data);
+
+				navigate('/signup/confirmation', {
+					state: { email },
+				});
 			} else {
 				// Handle specific backend errors if provided
 				if (response.data.message) {
@@ -209,6 +209,30 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		navigate('/signin');
 	};
 
+	const onPasswordSet = async ({ password }: { password: string }): Promise<void> => {
+		try {
+			const response = await axios.post(apiBaseUrl + '/user/set-password', {
+				password,
+			});
+
+			if (response.data.success) {
+				console.log('Password setup successful:', response.data);
+				navigate('/');
+			} else {
+				// Handle specific backend errors if provided
+				if (response.data.message) {
+					throw new Error(response.data.message);
+				} else {
+					throw new Error('Registration failed.');
+				}
+			}
+		} catch (error: any) {
+			toast.error(error?.response?.data?.message);
+			console.error('password setup error:', error);
+			throw error;
+		}
+	};
+
 	const value: IAuthContextProps = useMemo(
 		() => ({
 			userStorage: userStorage || {
@@ -228,6 +252,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			onLogout,
 			onOTPVerify,
 			onForgot,
+			onPasswordSet,
 		}),
 		[userStorage, userTokenStorage],
 	);

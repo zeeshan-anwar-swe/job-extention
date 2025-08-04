@@ -916,6 +916,19 @@ export const authPages = {
 		text: 'Profile',
 		icon: 'HeroUser',
 	},
+	userVerify: {
+		id: 'userVerify',
+		to: 'user/verify',
+		text: 'Confirmation',
+		icon: 'HeroArrowRightOnRectangle',
+	},
+	userPasswrodSet: {
+		id: 'userPasswrodSet',
+		to: 'user/set-password',
+		text: 'Confirmation',
+		icon: 'HeroArrowRightOnRectangle',
+	},
+	
 };
 
 const pagesConfig = {
