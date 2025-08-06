@@ -41,9 +41,8 @@ const CandidateCVEditPage = () => {
 		(state: RootState) => state.candidates,
 	);
 
-
 	const { state } = useLocation();
-	
+
 	const formik = useFormik({
 		initialValues: {
 			name: '',
@@ -53,9 +52,7 @@ const CandidateCVEditPage = () => {
 			roles: [],
 			experience: 0,
 			education: '',
-			cvText: JSON.parse(
-				'[{"type":"paragraph","children":[{"text":""}]}]',
-			) as Descendant[],
+			cvText: JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[],
 			LinkedIn: '',
 			GitHub: '',
 		},
@@ -68,19 +65,19 @@ const CandidateCVEditPage = () => {
 			} else if (values.name.length < 2) {
 				errors.name = 'Name must be at least 2 characters long';
 			}
-			// Add validation for required GitHub field
-			if (!values.GitHub) {
-				errors.GitHub = 'GitHub profile is required';
-			} else if (!values.GitHub.includes('github.com')) {
-				errors.GitHub = 'Must be a valid URL ex:github.com/user-name';
-			}
+			// // Add validation for required GitHub field
+			// if (!values.GitHub) {
+			// 	errors.GitHub = 'GitHub profile is required';
+			// } else if (!values.GitHub.includes('github.com')) {
+			// 	errors.GitHub = 'Must be a valid URL ex:github.com/user-name';
+			// }
 
-			// Add validation for required LinkedIn field
-			if (!values.LinkedIn) {
-				errors.LinkedIn = 'LinkedIn profile is required';
-			} else if (!values.LinkedIn.includes('linkedin.com')) {
-				errors.LinkedIn = 'Must be a valid URL ex: linkedin.com/in/user-name';
-			}
+			// // Add validation for required LinkedIn field
+			// if (!values.LinkedIn) {
+			// 	errors.LinkedIn = 'LinkedIn profile is required';
+			// } else if (!values.LinkedIn.includes('linkedin.com')) {
+			// 	errors.LinkedIn = 'Must be a valid URL ex: linkedin.com/in/user-name';
+			// }
 
 			return errors;
 		},
@@ -101,10 +98,10 @@ const CandidateCVEditPage = () => {
 				cadnidateProfile?.profile?.socialProfiles ?? [],
 				'GitHub',
 			);
-			const preLinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
-				cadnidateProfile?.profile?.socialProfiles ?? [],
-				'LinkedIn',
-			);
+			// const preLinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
+			// 	cadnidateProfile?.profile?.socialProfiles ?? [],
+			// 	'LinkedIn',
+			// );
 
 			const stringifiedCVText = await JSON.stringify(cvText);
 
@@ -121,9 +118,9 @@ const CandidateCVEditPage = () => {
 							preGitHub
 								? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
 								: { provider: 'GitHub', link: GitHub },
-							preLinkedIn
-								? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
-								: { provider: 'LinkedIn', link: LinkedIn },
+							// preLinkedIn
+							// 	? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
+							// 	: { provider: 'LinkedIn', link: LinkedIn },
 						],
 					},
 				}),
@@ -135,9 +132,9 @@ const CandidateCVEditPage = () => {
 
 	useEffect(() => {
 		if (state) {
-			console.log("State before fetch", {state});
-			
-			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
+			dispatch(
+				getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }),
+			);
 		} else {
 			navigateTo('/candidates');
 		}

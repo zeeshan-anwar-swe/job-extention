@@ -20,6 +20,8 @@ import Pagination from '../../../../components/ui/Pagination';
 import CustomSearchComponent from '../../components/CustomSearch.component';
 import { Link } from 'react-router-dom';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import { CustomFilterDropdownComponent } from '../../components/CustomFilterDropdown.component';
+import { JobType } from '../../../../types/enums/jobType.enum';
 
 const JobsPage = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -83,6 +85,13 @@ const JobsPage = () => {
 							]}
 						/>
 					</SubheaderLeft>
+						{/* <CustomFilterDropdownComponent
+							options={[
+								{ label: 'On Site', value: JobType.ON_SITE },
+								{ label: 'Remote', value: JobType.REMOTE },
+								{ label: 'Hybird', value: JobType.HYBRID },
+							]}
+						/> */}
 					<SubheaderRight>
 						<PeriodAndDateRange setDateRange={setDateRange} />
 					</SubheaderRight>

@@ -332,6 +332,7 @@ export const getAllCandidatesList = createAsyncThunk(
 export const assignJobToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ jobId, assignTo }: { jobId: string; assignTo: string }, { rejectWithValue }) => {
+
 		try {
 			const response = await axiosInstance.post('/linkedin-candidate/assign-job', {
 				jobId,

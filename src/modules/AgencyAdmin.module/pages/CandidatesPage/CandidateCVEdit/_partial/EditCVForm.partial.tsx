@@ -37,13 +37,13 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 				cadnidateProfile?.socialProfiles ?? [],
 				'GitHub',
 			);
-			const LinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
-				cadnidateProfile?.socialProfiles ?? [],
-				'LinkedIn',
-			);
+			// const LinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
+			// 	cadnidateProfile?.socialProfiles ?? [],
+			// 	'LinkedIn',
+			// );
 
 			GitHub && formik.setFieldValue('GitHub', GitHub.link);
-			LinkedIn && formik.setFieldValue('LinkedIn', LinkedIn.link);
+			cadnidateProfile.resumeLink && formik.setFieldValue('LinkedIn', cadnidateProfile.resumeLink);
 
 			formik.setFieldValue('roles', cadnidateProfile?.roles ?? []);
 			formik.setFieldValue('name', cadnidateProfile?.candidate?.name ?? '');
@@ -84,7 +84,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										name='name'
 										placeholder='Name'
 										value={formik.values.name}
-										onChange={formik.handleChange}
+										// onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>
@@ -159,7 +159,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										name='LinkedIn'
 										placeholder='Enter your GitHub profile url'
 										value={formik.values.LinkedIn}
-										onChange={formik.handleChange}
+										// onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>

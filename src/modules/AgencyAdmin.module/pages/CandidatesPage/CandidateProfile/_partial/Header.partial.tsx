@@ -11,8 +11,6 @@ import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.p
 import { assignJobToCandidate, unAssignJobToCandidate } from '../../../../../../store/slices/Candiates.slice';
 
 const HeaderPartial = ({ state }: any) => {
-	console.log({ state });
-	
 	const [modal, setModal] = useState<boolean>(false);
 	const [clientModal, setClientModal] = useState<boolean>(false);
 	const navgiateTo = useNavigate();
@@ -28,6 +26,9 @@ const HeaderPartial = ({ state }: any) => {
 		a.remove();
 		window.URL.revokeObjectURL(url);
 	};
+
+	console.log({state});
+	
 
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
 
@@ -77,12 +78,13 @@ const HeaderPartial = ({ state }: any) => {
 				</div>
 			</div>
 
+
 			<AssignJobModalPartial
 				title={`Assign Jobs to candidate: ${cadnidateProfile?.candidate?.name ?? ''}`}
 				assignToModule='candidate'
 				unAssignAction={unAssignJobToCandidate}
 				jobAssignAction={assignJobToCandidate}
-				assignTo={state.candidateId}
+				assignTo={state?.candidate?.id ?? ''}
 				setModal={setModal}
 				modal={modal}
 			/>
