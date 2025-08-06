@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch} from '../../../../store';
 import { CardSubTitle } from '../../../../components/ui/Card';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const ConfirmationModal = ({
 	modal,
@@ -16,14 +17,17 @@ export const ConfirmationModal = ({
 	title = 'Assign Job',
 	action,
 	onClose,
+	isRedirect
 }: {
 	title: string;
 	modal: boolean;
 	setModal: any;
 	action: any;
 	onClose?: any;
+	isRedirect?: any;
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
+	const navigateTo = useNavigate();
 
 	const dispatch: AppDispatch = useDispatch();
 
@@ -32,6 +36,7 @@ export const ConfirmationModal = ({
 		await dispatch(action);
 		setLoading(false);
 		typeof onClose === 'function' &&  dispatch(onClose);
+		isRedirect && navigateTo(isRedirect);
 	};
 
 	return (

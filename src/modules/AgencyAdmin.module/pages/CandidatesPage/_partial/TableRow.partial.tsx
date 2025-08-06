@@ -10,16 +10,17 @@ import {
 import { useState } from 'react';
 import SelectReact from '../../../../../components/form/SelectReact';
 import { formatString } from '../../../../../utils/helper';
+import Alert from '../../../../../components/ui/Alert';
+import { Link } from 'react-router-dom';
 
 const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
 	const [selectedJob, setSelectedJob] = useState<null | TCandidateJobProfile>(null);
-	
 
 	return (
 		<Tr>
 			<Td>
 				<TableDataProfilePartial
-					image={candidate?.image}
+					image={candidate?.profilePictureUrl}
 					title={candidate?.name}
 					subTitle={candidate?.email}
 				/>
@@ -42,14 +43,18 @@ const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
 			{selectedJob ? (
 				<>
 					<Td>
-						{selectedJob?.job?.client?.clientUser.firstName ?? '' +
-							' ' +
-							selectedJob?.job?.client?.clientUser.lastName ??''}
+						{selectedJob?.job?.client?.clientUser.firstName ??
+							'' + ' ' + selectedJob?.job?.client?.clientUser.lastName ??
+							''}
 					</Td>
 					<Td>
 						<TableDataFeedbackPartial title={formatString(selectedJob?.status ?? '')} />
 					</Td>
-					<Td>{<TableDataSourcePartial />}</Td>
+					<Td>
+						<Link className='mx-auto' target='_blank' to={candidate.publicProfileUrl}>
+							<Alert className='!p-1' icon='HeroLinkedIn'></Alert>
+						</Link>
+					</Td>
 					<Td colSpan={2}>
 						<TableDataActionsPartial selectedJob={selectedJob} candidate={candidate} />
 					</Td>

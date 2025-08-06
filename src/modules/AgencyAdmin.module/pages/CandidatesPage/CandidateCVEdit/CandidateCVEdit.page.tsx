@@ -19,6 +19,7 @@ import {
 } from '../../../../../store/slices/Candiates.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { getSocialLinkWithId } from '../../../../../utils/helper';
+import { Descendant } from 'slate';
 
 export type EditCVFormValues = {
 	name: string;
@@ -28,7 +29,7 @@ export type EditCVFormValues = {
 	roles: string[];
 	experience: number;
 	education: string;
-	cvText: string;
+	cvText: Descendant[];
 	LinkedIn: string;
 	GitHub: string;
 };
@@ -52,7 +53,9 @@ const CandidateCVEditPage = () => {
 			roles: [],
 			experience: 0,
 			education: '',
-			cvText: '',
+			cvText: JSON.parse(
+				'[{"type":"paragraph","children":[{"text":""}]}]',
+			) as Descendant[],
 			LinkedIn: '',
 			GitHub: '',
 		},
@@ -103,11 +106,13 @@ const CandidateCVEditPage = () => {
 				'LinkedIn',
 			);
 
+			const stringifiedCVText = await JSON.stringify(cvText);
+
 			await dispatch(
 				updateCandidateProfile({
 					candidateId: state.selectedJob.id,
 					payload: {
-						cv: cvText,
+						cv: stringifiedCVText,
 						about,
 						roles,
 						experience,

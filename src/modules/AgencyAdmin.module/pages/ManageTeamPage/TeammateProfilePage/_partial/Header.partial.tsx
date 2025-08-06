@@ -6,10 +6,17 @@ import Badge from '../../../../../../components/ui/Badge';
 import Button from '../../../../../../components/ui/Button';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
-import { assignJobToTeamMember, unAssignJobToTeamMember } from '../../../../../../store/slices/Team.slice';
+import {
+	assignJobToTeamMember,
+	deleteTeamMember,
+	getPaginatedTeamlist,
+	unAssignJobToTeamMember,
+} from '../../../../../../store/slices/Team.slice';
+import { ConfirmationModal } from '../../../../../Shared/components/CustomModal/confirmationModal';
 
 const HeaderPartial = ({ state }: any) => {
 	const [modal, setModal] = useState<boolean>(false);
+	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
 	const { teamMemberProfile } = useSelector((state: RootState) => state.team);
 
@@ -35,9 +42,16 @@ const HeaderPartial = ({ state }: any) => {
 					<Button onClick={() => setModal(true)} className='h-fit' variant='solid'>
 						Assign a job
 					</Button>
-					<Button className='h-fit' color='red' variant='solid'>
+					<Button onClick={() => setDeleteModal(true)} className='h-fit' color='red' variant='solid'>
 						Remove Member
 					</Button>
+					<ConfirmationModal
+						isRedirect={"/manage-team"}
+						modal={deleteModal}
+						setModal={setDeleteModal}
+						title='remove team member'
+						action={deleteTeamMember({ teamId: state.id })}
+					/>
 				</div>
 			</div>
 			<AssignJobModalPartial

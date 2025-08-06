@@ -33,6 +33,8 @@ export interface TCandidateListItem {
   id: string;
   name: string;
   email: string;
+  publicProfileUrl: string
+  profilePictureUrl?: string
   image: string;
   jobProfiles: TCandidateJobProfile[];
 }

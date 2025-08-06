@@ -14,13 +14,22 @@ import { FormikProps } from 'formik';
 import { EditCVFormValues } from '../CandidateCVEdit.page';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
 import { getSocialLinkWithId } from '../../../../../../utils/helper';
 import Tooltip from '../../../../../../components/ui/Tooltip';
+import RichText from '../../../../../../components/RichText';
+import { createEditor, Descendant } from 'slate';
 
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
+	const [cvTextValue, setCvTextValue] = useState<Descendant[]>(
+		cadnidateProfile?.cv ?
+		JSON.parse(cadnidateProfile?.cv) as Descendant[] :
+		JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[],
+	);
+
+	console.log({ formikValue: formik.values });
 
 	useEffect(() => {
 		if (cadnidateProfile) {
@@ -39,13 +48,18 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 			formik.setFieldValue('roles', cadnidateProfile?.roles ?? []);
 			formik.setFieldValue('name', cadnidateProfile?.candidate?.name ?? '');
 			formik.setFieldValue('experience', cadnidateProfile?.experience ?? '');
-			formik.setFieldValue('cvText', cadnidateProfile?.cv ?? '');
 			formik.setFieldValue('education', cadnidateProfile?.education ?? '');
 			// formik.setFieldValue('location', cadnidateProfile?.location ?? '');
 			// formik.setFieldValue('availabilty', cadnidateProfile?.availabilty ?? '');
 			formik.setFieldValue('about', cadnidateProfile?.about ?? '');
+			// if (cadnidateProfile?.cv) {
+			// 	const parsedCv = JSON.parse(cadnidateProfile?.cv);
+			// 	formik.setFieldValue('cvText', parsedCv);
+			// 	setCvTextValue(parsedCv);
+			// }
 		}
-	}, [cadnidateProfile, formik.setValues]); // Added formik.setValues to the dependency array
+	}, [cadnidateProfile]); // Added formik.setValues to the dependency array
+
 
 	return (
 		<Card className='col-span-9 flex flex-col gap-2 max-lg:col-span-12'>
@@ -179,10 +193,12 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 							isTouched={formik.touched.about}
 							invalidFeedback={formik.errors.about}
 							validFeedback=''>
-							<Input
+							<Textarea
 								dimension='lg'
 								id='about'
 								name='about'
+								rows={3}
+								className='max-h-72 min-h-36'
 								placeholder='Enter your bio'
 								value={formik.values.about}
 								onChange={formik.handleChange}
@@ -193,12 +209,25 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 
 					<div className={classNames({ 'mb-1': !formik.isValid })}>
 						<Label htmlFor='cvText'>Write CV</Label>
-						<Validation
+						{/* <Validation
 							isValid={formik.isValid}
 							isTouched={formik.touched.cvText}
 							invalidFeedback={formik.errors.cvText}
-							validFeedback=''>
-							<Textarea
+							validFeedback=''> */}
+						<RichText
+							id='cvText'
+							value={cvTextValue}
+							className='min-h-48'
+							handleChange={(event) => {
+								formik
+									.setFieldValue('cvText', event)
+									.then(() => {
+										setCvTextValue(event);
+									})
+									.catch(() => {});
+							}}
+						/>
+						{/* <Textarea
 								className='max-h-72 min-h-48'
 								rows={5}
 								dimension='lg'
@@ -208,8 +237,8 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 								value={formik.values.cvText}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
-							/>
-						</Validation>
+							/> */}
+						{/* </Validation> */}
 					</div>
 				</form>
 			</CardBody>

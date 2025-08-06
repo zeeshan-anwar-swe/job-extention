@@ -18,7 +18,10 @@ import InviteModalPartial from './_partial/InviteModal.partial';
 import Pagination from '../../../../components/ui/Pagination';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import CustomSearchComponent from '../../components/CustomSearch.component';
-import { getAgencyCandidatesList, setCandidatesSearch } from '../../../../store/slices/Candiates.slice';
+import {
+	getAgencyCandidatesList,
+	setCandidatesSearch,
+} from '../../../../store/slices/Candiates.slice';
 
 const ManageTeamPage = () => {
 	const { pageLoading, paginatedList, error, paginationCount, search } = useSelector(
@@ -38,7 +41,7 @@ const ManageTeamPage = () => {
 			</Header>
 			<PageWrapper name='Manage Team'>
 				<Subheader>
-					<SubheaderLeft >
+					<SubheaderLeft>
 						<CustomSearchComponent
 							setSearchActionForPagination={setTeamMemberSearch}
 							searchListAction={getPaginatedTeamlist}
@@ -64,9 +67,7 @@ const ManageTeamPage = () => {
 				</Subheader>
 				<PageLoader loading={pageLoading} error={error} data={paginatedList}>
 					<Container>
-						<div className=''>
-							<TablePartial />
-						</div>
+						<TablePartial />
 					</Container>
 				</PageLoader>
 				<Pagination
