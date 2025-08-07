@@ -6,7 +6,9 @@ const LabelTitleTextAreapartial = ({
 	detail,
 	className = '',
 	inputClassName = '',
+	
 }: {
+	
 	label?: string;
 	detail?: string;
 	className?: string;
@@ -18,6 +20,7 @@ const LabelTitleTextAreapartial = ({
 			<label className='font-light'>{textValidationCheck(label)}</label>
 
 			<textarea
+				disabled
 				className={
 					'w-full rounded-xl bg-zinc-100 p-4 font-medium dark:bg-zinc-800 ' +
 					inputClassName

@@ -1,10 +1,14 @@
+import { Link } from 'react-router-dom';
 import Alert from '../../../../../../components/ui/Alert';
 
-const TableDataSourcePartial = () => {
+const TableDataSourcePartial = ({ linkedInUrl }: { linkedInUrl?: string }) => {
 	return (
 		<div className='mx-auto flex w-fit'>
-			<Alert icon='HeroGitHub'>{''}</Alert>
-			<Alert icon='HeroLinkedIn'>{''}</Alert>
+			{linkedInUrl && (
+				<Link to={linkedInUrl} target='_blank'>
+					<Alert icon='HeroLinkedIn' />
+				</Link>
+			)}
 		</div>
 	);
 };

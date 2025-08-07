@@ -40,6 +40,7 @@ export const ConfirmationModal = ({
 	};
 
 	return (
+		
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>Confirmation!</ModalHeader>
 

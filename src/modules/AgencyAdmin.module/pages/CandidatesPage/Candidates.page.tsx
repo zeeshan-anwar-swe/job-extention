@@ -84,7 +84,7 @@ const CandidatesPage = () => {
 					loading={pageLoading}
 					error={error}
 					data={candidatesList}
-					messageForEmptyData='No candidates data found kindly create a job and assign candidates while creating it'>
+					messageForEmptyData='No candidates data found'>
 					<Container>
 						<TablePartial />
 					</Container>

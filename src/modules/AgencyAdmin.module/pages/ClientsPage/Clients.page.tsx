@@ -51,7 +51,6 @@ const ClientsPage = () => {
 						<CustomSearchComponent
 							searchLimit={10}
 							placeholder='Search clients...'
-							searchByFilterOptions={['name', 'email']}
 							setSearchActionForPagination={setClientSearch}
 							searchListAction={getPaginatedAgencyClientsList}
 						/>

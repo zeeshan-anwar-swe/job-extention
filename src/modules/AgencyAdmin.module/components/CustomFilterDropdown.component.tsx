@@ -8,6 +8,7 @@ import Button from '../../../components/ui/Button';
 import { AppDispatch } from '../../../store';
 import { useDispatch } from 'react-redux';
 import { formatString } from '../../../utils/helper';
+import Icon from '../../../components/icon/Icon';
 
 interface labelValue {
 	label: string;
@@ -39,27 +40,48 @@ export const CustomFilterDropdownComponent: FC<PropsTypes> = ({
 		dispatch(getListAction({ page: 1, limit: limit ?? 9, searchBy: filterBy, search: value }));
 	};
 
+	const clearFilter = () => {
+		dispatch(setSearch(''));
+		dispatch(getListAction({ page: 1, limit: limit ?? 9, search: '' }));
+	};
+
 	useEffect(() => {
 		const isExactMatchFound = options.some((option: labelValue) => option.value === search);
 		if (!isExactMatchFound) setSearchBy('');
 	}, [search]);
 	return (
-		<Dropdown>
-			<DropdownToggle hasIcon={false}>
-				<Button rounded='rounded-full' variant='outline' color='zinc' icon='HeroBarFilter'>
-					{searchBy ? searchBy : 'Filter'}
-				</Button>
-			</DropdownToggle>
-			<DropdownMenu>
-				{options.map((item: labelValue, index) => (
-					<DropdownItem
-						onClick={() => handleFilterChange(item.value)}
-						icon='HeroChevronRight'
-						key={index}>
-						{item.label}
-					</DropdownItem>
-				))}
-			</DropdownMenu>
-		</Dropdown>
+		<div className='flex items-center gap-2'>
+			<Dropdown>
+				<DropdownToggle hasIcon={false}>
+					<Button
+						rounded='rounded-full'
+						variant='outline'
+						color='zinc'
+						icon='HeroBarFilter'>
+						{searchBy ? searchBy : 'Filter'}
+					</Button>
+				</DropdownToggle>
+
+				<DropdownMenu>
+					{options.map((item: labelValue, index) => (
+						<DropdownItem
+							onClick={() => handleFilterChange(item.value)}
+							icon='HeroChevronRight'
+							key={index}>
+							{item.label}
+						</DropdownItem>
+					))}
+				</DropdownMenu>
+			</Dropdown>
+			{searchBy && (
+				<Button
+					onClick={clearFilter}
+					icon='HeroXMark'
+					rounded='rounded-full'
+					color='red'
+					className='!p-0.5'
+					variant='solid'></Button>
+			)}
+		</div>
 	);
 };

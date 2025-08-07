@@ -30,7 +30,6 @@ const ClientProfilePage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const navigateTo = useNavigate();
 
-	console.log({ state });
 
 	useEffect(() => {
 		if (state) {
@@ -73,22 +72,22 @@ const ClientProfilePage = () => {
 								<div className='flex items-center gap-4 '>
 									<LabelTitleTextAreapartial
 										label='About'
-										detail='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+										detail={clientDetails?.clientUser.about}
 									/>
 								</div>
 
 								<div className='flex items-center gap-4 max-md:flex-col '>
-									<LabelTitlepartial label='Location' detail='Miami, USA' />
-									<LabelTitlepartial label='Company' detail='KoalaByte AI' />
+									<LabelTitlepartial label='Location' detail={clientDetails?.clientUser.location} />
+									<LabelTitlepartial label='Company' detail={clientDetails?.companyName} />
 								</div>
 								<div className='flex items-center gap-4 max-md:flex-col '>
 									<LabelTitlepartial
 										label='Designation'
-										detail='CFO / Co Founder'
+										detail=''
 									/>
 									<LabelTitlepartial
 										label='Industry Sector'
-										detail='Tech / Finance'
+										detail={clientDetails?.clientUser.industry}
 									/>
 								</div>
 							</CardBody>
@@ -136,9 +135,12 @@ const ClientProfilePage = () => {
 								<h1>Active Jobs</h1>
 								<p className='font-light'>View the jobs assigned to candidate.</p>
 							</CardHeader>
-							<CardBody className='flex !flex-col gap-4'>
-								<ClientProfilePageCardPartial />
-								<ClientProfilePageCardPartial />
+							<CardBody className='flex !flex-col gap-4 max-h-[calc(100vh-45vh)] overflow-y-scroll'>
+								{
+									clientDetails?.jobs?.map((job) => (
+										<ClientProfilePageCardPartial key={job.id} job={job} />
+									))
+								}
 							</CardBody>
 						</Card>
 					</Container>

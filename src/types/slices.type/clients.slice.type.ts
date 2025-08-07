@@ -41,24 +41,66 @@ interface Job {
 
 interface ClientUser {
 	id: string;
-	email: string;
-	firstName: string;
-	lastName: string;
 	image: string;
+	email: string;
+	lastName: string;
+	firstName: string;
 	createdAt: string;
+	experience: string;
+	industry: string;
+	location: string;
+	about: string;
+}
+
+
+interface TeamUser {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  image: string | null;
+  createdAt: string;
+}
+
+interface Team {
+  id: string;
+  teamUser: TeamUser;
+}
+
+export interface ClientDetailsJobs {
+  id: string;
+  title: string;
+  experience: string;
+  location: string;
+  description: string;
+  type: string;
+  status: string;
+  isDeleted: boolean;
+  teamId: string;
+  clientId: string;
+  skills: string[];
+  positions: number;
+  team: Team;
 }
 
 export interface ClientDetailsType {
 	id: string;
+	title: string;
 	companyName: string;
 	contactInfo: string;
 	userId: string;
 	invitedBy: string;
 	createdAt: string;
 	updatedAt: string;
-	jobs: Job[];
+	jobs: ClientDetailsJobs[];
 	clientUser: ClientUser;
 }
+
+
+
+
+
+
 
 export interface TCandidateJobProfile {
 	id: string;

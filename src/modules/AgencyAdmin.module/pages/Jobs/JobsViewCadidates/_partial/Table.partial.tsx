@@ -8,6 +8,7 @@ import { RootState } from '../../../../../../store';
 
 const TablePartial = () => {
 	const { jobDetails } = useSelector((state: RootState) => state.jobsSlice);
+	
 	return (
 		<Table className='table-fixed max-md:min-w-[70rem]'>
 			<THead>
@@ -23,6 +24,7 @@ const TablePartial = () => {
 					<Tr key={candidate.id}>
 						<Td>
 							<TableDataProfilePartial
+								imageUrl={candidate?.candidate?.profilePictureUrl}
 								title={candidate.candidate.name}
 								subTitle={candidate.candidate.email}
 							/>
@@ -32,7 +34,7 @@ const TablePartial = () => {
 							<TableDataFeedbackPartial title='Fair' />
 						</Td>
 						<Td>
-							<TableDataSourcePartial />
+							<TableDataSourcePartial linkedInUrl={candidate?.resumeLink} />
 						</Td>
 						<Td colSpan={2}>
 							<TableDataActionsPartial selectedJob={jobDetails} candidate={candidate} />

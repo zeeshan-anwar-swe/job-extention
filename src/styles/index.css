@@ -49,6 +49,10 @@
 		@apply transition-opacity hover:opacity-75;
 	}
 
+	.trans-all {
+		@apply transition-all duration-300 ease-in-out;
+	}
+
 	[type='color'],
 	[type='date'],
 	[type='datetime-local'],

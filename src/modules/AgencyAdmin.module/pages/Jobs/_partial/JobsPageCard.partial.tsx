@@ -19,6 +19,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../../store';
 import { getAllCandidatesList } from '../../../../../store/slices/Candiates.slice';
 import { formatString } from '../../../../../utils/helper';
+import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
+import { deleteJob, getJobsList } from '../../../../../store/slices/Jobs.slice';
 
 const JobsPageCardPartial = ({ item }: any) => {
 	const navigateTo = useNavigate();
@@ -30,10 +32,29 @@ const JobsPageCardPartial = ({ item }: any) => {
 	// 		dispatch(getAllCandidatesList({ page: 1, limit: 9 }));
 	// 	}
 	// }, [assignCandidateModal]);
-	
+
+	const [deleteModal, setDeleteModal] = useState(false);
+
 	return (
-		<Card className='col-span-4 max-2xl:last:col-span-12 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-lg:col-span-12'>
-			<CardHeader className='gap-4 max-md:!flex-col-reverse'>
+		<Card className='group relative col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-2xl:last:col-span-12 max-lg:col-span-12'>
+			<Button
+				className='hidden group-hover:block absolute -top-2 -right-2 animate-pulse'
+				onClick={() => setDeleteModal(true)}
+				variant='solid'
+				color='red'
+				rounded='rounded-full'
+				iconSize='text-2xl'
+				rightIcon='HeroTrash'></Button>
+
+			{deleteModal && <ConfirmationModal
+				modal={deleteModal}
+				setModal={setDeleteModal}
+				onClose={getJobsList({ limit: 9, page: 1 })}
+				title='remove job'
+				action={deleteJob(item.id)}
+			/>}
+
+			<CardHeader className='gap-4 mt-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
 					<h4 className='max-md:text-sm'>{textValidationCheck(item?.title)}</h4>
@@ -41,14 +62,17 @@ const JobsPageCardPartial = ({ item }: any) => {
 						rounded='rounded-full'
 						variant='outline'
 						color='zinc'
-						className={`gap-2 !px-2 !py-1 !cursor-default hover:!cursor-default ${!item?.client && 'hidden'}`}
+						className={`!cursor-default gap-2 !px-2 !py-1 hover:!cursor-default ${!item?.client && 'hidden'}`}
 						rightIcon='Hero'>
 						<img
 							className='aspect-square w-6 rounded-full object-cover '
 							src={profileImageUrlValidationCheck(item?.client?.clientUser?.image)}
 							alt='profile-image'
 						/>
-						<h5 className='max-md:text-sm'>{item?.client?.clientUser?.firstName} {item?.client?.clientUser?.lastName}</h5>
+						<h5 className='max-md:text-sm'>
+							{item?.client?.clientUser?.firstName}{' '}
+							{item?.client?.clientUser?.lastName}
+						</h5>
 					</Button>
 				</div>
 				<div className='h-full max-md:flex-1'>
@@ -81,18 +105,19 @@ const JobsPageCardPartial = ({ item }: any) => {
 					<div className='flex items-center'>
 						{item?.[
 							item?.appliedCandidates ? 'appliedCandidates' : 'candidateJobProfiles'
-						].map(() => (
+						].map((cadidateItem: any , index: number) => (
 							<img
-								className='-mr-6 aspect-square w-10 object-cover'
-								src={profileImageUrlValidationCheck('')}
+								key={index}
+								className='-mr-6 rounded-full aspect-square w-10 object-cover'
+								src={profileImageUrlValidationCheck(cadidateItem?.candidate?.profilePictureUrl)}
 							/>
 						))}
 
 						<Button
 							variant='solid'
 							onClick={() => {
-							navigateTo(`/jobs/view-job-details`, { state: item });
-						}}
+								navigateTo(`/jobs/view-job-details`, { state: item });
+							}}
 							// onClick={() => setAssignCandidateModal(true)}
 							rounded='rounded-full'
 							// className='!bg-white dark:!bg-zinc-800 dark:text-white'

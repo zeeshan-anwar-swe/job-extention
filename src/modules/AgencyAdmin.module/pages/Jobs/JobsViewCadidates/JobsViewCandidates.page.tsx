@@ -20,14 +20,14 @@ import TablePartial from './_partial/Table.partial';
 import ResultUserDataPartial from './_partial/ResultUserData.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
-import { getJobDetails } from '../../../../../store/slices/Jobs.slice';
+import { deleteJob, getJobDetails } from '../../../../../store/slices/Jobs.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import JobFormPartial from './_partial/JobForm.partial';
 import { filterAndExtract } from '../../../../../utils/helper';
 import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
+import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
 
 const JobsViewCandidatesPage = () => {
-	
 	const [modal, setModal] = useState<boolean>(false);
 	const params = useLocation();
 	const { state } = params;
@@ -45,6 +45,8 @@ const JobsViewCandidatesPage = () => {
 	useEffect(() => {
 		dispatch(getJobDetails(state?.id ?? ''));
 	}, []);
+
+	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
 	return (
 		<>
@@ -77,12 +79,26 @@ const JobsViewCandidatesPage = () => {
 									</CardSubTitle>
 								</CardHeaderChild>
 								<CardHeaderChild>
-									{/* <Button size='xl' variant='solid' rightIcon='HeroEnvelope'>
-										Email
-									</Button> */}
+									<Button
+										onClick={() => setDeleteModal(true)}
+										size='lg'
+										color='red'
+										variant='solid'
+										rightIcon='HeroTrash'>
+										Remove Job
+									</Button>
+									{jobDetails && deleteModal && (
+										<ConfirmationModal
+											modal={deleteModal}
+											setModal={setDeleteModal}
+											title='remove job'
+											isRedirect={'/jobs'}
+											action={deleteJob(jobDetails.id)}
+										/>
+									)}
 									<Button
 										onClick={() => setModal(true)}
-										size='xl'
+										size='lg'
 										variant='solid'
 										rightIcon='HeroPlus'>
 										Assign to Candidate

@@ -198,6 +198,18 @@ export const changeJobStatus = createAsyncThunk(
 	},
 );
 
+export const deleteJob = createAsyncThunk(
+	'jobs/deleteJob',
+	async (jobId: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.delete('/job/' + jobId);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const updateJob = createAsyncThunk(
 	'jobs/updateJob',
 	async ({ jobId, payload }: { jobId: string; payload: any }, { rejectWithValue }) => {

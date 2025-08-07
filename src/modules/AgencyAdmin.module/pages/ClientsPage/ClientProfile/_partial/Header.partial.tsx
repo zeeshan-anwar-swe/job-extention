@@ -19,7 +19,7 @@ const HeaderPartial = ({
 	const [modal, setModal] = useState<boolean>(false);
 	const { loading, imageUrl } = useImageValidation(clientDetails?.clientUser.image);
 
-	console.log('clientDetails', clientDetails);
+	console.log('state', state);
 
 	return (
 		<Card className='!col-span-12 flex'>

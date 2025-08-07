@@ -1,6 +1,6 @@
 import Button from '../../../../../../components/ui/Button';
 
-const CardBodyTagPartial = ({ title, value }: { title: string; value: string }) => {
+const CardBodyTagPartial = ({ title, value }: { title: string; value: string|number }) => {
 	return (
 		<Button
 			borderWidth='border'
