@@ -125,6 +125,7 @@ export interface LinkedInProfile {
 }
 
 interface InitialStateType {
+	searchBy: string;
 	search: string;
 	filterOptions: FilterOptionsType;
 	candidatesList: TCandidateListItem[];
@@ -147,7 +148,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	search: '',
-
+	searchBy: '',
 	filterOptions: {
 		keywords: '',
 		skills: [],
@@ -436,6 +437,7 @@ export const candidatesSlice = createSlice({
 		setCandidatesSearch: (state, action: PayloadAction<string>) => {
 			state.search = action.payload;
 		},
+		
 	},
 	extraReducers: (builder) => {
 		builder

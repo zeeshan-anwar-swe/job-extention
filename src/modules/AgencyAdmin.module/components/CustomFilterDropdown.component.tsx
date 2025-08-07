@@ -1,6 +1,13 @@
-import { FC, useState } from 'react';
-import Dropdown, { DropdownItem, DropdownMenu, DropdownToggle } from '../../../components/ui/Dropdown';
+import { FC, useEffect, useState } from 'react';
+import Dropdown, {
+	DropdownItem,
+	DropdownMenu,
+	DropdownToggle,
+} from '../../../components/ui/Dropdown';
 import Button from '../../../components/ui/Button';
+import { AppDispatch } from '../../../store';
+import { useDispatch } from 'react-redux';
+import { formatString } from '../../../utils/helper';
 
 interface labelValue {
 	label: string;
@@ -9,13 +16,33 @@ interface labelValue {
 
 interface PropsTypes {
 	options: labelValue[];
+	getListAction: any;
+	filterBy: string;
+	search: string;
+	setSearch: any;
+	limit?: number;
 }
 
-export const CustomFilterDropdownComponent: FC<PropsTypes> = ({ options }) => {
+export const CustomFilterDropdownComponent: FC<PropsTypes> = ({
+	options,
+	getListAction,
+	filterBy,
+	search,
+	setSearch,
+	limit,
+}) => {
 	const [searchBy, setSearchBy] = useState<string>('');
+	const dispatch: AppDispatch = useDispatch();
 	const handleFilterChange = (value: string) => {
-		setSearchBy(value);
+		setSearchBy(formatString(value));
+		dispatch(setSearch(value));
+		dispatch(getListAction({ page: 1, limit: limit ?? 9, searchBy: filterBy, search: value }));
 	};
+
+	useEffect(() => {
+		const isExactMatchFound = options.some((option: labelValue) => option.value === search);
+		if (!isExactMatchFound) setSearchBy('');
+	}, [search]);
 	return (
 		<Dropdown>
 			<DropdownToggle hasIcon={false}>

@@ -11,21 +11,25 @@ const Pagination = ({
 	setCurrentPageAction,
 	search,
 	getListAction,
+	searchBy,
 }: {
 	limit: number;
 	count: number;
 	filterOptions?: any;
 	search?: string;
+	searchBy?: string;
 	setCurrentPageAction?: any;
 	getListAction: ({
 		page,
 		limit,
 		search,
+		searchBy
 				
 	}: {
 		page: number;
 		limit: number;
 		search?: string;
+		searchBy?: string
 	}) => void;
 }) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -40,7 +44,11 @@ const Pagination = ({
 				dispatch(getListAction({ page, limit, ...filterOptions }));
 			} else {
 				if (search) {
-					dispatch(getListAction({ page, limit, search }));
+					if(searchBy){
+						dispatch(getListAction({ page, limit, searchBy, search }))
+					}else{
+						dispatch(getListAction({ page, limit, search }));
+					} 
 				} else {
 					dispatch(getListAction({ page, limit }));
 				}

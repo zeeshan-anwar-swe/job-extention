@@ -18,6 +18,7 @@ import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandid
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../../store';
 import { getAllCandidatesList } from '../../../../../store/slices/Candiates.slice';
+import { formatString } from '../../../../../utils/helper';
 
 const JobsPageCardPartial = ({ item }: any) => {
 	const navigateTo = useNavigate();
@@ -61,7 +62,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 				</div>
 				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='Location:' value={item?.location} />
-					<CardBodyTagPartial title='Job Type:' value={item?.type} />
+					<CardBodyTagPartial title='Job Type:' value={formatString(item?.type)} />
 				</div>
 			</CardBody>
 			<CardFooter className='border-t-2 !py-2'>

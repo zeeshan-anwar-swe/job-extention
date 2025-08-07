@@ -15,6 +15,8 @@ import { ClientJobsStateType, JobDetailsType, SuperAdminJob } from '../../types/
 import { LinkedInProfile } from './Candiates.slice';
 
 interface InitialStateType {
+	searchBy: string;
+
 	search: string;
 	jobsList: any[];
 	currentListPage: number;
@@ -36,6 +38,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
 	search: '',
+	searchBy: '',
 	jobsList: [],
 	paginatedList: [],
 	superAdminJobsList: [],
@@ -211,6 +214,9 @@ export const jobsSlice = createSlice({
 	name: 'jobs',
 	initialState,
 	reducers: {
+		setJobSearchBy: (state, action: PayloadAction<string>) => {
+			state.searchBy = action.payload;
+		},
 		setJobSearch: (state, action: PayloadAction<string>) => {
 			state.search = action.payload;
 		},

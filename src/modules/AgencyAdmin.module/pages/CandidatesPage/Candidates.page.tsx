@@ -21,12 +21,18 @@ import Pagination from '../../../../components/ui/Pagination';
 import DownloadCsvModal from './_partial/CSVDownload.partial';
 import { useState } from 'react';
 import CustomSearchComponent from '../../components/CustomSearch.component';
+import { CustomFilterDropdownComponent } from '../../components/CustomFilterDropdown.component';
+import { CandidateJobStatus } from '../../../../types/enums/candidateJobStatus.enum';
+import { getLabedOptionFromEnum } from '../../../../utils/enum.helper';
 
 const CandidatesPage = () => {
 	const { pageLoading, candidatesList, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+
+	const statuses = Object.values(CandidateJobStatus);
+	console.log(typeof CandidateJobStatus);
 
 	return (
 		<>
@@ -40,22 +46,20 @@ const CandidatesPage = () => {
 			</Header>
 
 			<PageWrapper name='Candidates'>
-				
 				<Subheader>
 					<SubheaderLeft>
 						<CustomSearchComponent
 							setSearchActionForPagination={setCandidatesSearch}
 							searchListAction={getAgencyCandidatesList}
 							searchLimit={10}
-							searchByFilterOptions={[
-								'name',
-								'email',
-								'status',
-								'jobTitle',
-								'clientName',
-								'clientEmail',
-							]}
-							placeholder='Search Candidates...'
+						/>
+						<CustomFilterDropdownComponent
+							limit={10}
+							filterBy='status'
+							search={search}
+							setSearch={setCandidatesSearch}
+							getListAction={getAgencyCandidatesList}
+							options={getLabedOptionFromEnum(CandidateJobStatus)}
 						/>
 					</SubheaderLeft>
 					<SubheaderRight>

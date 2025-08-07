@@ -31,7 +31,7 @@ const JobsPage = () => {
 		endDate: '',
 	});
 
-	const { pageLoading, error, paginatedList, paginationCount, search } = useSelector(
+	const { pageLoading, error, paginatedList, paginationCount, search, searchBy } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
 
@@ -75,23 +75,27 @@ const JobsPage = () => {
 							searchLimit={9}
 							setSearchActionForPagination={setJobSearch}
 							searchListAction={getJobsList}
-							searchByFilterOptions={[
-								'title',
-								'location',
-								'type',
-								'experience',
-								'clientName',
-								'clientEmail',
-							]}
+							// searchByFilterOptions={[
+							// 	'title',
+							// 	'location',
+							// 	'type',
+							// 	'experience',
+							// 	'clientName',
+							// 	'clientEmail',
+							// ]}
 						/>
-					</SubheaderLeft>
-						{/* <CustomFilterDropdownComponent
+						<CustomFilterDropdownComponent
+							filterBy='type'
+							search={search}
+							setSearch={setJobSearch} 
+							getListAction={getJobsList}
 							options={[
 								{ label: 'On Site', value: JobType.ON_SITE },
 								{ label: 'Remote', value: JobType.REMOTE },
 								{ label: 'Hybird', value: JobType.HYBRID },
 							]}
-						/> */}
+						/>
+					</SubheaderLeft>
 					<SubheaderRight>
 						<PeriodAndDateRange setDateRange={setDateRange} />
 					</SubheaderRight>
@@ -119,6 +123,7 @@ const JobsPage = () => {
 					</Container>
 				</PageLoader>
 				<Pagination
+					searchBy={searchBy}
 					search={search}
 					getListAction={getJobsList}
 					count={paginationCount}
