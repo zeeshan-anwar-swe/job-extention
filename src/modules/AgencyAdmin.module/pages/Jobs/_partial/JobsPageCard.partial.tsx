@@ -36,25 +36,18 @@ const JobsPageCardPartial = ({ item }: any) => {
 	const [deleteModal, setDeleteModal] = useState(false);
 
 	return (
-		<Card className='group relative col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-2xl:last:col-span-12 max-lg:col-span-12'>
-			<Button
-				className='hidden group-hover:block absolute -top-2 -right-2 animate-pulse'
-				onClick={() => setDeleteModal(true)}
-				variant='solid'
-				color='red'
-				rounded='rounded-full'
-				iconSize='text-2xl'
-				rightIcon='HeroTrash'></Button>
+		<Card className=' col-span-4 flex flex-col gap-2 border border-zinc-300 max-2xl:col-span-6 max-2xl:last:col-span-12 max-lg:col-span-12'>
+			{deleteModal && (
+				<ConfirmationModal
+					modal={deleteModal}
+					setModal={setDeleteModal}
+					onClose={getJobsList({ limit: 9, page: 1 })}
+					title='remove job'
+					action={deleteJob(item.id)}
+				/>
+			)}
 
-			{deleteModal && <ConfirmationModal
-				modal={deleteModal}
-				setModal={setDeleteModal}
-				onClose={getJobsList({ limit: 9, page: 1 })}
-				title='remove job'
-				action={deleteJob(item.id)}
-			/>}
-
-			<CardHeader className='gap-4 mt-4 max-md:!flex-col-reverse'>
+			<CardHeader className='mt-4 gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
 				<div className='flex-1'>
 					<h4 className='max-md:text-sm'>{textValidationCheck(item?.title)}</h4>
@@ -105,11 +98,13 @@ const JobsPageCardPartial = ({ item }: any) => {
 					<div className='flex items-center'>
 						{item?.[
 							item?.appliedCandidates ? 'appliedCandidates' : 'candidateJobProfiles'
-						].map((cadidateItem: any , index: number) => (
+						].slice(0, 5).map((cadidateItem: any, index: number) => (
 							<img
 								key={index}
-								className='-mr-6 rounded-full aspect-square w-10 object-cover'
-								src={profileImageUrlValidationCheck(cadidateItem?.candidate?.profilePictureUrl)}
+								className='-mr-6 aspect-square w-10 rounded-full border-2 border-blue-500 object-cover'
+								src={profileImageUrlValidationCheck(
+									cadidateItem?.candidate?.profilePictureUrl,
+								)}
 							/>
 						))}
 
@@ -122,6 +117,14 @@ const JobsPageCardPartial = ({ item }: any) => {
 							rounded='rounded-full'
 							// className='!bg-white dark:!bg-zinc-800 dark:text-white'
 							icon='HeroPlus'></Button>
+						<Button
+							className='ml-2'
+							onClick={() => setDeleteModal(true)}
+							variant='solid'
+							color='red'
+							rounded='rounded-full'
+							iconSize='text-2xl'
+							rightIcon='HeroTrash'></Button>
 					</div>
 					{/* {assignCandidateModal && <AssignCandidatesModalPartial modal={assignCandidateModal} setModal={setAssignCandidateModal} jobId={item?.id} jobTitle={item?.title} />} */}
 				</CardFooterChild>

@@ -2,6 +2,7 @@ import { textValidationCheck } from '../../../../../utils/validationCheck';
 import Label from '../../../../../components/form/Label';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import SelectReact from '../../../../../components/form/SelectReact';
+import { formatString } from '../../../../../utils/helper';
 
 interface FormData {
 	title: string;
@@ -46,13 +47,13 @@ const LabelSelectPartial = ({
 					onChange={handleChange}
 					selected={formData.type}
 					className='w-full'
-					value={{ value: formData.type, label: formData.type }}
+					value={{ value: formData.type, label: formatString(formData.type) }}
 					name='type'
 					options={[
 						{ value: '', label: '' },
-						{ value: 'REMOTE', label: 'REMOTE' },
-						{ value: 'ON_SITE', label: 'On ON_SITE' },
-						{ value: 'HYBRID', label: 'HYBRID' },
+						{ value: 'REMOTE', label: 'Remote' },
+						{ value: 'ON_SITE', label: 'On Site' },
+						{ value: 'HYBRID', label: 'Hybrid' },
 					]}
 				/>
 			</FieldWrap>

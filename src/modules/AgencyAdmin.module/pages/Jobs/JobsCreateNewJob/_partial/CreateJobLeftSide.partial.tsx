@@ -42,18 +42,31 @@ const CreateJobLeftSidePartial = () => {
 
 	const dispatchCreateJob = async () => {
 		const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
+
+		if (formData.title.length < 3) {
+			toast.error('Enter at least 3 characters for title');
+			return;
+		}
 		if (formData.positions === '' || +formData.positions < 1) {
 			toast.error('Position shoud empty or less than 1');
 			return;
+		} else if (formData.experience.length < 1) {
+			toast.error('Enter experience');
+			return;
 		} else if (formData.skills.length < 1) {
 			toast.error('Enter at least one skill');
+			return;
+		} else if (formData.location.length < 3) {
+			toast.error('Enter at least 3 characters for location');
+			return;
+		} else if (formData.type === '') {
+			toast.error('Job type should not be empty');
 			return;
 		}
 
 		// @ts-ignore
 		// prettier-ignore
 		await dispatch(createJobs( isAssigned ? {...formData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
-
 		navigate('/jobs');
 	};
 
@@ -110,7 +123,12 @@ const CreateJobLeftSidePartial = () => {
 					formData={formData}
 					label='Description'
 				/>
-				<LabelSkillSelectPartial id='skills' setFormData={setFormData} formData={formData} label='Required Skills ' />
+				<LabelSkillSelectPartial
+					id='skills'
+					setFormData={setFormData}
+					formData={formData}
+					label='Required Skills '
+				/>
 				<NavSeparator className='mt-8' />
 			</CardBody>
 			<CardFooter className='!flex-col !items-start'>

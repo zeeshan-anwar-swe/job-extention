@@ -25,19 +25,19 @@ import { cn } from '../../../../utils/cn';
 const AssignCandidatesModalPartial = ({
 	jobId,
 	modal,
-	
 	setModal,
 	jobTitle,
+	reFreshList
 }: {
 	modal: boolean;
 	jobId: string;
 	setModal: any;
 	jobTitle?: string;
+	reFreshList?: any;
 }) => {
 	const { allCadidateList, paginationCount, pageLoading, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
-	
 	
 	const dispatch: AppDispatch = useDispatch();
 
@@ -55,6 +55,7 @@ const AssignCandidatesModalPartial = ({
 			);
 		}
 		setModal(false);
+		reFreshList && reFreshList();
 		await dispatch(setAssignedCandidatesWhileUpdatingJob([]));
 	};
 

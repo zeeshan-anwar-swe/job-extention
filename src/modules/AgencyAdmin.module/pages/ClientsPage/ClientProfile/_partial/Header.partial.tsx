@@ -7,7 +7,9 @@ import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { ClientDetailsType } from '../../../../../../types/slices.type/clients.slice.type';
 import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
-import { assignJobToClient } from '../../../../../../store/slices/Agency/Client.slice';
+import { assignJobToClient, getClientDetails } from '../../../../../../store/slices/Agency/Client.slice';
+import { AppDispatch } from '../../../../../../store';
+import { useDispatch } from 'react-redux';
 
 const HeaderPartial = ({
 	clientDetails,
@@ -19,7 +21,10 @@ const HeaderPartial = ({
 	const [modal, setModal] = useState<boolean>(false);
 	const { loading, imageUrl } = useImageValidation(clientDetails?.clientUser.image);
 
-	console.log('state', state);
+	const dispatch: AppDispatch = useDispatch();
+	const refreshData = () => {
+		dispatch(getClientDetails(state?.id));
+	};
 
 	return (
 		<Card className='!col-span-12 flex'>
@@ -56,6 +61,7 @@ const HeaderPartial = ({
 			<AssignJobModalPartial
 				title={`Assign Jobs to client: ${clientDetails?.clientUser?.firstName ?? ''}`}
 				assignToModule='client'
+				refreshData={refreshData}
 				modal={modal}
 				setModal={setModal}
 				assignTo={clientDetails?.id}

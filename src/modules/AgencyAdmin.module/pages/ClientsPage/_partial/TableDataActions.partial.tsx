@@ -2,13 +2,20 @@ import { useState } from 'react';
 import Button from '../../../../../components/ui/Button';
 import { ClientListItemType } from '../../../../../types/slices.type/clients.slice.type';
 import { AssignJobModalPartial } from '../../../common/AssignJobModal/Modal.partial';
-import { assignJobToClient, unAssignJobToClient } from '../../../../../store/slices/Agency/Client.slice';
+import { assignJobToClient, getPaginatedAgencyClientsList, unAssignJobToClient } from '../../../../../store/slices/Agency/Client.slice';
 import { AssignTeamModalPartial } from '../../../common/AssignTeamModal/Modal.partial';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../../store';
 
 const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [teamModal, setTeamModal] = useState<boolean>(false);
+	const dispatch: AppDispatch = useDispatch();
+
+	const refreshData = async () => {
+		await dispatch(getPaginatedAgencyClientsList({ limit: 10, page: 1 }));
+	};
 	return (
 		<div className='flex no-scrollbar overflow-x-scroll text-nowrap'>
 			<Link to={`/clients/jobs`} state={client}>
@@ -24,6 +31,7 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 				title={`Assign Jobs to a client: ${client?.name ?? ''}`}
 				assignToModule='client'
 				modal={modal}
+				refreshData={refreshData}
 				setModal={setModal}
 				assignTo={client.id}
 				jobAssignAction={assignJobToClient}

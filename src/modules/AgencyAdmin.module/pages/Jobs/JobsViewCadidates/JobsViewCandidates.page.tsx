@@ -46,6 +46,8 @@ const JobsViewCandidatesPage = () => {
 		dispatch(getJobDetails(state?.id ?? ''));
 	}, []);
 
+	const reFreshList = () => dispatch(getJobDetails(state?.id ?? ''));
+
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
 	return (
@@ -105,6 +107,7 @@ const JobsViewCandidatesPage = () => {
 									</Button>
 									{jobDetails && (
 										<AssignCandidatesModalPartial
+											reFreshList={reFreshList}
 											jobId={jobDetails.id}
 											jobTitle={jobDetails?.title}
 											modal={modal}

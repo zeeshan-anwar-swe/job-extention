@@ -23,6 +23,7 @@ export const AssignJobModalPartial = ({
 	assignToModule,
 	unAssignAction,
 	jobAssignAction,
+	refreshData,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
 	title?: string;
@@ -31,6 +32,7 @@ export const AssignJobModalPartial = ({
 	unAssignAction?: any;
 	jobAssignAction: any;
 	assignTo: string;
+	refreshData?: any;
 }) => {
 	const { paginatedList, pageLoading, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
@@ -42,6 +44,11 @@ export const AssignJobModalPartial = ({
 			dispatch(getJobsList({ limit: 10, page: 1 }));
 		}
 	}, [modal]);
+
+	const closeModal = () => {
+		setModal(false);
+		refreshData && refreshData();
+	}
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
@@ -86,7 +93,7 @@ export const AssignJobModalPartial = ({
 						color='zinc'>
 						Cancel
 					</Button>
-					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
+					<Button onClick={closeModal} className='w-full' variant='solid'>
 						Done
 					</Button>
 				</ModalFooterChild>

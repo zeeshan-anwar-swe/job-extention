@@ -15,12 +15,13 @@ import LabelTitlepartial from '../../_partial/LabelTitle.partial';
 import LabelSkillSelectPartial from '../../_partial/LabelSkillSelect.partial';
 import LabelSelectPartial from '../../_partial/LabelSelect.partial';
 import CardDropdownPartial from './CardDropdown.partial';
-import { getStatusColor } from '../../../../../../utils/helper';
+import { formatString, getStatusColor } from '../../../../../../utils/helper';
 import useImageValidation from '../../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../../store';
 import { getJobDetails, updateJob } from '../../../../../../store/slices/Jobs.slice';
+import { useNavigate } from 'react-router-dom';
 
 interface JobFormData {
 	title: string;
@@ -33,6 +34,7 @@ interface JobFormData {
 }
 
 const JobFormPartial = ({ jobDetails }: any) => {
+	const navigateTo = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 	const [formData, setFormData] = useState<JobFormData>({
 		title: '',
@@ -70,7 +72,8 @@ const JobFormPartial = ({ jobDetails }: any) => {
 				payload: { ...formData, status: jobDetails.status },
 			}),
 		);
-		dispatch(getJobDetails(jobDetails.id));
+		navigateTo('/jobs');
+		// dispatch(getJobDetails(jobDetails.id));
 	};
 
 	return (
@@ -106,7 +109,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					color={getStatusColor(jobDetails.status)}
 					rounded='rounded-full'
 					className='!justify-start gap-2  !py-1'>
-					<span>{jobDetails?.status}</span>
+					<span>{formatString(jobDetails?.status)}</span>
 				</Button>
 			</CardHeader>
 			<CardBody className='!h-fit gap-4'>
