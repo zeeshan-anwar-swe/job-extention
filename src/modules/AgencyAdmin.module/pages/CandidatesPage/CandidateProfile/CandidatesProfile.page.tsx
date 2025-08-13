@@ -178,7 +178,7 @@ const CandidatesProfilePage = () => {
 
 									<div
 										onClick={handleDownloadCV}
-										className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
+										className='flex items-center hover:cursor-pointer justify-between rounded-xl border-2 border-zinc-100'>
 										<Button className='h-fit' icon='HeroPdf' color='zinc'>
 											FluerCook.pdf
 										</Button>
@@ -194,9 +194,10 @@ const CandidatesProfilePage = () => {
 									<div className='flex flex-col gap-2'>
 										<Link
 											target='_blank'
-											to={'#'}
+											to={cadnidateProfile?.candidate?.publicProfileUrl}
 											className='flex items-center justify-between rounded-xl border-2 border-zinc-100 '>
 											<Button
+
 												className='h-fit'
 												icon='HeroLinkedIn'
 												color='zinc'>
@@ -204,18 +205,7 @@ const CandidatesProfilePage = () => {
 											</Button>
 											<Alert icon='HeroArrowUpRight'>{''}</Alert>
 										</Link>
-										<Link
-											target='_blank'
-											to={'/'}
-											className='flex items-center justify-between rounded-xl border-2 border-zinc-100'>
-											<Button
-												className='h-fit'
-												icon='HeroGitHub'
-												color='zinc'>
-												Git Hub
-											</Button>
-											<Alert icon='HeroArrowUpRight'>{''}</Alert>
-										</Link>
+										
 									</div>
 								</Card>
 							</div>

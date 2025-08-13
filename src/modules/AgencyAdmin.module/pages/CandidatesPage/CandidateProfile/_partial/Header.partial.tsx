@@ -15,6 +15,9 @@ const HeaderPartial = ({ state }: any) => {
 	const [clientModal, setClientModal] = useState<boolean>(false);
 	const navgiateTo = useNavigate();
 
+	console.log({state});
+	
+
 	const handleDownloadCV = async () => {
 		const response = await getCandidateCV(state.selectedJob.id);
 		const url = window.URL.createObjectURL(response.data);
@@ -32,11 +35,14 @@ const HeaderPartial = ({ state }: any) => {
 
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
 
+
+	
+
 	return (
 		<Card className='flex'>
 			<div className='flex items-center justify-between !gap-2 px-4 py-2 max-xl:flex-col max-xl:items-start'>
 				<TableDataProfilePartial
-					imageUrl={cadnidateProfile?.candidate?.image}
+					imageUrl={cadnidateProfile?.candidate?.profilePictureUrl}
 					title={cadnidateProfile?.candidate?.name}
 					subTitle={cadnidateProfile?.candidate?.email}
 				/>
