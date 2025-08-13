@@ -11,10 +11,14 @@ import {
 import { assignTeamMemberToJob, getJobsList, getTeamlistForJobs } from '../../../../../store/slices/Jobs.slice';
 import { useState } from 'react';
 import { set } from 'lodash';
+import useImageValidation from '../../../../../hooks/useImageValidation';
 
 const DropDownITemUserMetaPartial = ({ teamMamber, job }: { teamMamber: any; job: any }) => {
 	const isAssigned: boolean = job?.team?.id === teamMamber?.id;
 	const dispatch: AppDispatch = useDispatch();
+
+	console.log({});
+	
 
 	const handleAssignClientToJob = async () => {
 		if (!isAssigned) {
@@ -23,14 +27,16 @@ const DropDownITemUserMetaPartial = ({ teamMamber, job }: { teamMamber: any; job
 		}
 	};
 
+	const {imageUrl, loading} = useImageValidation(teamMamber?.user?.image)
+
 	
 
 	return (
 		<DropdownItem className='group m-4 justify-between gap-2 rounded-md bg-zinc-100'>
 			<div className='flex items-center gap-2'>
 				<img
-					className='aspect-square w-10 rounded-lg'
-					src={profileImageUrlValidationCheck('')}
+					className='aspect-square w-10 rounded-full'
+					src={imageUrl}
 					alt='profile-image'
 				/>
 				<h5>{textValidationCheck(teamMamber?.user?.name)}</h5>
@@ -41,7 +47,7 @@ const DropDownITemUserMetaPartial = ({ teamMamber, job }: { teamMamber: any; job
 						onClick={handleAssignClientToJob}
 						variant='solid'
 						isLoading={false}
-						className='hidden group-hover:block'
+						className='opacity-0 group-hover:opacity-100'
 						icon='HeroTwiceCheck'></Button>
 				</Tooltip>
 			) : (

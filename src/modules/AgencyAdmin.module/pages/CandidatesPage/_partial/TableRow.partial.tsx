@@ -14,7 +14,10 @@ import Alert from '../../../../../components/ui/Alert';
 import { Link } from 'react-router-dom';
 
 const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
+
+	
 	const [selectedJob, setSelectedJob] = useState<null | TCandidateJobProfile>(null);
+	console.log({ selectedJob });
 
 	return (
 		<Tr>
@@ -43,9 +46,7 @@ const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
 			{selectedJob ? (
 				<>
 					<Td>
-						{selectedJob?.job?.client?.clientUser.firstName ??
-							'' + ' ' + selectedJob?.job?.client?.clientUser.lastName ??
-							''}
+						{selectedJob.job.client?.clientUser.firstName??""}
 					</Td>
 					<Td>
 						<TableDataFeedbackPartial title={formatString(selectedJob?.status ?? '')} />

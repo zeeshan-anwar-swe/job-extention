@@ -37,7 +37,7 @@ const TablePartial = () => {
 							<TableDataSourcePartial linkedInUrl={candidate?.resumeLink} />
 						</Td>
 						<Td colSpan={2}>
-							<TableDataActionsPartial selectedJob={jobDetails} candidate={candidate} />
+							<TableDataActionsPartial selectedJob={candidate} candidate={jobDetails} />
 						</Td>
 					</Tr>
 				))}

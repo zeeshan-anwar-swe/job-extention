@@ -20,7 +20,7 @@ const TableDataActionsPartial = ({ candidate , selectedJob}: { candidate: any; s
 				modal={deleteModal}
 				setModal={setDeleteModal}
 				title='remove candidate'
-				action={removeAgencyCandidate(candidate.id)}
+				action={removeAgencyCandidate(selectedJob.id)}
 			/>
 		</div>
 	);
