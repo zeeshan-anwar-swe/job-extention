@@ -26,7 +26,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 		}
 	};
 
-	const [deleteModal, setDeleteModal] = useState<boolean>(false);
+	// const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
 	return (
 		<Dropdown>
@@ -34,12 +34,12 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 				<Button icon='HeroEllipsisHorizontal' />
 			</DropdownToggle>
 			<DropdownMenu placement='bottom-end'>
-				<DropdownItem className='justify-end'>
+				{/* <DropdownItem className='justify-end'>
 					<Button onClick={() => setDeleteModal(true)} variant='solid' color='red' rounded='rounded-full' rightIcon='HeroTrash'>
 						Remove 
 					</Button>
 					<ConfirmationModal modal={deleteModal} setModal={setDeleteModal} onClose={getJobsList({ limit: 9, page: 1 })}  title='remove job' action={deleteJob(item.id)}/>
-				</DropdownItem>
+				</DropdownItem> */}
 				<div className='px-4 text-sm font-bold'>Mark As</div>
 				<DropdownItem className='gap-2'>
 					<Button
