@@ -1,17 +1,18 @@
 import { Td, Tr } from '../../../../../components/ui/Table';
 import TableDataProfilePartial from './TableDataProfile.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
+import { AdminListItemType } from '../../../../../store/slices/SuperAdmin/Admin.slice';
 
-const TableRowPartial = () => {
+const TableRowPartial = ({ admin }: { admin: AdminListItemType }) => {
 	return (
 		<Tr className='font-medium'>
 			<Td>
-				<TableDataProfilePartial title='Alina Jourge' subTitle='alina@gmail.com' />
+				<TableDataProfilePartial title={admin.firstName} subTitle={admin.email} />
 			</Td>
-			<Td className='text-center'>12-Feb-2024</Td>
-			<Td>Super Admin</Td>
+			<Td className='text-center'>12-Feb-2025</Td>
+			<Td className='text-center'>{admin.role}</Td>
 			<Td>
-				<TableDataProfilePartial title='Alina Jourge' />
+				{admin.inviter ?? ""}
 			</Td>
 
 			<Td colSpan={2}>

@@ -7,7 +7,7 @@ import { RootState } from '../../../../../store';
 
 const TablePartial = () => {
 	const { rows } = useSelector(
-		(state: RootState) => state.recruiters.recruiterProfilerecruitersList,
+		(state: RootState) => state.recruiters.reccruitersList,
 	);
 
 	return (

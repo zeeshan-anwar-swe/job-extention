@@ -8,6 +8,7 @@ import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import Card, {
 	CardBody,
+	CardFooter,
 	CardHeader,
 	CardHeaderChild,
 	CardSubTitle,
@@ -15,12 +16,25 @@ import Card, {
 } from '../../../../components/ui/Card';
 import SearchPartial from './_partial/Search.partial';
 import { useState } from 'react';
-import Dropdown, { DropdownItem, DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
+import Dropdown, {
+	DropdownItem,
+	DropdownMenu,
+	DropdownToggle,
+} from '../../../../components/ui/Dropdown';
 import InviteModalPartial from './_partial/AssignJob.partial';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store';
+import Pagination from '../../../../components/ui/Pagination';
+import { getAdminList } from '../../../../store/slices/SuperAdmin/Admin.slice';
+import PageLoader from '../../../../templates/layouts/main/PageLoader';
 
 const AdminPage = () => {
 	const [sortBy, setSortBy] = useState<string>('Sort By');
 	const [modal, setModal] = useState<boolean>(false);
+
+	const { loading, rows, error, count, search } = useSelector(
+		(state: RootState) => state.AdminSlice.adminList,
+	);
 	return (
 		<>
 			<Header>
@@ -62,7 +76,7 @@ const AdminPage = () => {
 									<div>
 										<CardTitle>Admins</CardTitle>
 										<CardSubTitle>
-											View and manage  Admin relationships.
+											View and manage Admin relationships.
 										</CardSubTitle>
 									</div>
 								</CardHeaderChild>
@@ -81,9 +95,7 @@ const AdminPage = () => {
 											<DropdownItem onClick={() => setSortBy('Desending')}>
 												Desending
 											</DropdownItem>
-											<DropdownItem onClick={() => setSortBy('New First')}>
-												New First
-											</DropdownItem>
+											
 										</DropdownMenu>
 									</Dropdown>
 									<Button
@@ -96,8 +108,18 @@ const AdminPage = () => {
 								</CardHeaderChild>
 							</CardHeader>
 							<CardBody className='overflow-auto'>
-								<TablePartial />
+								<PageLoader loading={loading} error={error} data={rows}>
+									<TablePartial sortBy={sortBy} />
+								</PageLoader>
 							</CardBody>
+							<CardFooter>
+								<Pagination
+									limit={10}
+									count={count}
+									search={search}
+									getListAction={getAdminList}
+								/>
+							</CardFooter>
 						</Card>
 					</div>
 				</Container>

@@ -6,11 +6,30 @@ import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
-import Card, { CardBody, CardHeader, CardHeaderChild, CardTitle } from '../../../../components/ui/Card';
+import Card, {
+	CardBody,
+	CardFooter,
+	CardHeader,
+	CardHeaderChild,
+	CardTitle,
+} from '../../../../components/ui/Card';
 import SearchPartial from './_partial/Search.partial';
 import SortDropdownPartial from './_partial/SortDropdown.partial';
+import Pagination from '../../../../components/ui/Pagination';
+import { RootState } from '../../../../store';
+import { useSelector } from 'react-redux';
+import {
+	getRecruitersList,
+	setSearchForAdminRecruitersList,
+} from '../../../../store/slices/SuperAdmin/Recruiter.slice';
+import PageLoader from '../../../../templates/layouts/main/PageLoader';
+import CustomSearchComponent from '../../../Shared/components/CustomSearch.component';
 
 const SuperAdminRecruitersPage = () => {
+	const { loading, rows, count, error, search } = useSelector(
+		(state: RootState) => state.recruitersAdmin.reccruitersList,
+	);
+
 	return (
 		<>
 			<Header>
@@ -24,24 +43,29 @@ const SuperAdminRecruitersPage = () => {
 			<PageWrapper name='Recruiters'>
 				<Subheader>
 					<SubheaderLeft>
-						<SearchPartial />
+						<CustomSearchComponent
+							searchLimit={10}
+							placeholder='Search Recruiters'
+							searchListAction={getRecruitersList}
+							setSearchActionForPagination={setSearchForAdminRecruitersList}
+						/>
 						<Button
-							iconSize='text-5xl'
-							rightIcon='HeroMicrophone'
-							borderWidth='border'
 							color='zinc'
 							variant='outline'
+							iconSize='text-5xl'
+							borderWidth='border'
+							icon='CustomKoalaHead'
 							rounded='rounded-full'
-							icon='CustomKoalaHead'>
+							rightIcon='HeroMicrophone'>
 							Search with KoalaByte Talking Avatar
 						</Button>
 
 						<Button
-							borderWidth='border'
 							color='zinc'
 							variant='outline'
-							rounded='rounded-full'
-							icon='HeroBarFilter'>
+							borderWidth='border'
+							icon='HeroBarFilter'
+							rounded='rounded-full'>
 							Filter
 						</Button>
 					</SubheaderLeft>
@@ -54,15 +78,25 @@ const SuperAdminRecruitersPage = () => {
 								<p>View top Recruiters that signed up for KoalaByte.</p>
 							</CardHeaderChild>
 							<CardHeaderChild>
-								<SortDropdownPartial />
+								{/* <SortDropdownPartial />	 */}
 								<Button variant='solid' rightIcon='HeroPaperAirplane'>
 									Invite a Recruiter
 								</Button>
 							</CardHeaderChild>
 						</CardHeader>
 						<CardBody className='overflow-auto'>
-							<TablePartial />
+							<PageLoader loading={loading} error={error} data={rows}>
+								<TablePartial />
+							</PageLoader>
 						</CardBody>
+						<CardFooter>
+							<Pagination
+								limit={10}
+								count={count}
+								search={search}
+								getListAction={getRecruitersList}
+							/>
+						</CardFooter>
 					</Card>
 				</Container>
 			</PageWrapper>

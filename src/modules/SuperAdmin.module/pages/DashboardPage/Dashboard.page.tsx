@@ -7,91 +7,42 @@ import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import Subheader, {
-	SubheaderLeft,
-	SubheaderRight,
-} from '../../../../components/layouts/Subheader/Subheader';
-import colors from 'tailwindcss/colors';
-import Button from '../../../../components/ui/Button';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
-import { useTranslation } from 'react-i18next';
-import PeriodButtonsPartial from './_partial/PeriodButtons.partial';
-import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
-import { DateRangePicker, Range } from 'react-date-range';
-import themeConfig from '../../../../config/theme.config';
 import CommentPartial from './_partial/Comment.partial';
 import ApexLineChartPartial from './_partial/ApexLineChart.partial';
 import TablePartial from './_partial/Table.partial';
+import { AppDispatch, RootState } from '../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
+import { getAdminStatics } from '../../../../store/slices/SuperAdmin/Dashboard.slice';
 
 const SuperAdminDashboardPage = () => {
-	const { i18n } = useTranslation();
+	const dispatch: AppDispatch = useDispatch();
+	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
+	const [dateRange, setDateRange] = useState<any>({
+		startDate: dayjs().format('YYYY-MM-DD'),
+		endDate: '',
+	});
 
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.DAY);
-
-	const [selectedDate, setSelectedDate] = useState<Range[]>([
-		{
-			startDate: dayjs().startOf('week').add(-1, 'week').toDate(),
-			endDate: dayjs().endOf('week').toDate(),
-			key: 'selection',
-		},
-	]);
+	const { chartData, chartCategory, componentLoading, error } = useSelector(
+		(state: RootState) => state.agencyStatics,
+	);
 
 	useEffect(() => {
-		if (activeTab === PERIOD.DAY) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('day').toDate(),
-					endDate: dayjs().endOf('day').toDate(),
-					key: 'selection',
-				},
-			]);
+		if (activeTab === PERIOD.RANGE) {
+			if (!dateRange.startDate || !dateRange.endDate) return;
 		}
-		if (activeTab === PERIOD.WEEK) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('week').toDate(),
-					endDate: dayjs().endOf('week').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		if (activeTab === PERIOD.MONTH) {
-			setSelectedDate([
-				{
-					startDate: dayjs().startOf('month').toDate(),
-					endDate: dayjs().endOf('month').toDate(),
-					key: 'selection',
-				},
-			]);
-		}
-		return () => {};
-	}, [activeTab]);
-	useEffect(() => {
-		const selectedStart = dayjs(selectedDate[0].startDate).format('LL');
-		const selectedEnd = dayjs(selectedDate[0].endDate).format('LL');
+		dispatch(
+			getAdminStatics({
+				startDate: dateRange.startDate,
+				endDate: dateRange.endDate,
+				period: activeTab.text.toLowerCase(),
+			}),
+		);
+	}, [activeTab, dateRange]);
 
-		if (
-			selectedStart === dayjs().startOf('day').format('LL') &&
-			selectedEnd === dayjs().endOf('day').format('LL')
-		) {
-			setActiveTab(PERIOD.DAY);
-		}
-		if (
-			selectedStart === dayjs().startOf('week').format('LL') &&
-			selectedEnd === dayjs().endOf('week').format('LL')
-		) {
-			setActiveTab(PERIOD.WEEK);
-		}
-		if (
-			selectedStart === dayjs().startOf('month').format('LL') &&
-			selectedEnd === dayjs().endOf('month').format('LL')
-		) {
-			setActiveTab(PERIOD.MONTH);
-		}
-		return () => {};
-	}, [selectedDate]);
 	return (
 		<>
 			<Header>
@@ -103,48 +54,11 @@ const SuperAdminDashboardPage = () => {
 				</HeaderRight>
 			</Header>
 			<PageWrapper name='Dashboard'>
-				<Subheader>
-					<SubheaderLeft>
-						<PeriodButtonsPartial activeTab={activeTab} setActiveTab={setActiveTab} />
-					</SubheaderLeft>
-					<SubheaderRight>
-						<Dropdown>
-							<DropdownToggle>
-								<Button icon='HeroCalendarDays'>
-									{activeTab === PERIOD.DAY &&
-										dayjs().locale(i18n.language).format('LL')}
-									{activeTab === PERIOD.WEEK &&
-										`${dayjs()
-											.startOf('week')
-											.locale(i18n.language)
-											.format('MMMM D')} - ${dayjs()
-											.endOf('week')
-											.locale(i18n.language)
-											.format('MMMM D, YYYY')}`}
-									{activeTab === PERIOD.MONTH &&
-										dayjs()
-											.startOf('month')
-											.locale(i18n.language)
-											.format('MMMM, YYYY')}
-								</Button>
-							</DropdownToggle>
-							<DropdownMenu className='!p-0'>
-								<DateRangePicker
-									onChange={(item) => setSelectedDate([item.selection])}
-									moveRangeOnFirstSelection={false}
-									months={2}
-									ranges={selectedDate}
-									direction='horizontal'
-									rangeColors={[
-										colors[themeConfig.themeColor][themeConfig.themeColorShade],
-										colors.emerald[themeConfig.themeColorShade],
-										colors.amber[themeConfig.themeColorShade],
-									]}
-								/>
-							</DropdownMenu>
-						</Dropdown>
-					</SubheaderRight>
-				</Subheader>
+				<PeriodAndDateRange
+					activeTab={activeTab}
+					setActiveTab={setActiveTab}
+					setDateRange={setDateRange}
+				/>
 				<Container>
 					<div className='grid grid-cols-12 gap-4'>
 						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>

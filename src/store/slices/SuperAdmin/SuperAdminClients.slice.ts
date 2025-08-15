@@ -12,7 +12,7 @@ import {
 
 interface InitialStateType {
 	error: null | any;
-	clentSearch: string;
+	clientSearch: string;
 	search: string;
 	clientsList: ClientListItemType[];
 	paginatedClients: ClientListItemTypeSuperAdmin[];
@@ -30,7 +30,7 @@ interface InitialStateType {
 const initialState: InitialStateType = {
 	error: null,
 	search: '',
-	clentSearch: '',
+	clientSearch: '',
 	paginationCount: 0,
 	paginatedClients: [],
 	clientFeedback: [],
@@ -175,7 +175,7 @@ export const superAdminClientsSlice = createSlice({
 			});
 		},
 		setClientSearch: (state, action: PayloadAction<string>) => {
-			state.clentSearch = action.payload;
+			state.clientSearch = action.payload;
 		},
 	},
 	extraReducers: (builder) => {

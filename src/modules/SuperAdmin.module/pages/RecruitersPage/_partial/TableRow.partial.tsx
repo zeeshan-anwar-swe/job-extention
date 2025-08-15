@@ -4,25 +4,30 @@ import TableDataSourcePartial from './TableDataSource.partial';
 import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataBacklogPartial from './TableDataBacklog.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
+import { RecruiterUserListITemType } from '../../../../../types/slices.type/agency/recruiters.slice.type';
 
-const TableRowPartial = () => {
+const TableRowPartial = ({ recruiter }: { recruiter: RecruiterUserListITemType }) => {
 	return (
 		<Tr>
 			<Td>
-				<TableDataProfilePartial title='Alina Jourge' subTitle='alina@gmail.com' />
+				<TableDataProfilePartial
+					imageUrl={recruiter?.image}
+					title={recruiter?.firstName ?? ''}
+					subTitle={recruiter?.email ?? ''}
+				/>
 			</Td>
 			<Td className='text-center'>
-				<b>Mar-17-2006</b>
+				<b>{recruiter.createdAt.slice(0, 10)}</b>
+			</Td>
+			<Td className='text-center'>
+				<b>{recruiter.industry ?? ''}</b>
 			</Td>
 			<Td>
-				<TableDataSourcePartial />
-			</Td>
-			<Td>
-				<TableDataFeedbackPartial percentage={20} />
+				<TableDataFeedbackPartial percentage={recruiter?.successRate} />
 			</Td>
 			<Td>
 				<b>
-					<TableDataBacklogPartial />
+					{recruiter?.location??""}
 				</b>
 			</Td>
 			<Td colSpan={2}>

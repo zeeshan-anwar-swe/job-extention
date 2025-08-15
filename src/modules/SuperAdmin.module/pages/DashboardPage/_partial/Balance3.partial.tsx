@@ -2,8 +2,12 @@ import Card, { CardBody } from '../../../../../components/ui/Card';
 import Icon from '../../../../../components/icon/Icon';
 import Balance from '../../../../../components/Balance';
 import Button from '../../../../../components/ui/Button';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../store';
 
 const Balance3Partial = () => {
+	const { adminStatistics } = useSelector((state: RootState) => state.adminStatics);
+
 	return (
 		<Card>
 			<CardBody>
@@ -25,8 +29,10 @@ const Balance3Partial = () => {
 						<span className='font-semibold'>New Recruiters</span>
 					</div>
 					<div className='flex justify-between'>
-						<div className='text-4xl font-semibold'>48</div>
-						<Balance status='negative' value='-2%' />
+						<div className='text-4xl font-semibold'>
+							{adminStatistics.newRecruiters.value}
+						</div>
+						<Balance status='negative' value={adminStatistics.newRecruiters.change} />
 					</div>
 				</div>
 			</CardBody>

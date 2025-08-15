@@ -3,7 +3,6 @@ import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper'
 import TablePartial from './_partial/Table.partial';
 import Subheader, {
 	SubheaderLeft,
-	SubheaderRight,
 } from '../../../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
@@ -30,11 +29,10 @@ import CustomSearchComponent from '../../../Shared/components/CustomSearch.compo
 const ClientsPage = () => {
 	const [sortBy, setSortBy] = useState<string>('Default');
 	const [modal, setModal] = useState<boolean>(false);
-	const { paginatedClients, paginationCount, pageLoading, error } = useSelector(
+	const { paginatedClients, paginationCount, pageLoading, error, clientSearch } = useSelector(
 		(state: RootState) => state.SuperAdminClients,
 	);
 
-	console.log({paginatedClients});
 	
 	return (
 		<>
@@ -53,7 +51,6 @@ const ClientsPage = () => {
 						<CustomSearchComponent
 							searchLimit={10}
 							placeholder='Search clients...'
-							searchByFilterOptions={['name', 'email']}
 							setSearchActionForPagination={setClientSearch}
 							searchListAction={getSuperAdminClientsList}
 						/>
@@ -100,6 +97,7 @@ const ClientsPage = () => {
 				<Pagination
 					count={paginationCount}
 					limit={10}
+					search={clientSearch}
 					getListAction={getSuperAdminClientsList}
 				/>
 			</PageWrapper>

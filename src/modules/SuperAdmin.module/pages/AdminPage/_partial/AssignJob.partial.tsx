@@ -30,7 +30,7 @@ const InviteModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>Invite Client</ModalHeader>
+			<ModalHeader>Invite Admin</ModalHeader>
 			<NavSeparator />
 
 			<ModalBody className='!flex !w-full !flex-col gap-4'>
@@ -40,7 +40,7 @@ const InviteModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any
 						<Input
 							id='clientName'
 							name='clientName'
-							placeholder='Enter your team member name'
+							placeholder='Enter admin name'
 							className='rounded-full'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
@@ -48,7 +48,7 @@ const InviteModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any
 						/>
 					</FieldWrap>
 				</div>
-				<div>
+				{/* <div>
 					<Label htmlFor='adminRole'>Choose Admin Role*</Label>
 					<FieldWrap lastSuffix={<Icon icon='HeroChevronDown' className='mx-2' />}>
 						<Select
@@ -65,7 +65,7 @@ const InviteModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any
 							))}
 						</Select>
 					</FieldWrap>
-				</div>
+				</div> */}
 				<div>
 					<Label htmlFor='clientEmail'>Admin Email*</Label>
 					<FieldWrap>
@@ -73,7 +73,7 @@ const InviteModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any
 							type='email'
 							id='clientEmail'
 							name='clientEmail'
-							placeholder='Enter your team member email'
+							placeholder='Enter your admin email'
 							className='rounded-full'
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}

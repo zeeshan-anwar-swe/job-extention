@@ -1,7 +1,12 @@
+import { useSelector } from 'react-redux';
 import Table, { TBody, Td, TFoot, Th, THead, Tr } from '../../../../../components/ui/Table';
+import { RootState } from '../../../../../store';
 import TableRowPartial from './TableRow.partial';
 
-const TablePartial = () => {
+const TablePartial = ( {sortBy}:{sortBy:string}) => {
+	const { loading, rows, error, count, search } = useSelector(
+		(state: RootState) => state.AdminSlice.adminList,
+	);
 	return (
 		<Table className='table-fixed max-md:min-w-[70rem]'>
 			<THead>
@@ -14,13 +19,12 @@ const TablePartial = () => {
 				</Tr>
 			</THead>
 			<TBody>
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
-				<TableRowPartial />
+				{
+					(sortBy === "Desending" ? [...rows].reverse() : rows).map((admin) => (
+						<TableRowPartial key={admin.id} admin={admin} />
+					))
+				}
+				
 			</TBody>
 			<TFoot>
 				<Tr>

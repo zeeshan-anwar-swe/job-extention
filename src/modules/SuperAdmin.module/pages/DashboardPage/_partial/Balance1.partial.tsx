@@ -3,8 +3,12 @@ import Icon from '../../../../../components/icon/Icon';
 import Tooltip from '../../../../../components/ui/Tooltip';
 import Button from '../../../../../components/ui/Button';
 import Balance from '../../../../../components/Balance';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../store';
 
 const Balance1Partial = () => {
+	const { adminStatistics } = useSelector((state: RootState) => state.adminStatics);
+
 	return (
 		<Card>
 			<CardBody>
@@ -27,8 +31,8 @@ const Balance1Partial = () => {
 						<Tooltip text='Total number of posted jobs.' />
 					</div>
 					<div className='flex justify-between'>
-						<div className='text-4xl font-semibold'>228</div>
-						<Balance status='positive' value='18%' />
+						<div className='text-4xl font-semibold'>{adminStatistics.jobsPosted.value}</div>
+						<Balance status='positive' value={adminStatistics.jobsPosted.change} />
 					</div>
 				</div>
 			</CardBody>

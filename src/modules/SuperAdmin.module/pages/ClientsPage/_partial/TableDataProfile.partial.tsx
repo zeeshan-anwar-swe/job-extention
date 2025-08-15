@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { textValidationCheck } from '../../../../../utils/validationCheck';
 import {  ClientListItemTypeSuperAdmin } from '../../../../../types/slices.type/clients.slice.type';
 import useImageValidation from '../../../../../hooks/useImageValidation';
@@ -9,7 +8,7 @@ const TableDataProfilePartial = ({ client, inviteBy }: { client?: ClientListItem
 	const { loading, imageUrl } = useImageValidation(inviteBy? inviteBy.invitedBy.image : client?.clientUser.image);
 	return (
 		<div
-			className={cn('flex items-center gap-x-6 max-lg:flex-col', inviteBy ? 'justify-center' : 'justify-start')}>
+			className={cn('flex items-center gap-x-6 max-lg:flex-col', inviteBy ? 'justify-start' : 'justify-start')}>
 			<ImageLoaderWraper height='h-14' loading={loading}>
 				<img
 					className='aspect-square w-14 rounded-full object-cover'

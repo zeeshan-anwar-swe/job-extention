@@ -20,7 +20,7 @@ import { getRecruitersList } from '../../../../store/slices/Agency/Recruiter.sli
 
 const RecruitersPage = () => {
 	const { rows,count,loading, error } = useSelector(
-		(state: RootState) => state.recruiters.recruiterProfilerecruitersList,
+		(state: RootState) => state.recruiters.reccruitersList,
 	);
 	
 	const [modal, setModal] = useState<boolean>(false);

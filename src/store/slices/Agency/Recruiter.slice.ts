@@ -5,7 +5,7 @@ import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHa
 import { RecruitersInitialStateType } from '../../../types/slices.type/agency/recruiters.slice.type';
 
 const initialState: RecruitersInitialStateType = {
-    recruiterProfilerecruitersList: { loading: true, error: null, count: 0, rows: [] },
+    reccruitersList: { loading: true, error: null, count: 0, rows: [] , search: '' },
     recruiterProfile: { loading: false, error: null,  data: null },
 };
 
@@ -30,20 +30,20 @@ const recruitersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getRecruitersList.pending, (state) => {
-                state.recruiterProfilerecruitersList.loading = true;
-                state.recruiterProfilerecruitersList.error = null;
+                state.reccruitersList.loading = true;
+                state.reccruitersList.error = null;
             })
             .addCase(getRecruitersList.fulfilled, (state, action) => {
-                state.recruiterProfilerecruitersList.rows = action.payload.rows;
-                state.recruiterProfilerecruitersList.count = action.payload.count;
-                state.recruiterProfilerecruitersList.loading = false;
+                state.reccruitersList.rows = action.payload.rows;
+                state.reccruitersList.count = action.payload.count;
+                state.reccruitersList.loading = false;
             })
             .addCase(getRecruitersList.rejected, (state, action: any) => {
-                state.recruiterProfilerecruitersList.error = action.payload || {
+                state.reccruitersList.error = action.payload || {
                     message: 'Unknown error occurred ',
                 };
                 toast.error((action.payload.message as string) || 'Unknown error occurred ');
-                state.recruiterProfilerecruitersList.loading = false;
+                state.reccruitersList.loading = false;
             });
 
     },

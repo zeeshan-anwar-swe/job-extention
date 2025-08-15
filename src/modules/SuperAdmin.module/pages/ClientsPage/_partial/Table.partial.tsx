@@ -3,7 +3,6 @@ import Table, { TBody, TFoot, Th, THead, Tr } from '../../../../../components/ui
 import { RootState } from '../../../../../store';
 import { useSelector } from 'react-redux';
 import {
-	ClientListItemType,
 	ClientListItemTypeSuperAdmin,
 } from '../../../../../types/slices.type/clients.slice.type';
 
