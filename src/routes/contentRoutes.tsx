@@ -47,6 +47,7 @@ import ConfirmtionPage from '../modules/Shared/pages/SignupPage/Confirmation.pag
 import SignupPage from '../modules/Shared/pages/SignupPage/Signup.page';
 import SetUserPassword from '../modules/Shared/pages/user/SetUserPassword.page';
 import { UserVerificationPage } from '../modules/Shared/pages/user/UserVerify.page';
+import TeamSettingPage from '../modules/Team.module/pages/SettingPage/Setting.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -335,6 +336,11 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.Team.recruiterAppPages.to,
 			element: <RecruitersPage />,
+		},
+
+		{
+			path: appPages.Team.settingAppPages.subPages.settingPage.to,
+			element: <TeamSettingPage />,
 		},
 
 		{

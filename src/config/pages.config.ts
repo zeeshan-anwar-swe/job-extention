@@ -519,6 +519,22 @@ export const appPages = {
 				},
 			},
 		},
+
+		settingAppPages: {
+			id: 'TeamSettingsApp',
+			to: '/setting',
+			text: 'Setting',
+			icon: 'HeroUserGroup',
+			subPages: {
+				settingPage: {
+					id: 'setingMainPage',
+					to: '/setting',
+					text: 'Setting',
+					icon: 'HeroUserGroup',
+				},
+				
+			},
+		},
 	},
 	[Roles.ADMIN]: {
 		dashboardAppPages: {
@@ -928,7 +944,6 @@ export const authPages = {
 		text: 'Confirmation',
 		icon: 'HeroArrowRightOnRectangle',
 	},
-	
 };
 
 const pagesConfig = {

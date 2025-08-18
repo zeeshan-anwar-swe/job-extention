@@ -97,8 +97,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 					toast.custom((t) => <ToastMessage t={t} msg={msg} />);
 				}
 			} else {
-				playMessageSound();
-				toast.custom((t) => <ToastMessage t={t} msg={msg} />);
+					playMessageSound();
+					toast.custom((t) => <ToastMessage t={t} msg={msg} />);
 			}
 
 			setInbox((prev) => {

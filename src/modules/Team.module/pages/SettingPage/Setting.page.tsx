@@ -31,7 +31,7 @@ export type UserProfileDataType = {
 	image: File | null;
 };
 
-const SettingPage = () => {
+const TeamSettingPage = () => {
 	const { userProfile, loading } = useSelector((state: RootState) => state.user);
 	console.log({userProfile});
 	
@@ -110,8 +110,8 @@ const SettingPage = () => {
 			<PageWrapper name='Setting'>
 				<Container className='!grid flex-1 !grid-cols-12 !gap-4'>
 					<Card className='col-span-12 !grid flex-1 !grid-cols-10 gap-4 overflow-hidden p-4'>
-						<SettingAside />
-						<Card className='col-span-8 !bg-zinc-100  dark:!bg-zinc-950 max-md:col-span-12 '>
+						{/* <SettingAside /> */}
+						<Card className='col-span-12 '>
 							<CardBody className='!flex gap-4 max-md:!flex-col'>
 								<form className='flex w-full gap-4'>
 									<ProfileImagePartial initialImage={userProfile?.image} formik={formik} />
@@ -283,4 +283,4 @@ const SettingPage = () => {
 	);
 };
 
-export default SettingPage;
+export default TeamSettingPage;

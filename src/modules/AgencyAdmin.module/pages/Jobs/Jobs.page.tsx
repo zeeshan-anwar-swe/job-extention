@@ -26,14 +26,14 @@ import { JobType } from '../../../../types/enums/jobType.enum';
 const JobsPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 
+	
+	const { pageLoading, error, paginatedList, paginationCount, search, searchBy } = useSelector(
+		(state: RootState) => state.jobsSlice,
+	);
 	const [dateRange, setDateRange] = useState<any>({
 		startDate: dayjs().format('YYYY-MM-DD'),
 		endDate: '',
 	});
-
-	const { pageLoading, error, paginatedList, paginationCount, search, searchBy } = useSelector(
-		(state: RootState) => state.jobsSlice,
-	);
 
 	useEffect(() => {
 		console.log('dateRange', dateRange);

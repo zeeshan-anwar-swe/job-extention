@@ -24,9 +24,10 @@ import { Link } from 'react-router-dom';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
 import { getTeamJobs } from '../../../../store/slices/Team/TeamJobs.slice';
 import { TeamJob } from '../../../../types/slices.type/team/jobs.slice.type';
+import { CustomFilterDropdownComponent } from '../../../Shared/components/CustomFilterDropdown.component';
+import { JobType } from '../../../../types/enums/jobType.enum';
 
 const TeamJobsPage = () => {
-
 	const [dateRange, setDateRange] = useState<any>({ startDate: '', endDate: '' });
 	const { loading, error, rows, count, search } = useSelector(
 		(state: RootState) => state.teamJobs.jobList,
@@ -115,20 +116,21 @@ const TeamJobsPage = () => {
 							searchLimit={9}
 							setSearchActionForPagination={setJobSearch}
 							searchListAction={getTeamJobs}
-							searchByFilterOptions={[
-								'title',
-								'location',
-								'type',
-								'experience',
-								'clientName',
-								'clientEmail',
+						/>
+						<CustomFilterDropdownComponent
+							filterBy='type'
+							search={search}
+							setSearch={setJobSearch}
+							getListAction={getTeamJobs}
+							options={[
+								{ label: 'On Site', value: JobType.ON_SITE },
+								{ label: 'Remote', value: JobType.REMOTE },
+								{ label: 'Hybird', value: JobType.HYBRID },
 							]}
 						/>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<PeriodAndDateRange
-							setDateRange={setDateRange}
-						/>
+						<PeriodAndDateRange setDateRange={setDateRange} />
 					</SubheaderRight>
 				</div>
 				<Subheader>
@@ -146,12 +148,7 @@ const TeamJobsPage = () => {
 						))}
 					</Container>
 				</PageLoader>
-				<Pagination
-					search={search}
-					getListAction={getTeamJobs}
-					count={count}
-					limit={9}
-				/>
+				<Pagination search={search} getListAction={getTeamJobs} count={count} limit={9} />
 			</PageWrapper>
 		</>
 	);
