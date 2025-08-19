@@ -532,7 +532,6 @@ export const appPages = {
 					text: 'Setting',
 					icon: 'HeroUserGroup',
 				},
-				
 			},
 		},
 	},
@@ -919,6 +918,14 @@ export const authPages = {
 		to: '/signup',
 		text: 'Signup',
 		icon: 'HeroArrowRightOnRectangle',
+		subPages: {
+			confirmationPage: {
+				id: 'confirmationPage',
+				to: '/signup/confirmation',
+				text: 'Confirmation',
+				icon: 'HeroArrowRightOnRectangle',
+			},
+		},
 	},
 	ssoWaitingPage: {
 		id: 'ssoWaitingPage',

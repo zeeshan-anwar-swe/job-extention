@@ -186,6 +186,8 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
+		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
+
 
 		
 		{ path: '*', element: <NotFoundPage /> },
@@ -297,7 +299,7 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
-		
+		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 
 		{ path: '*', element: <NotFoundPage /> },
@@ -352,6 +354,8 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
+		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
+
 
 		{ path: '*', element: <NotFoundPage /> },
 	],
@@ -464,6 +468,8 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
+		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
+
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	SuperAdmin: [
@@ -545,7 +551,7 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
-		
+		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
 		{ path: '*', element: <NotFoundPage /> },
 	],
 
@@ -554,7 +560,7 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
-
+		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
 		{ path: '*', element: <NotFoundPage /> },
 	],
 

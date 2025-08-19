@@ -20,6 +20,9 @@ const SetUserPassword = () => {
   
   const { onPasswordSet } = useAuth();
 
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+
   const [param] = useSearchParams()
   const token = param.get('token')
 

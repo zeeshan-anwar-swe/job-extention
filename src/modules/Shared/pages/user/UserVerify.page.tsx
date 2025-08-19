@@ -9,56 +9,67 @@ import Card, {
 } from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import Icon from '../../../../components/icon/Icon';
+import axios from 'axios';
 
 type VerificationStatus = 'loading' | 'success' | 'failed';
 
 export function UserVerificationPage() {
+	
+	const [status, setStatus] = useState<VerificationStatus>('loading');
+	const [message, setMessage] = useState('Verifying your account...');
+	const baseUrl = import.meta.env.VITE_API_BASE_URL;
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const token = searchParams.get('token');
 
-	const [status, setStatus] = useState<VerificationStatus>('loading');
-	const [message, setMessage] = useState('Verifying your account...');
+	const verifyToken = async () => {
+		// Simulate API call
 
+		try {
+			const responseForVerification = await axios.get(
+				`${baseUrl}/user/verify?token=${token}`,
+			);
+			console.log({ responseForVerification });
+			
+		} catch (error) {
+			console.error('Verification error:', error);
+		}
+		await new Promise((resolve) => setTimeout(resolve, 2000)); // 2-second delay
+
+		// In a real application, you would send the token to your backend
+		// const response = await fetch('/api/verify-token', {
+		//   method: 'POST',
+		//   headers: { 'Content-Type': 'application/json' },
+		//   body: JSON.stringify({ token }),
+		// });
+		//
+		// if (response.ok) {
+		//   setStatus('success');
+		//   setMessage('Your account has been successfully verified!');
+		// } else {
+		//   const errorData = await response.json();
+		//   setStatus('failed');
+		//   setMessage(errorData.message || 'Account verification failed. The token might be invalid or expired.');
+		// }
+
+		// For demonstration: randomly succeed or fail
+		const isSuccess = Math.random() > 0.3; // 70% chance of success
+		if (isSuccess) {
+			setStatus('success');
+			setMessage('Your account has been successfully verified!');
+		} else {
+			setStatus('failed');
+			setMessage('Account verification failed. The token might be invalid or expired.');
+		}
+	};
 	useEffect(() => {
 		if (!token) {
 			setStatus('failed');
 			setMessage('No verification token found. Please check your link.');
 			return;
+		} else {
+			verifyToken();
 		}
-
-		const verifyToken = async () => {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 2000)); // 2-second delay
-
-			// In a real application, you would send the token to your backend
-			// const response = await fetch('/api/verify-token', {
-			//   method: 'POST',
-			//   headers: { 'Content-Type': 'application/json' },
-			//   body: JSON.stringify({ token }),
-			// });
-			//
-			// if (response.ok) {
-			//   setStatus('success');
-			//   setMessage('Your account has been successfully verified!');
-			// } else {
-			//   const errorData = await response.json();
-			//   setStatus('failed');
-			//   setMessage(errorData.message || 'Account verification failed. The token might be invalid or expired.');
-			// }
-
-			// For demonstration: randomly succeed or fail
-			const isSuccess = Math.random() > 0.3; // 70% chance of success
-			if (isSuccess) {
-				setStatus('success');
-				setMessage('Your account has been successfully verified!');
-			} else {
-				setStatus('failed');
-				setMessage('Account verification failed. The token might be invalid or expired.');
-			}
-		};
-
-		verifyToken();
 	}, [token]);
 
 	const cardVariants = {
@@ -99,7 +110,7 @@ export function UserVerificationPage() {
 									}}
 									className='mx-auto mb-4 text-blue-500'>
 									<Icon size='text-4xl' icon='DuoLoading' />
-								    </motion.div>
+								</motion.div>
 							)}
 							{status === 'success' && (
 								<motion.div
