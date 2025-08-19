@@ -12,13 +12,13 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../../store';
 import {
-	getJobsList,
 	setAssignedCandidatesWhileCreatingJob,
 	setClientWhileCreatingJob,
 } from '../../../../../store/slices/Jobs.slice';
-import { getPaginatedAgencyClientsList } from '../../../../../store/slices/Agency/Client.slice';
+import { useSpeechTitleAndExperience } from '../../../../../hooks/useSpeechTitleAndExperience';
 
 const JobsCreateNewJobPage = () => {
+	useSpeechTitleAndExperience()
 	const dispatch: AppDispatch = useDispatch();
 	useEffect(() => {
 		return () => {
