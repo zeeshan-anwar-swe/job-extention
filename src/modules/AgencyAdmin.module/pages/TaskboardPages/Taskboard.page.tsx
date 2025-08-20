@@ -100,7 +100,7 @@ const TaskboardPage = () => {
 							icon='HeroArrowsUpDown'
 						/>
 
-						<CustomDropDown
+						{/* <CustomDropDown
 							items={['Custom1', 'Custom2', 'custom3']}
 							title='Customise'
 							icon='HeroPencilSquare'
@@ -110,7 +110,7 @@ const TaskboardPage = () => {
 							items={['option1', 'option2', 'option3']}
 							title='Filter'
 							icon='HeroBarFilter'
-						/>
+						/> */}
 					</SubheaderLeft>
 					<SubheaderRight>
 						<PeriodAndDateRange setDateRange={setDateRange} />

@@ -46,6 +46,8 @@ const NotificationPartial = () => {
 		socket?.emit('notifications_seen', { notificationIds: [id] });
 	};
 
+
+	
 	
 	
 
@@ -74,6 +76,7 @@ const NotificationPartial = () => {
 							)}
 							{notifications.map((item: any) => (
 								<NotificationItem
+									type={item.type}
 									key={item.id}
 									image={item.user.image}
 									name={`${item.user.firstName} ${item.user.lastName}`}

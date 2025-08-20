@@ -27,12 +27,17 @@ const LabelSelectPartial = ({
 	id,
 	formData,
 	setFormData,
+	options = [],
+	placeholder = 'Select...',
+
 }: {
 	label?: string;
 	id: AllowedId;
 	detail?: string;
 	formData: FormData;
 	setFormData: any;
+	placeholder?: string;
+	options?: { label: string; value: string }[];
 }) => {
 	const handleChange = (options: { label: string; value: string }) => {
 		const { value } = options;
@@ -50,16 +55,12 @@ const LabelSelectPartial = ({
 
 			<FieldWrap>
 				<SelectReact
+					placeholder={placeholder || ''}
 					// @ts-ignore
 					onChange={handleChange}
 					className='w-full'
 					name='type'
-					options={[
-						{ value: '', label: '' },
-						{ value: 'REMOTE', label: 'Remote' },
-						{ value: 'ON_SITE', label: 'On Site' },
-						{ value: 'HYBRID', label: 'Hybrid' },
-					]}
+					options={options}
 				/>
 			</FieldWrap>
 		</div>

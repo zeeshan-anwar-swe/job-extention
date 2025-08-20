@@ -9,7 +9,6 @@ import Card, {
 import { NavSeparator } from '../../../../../../components/layouts/Navigation/Nav';
 import SearchPartial from './Search.partial';
 import CandidateCardPartial from './CandidateCard.partial';
-import JobFilterDropdownPartial from './JobFilterDropdown.partial';
 import { AppDispatch, RootState } from '../../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLoader from '../../../../../../templates/layouts/main/MainLoader';
@@ -19,6 +18,7 @@ import {
 	LinkedInProfile,
 } from '../../../../../../store/slices/Candiates.slice';
 import Pagination from '../../../../../../components/ui/Pagination';
+import JobFilterDropdownPartial from './JobFilterDropdown.partial';
 
 const CreateJobRightSidePartial = () => {
 	const {

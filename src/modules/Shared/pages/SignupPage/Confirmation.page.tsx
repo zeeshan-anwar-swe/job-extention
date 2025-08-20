@@ -11,7 +11,7 @@ import Icon from '../../../../components/icon/Icon';
 export default function ConfirmationPage() {
 	return (
 		<div className='flex min-h-full items-center justify-center bg-gray-100 px-4 py-12 dark:bg-gray-950'>
-			<Card className='w-full max-w-lg text-center p-8'>
+			<Card className='w-full max-w-lg text-center pcls-8'>
 				<CardHeader>
 					<CardTitle className='!mx-auto text-3xl font-bold'>Check Your Email</CardTitle>
 				</CardHeader>

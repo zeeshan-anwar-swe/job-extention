@@ -16,6 +16,7 @@ import {
 	getAllCandidatesList,
 	getFilteredCandidates,
 	setCandidatesFilterOptions,
+	setCandidatesSearch,
 } from '../../../../../../store/slices/Candiates.slice';
 import { RootState } from '../../../../../../store';
 import { JobsFilterDropdownLocation } from './JobsFilterDropdownLocation';
@@ -28,8 +29,9 @@ interface ExperienceItem {
 
 const JobFilterDropdownPartial = () => {
 	const dispatch: AppDispatch = useDispatch();
+	
 
-	const { filterOptions } = useSelector((state: RootState) => state.candidates);
+	const { filterOptions, search } = useSelector((state: RootState) => state.candidates);
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 	const experience: ExperienceItem[] = [
 		{ title: '1 Year', value: 1 },
@@ -151,7 +153,7 @@ const JobFilterDropdownPartial = () => {
 				limit: 10,
 				skills,
 				location,
-				keywords,
+				keywords:search ?? '',
 				tenure,
 			}),
 		);
@@ -165,6 +167,7 @@ const JobFilterDropdownPartial = () => {
 				skills: [],
 			}),
 		);
+		dispatch(setCandidatesSearch(''));
 		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 	};
 
@@ -209,7 +212,7 @@ const JobFilterDropdownPartial = () => {
 							))}
 						</CardBody>
 					</Card>
-					<JobsFilterDropdownLocation />
+					<JobsFilterDropdownLocation  />
 					<Card>
 						<CardHeader>
 							<CardTitle className='!text-lg !font-medium'>Skills</CardTitle>

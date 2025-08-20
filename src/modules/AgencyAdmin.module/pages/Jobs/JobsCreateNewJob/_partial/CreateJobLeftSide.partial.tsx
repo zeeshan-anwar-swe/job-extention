@@ -21,16 +21,29 @@ import LabelSkillSelectPartial from './LabelSkillSelect.partial';
 import LabelTitleTextareaPartial from './LabelTitleTextarea.partial';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { JobsFilterDropdownLocation } from './JobsFilterDropdownLocation';
+
+interface FormData {
+	title: string;
+	description: string;
+	experience: string;
+	type: string;
+	location: string;
+	positions: string;
+	skills: string[];
+}
 
 const CreateJobLeftSidePartial = () => {
 	const { assignedCandidatesWhileCreatingJob, assignedClientWhileCreatingJob } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
 
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
 	const [modal, setModal] = useState<boolean>(false);
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<FormData>({
 		title: '',
 		description: '',
 		experience: '',
@@ -41,6 +54,7 @@ const CreateJobLeftSidePartial = () => {
 	});
 
 	const dispatchCreateJob = async () => {
+		setIsSubmitting(true);
 		const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
 
 		if (formData.title.length < 3) {
@@ -67,6 +81,7 @@ const CreateJobLeftSidePartial = () => {
 		// @ts-ignore
 		// prettier-ignore
 		await dispatch(createJobs( isAssigned ? {...formData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
+		setIsSubmitting(false);
 		navigate('/jobs');
 	};
 
@@ -95,19 +110,47 @@ const CreateJobLeftSidePartial = () => {
 						formData={formData}
 						label='No. of Positions'
 					/>
-					<LabelTitlepartial
+					{/* <LabelTitlepartial
 						id='experience'
 						setFormData={setFormData}
 						formData={formData}
 						label='Experience'
+					/> */}
+					<LabelSelectPartial
+						id='experience'
+						setFormData={setFormData}
+						formData={formData}
+						label='Experience'
+						placeholder='Select Years Of Experience'
+						options={[
+							{ value: '', label: '' },
+							{ value: '1 Year', label: '1 Year' },
+							{ value: '2 Years', label: '2 Years' },
+							{ value: '3 Years', label: '3 Years' },
+							{ value: '4 Years', label: '4 Years' },
+							{ value: '5 Years', label: '5 Years' },
+							{ value: '6 Years', label: '6 Years' },
+							{ value: '7 Years', label: '7 Years' },
+							{ value: '8 Years', label: '8 Years' },
+							{ value: '9 Years', label: '9 Years' },
+							{ value: '10 Years', label: '10 Years' },
+							{ value: '10+ Years', label: '10+ Years' },
+						]}
 					/>
 				</div>
 				<div className='flex items-center gap-4 max-md:flex-col'>
 					<LabelSelectPartial
+						placeholder='Select Job Type'
 						id='type'
 						setFormData={setFormData}
 						formData={formData}
 						label='Job Type'
+						options={[
+							{ value: '', label: '' },
+							{ value: 'REMOTE', label: 'Remote' },
+							{ value: 'ON_SITE', label: 'On Site' },
+							{ value: 'HYBRID', label: 'Hybrid' },
+						]}
 					/>
 
 					<LabelTitlepartial
@@ -116,6 +159,8 @@ const CreateJobLeftSidePartial = () => {
 						formData={formData}
 						label='Location'
 					/>
+					
+					
 				</div>
 				<LabelTitleTextareaPartial
 					id='description'
@@ -151,7 +196,7 @@ const CreateJobLeftSidePartial = () => {
 						borderWidth='border'>
 						Cancel
 					</Button>
-					<Button onClick={dispatchCreateJob} variant='solid'>
+					<Button isLoading={isSubmitting} onClick={dispatchCreateJob} variant='solid'>
 						Save Job
 					</Button>
 					<Button variant='solid' onClick={() => setModal(true)}>
