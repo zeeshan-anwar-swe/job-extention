@@ -3,14 +3,11 @@ import Card, {
 	CardBody,
 	CardFooter,
 	CardHeader,
-	CardHeaderChild,
 } from '../../../../../../components/ui/Card';
 import {
-	profileImageUrlValidationCheck,
 	textValidationCheck,
 } from '../../../../../../utils/validationCheck';
 import Button from '../../../../../../components/ui/Button';
-import Alert from '../../../../../../components/ui/Alert';
 import { NavSeparator } from '../../../../../../components/layouts/Navigation/Nav';
 import AssignJobModalPartial from './AssignJob.partial';
 import { Link } from 'react-router-dom';

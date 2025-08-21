@@ -16,7 +16,6 @@ import { LinkedInProfile } from './Candiates.slice';
 
 interface InitialStateType {
 	searchBy: string;
-
 	search: string;
 	jobsList: any[];
 	currentListPage: number;

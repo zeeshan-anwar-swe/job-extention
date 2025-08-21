@@ -26,6 +26,7 @@ import JobFormPartial from './_partial/JobForm.partial';
 import { filterAndExtract } from '../../../../../utils/helper';
 import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
 import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
+import { AssignLinkedInCandiatesToJobModalPartial } from '../../../../Shared/common/assignLinkedInCandiatesToJobModal/assignLinkedInCandiatesToJobModal.partial';
 
 const JobsViewCandidatesPage = () => {
 	const [modal, setModal] = useState<boolean>(false);
@@ -39,6 +40,9 @@ const JobsViewCandidatesPage = () => {
 		key: 'status',
 		valueForMatch: 'hired',
 	});
+
+	console.log({jobDetails});
+	
 
 	const dispatch: AppDispatch = useDispatch();
 
@@ -106,7 +110,7 @@ const JobsViewCandidatesPage = () => {
 										Assign to Candidate
 									</Button>
 									{jobDetails && (
-										<AssignCandidatesModalPartial
+										<AssignLinkedInCandiatesToJobModalPartial
 											reFreshList={reFreshList}
 											jobId={jobDetails.id}
 											jobTitle={jobDetails?.title}

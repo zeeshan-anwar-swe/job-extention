@@ -23,7 +23,6 @@ interface INotificationItemProps {
 const NotificationItem: FC<INotificationItemProps> = ({
 	image,
 	type,
-	icon,
 	firstLine,
 	secondLine,
 	isUnread,
