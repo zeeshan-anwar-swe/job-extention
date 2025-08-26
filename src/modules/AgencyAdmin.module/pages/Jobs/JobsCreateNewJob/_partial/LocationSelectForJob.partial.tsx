@@ -39,15 +39,17 @@ export const LocationSelectForJob = ({
 
 	const { filterOptions } = useSelector((state: RootState) => state.candidates);
 
-	const handleLocationChange = (event: any) => {
+	const handleLocationChange = async (event: any) => {
+		console.log({ event });
 		setFormData({ ...formData, location: event.label });
-		dispatch(
+		
+		await dispatch(
 			setCandidatesFilterOptions({
 				...filterOptions,
 				location: [{ id: event.value, title: event.label }],
 			}),
 		);
-		dispatch(
+		await dispatch(
 			getAllCandidatesList({
 				page: 1,
 				limit: 10,
@@ -58,6 +60,10 @@ export const LocationSelectForJob = ({
 			}),
 		);
 	};
+
+	console.log({ filterOptions });
+	
+
 	return (
 		<div className='w-full'>
 			<Label htmlFor='loaction' className='font-light'>
@@ -69,16 +75,7 @@ export const LocationSelectForJob = ({
 					name='location'
 					isLoading={loading}
 					placeholder='Search Location'
-					value={
-						filterOptions.location
-							? filterOptions.location.length > 0
-								? {
-										label: filterOptions.location[0]?.title,
-										value: filterOptions.location[0]?.id,
-									}
-								: { label: 'Search Location', value: '' }
-							: { label: 'Search Location', value: '' }
-					}
+					
 					options={
 						rows?.length > 0
 							? rows.map((location) => ({

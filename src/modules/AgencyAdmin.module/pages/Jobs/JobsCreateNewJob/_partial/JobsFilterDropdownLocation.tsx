@@ -56,16 +56,7 @@ export const JobsFilterDropdownLocation = () => {
 					name='location'
 					isLoading={loading}
 					placeholder='Search Location'
-					value={
-						filterOptions.location
-							? filterOptions.location.length > 0
-								? {
-										label: filterOptions.location[0]?.title,
-										value: filterOptions.location[0]?.id,
-									}
-								: { label: 'Search Location', value: '' }
-							: { label: 'Search Location', value: '' }
-					}
+					
 					options={
 						rows?.length > 0
 							? rows.map((location) => ({
