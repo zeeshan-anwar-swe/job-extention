@@ -106,7 +106,7 @@ export interface FilterOptionsType {
 export interface GetAllCandidatesParamsType {
   page: number;
   limit: number;
-  filterOptions: FilterOptionsType;
+  filterOptions?: FilterOptionsType;
 }
 
 

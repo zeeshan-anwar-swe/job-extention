@@ -65,6 +65,7 @@ const JobFilterDropdownPartial = () => {
 
 	const handleExperienceClick = (value: number) => {
 		const { tenure } = filterOptions;
+		if(!tenure) return
 		let newMin = tenure.min;
 		let newMax = tenure.max;
 
@@ -156,12 +157,7 @@ const JobFilterDropdownPartial = () => {
 
 	const applyFilter = () => {
 		const { location, tenure, skills, keywords } = filterOptions;
-		if(tenure.min>0){
-			if (tenure.max === 0){
-				toast.error("chose second number")
-				return;
-			}
-		}
+		
 
 		dispatch(getFilteredCandidates({ page: 1, limit: 10, skills, keywords, tenure }));
 		setDropdownOpen(false);

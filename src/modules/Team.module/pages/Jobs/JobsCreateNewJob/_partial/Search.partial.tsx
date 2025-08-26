@@ -18,7 +18,7 @@ const SearchPartial = () => {
 		if (!search) {
 			return;
 		} else {
-			dispatch(getAllCandidatesList({ page: 1, limit: 10, search }));
+			dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 		}
 	};
 
