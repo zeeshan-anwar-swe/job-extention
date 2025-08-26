@@ -4,19 +4,22 @@ import { useDispatch } from 'react-redux';
 import Input from '../../../components/form/Input';
 import Icon from '../../../components/icon/Icon';
 import FieldWrap from '../../../components/form/FieldWrap';
+import { FilterOptionsType } from '../../../store/slices/Candiates.slice';
 
 interface SearchComponentProps {
-	searchListAction: (payload: { search?: string; limit: number; page: number }) => void;
+	searchListAction: any;
 	setSearchActionForPagination: (payload: any) => void;
 	placeholder?: string;
 	searchLimit?: number;
+	filterOptions?: FilterOptionsType;
 }
 
 const SearchPartial: FC<SearchComponentProps> = ({
+	filterOptions,
 	searchListAction,
-	setSearchActionForPagination,
-	placeholder = 'Search...',
 	searchLimit = 10,
+	placeholder = 'Search...',
+	setSearchActionForPagination,
 }) => {
 	const [searchValue, setSearchValue] = useState<string>('');
 
@@ -25,7 +28,11 @@ const SearchPartial: FC<SearchComponentProps> = ({
 	const handleSearch = async (e: any) => {
 		e.preventDefault();
 		if (searchValue) {
-			dispatch(searchListAction({ search: searchValue, limit: searchLimit, page: 1 }));
+			if(!filterOptions){
+				dispatch(searchListAction({ search: searchValue, limit: searchLimit, page: 1 }));
+			} else {
+				dispatch(searchListAction({ search: searchValue, limit: searchLimit, page: 1, filterOptions }));
+			}
 		}
 	};
 

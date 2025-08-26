@@ -2,7 +2,21 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
-import { CandidateProfile, TCandidateListItem } from '../../types/slices.type/candidate.slice.type';
+import {
+	CandidateProfile,
+	GetAllCandidatesParamsType,
+	GetMoreCandidatesParamsType,
+	TCandidateListItem,
+} from '../../types/slices.type/candidate.slice.type';
+
+type UseType = 'cursor' | 'page';
+
+export interface NextType {
+	dbOffset: number;
+	page: number;
+	unipileCursor: string | null;
+	use: UseType;
+}
 
 interface FilterOptionLocation {
 	id: string;
@@ -16,9 +30,9 @@ interface FilterOptionTenure {
 
 export interface FilterOptionsType {
 	keywords?: string;
+	skills?: string[];
+	tenure?: FilterOptionTenure;
 	location?: FilterOptionLocation[];
-	tenure: FilterOptionTenure;
-	skills: string[];
 }
 
 export interface LocationType {
@@ -125,6 +139,7 @@ export interface LinkedInProfile {
 }
 
 interface InitialStateType {
+	next: NextType;
 	searchBy: string;
 	search: string;
 	filterOptions: FilterOptionsType;
@@ -147,15 +162,23 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+	next: {
+		dbOffset: 0,
+		page: 1,
+		unipileCursor: null,
+		use: 'page',
+	},
+
 	search: '',
 	searchBy: '',
+
 	filterOptions: {
 		keywords: '',
 		skills: [],
 		location: [],
 		tenure: { min: 0, max: 0 },
 	},
-	
+
 	location: {
 		rows: [],
 		count: 0,
@@ -216,20 +239,6 @@ export const getAgencyCandidatesList = createAsyncThunk(
 		}
 	},
 );
-
-// const getLocationForCandidatesFilters = createAsyncThunk(
-// 	'candidates/getLocation',
-// 	async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
-// 		try {
-// 			const response = await axiosInstance.get(
-// 				`/unipile-linkedin/location?page=${page}&limit=${limit}`,
-// 			);
-// 			return response.data.data;
-// 		} catch (error: any) {
-// 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
-// 		}
-// 	},
-// );
 
 export const getSearchedAgencyCandidatesList = createAsyncThunk(
 	'candidates/getSearchedAgencyCandidatesList',
@@ -300,40 +309,9 @@ export const getFilteredCandidates = createAsyncThunk(
 	},
 );
 
-export const getAllCandidatesList = createAsyncThunk(
-	'candidates/getAllCandidatesList',
-	async (
-		{
-			page,
-			limit,
-			search = '',
-		}: {
-			page: number;
-			limit: number;
-			params?: string;
-			search?: string;
-		},
-		{ rejectWithValue },
-	) => {
-		try {
-			const response = await axiosInstance.post(
-				`/unipile-linkedin/search?page=${page}&limit=${limit}`,
-				{
-					keywords: search,
-				},
-			);
-
-			return response.data.data;
-		} catch (error: any) {
-			return await withAsyncThunkErrorHandler(error, rejectWithValue);
-		}
-	},
-);
-
 export const assignJobToCandidate = createAsyncThunk(
 	'candidates/assignJobToCandidate',
 	async ({ jobId, assignTo }: { jobId: string; assignTo: string }, { rejectWithValue }) => {
-
 		try {
 			const response = await axiosInstance.post('/linkedin-candidate/assign-job', {
 				jobId,
@@ -413,9 +391,45 @@ export const updateCandidateProfile = createAsyncThunk(
 				'linkedin-candidate/profile/edit/' + candidateId,
 				payload,
 			);
+
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getAllCandidatesList = createAsyncThunk(
+	'candidates/getAllCandidatesList',
+	async ({ page, limit, filterOptions }: GetAllCandidatesParamsType, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post(
+				`/unipile-linkedin/search?page=${page}&limit=${limit}`,
+				filterOptions,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getMoreAllCandidatesList = createAsyncThunk(
+	'candidates/getMoreAllCandidatesList',
+	async (
+		{ page, limit, cursor, filterOptions }: GetMoreCandidatesParamsType,
+		{ rejectWithValue },
+	) => {
+		try {
+			const url = `/unipile-linkedin/search?page=${page}&limit=${limit}${
+				cursor ? `&cursor=${cursor}` : ''
+			}`;
+
+			const response = await axiosInstance.post(url, filterOptions);
+
+			return response.data.data;
+		} catch (error: any) {
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
@@ -437,7 +451,6 @@ export const candidatesSlice = createSlice({
 		setCandidatesSearch: (state, action: PayloadAction<string>) => {
 			state.search = action.payload;
 		},
-		
 	},
 	extraReducers: (builder) => {
 		builder
@@ -528,10 +541,27 @@ export const candidatesSlice = createSlice({
 			.addCase(getAllCandidatesList.fulfilled, (state, action) => {
 				state.filteredCandidate = [];
 				state.allCadidateList = action.payload.data;
-				state.paginationCount = action.payload.count;
+				state.next = action.payload.next;
 				state.pageLoading = false;
 			})
 			.addCase(getAllCandidatesList.rejected, (state, action) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+			})
+
+			.addCase(getMoreAllCandidatesList.pending, (state) => {
+				state.pageLoading = false;
+				state.error = null;
+			})
+			.addCase(getMoreAllCandidatesList.fulfilled, (state, action) => {
+				state.filteredCandidate = [];
+				state.allCadidateList.push(...action.payload.data);
+				state.next = action.payload.next;
+				state.pageLoading = false;
+			})
+			.addCase(getMoreAllCandidatesList.rejected, (state, action) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

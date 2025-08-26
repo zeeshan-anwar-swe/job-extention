@@ -40,13 +40,6 @@ export interface TCandidateListItem {
 }
 
 
-
-
-
-
-
-
-
 export interface FeedbackBy {
     feedback: string;
     createdAt: string;
@@ -85,4 +78,41 @@ export interface CandidateProfile {
     location: string;
     availabilty: string;
     assignedJobs: AssignedJob[];
+}
+
+
+
+// candidate filter options types
+interface FilterOptionLocation {
+	id: string;
+	title: string;
+}
+
+interface FilterOptionTenure {
+	min: number;
+	max: number;
+}
+
+export interface FilterOptionsType {
+	keywords?: string;
+	skills?: string[];
+	tenure?: FilterOptionTenure;
+	location?: FilterOptionLocation[];
+}
+
+
+
+// Params types
+export interface GetAllCandidatesParamsType {
+  page: number;
+  limit: number;
+  filterOptions: FilterOptionsType;
+}
+
+
+export interface GetMoreCandidatesParamsType {
+  page: number;
+  limit: number;
+  cursor: string | null;
+  filterOptions: FilterOptionsType;
 }

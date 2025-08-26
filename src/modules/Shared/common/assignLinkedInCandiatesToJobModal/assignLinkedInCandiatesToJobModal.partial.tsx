@@ -5,7 +5,7 @@ import Modal, {
 	ModalFooterChild,
 	ModalHeader,
 } from '../../../../components/ui/Modal';
-import SearchPartial from '../Search.partial';
+import SearchPartial from './Search.partial';
 import { AppDispatch, RootState } from '../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -15,13 +15,16 @@ import {
 } from '../../../../store/slices/Jobs.slice';
 import {
 	getAllCandidatesList,
+	getMoreAllCandidatesList,
+	setCandidatesFilterOptions,
 	setCandidatesSearch,
 } from '../../../../store/slices/Candiates.slice';
-import Pagination from '../../../../components/ui/Pagination';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { cn } from '../../../../utils/cn';
 import { LinkedInCandidateCardPartial } from './linkedInCandidateCard.partial';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CursorBasePagination } from '../../../../components/ui/CusrorBasePagination';
+import { get } from 'lodash';
 
 export const AssignLinkedInCandiatesToJobModalPartial = ({
 	jobId,
@@ -37,7 +40,7 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
 	reFreshList?: any;
 }) => {
 	const [submitLoading, setSubmitLoading] = useState<boolean>(false);
-	const { allCadidateList, paginationCount, pageLoading, error } = useSelector(
+	const { allCadidateList, pageLoading, error, next, search, filterOptions } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
@@ -50,7 +53,6 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
 	const assignManyCandidates = async () => {
 		setSubmitLoading(true);
 		if (assignedCandidatesWhileCreatingJob.length > 0) {
-
 			const candidateIds = await assignedCandidatesWhileCreatingJob.map(
 				(candidate) => candidate.id,
 			);
@@ -62,22 +64,26 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
 				}),
 			);
 		}
-		setSubmitLoading(false)
+		setSubmitLoading(false);
 		setModal(false);
 		await dispatch(setAssignedCandidatesWhileUpdatingJob([]));
 		await dispatch(setAssignedCandidatesWhileCreatingJob([]));
 		reFreshList && reFreshList();
-		
 	};
+
+	useEffect(() => {
+		dispatch(getAllCandidatesList({ page: 1, limit: 10, filterOptions }));
+	}, []);
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>Assign candidates to job: “{jobTitle ?? ''}” </ModalHeader>
 			<div className='p-4'>
 				<SearchPartial
+					filterOptions={filterOptions}
 					placeholder='Search candidates...'
 					searchListAction={getAllCandidatesList}
-					setSearchActionForPagination={setCandidatesSearch}
+					setFilterOptions={setCandidatesFilterOptions}
 				/>
 			</div>
 
@@ -93,16 +99,20 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
 						<LinkedInCandidateCardPartial candidate={candidate} key={candidate.id} />
 					))}
 				</PageLoader>
+				{!pageLoading && (
+					<CursorBasePagination
+						limit={10}
+						use={next.use}
+						nextPage={next.page}
+						cursor={next.unipileCursor}
+						filterOptions={filterOptions}
+						getMoreListAction={getMoreAllCandidatesList}
+					/>
+				)}
 			</ModalBody>
 
 			<ModalFooter className='!block'>
-				<ModalFooterChild>
-					<Pagination
-						count={paginationCount}
-						limit={10}
-						getListAction={getAllCandidatesList}
-					/>
-				</ModalFooterChild>
+				<ModalFooterChild></ModalFooterChild>
 				<ModalFooterChild className='w-full pt-4 max-md:!flex-col'>
 					<Button
 						isDisable={submitLoading}
