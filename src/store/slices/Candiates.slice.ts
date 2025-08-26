@@ -451,6 +451,10 @@ export const candidatesSlice = createSlice({
 		setCandidatesSearch: (state, action: PayloadAction<string>) => {
 			state.search = action.payload;
 		},
+
+		setCandidatesLocations: (state, action:PayloadAction<any[]>) =>{
+			state.location.rows = action.payload
+		}
 	},
 	extraReducers: (builder) => {
 		builder
@@ -633,9 +637,10 @@ export const candidatesSlice = createSlice({
 });
 
 export const {
-	setCandidateProfile,
 	setLoactionLoading,
-	setCandidatesFilterOptions,
+	setCandidateProfile,
 	setCandidatesSearch,
+	setCandidatesLocations,
+	setCandidatesFilterOptions,
 } = candidatesSlice.actions;
 export default candidatesSlice.reducer;

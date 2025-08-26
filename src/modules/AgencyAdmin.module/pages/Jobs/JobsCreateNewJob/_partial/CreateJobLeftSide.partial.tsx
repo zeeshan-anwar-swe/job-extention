@@ -98,17 +98,19 @@ const CreateJobLeftSidePartial = () => {
 			<CardBody className='flex flex-col gap-y-4'>
 				<LabelTitlepartial
 					id='title'
+					placeholder='React etc...'
 					setFormData={setFormData}
 					formData={formData}
 					label='Job Title'
 				/>
 				<div className='flex items-center gap-4 max-md:flex-col'>
 					<LabelTitlepartial
-						inputType='number'
 						id='positions'
-						setFormData={setFormData}
+						placeholder='10...'
+						inputType='number'
 						formData={formData}
 						label='No. of Positions'
+						setFormData={setFormData}
 					/>
 					{/* <LabelTitlepartial
 						id='experience'

@@ -25,17 +25,19 @@ type AllowedId =
 	| 'skills';
 
 const LabelTitlepartial = ({
-	label,
 	id,
+	label,
 	formData,
-	setFormData,
 	inputType,
+	setFormData,
+	placeholder,
 }: {
-	label?: string;
 	id: AllowedId;
+	label?: string;
 	detail?: string;
-	formData: FormData;
 	setFormData: any;
+	formData: FormData;
+	placeholder?: string;
 	inputType?: TInputTypes;
 }) => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -53,16 +55,16 @@ const LabelTitlepartial = ({
 
 			<FieldWrap>
 				<Input
-					defaultValue={1}
-					type={inputType ?? 'text'}
-					dimension='lg'
 					id={id}
 					min={1}
-					autoComplete='name'
 					name={id}
+					dimension='lg'
+					defaultValue={1}
+					autoComplete='name'
 					value={formData[id]}
-					placeholder={label ?? ''}
 					onChange={handleChange}
+					placeholder={ placeholder ?? label ?? ''}
+					type={inputType ?? 'text'}
 				/>
 			</FieldWrap>
 		</div>

@@ -24,7 +24,6 @@ export const JobsFilterDropdownLocation = () => {
 	const dispatch: AppDispatch = useDispatch();
 
 	const debounced = useDebouncedCallback((value) => {
-		
 		if (value) {
 			dispatch(getLocationForCandidates({ page: 1, limit: 10, keywords: value }));
 		}
@@ -34,22 +33,18 @@ export const JobsFilterDropdownLocation = () => {
 		if (value) {
 			dispatch(setLoactionLoading(true));
 			debounced(value);
-		} 
-
-	}
-
-	
-	
+		}
+	};
 
 	const { filterOptions } = useSelector((state: RootState) => state.candidates);
 
-	console.log({ filterOptions });
-	
 	const handleLocationChange = (event: any) => {
-
-		console.log('Location changed:', event);
-		
-		dispatch(setCandidatesFilterOptions({ ...filterOptions, location: [{ id: event.value, title: event.label }] }));
+		dispatch(
+			setCandidatesFilterOptions({
+				...filterOptions,
+				location: [{ id: event.value, title: event.label }],
+			}),
+		);
 	};
 	return (
 		<Card>
@@ -61,15 +56,23 @@ export const JobsFilterDropdownLocation = () => {
 					name='location'
 					isLoading={loading}
 					placeholder='Search Location'
+					value={
+						filterOptions.location
+							? filterOptions.location.length > 0
+								? {
+										label: filterOptions.location[0]?.title,
+										value: filterOptions.location[0]?.id,
+									}
+								: { label: 'Search Location', value: '' }
+							: { label: 'Search Location', value: '' }
+					}
 					options={
 						rows?.length > 0
 							? rows.map((location) => ({
 									value: location.id,
 									label: location.title,
 								}))
-							: [
-									
-								]
+							: []
 					}
 					onInputChange={(value: string) => handlelocationinputChange(value)}
 					onChange={handleLocationChange}

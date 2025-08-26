@@ -1,5 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../../../components/ui/Dropdown';
+import { useState } from 'react';
 import Button from '../../../../../../components/ui/Button';
 import Card, {
 	CardBody,
@@ -16,11 +15,12 @@ import {
 	getAllCandidatesList,
 	getFilteredCandidates,
 	setCandidatesFilterOptions,
+	setCandidatesLocations,
 	setCandidatesSearch,
 } from '../../../../../../store/slices/Candiates.slice';
 import { RootState } from '../../../../../../store';
 import { JobsFilterDropdownLocation } from './JobsFilterDropdownLocation';
-import toast from 'react-hot-toast';
+import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../../../components/ui/Dropdown';
 
 interface ExperienceItem {
 	title: string;
@@ -36,7 +36,7 @@ const JobFilterDropdownPartial = () => {
 	};
 	const dispatch: AppDispatch = useDispatch();
 
-	const { filterOptions, search } = useSelector((state: RootState) => state.candidates);
+	const { filterOptions } = useSelector((state: RootState) => state.candidates);
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 	const experience: ExperienceItem[] = [
 		{ title: '1 Year', value: 1 },
@@ -139,7 +139,6 @@ const JobFilterDropdownPartial = () => {
 	};
 
 	const handleSkillsChange = (skillChangeEvet: any) => {
-		console.log({ skillChangeEvet });
 		dispatch(setCandidatesFilterOptions(skillChangeEvet));
 	};
 
@@ -160,6 +159,7 @@ const JobFilterDropdownPartial = () => {
 
 	const clearAllFilters = async () => {
 		await dispatch(setCandidatesFilterOptions(emptyFilterOptions));
+		dispatch(setCandidatesLocations([]))
 		dispatch(setCandidatesSearch(''));
 		dispatch(
 			getAllCandidatesList({
