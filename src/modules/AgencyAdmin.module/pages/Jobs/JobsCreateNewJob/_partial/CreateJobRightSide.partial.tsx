@@ -65,7 +65,7 @@ const CreateJobRightSidePartial = () => {
 						),
 					)}
 				</MainLoader>
-				{!pageLoading && (
+				{!pageLoading && next && (
 					<CursorBasePagination
 						limit={10}
 						use={next.use}

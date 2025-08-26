@@ -139,7 +139,7 @@ export interface LinkedInProfile {
 }
 
 interface InitialStateType {
-	next: NextType;
+	next: NextType | null;
 	searchBy: string;
 	search: string;
 	filterOptions: FilterOptionsType;

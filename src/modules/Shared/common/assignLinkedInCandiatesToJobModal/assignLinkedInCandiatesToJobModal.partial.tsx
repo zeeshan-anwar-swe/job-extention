@@ -99,7 +99,7 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
 						<LinkedInCandidateCardPartial candidate={candidate} key={candidate.id} />
 					))}
 				</PageLoader>
-				{!pageLoading && (
+				{!pageLoading && next && (
 					<CursorBasePagination
 						limit={10}
 						use={next.use}
