@@ -21,9 +21,12 @@ import LabelSkillSelectPartial from './LabelSkillSelect.partial';
 import LabelTitleTextareaPartial from './LabelTitleTextarea.partial';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { JobsFilterDropdownLocation } from './JobsFilterDropdownLocation';
+import { TitleInputForJobPartial } from './TitleInputForJob.partial';
+import { ExperienceSelectForJobPartial } from './ExperienceSelectForJob.partial';
+import { LocationSelectForJob } from './LocationSelectForJob.partial';
+import { SkillsSelectForJob } from './SkillSelectForJob.partial';
 
-interface FormData {
+export interface FormData {
 	title: string;
 	description: string;
 	experience: string;
@@ -96,13 +99,7 @@ const CreateJobLeftSidePartial = () => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='flex flex-col gap-y-4'>
-				<LabelTitlepartial
-					id='title'
-					placeholder='React etc...'
-					setFormData={setFormData}
-					formData={formData}
-					label='Job Title'
-				/>
+				<TitleInputForJobPartial setFormData={setFormData} formData={formData} />
 				<div className='flex items-center gap-4 max-md:flex-col'>
 					<LabelTitlepartial
 						id='positions'
@@ -112,33 +109,8 @@ const CreateJobLeftSidePartial = () => {
 						label='No. of Positions'
 						setFormData={setFormData}
 					/>
-					{/* <LabelTitlepartial
-						id='experience'
-						setFormData={setFormData}
-						formData={formData}
-						label='Experience'
-					/> */}
-					<LabelSelectPartial
-						id='experience'
-						setFormData={setFormData}
-						formData={formData}
-						label='Experience'
-						placeholder='Select Years Of Experience'
-						options={[
-							{ value: '', label: '' },
-							{ value: '1 Year', label: '1 Year' },
-							{ value: '2 Years', label: '2 Years' },
-							{ value: '3 Years', label: '3 Years' },
-							{ value: '4 Years', label: '4 Years' },
-							{ value: '5 Years', label: '5 Years' },
-							{ value: '6 Years', label: '6 Years' },
-							{ value: '7 Years', label: '7 Years' },
-							{ value: '8 Years', label: '8 Years' },
-							{ value: '9 Years', label: '9 Years' },
-							{ value: '10 Years', label: '10 Years' },
-							{ value: '10+ Years', label: '10+ Years' },
-						]}
-					/>
+
+					<ExperienceSelectForJobPartial setFormData={setFormData} formData={formData} />
 				</div>
 				<div className='flex items-center gap-4 max-md:flex-col'>
 					<LabelSelectPartial
@@ -155,14 +127,7 @@ const CreateJobLeftSidePartial = () => {
 						]}
 					/>
 
-					<LabelTitlepartial
-						id='location'
-						setFormData={setFormData}
-						formData={formData}
-						label='Location'
-					/>
-					
-					
+					<LocationSelectForJob formData={formData} setFormData={setFormData} />
 				</div>
 				<LabelTitleTextareaPartial
 					id='description'
@@ -170,12 +135,7 @@ const CreateJobLeftSidePartial = () => {
 					formData={formData}
 					label='Description'
 				/>
-				<LabelSkillSelectPartial
-					id='skills'
-					setFormData={setFormData}
-					formData={formData}
-					label='Required Skills '
-				/>
+				<SkillsSelectForJob formData={formData} setFormData={setFormData} />
 				<NavSeparator className='mt-8' />
 			</CardBody>
 			<CardFooter className='!flex-col !items-start'>

@@ -28,6 +28,7 @@ const SearchPartial: FC<SearchComponentProps> = ({
 		location: [],
 		skills: [],
 	};
+	const [searchValue, setSearchValue] = useState<string>('');
 	const dispatch: AppDispatch = useDispatch();
 
 	const handleSearch = async (e: any) => {
@@ -52,6 +53,7 @@ const SearchPartial: FC<SearchComponentProps> = ({
 	};
 
 	const handleChange = (data: string) => {
+		setSearchValue(data);
 		dispatch(setFilterOptions({ ...filterOptions, keywords: data }));
 	};
 
@@ -63,7 +65,7 @@ const SearchPartial: FC<SearchComponentProps> = ({
 			<div className='w-full'>
 				<FieldWrap
 					lastSuffix={
-						filterOptions.keywords !== '' && (
+						searchValue !== '' && (
 							<Icon
 								color='red'
 								icon='HeroXMark'
@@ -80,7 +82,7 @@ const SearchPartial: FC<SearchComponentProps> = ({
 						className='pl-4'
 						rounded='rounded-full'
 						placeholder={placeholder}
-						value={filterOptions.keywords}
+						value={searchValue}
 						onChange={(e: any) => handleChange(e.target.value as string)}
 					/>
 				</FieldWrap>
