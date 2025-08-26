@@ -28,8 +28,13 @@ interface ExperienceItem {
 }
 
 const JobFilterDropdownPartial = () => {
+	const emptyFilterOptions: FilterOptionsType = {
+		skills: [],
+		location: [],
+		keywords: '',
+		tenure: { min: 0, max: 0 },
+	};
 	const dispatch: AppDispatch = useDispatch();
-	
 
 	const { filterOptions, search } = useSelector((state: RootState) => state.candidates);
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -53,6 +58,7 @@ const JobFilterDropdownPartial = () => {
 
 	const handleExperienceClick = (value: number) => {
 		const { tenure } = filterOptions;
+		if (!tenure) return;
 		let newMin = tenure.min;
 		let newMax = tenure.max;
 
@@ -140,35 +146,28 @@ const JobFilterDropdownPartial = () => {
 	const applyFilter = () => {
 		const { location, tenure, skills, keywords } = filterOptions;
 
-		if (tenure.min > 0) {
-			if (tenure.max === 0) {
-				toast.error('chose second number');
-				return;
-			}
-		}
-
 		dispatch(
 			getFilteredCandidates({
 				page: 1,
 				limit: 10,
 				skills,
 				location,
-				keywords:search ?? '',
+				keywords,
 				tenure,
 			}),
 		);
 	};
 
 	const clearAllFilters = async () => {
-		await dispatch(
-			setCandidatesFilterOptions({
-				location: [],
-				tenure: { min: 0, max: 0 },
-				skills: [],
+		await dispatch(setCandidatesFilterOptions(emptyFilterOptions));
+		dispatch(setCandidatesSearch(''));
+		dispatch(
+			getAllCandidatesList({
+				page: 1,
+				limit: 10,
+				filterOptions: emptyFilterOptions,
 			}),
 		);
-		dispatch(setCandidatesSearch(''));
-		dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
 	};
 
 	return (
@@ -212,7 +211,7 @@ const JobFilterDropdownPartial = () => {
 							))}
 						</CardBody>
 					</Card>
-					<JobsFilterDropdownLocation  />
+					<JobsFilterDropdownLocation />
 					<Card>
 						<CardHeader>
 							<CardTitle className='!text-lg !font-medium'>Skills</CardTitle>
