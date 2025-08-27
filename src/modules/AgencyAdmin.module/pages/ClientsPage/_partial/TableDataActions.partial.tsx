@@ -16,9 +16,8 @@ import { ConfirmationModal } from '../../../../Shared/components/CustomModal/con
 
 const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => {
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
-
-	const [modal, setModal] = useState<boolean>(false);
 	const [teamModal, setTeamModal] = useState<boolean>(false);
+	const [modal, setModal] = useState<boolean>(false);
 	const dispatch: AppDispatch = useDispatch();
 
 	const refreshData = async () => {
@@ -26,26 +25,30 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 	};
 	return (
 		<div className='no-scrollbar flex overflow-x-scroll text-nowrap'>
+			
 			<Link to={`/clients/jobs`} state={client}>
 				<Button color='blue'>View Jobs</Button>
 			</Link>
+
 			<Link
 				to={`/chat/${client?.userId}`}
 				state={{ userName: client?.name, userId: client?.userId }}>
 				<Button color='blue'>Message</Button>
 			</Link>
+
 			<Button onClick={() => setModal(true)}>Assign A job</Button>
 			<Button onClick={() => setTeamModal(true)}>Assign to a Team Member</Button>
 			<Button onClick={()=>setDeleteModal(true)}>Remove Client</Button>
+
 			<AssignJobModalPartial
-				title={`Assign Jobs to a client: ${client?.name ?? ''}`}
-				assignToModule='client'
 				modal={modal}
-				refreshData={refreshData}
 				setModal={setModal}
 				assignTo={client.id}
+				assignToModule='client'
+				refreshData={refreshData}
 				jobAssignAction={assignJobToClient}
 				unAssignAction={unAssignJobToClient}
+				title={`Assign Jobs to a client: ${client?.name ?? ''}`}
 			/>
 			<AssignTeamModalPartial
 				modal={teamModal}
@@ -57,10 +60,10 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 
 			<ConfirmationModal
 				modal={deleteModal}
+				title='remove client'
 				setModal={setDeleteModal}
 				action={deleteClientClient(client.id)}
 				onClose={getPaginatedAgencyClientsList({ limit: 10, page: 1 })}
-				title='remove client'
 				/>
 		</div>
 	);
