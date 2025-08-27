@@ -4,20 +4,12 @@ import Label from '../../../../../components/form/Label';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import Input from '../../../../../components/form/Input';
 import { TInputTypes } from '../../../../../types/input.type';
+import { JobFormData } from '../JobsViewCadidates/_partial/JobForm.partial';
 
-interface FormData {
-	title: string;
-	description: string;
-	experience: string;
-	type: string;
-	location: string;
-	positions: string;
-	skills: string[];
-}
+
 
 type AllowedId =
 	| 'title'
-	| 'description'
 	| 'type'
 	| 'experience'
 	| 'location'
@@ -25,6 +17,7 @@ type AllowedId =
 	| 'skills';
 
 const LabelTitlepartial = ({
+	
 	label,
 	id,
 	formData,
@@ -34,9 +27,10 @@ const LabelTitlepartial = ({
 	label?: string;
 	id: AllowedId;
 	detail?: string;
-	formData: FormData;
+	formData: JobFormData;
 	setFormData: any;
 	inputType?: TInputTypes;
+	
 }) => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;

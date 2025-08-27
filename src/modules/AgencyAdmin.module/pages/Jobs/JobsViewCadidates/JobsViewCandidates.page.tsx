@@ -23,15 +23,17 @@ import { AppDispatch, RootState } from '../../../../../store';
 import { deleteJob, getJobDetails } from '../../../../../store/slices/Jobs.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import JobFormPartial from './_partial/JobForm.partial';
-import { filterAndExtract } from '../../../../../utils/helper';
+import { filterAndExtract, formatString } from '../../../../../utils/helper';
 import AssignCandidatesModalPartial from '../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial';
 import { ConfirmationModal } from '../../../../Shared/components/CustomModal/confirmationModal';
 import { AssignLinkedInCandiatesToJobModalPartial } from '../../../../Shared/common/assignLinkedInCandiatesToJobModal/assignLinkedInCandiatesToJobModal.partial';
+import { cn } from '../../../../../utils/cn';
 
 const JobsViewCandidatesPage = () => {
 	const [modal, setModal] = useState<boolean>(false);
 	const params = useLocation();
-	const { state } = params;
+	const { state, pathname } = params;
+	const isEditPage = pathname.includes('edit');
 
 	const { jobDetails, pageLoading, error } = useSelector((state: RootState) => state.jobsSlice);
 	const hiredCandidates = filterAndExtract({
@@ -40,9 +42,6 @@ const JobsViewCandidatesPage = () => {
 		key: 'status',
 		valueForMatch: 'hired',
 	});
-
-	console.log({jobDetails});
-	
 
 	const dispatch: AppDispatch = useDispatch();
 
@@ -64,7 +63,7 @@ const JobsViewCandidatesPage = () => {
 					<DefaultHeaderRightCommon />
 				</HeaderRight>
 			</Header>
-			<PageWrapper name='Job Details'>
+			<PageWrapper name={formatString(pathname)}>
 				<Subheader>
 					<SubheaderLeft>
 						<Link to='/jobs'>
@@ -76,7 +75,10 @@ const JobsViewCandidatesPage = () => {
 				</Subheader>
 				<PageLoader loading={pageLoading} error={error} data={jobDetails}>
 					<Container className='grid grid-cols-12 gap-4 '>
-						<Card className='col-span-8 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+						<Card
+							className={cn(
+								'col-span-7 flex flex-col gap-2  p-4 max-lg:col-span-12',
+							)}>
 							<CardHeader>
 								<CardHeaderChild className='!flex-col !items-start '>
 									<CardTitle>{`${jobDetails?.title as string} - Candidates`}</CardTitle>

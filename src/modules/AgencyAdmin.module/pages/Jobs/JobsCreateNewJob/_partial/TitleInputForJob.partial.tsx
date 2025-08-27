@@ -6,16 +6,8 @@ import { getAllCandidatesList, setCandidatesFilterOptions } from '../../../../..
 import { AppDispatch, RootState } from '../../../../../../store';
 import { useDebouncedCallback } from 'use-debounce';
 import { useDispatch, useSelector } from 'react-redux';
+import { FormData } from './CreateJobLeftSide.partial';
 
-interface FormData {
-	title: string;
-	description: string;
-	experience: string;
-	type: string;
-	location: string;
-	positions: string;
-	skills: string[];
-}
 
 export const TitleInputForJobPartial = ({
 	formData,

@@ -143,6 +143,12 @@ export const appPages = {
 					text: 'Create Job',
 					icon: 'Heroplus',
 				},
+				editJobAppPages: {
+					id: 'editJobAppPages',
+					to: '/jobs/edit-job',
+					text: 'Edit Job',
+					icon: 'HeroPencilSquare',
+				},
 			},
 		},
 

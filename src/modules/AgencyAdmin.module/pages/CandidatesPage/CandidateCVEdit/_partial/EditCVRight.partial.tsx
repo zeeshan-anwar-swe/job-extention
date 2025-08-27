@@ -26,10 +26,6 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 		(state: RootState) => state.candidates,
 	);
 
-	console.log({ cadnidateProfile });
-
-	const { state } = useLocation();
-
 	const { loading, imageUrl } = useImageValidation(
 		cadnidateProfile?.candidate?.profilePictureUrl,
 	);

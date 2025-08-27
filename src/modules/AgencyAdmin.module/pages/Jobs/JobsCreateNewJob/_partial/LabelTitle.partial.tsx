@@ -4,25 +4,9 @@ import Label from '../../../../../../components/form/Label';
 import FieldWrap from '../../../../../../components/form/FieldWrap';
 import Input from '../../../../../../components/form/Input';
 import { TInputTypes } from '../../../../../../types/input.type';
+import { FormData } from './CreateJobLeftSide.partial';
 
-interface FormData {
-	title: string;
-	description: string;
-	experience: string;
-	type: string;
-	location: string;
-	positions: string;
-	skills: string[];
-}
-
-type AllowedId =
-	| 'title'
-	| 'description'
-	| 'type'
-	| 'experience'
-	| 'location'
-	| 'positions'
-	| 'skills';
+type AllowedId = 'title' | 'type' | 'experience' | 'location' | 'positions' | 'skills';
 
 const LabelTitlepartial = ({
 	id,
@@ -63,7 +47,7 @@ const LabelTitlepartial = ({
 					autoComplete='name'
 					value={formData[id]}
 					onChange={handleChange}
-					placeholder={ placeholder ?? label ?? ''}
+					placeholder={placeholder ?? label ?? ''}
 					type={inputType ?? 'text'}
 				/>
 			</FieldWrap>

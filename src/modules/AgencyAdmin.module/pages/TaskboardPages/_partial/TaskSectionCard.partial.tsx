@@ -18,6 +18,7 @@ import { cn } from '../../../../../utils/cn';
 import { useState } from 'react';
 import { JobStatus } from '../../../../../types/enums/jobStatus.enum';
 import { TaskboardCardButton } from './TaskboardCardButton';
+import { formatString } from '../../../../../utils/helper';
 
 const TaskSectionCardPartial = ({
 	cardType,
@@ -47,7 +48,7 @@ const TaskSectionCardPartial = ({
 						color={color}
 						colorIntensity='500'
 					/>
-					<h4>{cardType}</h4>
+					<h4>{formatString(cardType)}</h4>
 				</CardHeaderChild>
 				<CardHeaderChild>
 					<Alert

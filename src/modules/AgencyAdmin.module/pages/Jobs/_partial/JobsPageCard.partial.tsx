@@ -72,7 +72,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 					<CardDropdownPartial item={item} />
 				</div>
 			</CardHeader>
-			<CardBody className='flex flex-col gap-4'>
+			<CardBody onClick={() => navigateTo(`/jobs/view-job-details`, { state: item })} className='flex flex-col hover:cursor-pointer gap-4'>
 				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='No. of Positions:' value='4' />
 					<CardBodyTagPartial title='Experience:' value={item?.experience} />
@@ -98,15 +98,17 @@ const JobsPageCardPartial = ({ item }: any) => {
 					<div className='flex items-center'>
 						{item?.[
 							item?.appliedCandidates ? 'appliedCandidates' : 'candidateJobProfiles'
-						].slice(0, 5).map((cadidateItem: any, index: number) => (
-							<img
-								key={index}
-								className='-mr-6 aspect-square w-10 rounded-full border-2 border-blue-500 object-cover'
-								src={profileImageUrlValidationCheck(
-									cadidateItem?.candidate?.profilePictureUrl,
-								)}
-							/>
-						))}
+						]
+							.slice(0, 5)
+							.map((cadidateItem: any, index: number) => (
+								<img
+									key={index}
+									className='-mr-6 aspect-square w-10 rounded-full border-2 border-blue-500 object-cover'
+									src={profileImageUrlValidationCheck(
+										cadidateItem?.candidate?.profilePictureUrl,
+									)}
+								/>
+							))}
 
 						<Button
 							variant='solid'
@@ -117,6 +119,16 @@ const JobsPageCardPartial = ({ item }: any) => {
 							rounded='rounded-full'
 							// className='!bg-white dark:!bg-zinc-800 dark:text-white'
 							icon='HeroPlus'></Button>
+
+						<Button
+							className='ml-2'
+							onClick={() => {
+								navigateTo(`/jobs/edit-job`, { state: item });
+							}}
+							variant='solid'
+							rounded='rounded-full'
+							iconSize='text-2xl'
+							rightIcon='HeroPencilSquare'></Button>
 						<Button
 							className='ml-2'
 							onClick={() => setDeleteModal(true)}

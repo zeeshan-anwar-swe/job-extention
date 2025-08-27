@@ -16,7 +16,6 @@ interface FormData {
 
 type AllowedId =
 	| 'title'
-	| 'description'
 	| 'type'
 	| 'experience'
 	| 'location'

@@ -109,6 +109,11 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
+			path: `${appPages.AgencyAdmin.jobsAppPages.subPages.editJobAppPages.to}`,
+			element: <JobsViewCandidatesPage />,
+		},
+
+		{
 			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
 			element: <JobsCreateNewJobPage />,
 		},

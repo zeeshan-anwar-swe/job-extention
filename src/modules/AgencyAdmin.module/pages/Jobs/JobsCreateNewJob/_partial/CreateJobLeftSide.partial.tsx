@@ -25,10 +25,13 @@ import { TitleInputForJobPartial } from './TitleInputForJob.partial';
 import { ExperienceSelectForJobPartial } from './ExperienceSelectForJob.partial';
 import { LocationSelectForJob } from './LocationSelectForJob.partial';
 import { SkillsSelectForJob } from './SkillSelectForJob.partial';
+import RichText from '../../../../../../components/RichText';
+import { Descendant } from 'slate';
+import Label from '../../../../../../components/form/Label';
 
 export interface FormData {
 	title: string;
-	description: string;
+	description: Descendant[];
 	experience: string;
 	type: string;
 	location: string;
@@ -48,7 +51,7 @@ const CreateJobLeftSidePartial = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const [formData, setFormData] = useState<FormData>({
 		title: '',
-		description: '',
+		description: [],
 		experience: '',
 		location: '',
 		type: '',
@@ -80,12 +83,21 @@ const CreateJobLeftSidePartial = () => {
 			toast.error('Job type should not be empty');
 			return;
 		}
+		const strigifiedDescription = await JSON.stringify(formData.description);
+		const newFormData = await { ...formData, description: strigifiedDescription };
 
 		// @ts-ignore
 		// prettier-ignore
-		await dispatch(createJobs( isAssigned ? {...formData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
+		await dispatch(createJobs( isAssigned ? {...newFormData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
 		setIsSubmitting(false);
 		navigate('/jobs');
+	};
+
+	const handleDescriptionChange = (newValue: any) => {
+		setFormData((prevState) => ({
+			...prevState,
+			description: newValue,
+		}));
 	};
 
 	return (
@@ -128,12 +140,16 @@ const CreateJobLeftSidePartial = () => {
 					/>
 					<LocationSelectForJob formData={formData} setFormData={setFormData} />
 				</div>
-				<LabelTitleTextareaPartial
-					id='description'
-					setFormData={setFormData}
-					formData={formData}
-					label='Description'
-				/>
+				<div className='w-full'>
+					<Label htmlFor='description'>Description</Label>
+					<RichText
+						id='description'
+						value={formData.description}
+						className='min-h-48'
+						handleChange={handleDescriptionChange}
+					/>
+				</div>
+
 				<SkillsSelectForJob formData={formData} setFormData={setFormData} />
 				<NavSeparator className='mt-8' />
 			</CardBody>

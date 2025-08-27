@@ -24,12 +24,10 @@ import { createEditor, Descendant } from 'slate';
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
 	const [cvTextValue, setCvTextValue] = useState<Descendant[]>(
-		cadnidateProfile?.cv ?
-		JSON.parse(cadnidateProfile?.cv) as Descendant[] :
-		JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[],
+		cadnidateProfile?.cv
+			? (JSON.parse(cadnidateProfile?.cv) as Descendant[])
+			: (JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[]),
 	);
-
-	console.log({ formikValue: formik.values });
 
 	useEffect(() => {
 		if (cadnidateProfile) {
@@ -43,7 +41,8 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 			// );
 
 			GitHub && formik.setFieldValue('GitHub', GitHub.link);
-			cadnidateProfile.resumeLink && formik.setFieldValue('LinkedIn', cadnidateProfile.resumeLink);
+			cadnidateProfile.resumeLink &&
+				formik.setFieldValue('LinkedIn', cadnidateProfile.resumeLink);
 
 			formik.setFieldValue('roles', cadnidateProfile?.roles ?? []);
 			formik.setFieldValue('name', cadnidateProfile?.candidate?.name ?? '');
@@ -59,7 +58,6 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 			// }
 		}
 	}, [cadnidateProfile]); // Added formik.setValues to the dependency array
-
 
 	return (
 		<Card className='col-span-9 flex flex-col gap-2 max-lg:col-span-12'>

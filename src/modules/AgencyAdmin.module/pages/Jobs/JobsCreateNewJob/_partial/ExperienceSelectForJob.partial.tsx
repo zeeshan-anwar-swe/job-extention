@@ -7,16 +7,9 @@ import {
 	getAllCandidatesList,
 	setCandidatesFilterOptions,
 } from '../../../../../../store/slices/Candiates.slice';
+import { FormData } from './CreateJobLeftSide.partial';
 
-interface FormData {
-	title: string;
-	description: string;
-	experience: string;
-	type: string;
-	location: string;
-	positions: string;
-	skills: string[];
-}
+
 
 export const ExperienceSelectForJobPartial = ({
 	formData,
@@ -35,12 +28,12 @@ export const ExperienceSelectForJobPartial = ({
 			...formData,
 			experience: label,
 		});
-		dispatch(setCandidatesFilterOptions({ ...filterOptions, tenure: { min: +value, max: 100 } }));
+		dispatch(setCandidatesFilterOptions({ ...filterOptions, tenure: { min: +value, max: +value } }));
 		dispatch(
 			getAllCandidatesList({
 				page: 1,
 				limit: 10,
-				filterOptions: { ...filterOptions, tenure: { min: +value, max: 100 } },
+				filterOptions: { ...filterOptions, tenure: { min: +value, max: +value } },
 			}),
 		);
 	};

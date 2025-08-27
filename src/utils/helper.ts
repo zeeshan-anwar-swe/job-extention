@@ -252,7 +252,7 @@ export const formatString = (inputString: string | null | undefined): string => 
   // Corrected: Replace underscores, hyphens, and commas with spaces
   // Place '-' at the end of the character set to treat it literally,
   // or escape it like /[_,\-]/g
-  const cleanedString = inputString.replace(/[_,-]/g, ' '); // Changed from /[_-|,]/g
+  const cleanedString = inputString.replace(/[_,/,-]/g, ' '); // Changed from /[_-|,]/g
 
   // Split the string into words, filter out empty strings, and then format each word
   const formattedWords = cleanedString.split(' ').filter(word => word.length > 0).map(word => {
