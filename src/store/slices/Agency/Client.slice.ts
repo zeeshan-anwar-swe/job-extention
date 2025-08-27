@@ -158,6 +158,18 @@ export const getClientFeedback = createAsyncThunk(
 	},
 );
 
+export const deleteClientClient = createAsyncThunk(
+	'clients/deleteClientClient',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.delete(`/client/${id}/delete/`);
+			return response.data.data;
+		} catch (error: any) {
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const clientsSlice = createSlice({
 	name: 'clients',
 	initialState,

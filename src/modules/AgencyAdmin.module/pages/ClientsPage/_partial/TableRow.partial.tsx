@@ -1,9 +1,9 @@
 import { Td, Tr } from '../../../../../components/ui/Table';
-import { textValidationCheck } from '../../../../../utils/validationCheck';
-import TableDataFeedbackPartial from './TableDataFeedback.partial';
 import TableDataActionsPartial from './TableDataActions.partial';
-import { ClientListItemType } from '../../../../../types/slices.type/clients.slice.type';
 import TableDataProfilePartial from './TableDataProfile.partial';
+import TableDataFeedbackPartial from './TableDataFeedback.partial';
+import { textValidationCheck } from '../../../../../utils/validationCheck';
+import { ClientListItemType } from '../../../../../types/slices.type/clients.slice.type';
 
 const TableRowPartial = ({ client }: { client: ClientListItemType }) => {
 	return (

@@ -49,7 +49,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 
 			<CardHeader className='mt-4 gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
-				<div className='flex-1'>
+				<div className='flex-1 hover:cursor-pointer' onClick={() => navigateTo(`/jobs/view-job-details`, { state: item })}>
 					<h4 className='max-md:text-sm'>{textValidationCheck(item?.title)}</h4>
 					<Button
 						rounded='rounded-full'
