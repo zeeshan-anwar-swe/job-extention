@@ -35,11 +35,14 @@ export interface FilterOptionsType {
 	location?: FilterOptionLocation[];
 }
 
-export interface LocationType {
-	object: string;
-	title: string;
-	id: string;
+export interface LocationTypeBase {
+  title: string;
+  object: string;
 }
+
+export type LocationType = 
+  | (LocationTypeBase & { id: string; locationId: never })
+  | (LocationTypeBase & { locationId: string; id: never });
 
 export interface LinkedInProfile {
 	id: string;
@@ -452,9 +455,9 @@ export const candidatesSlice = createSlice({
 			state.search = action.payload;
 		},
 
-		setCandidatesLocations: (state, action:PayloadAction<any[]>) =>{
-			state.location.rows = action.payload
-		}
+		setCandidatesLocations: (state, action: PayloadAction<any[]>) => {
+			state.location.rows = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder

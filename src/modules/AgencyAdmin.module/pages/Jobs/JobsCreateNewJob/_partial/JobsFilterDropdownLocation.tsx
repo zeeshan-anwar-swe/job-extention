@@ -60,7 +60,7 @@ export const JobsFilterDropdownLocation = () => {
 					options={
 						rows?.length > 0
 							? rows.map((location) => ({
-									value: location.id,
+									value: location.id ? location.id : location.locationId,
 									label: location.title,
 								}))
 							: []

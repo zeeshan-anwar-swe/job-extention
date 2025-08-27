@@ -42,7 +42,7 @@ export const LocationSelectForJob = ({
 	const handleLocationChange = async (event: any) => {
 		console.log({ event });
 		setFormData({ ...formData, location: event.label });
-		
+
 		await dispatch(
 			setCandidatesFilterOptions({
 				...filterOptions,
@@ -61,8 +61,7 @@ export const LocationSelectForJob = ({
 		);
 	};
 
-	console.log({ filterOptions });
-	
+	console.log({ rows });
 
 	return (
 		<div className='w-full'>
@@ -75,11 +74,10 @@ export const LocationSelectForJob = ({
 					name='location'
 					isLoading={loading}
 					placeholder='Search Location'
-					
 					options={
 						rows?.length > 0
 							? rows.map((location) => ({
-									value: location.id,
+									value: location.id ? location.id : location.locationId,
 									label: location.title,
 								}))
 							: []

@@ -126,7 +126,6 @@ const CreateJobLeftSidePartial = () => {
 							{ value: 'HYBRID', label: 'Hybrid' },
 						]}
 					/>
-
 					<LocationSelectForJob formData={formData} setFormData={setFormData} />
 				</div>
 				<LabelTitleTextareaPartial
