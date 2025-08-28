@@ -9,16 +9,11 @@ import { RootState } from '../../../../store';
 import ResetPasswordFormPartial from './partial/ResetPassword';
 import LoginWithGoogle from './partial/LoginWithGoogle';
 import LoginWitLinkedIn from './partial/LoginWithLinkedIn';
-import { useEffect, useState } from 'react';
 
 const LoginPage = () => {
 	const [param] = useSearchParams();
 	const status = param.get('status');
 	const { formType } = useSelector((state: RootState) => state.forgotPasswordSlice);
-
-	console.log({ status });
-
-	
 
 	return (
 		<PageWrapper
