@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Icon from '../../../../components/icon/Icon';
 import Input from '../../../../components/form/Input';
 import Button from '../../../../components/ui/Button';
@@ -18,6 +18,7 @@ type TValues = {
 };
 
 const SetUserPassword = () => {
+  const navigateTo = useNavigate();
 	const { onPasswordSet } = useAuth();
 
 	const [param] = useSearchParams();
@@ -57,7 +58,12 @@ const SetUserPassword = () => {
 			if (!token) {
 				toast.error('Token not found');
 			}else{
-        onPasswordSet({ password: values.password, token });
+        onPasswordSet({ password: values.password, token }).then(() => {
+            navigateTo('/signin');
+        }).catch((error: any) => {
+            toast.error("Somthing went wrong");
+            console.error('password setup error:', error);
+        });
       }
 
 		},
@@ -254,7 +260,8 @@ const SetUserPassword = () => {
 								variant='solid'
 								className='w-full font-semibold'
 								type='submit'
-								isDisable={!formik.isValid || formik.isSubmitting}>
+                isLoading={formik.isSubmitting}
+                >
 								Set Password
 							</Button>
 						</div>

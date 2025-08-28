@@ -218,7 +218,6 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 
 			if (response.data.success) {
 				console.log('Password setup successful:', response.data);
-				navigate('/');
 			} else {
 				// Handle specific backend errors if provided
 				if (response.data.message) {

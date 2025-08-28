@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import LogoTemplate from '../../../../templates/layouts/Logo/Logo.template';
 import LoginFormPartial from './partial/LoginForm.partial';
@@ -9,9 +9,16 @@ import { RootState } from '../../../../store';
 import ResetPasswordFormPartial from './partial/ResetPassword';
 import LoginWithGoogle from './partial/LoginWithGoogle';
 import LoginWitLinkedIn from './partial/LoginWithLinkedIn';
+import { useEffect, useState } from 'react';
 
 const LoginPage = () => {
+	const [param] = useSearchParams();
+	const status = param.get('status');
 	const { formType } = useSelector((state: RootState) => state.forgotPasswordSlice);
+
+	console.log({ status });
+
+	
 
 	return (
 		<PageWrapper
@@ -57,7 +64,12 @@ const LoginPage = () => {
 							</div>
 						</>
 					)}
-					{formType === 'login' ? (
+
+					{status && status !== 'verified' ? (
+						<h4 className='text-center'>
+							Email is not verified please verified it again
+						</h4>
+					) : formType === 'login' ? (
 						<LoginFormPartial />
 					) : formType === 'forgot' ? (
 						<ForgotPasswordFormPartial />
