@@ -953,7 +953,7 @@ export const authPages = {
 	},
 	userPasswrodSet: {
 		id: 'userPasswrodSet',
-		to: 'user/set-password',
+		to: '/set-password',
 		text: 'Confirmation',
 		icon: 'HeroArrowRightOnRectangle',
 	},

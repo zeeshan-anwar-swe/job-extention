@@ -27,7 +27,7 @@ export interface IAuthContextProps {
 	onOTPVerify: (otpCode: string) => void;
 	onResetPassword: (newPassword: string) => void;
 	onForgot: ({ email }: { email: string }) => void;
-	onPasswordSet: ({ password }: { password: string }) => Promise<void>;
+	onPasswordSet: ({ password, token }: { password: string; token: string }) => Promise<void>;
 	onSignUp: (
 		firstName: string,
 		lastName: string,
@@ -209,10 +209,11 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		navigate('/signin');
 	};
 
-	const onPasswordSet = async ({ password }: { password: string }): Promise<void> => {
+	const onPasswordSet = async ({ password, token }: { password: string; token: string }): Promise<void> => {
 		try {
 			const response = await axios.post(apiBaseUrl + '/user/set-password', {
 				password,
+				token,
 			});
 
 			if (response.data.success) {
