@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 import axiosInstance from '../../utils/axiosInstance';
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
+import axiosInstanceSoft from '../../utils/axiosInstanceSoft';
 
 interface InitialStateType {
 	data: any;
@@ -73,7 +74,7 @@ export const changeUserPassword = createAsyncThunk(
 	'user/changeUserPassword',
 	async (passwordData: { currentPassword: string; newPassword: string }, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.post('/user/change-password', passwordData);
+			const response = await axiosInstanceSoft.post('/user/change-password', passwordData);
 			return response.data.data;
 		} catch (error: any) {
 			return rejectWithValue(error.response?.data?.message || 'Failed to change password');

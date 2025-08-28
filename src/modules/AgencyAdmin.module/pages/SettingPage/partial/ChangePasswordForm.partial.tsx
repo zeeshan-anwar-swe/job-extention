@@ -5,7 +5,7 @@ import Input from '../../../../../components/form/Input';
 import { useFormik } from 'formik';
 import Label from '../../../../../components/form/Label';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../../../../components/ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
@@ -21,6 +21,8 @@ const ChangePasswordFormPartial = () => {
 	const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 	const { passwordChangeLoading, passwordError } = useSelector((state: RootState) => state.user);
+	console.log({ passwordError });
+
 	const dispatch: AppDispatch = useDispatch();
 	const formik = useFormik({
 		initialValues: {
@@ -72,7 +74,7 @@ const ChangePasswordFormPartial = () => {
 	});
 
 	if (passwordError) {
-		formik.errors.currentPassword = passwordError;
+		formik.setErrors({ currentPassword: passwordError });
 	}
 
 	return (
