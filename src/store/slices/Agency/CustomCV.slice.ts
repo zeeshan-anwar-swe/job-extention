@@ -16,9 +16,10 @@ export const getCustomCVList = createAsyncThunk(
 		{ rejectWithValue },
 	) => {
 		try {
-			const response = await axiosInstance.get(
-				`/custom-cv/agency/list?page=${page}&limit=${limit}${search && `&search=${search}`}`,
-			);
+			const url = search
+				? `/custom-cv/agency/list?page=${page}&limit=${limit}&search=${search}`
+				: `/custom-cv/agency/list?page=${page}&limit=${limit}`;
+			const response = await axiosInstance.get(url);
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -38,20 +39,46 @@ export const getCustomCVById = createAsyncThunk(
 	},
 );
 
-
 export const createCustomCV = createAsyncThunk(
 	'custom-cv/createCustomCV',
 	async (data: any, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post(`/custom-cv/create`, data);
 			console.log({ response });
-			
+
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
 		}
 	},
 );
+
+export const updateCustomCV = createAsyncThunk(
+	'custom-cv/updateCustomCV',
+	async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.put(`/custom-cv/${id}/update`, data);
+			console.log({ updateCustomCV: response });
+
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const deleteCustomCVById = createAsyncThunk(
+	'custom-cv/deleteCustomCVById',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.delete(`/custom-cv/${id}/delete`);
+			return id;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 const customCVSlice = createSlice({
 	name: 'custom-cv',
 	initialState,
@@ -94,6 +121,14 @@ const customCVSlice = createSlice({
 				};
 				toast.error((action.payload.message as string) || 'Unknown error occurred ');
 				state.cvDetails.loading = false;
+			});
+
+		builder
+			.addCase(deleteCustomCVById.fulfilled, (state, action) => {
+				state.list.rows = state.list.rows.filter((item: any) => item.id !== action.payload);
+			})
+			.addCase(deleteCustomCVById.rejected, (action: any) => {
+				toast.error((action.payload.message as string) || 'Unknown error occurred ');
 			});
 	},
 });

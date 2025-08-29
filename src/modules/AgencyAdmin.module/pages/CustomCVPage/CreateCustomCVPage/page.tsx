@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
 import Icon from '../../../../../components/icon/Icon';
 import Button from '../../../../../components/ui/Button';
@@ -14,9 +14,16 @@ import Breadcrumb from '../../../../../components/layouts/Breadcrumb/Breadcrumb'
 import PageWrapper from '../../../../../components/layouts/PageWrapper/PageWrapper';
 import Header, { HeaderLeft, HeaderRight } from '../../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import { AppDispatch } from '../../../../../store';
-import { useDispatch } from 'react-redux';
-import { createCustomCV } from '../../../../../store/slices/Agency/CustomCV.slice';
+import { AppDispatch, RootState } from '../../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	createCustomCV,
+	getCustomCVById,
+	updateCustomCV,
+} from '../../../../../store/slices/Agency/CustomCV.slice';
+import { useEffect, useLayoutEffect } from 'react';
+import { cn } from '../../../../../utils/cn';
+import { TCustomCVSkill } from '../../../../../types/slices.type/agency/custom-cv.slice.type';
 
 type TCVFormValues = {
 	firstName: string;
@@ -57,8 +64,11 @@ type TCVFormValues = {
 		description: string;
 	}[];
 };
-
 const CreateCustomCVPage = () => {
+	const { loading, data } = useSelector((state: RootState) => state.customCV.cvDetails);
+	const { state, pathname } = useLocation();
+	const isEditPage = pathname === '/custom-cv/edit';
+
 	const navigateTo = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 
@@ -106,19 +116,19 @@ const CreateCustomCVPage = () => {
 				errors.summary = 'Required';
 			}
 
-			
-
-			
 			return errors;
 		},
 		onSubmit: async (values) => {
 			console.log({ values });
-			try{
-				await dispatch(createCustomCV(values));
+			try {
+				if (isEditPage) {
+					await dispatch(updateCustomCV({ id: state.id, data: values }));
+				} else {
+					await dispatch(createCustomCV(values));
+				}
 				navigateTo('/custom-cv');
-			}catch(e){
+			} catch (e) {
 				console.log({ e });
-					
 			}
 		},
 	});
@@ -170,6 +180,35 @@ const CreateCustomCVPage = () => {
 		formik.setFieldValue('workExperience', newWorkExperience);
 	};
 
+	useLayoutEffect(() => {
+		if (state) {
+			dispatch(getCustomCVById(state.id));
+		} else {
+			if (isEditPage) {
+				navigateTo('/custom-cv');
+			}
+			formik.resetForm();
+		}
+	}, [pathname]);
+
+	useEffect(() => {
+		if (data && isEditPage) {
+			formik.setFieldValue('summary', data?.summary ?? '');
+			formik.setFieldValue('firstName', data?.firstName ?? '');
+			formik.setFieldValue('lastName', data?.lastName ?? '');
+			formik.setFieldValue('location', data?.location ?? '');
+			formik.setFieldValue('industry', data?.industry ?? '');
+			formik.setFieldValue('headline', data?.headline ?? '');
+			formik.setFieldValue('publicProfileUrl', data?.publicProfileUrl ?? '');
+			formik.setFieldValue('workExperience', data?.workExperience ?? []);
+			formik.setFieldValue('education', data?.education ?? []);
+			formik.setFieldValue(
+				'skills',
+				data?.skills.map((skill: TCustomCVSkill) => skill.name) ?? [],
+			);
+		}
+	}, [data, isEditPage]);
+
 	return (
 		<>
 			<Header>
@@ -186,7 +225,10 @@ const CreateCustomCVPage = () => {
 					<Card>
 						<CardBody>
 							<form
-								className='grid grid-cols-1 gap-4 lg:grid-cols-2'
+								className={cn(
+									'grid grid-cols-1 gap-4 lg:grid-cols-2',
+									loading && 'animate-pulse',
+								)}
 								onSubmit={formik.handleSubmit}>
 								<div className='lg:col-span-2'>
 									<h2 className='text-xl font-semibold'>Personal Information</h2>
@@ -680,8 +722,13 @@ const CreateCustomCVPage = () => {
 
 								{/* --- */}
 								<div className='mt-4 flex justify-between gap-2 lg:col-span-2'>
-									<Button isLoading={formik.isSubmitting} variant='solid' color='blue' type='submit'>
-										Create CV
+									<Button
+										isDisable={formik.isSubmitting || loading}
+										isLoading={formik.isSubmitting}
+										variant='solid'
+										color='blue'
+										type='submit'>
+										{isEditPage ? 'Update CV' : 'Create CV'}
 									</Button>
 									<Button
 										onClick={() => navigateTo('/custom-cv')}

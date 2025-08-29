@@ -15,6 +15,8 @@ import { HeroMapPin, HeroUser } from '../../../../../components/icon/heroicons';
 import Badge from '../../../../../components/ui/Badge';
 import Button from '../../../../../components/ui/Button';
 import Icon from '../../../../../components/icon/Icon';
+import { CVProfilePhoto } from './_partial/CVProfilePhoto';
+import Subheader, { SubheaderLeft } from '../../../../../components/layouts/Subheader/Subheader';
 
 const ViewCustomCVPage = () => {
 	const { loading, data, error } = useSelector((state: RootState) => state.customCV.cvDetails);
@@ -42,16 +44,36 @@ const ViewCustomCVPage = () => {
 			</Header>
 
 			<PageWrapper name='View Custom CV'>
+				{/* <Subheader>
+					<SubheaderLeft>
+						<Button icon='HeroArrowLeft'>Back</Button>
+					</SubheaderLeft>
+				</Subheader> */}
 				<PageLoader
 					data={data}
 					error={error}
 					loading={loading}
 					messageForEmptyData='No Custom CV data found'>
-					<Container  className='mx-auto space-y-4'>
-						{/* Header Section */}
+					<Container className='mx-auto space-y-4'>
+						<div className='flex w-full justify-end gap-4'>
+							<Button
+								variant='solid'
+								onClick={() => navigateTo('/custom-cv/edit', { state: data })}
+								icon='HeroPencilSquare'>
+								Edit CV
+							</Button>
+							<Button
+								variant='solid'
+								color='zinc'
+								onClick={() => navigateTo('/custom-cv')}
+								icon='HeroArrowLeft'>
+								Back
+							</Button>
+						</div>
 						<Card className='shadow'>
 							<CardBody className='pt-6'>
 								<div className='flex flex-col gap-6 md:flex-row'>
+									<CVProfilePhoto image={data?.profilePictureUrl} />
 									<div className='flex-1 text-center md:text-left'>
 										<h1 className='text-balance text-3xl font-bold'>
 											{data?.firstName}
@@ -65,7 +87,7 @@ const ViewCustomCVPage = () => {
 												{data?.location}
 											</Button>
 
-											<Button  icon='HeroUsers'>
+											<Button icon='HeroUsers'>
 												{data?.connectionsCount}+ connections
 											</Button>
 											<div className='flex items-center gap-1'>
@@ -87,7 +109,10 @@ const ViewCustomCVPage = () => {
 												variant='solid'>
 												{data?.industry}
 											</Badge>
-											<Badge variant='outline' color='zinc' className='ml-2 !bg-transparent'>
+											<Badge
+												variant='outline'
+												color='zinc'
+												className='ml-2 !bg-transparent'>
 												{data?.networkDistance} connection
 											</Badge>
 										</div>
@@ -174,7 +199,6 @@ const ViewCustomCVPage = () => {
 										</div>
 									</div>
 								))}
-								
 							</CardBody>
 						</Card>
 
@@ -193,7 +217,6 @@ const ViewCustomCVPage = () => {
 											variant='solid'
 											className='flex items-center gap-1'>
 											{skill.name}
-											
 										</Badge>
 									))}
 								</div>

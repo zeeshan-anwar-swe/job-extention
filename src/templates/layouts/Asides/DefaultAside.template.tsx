@@ -43,8 +43,9 @@ const DefaultAsideTemplate = () => {
 						to={appPages.AgencyAdmin.customCVAppPages.to}
 						icon={appPages.AgencyAdmin.customCVAppPages.icon}>
 						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.rootPage} />
-						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.viewCVPages} />
+						{/* <NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.viewCVPages} /> */}
 						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.createCVPages} />
+						{/* <NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.editCVPages} /> */}
 					</NavCollapse>
 
 					<NavItem {...appPages.AgencyAdmin.testForCadidateAppPages} />

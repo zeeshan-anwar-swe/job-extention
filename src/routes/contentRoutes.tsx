@@ -200,6 +200,11 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
+			path: `${appPages.AgencyAdmin.customCVAppPages.subsPages.editCVPages.to}`,
+			element: <CreateCustomCVPage />,
+		},
+
+		{
 			path: `${appPages.AgencyAdmin.customCVAppPages.subsPages.viewCVPages.to}`,
 			element: <ViewCustomCVPage />,
 		},

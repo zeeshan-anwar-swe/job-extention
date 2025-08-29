@@ -31,25 +31,30 @@ export const appPages = {
 			icon: 'HeroDocument',
 			subsPages: {
 				rootPage: {
-					text: 'CV List',
+					text: 'List',
 					to: '/custom-cv',
 					id: 'customCVApp',
 					icon: 'HeroTableCells',
 				},
 				createCVPages: {
-					to: '/custom-cv/create-cv',
+					to: '/custom-cv/create',
 					icon: 'HeroDocumentPlus',
 					id: 'createCustomCVApp',
-					text: 'Create CV',
-				}
-				,
-				viewCVPages: {
-					text: 'View CV',
+					text: 'Create',
+				},
+				editCVPages: {
+					text: 'Edit',
 					id: 'viewCustomCVApp',
-					to: '/custom-cv/view-cv',
-					icon: 'HeroDocumentText',
-				}
-			}
+					to: '/custom-cv/edit',
+					icon: 'HeroDocumentCheck',
+				},
+				viewCVPages: {
+					text: 'View',
+					id: 'viewCustomCVApp',
+					to: '/custom-cv/view',
+					icon: 'HeroDocumentMagnifyingGlass',
+				},
+			},
 		},
 
 		chatAppPages: {
