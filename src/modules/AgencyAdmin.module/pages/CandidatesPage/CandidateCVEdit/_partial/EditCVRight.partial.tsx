@@ -9,6 +9,7 @@ import Card, {
 import { FormikProps } from 'formik';
 import Button from '../../../../../../components/ui/Button';
 import {
+	imageUrlValidationCheck,
 	profileImageUrlValidationCheck,
 	textValidationCheck,
 } from '../../../../../../utils/validationCheck';
@@ -24,10 +25,6 @@ import Icon from '../../../../../../components/icon/Icon';
 export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { componentLoading, cadnidateProfile } = useSelector(
 		(state: RootState) => state.candidates,
-	);
-
-	const { loading, imageUrl } = useImageValidation(
-		cadnidateProfile?.candidate?.profilePictureUrl,
 	);
 
 	const handleDownloadCV = async () => {
@@ -54,19 +51,20 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 				<Icon size='text-xl' icon='HeroArrowUpRight' color='blue' />
 			</CardHeader>
 			<CardBody>
-				<ImageLoaderWraper loading={loading} height='h-full'>
 					<img
 						className='aspect-square w-full rounded-xl object-cover'
-						src={imageUrl}
+						src={profileImageUrlValidationCheck(formik.values.isShowImage ? cadnidateProfile?.candidate?.profilePictureUrl : '')}
 						alt='profile-image'
 					/>
-				</ImageLoaderWraper>
 				<div>
 					<h3>{textValidationCheck(cadnidateProfile?.candidate?.name)}</h3>
 					<p className='font-light'>
 						{textValidationCheck(cadnidateProfile?.candidate?.email)}
 					</p>
 				</div>
+				<Button onClick={() => formik.setFieldValue('isShowImage', !formik.values.isShowImage)} variant='solid'>
+					{formik.values.isShowImage ? 'Hide Profile Picture' : 'Show Profile Picture'}
+				</Button>
 			</CardBody>
 			<CardFooter>
 				<CardFooterChild className='flex w-full items-center'>

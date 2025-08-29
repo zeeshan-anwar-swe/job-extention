@@ -22,6 +22,7 @@ import { getSocialLinkWithId } from '../../../../../utils/helper';
 import { Descendant } from 'slate';
 
 export type EditCVFormValues = {
+	isShowImage: boolean;
 	name: string;
 	about: string;
 	location: string;
@@ -45,6 +46,7 @@ const CandidateCVEditPage = () => {
 
 	const formik = useFormik({
 		initialValues: {
+			isShowImage: false,
 			name: '',
 			about: '',
 			availabilty: '',
@@ -66,11 +68,9 @@ const CandidateCVEditPage = () => {
 				errors.name = 'Name must be at least 2 characters long';
 			}
 			// // Add validation for required GitHub field
-			// if (!values.GitHub) {
-			// 	errors.GitHub = 'GitHub profile is required';
-			// } else if (!values.GitHub.includes('github.com')) {
-			// 	errors.GitHub = 'Must be a valid URL ex:github.com/user-name';
-			// }
+			if (!values.GitHub) {
+				errors.GitHub = 'GitHub profile is required';
+			} 
 
 			// // Add validation for required LinkedIn field
 			// if (!values.LinkedIn) {
@@ -84,6 +84,7 @@ const CandidateCVEditPage = () => {
 		onSubmit: async (values: EditCVFormValues) => {
 			const {
 				cvText,
+				isShowImage,
 				roles,
 				experience,
 				education,
@@ -110,6 +111,7 @@ const CandidateCVEditPage = () => {
 					candidateId: state.selectedJob.id,
 					payload: {
 						cv: stringifiedCVText,
+						isShowImage,
 						about,
 						roles,
 						experience,
