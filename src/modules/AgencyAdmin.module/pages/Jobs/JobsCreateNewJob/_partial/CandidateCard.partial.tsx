@@ -70,7 +70,7 @@ const CandidateCardPartial = ({ candidate }: { candidate: LinkedInProfile }) => 
 					}}>
 					{isAssigned ? 'Assigned' : 'Assign'}
 				</Button>
-				<Link target='_blank' to={candidate.profileUrl}>
+				<Link target='_blank' to={candidate.publicProfileUrl}>
 					<Button variant='outline' borderWidth='border' color='zinc'>
 						View Profile
 					</Button>

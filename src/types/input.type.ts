@@ -14,4 +14,5 @@ export type TInputTypes =
 	| 'text'
 	| 'time'
 	| 'url'
-	| 'week';
+	| 'week'
+	| 'checkbox';

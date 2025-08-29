@@ -1,24 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
-
-import { ThemeContextProvider } from './context/themeContext';
-import { AuthProvider } from './context/authContext';
-import App from './App/App';
-
 import './i18n';
 import './styles/index.css';
-
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
+import App from './App/App';
 import './styles/vendors.css';
 import { store } from './store';
+import { StrictMode } from 'react';
 import { Provider } from 'react-redux';
+import ReactDOM from 'react-dom/client';
+import 'react-date-range/dist/styles.css';
+import reportWebVitals from './reportWebVitals';
+import 'react-date-range/dist/theme/default.css';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/authContext';
 import { SocketProvider } from './context/socketContext';
+import { ThemeContextProvider } from './context/themeContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
 root.render(
-	<React.StrictMode>
+	<StrictMode>
 		<Provider store={store}>
 			<ThemeContextProvider>
 				<BrowserRouter>
@@ -30,10 +29,7 @@ root.render(
 				</BrowserRouter>
 			</ThemeContextProvider>
 		</Provider>
-	</React.StrictMode>,
+	</StrictMode>,
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

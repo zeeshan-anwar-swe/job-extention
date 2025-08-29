@@ -48,6 +48,9 @@ import SignupPage from '../modules/Shared/pages/SignupPage/Signup.page';
 import SetUserPassword from '../modules/Shared/pages/user/SetUserPassword.page';
 import { UserVerificationPage } from '../modules/Shared/pages/user/UserVerify.page';
 import TeamSettingPage from '../modules/Team.module/pages/SettingPage/Setting.page';
+import CustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/page';
+import CreateCustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/CreateCustomCVPage/page';
+import ViewCustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -185,6 +188,22 @@ const contentRoutes: ContentRoutesType = {
 			path: `${appPages.AgencyAdmin.manageTeamAppPages.subPages.chatAppPage.to}/*`,
 			element: <ChatPage />,
 		},
+
+		{
+			path: `${appPages.AgencyAdmin.customCVAppPages.to}`,
+			element: <CustomCVPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.customCVAppPages.subsPages.createCVPages.to}`,
+			element: <CreateCustomCVPage />,
+		},
+
+		{
+			path: `${appPages.AgencyAdmin.customCVAppPages.subsPages.viewCVPages.to}`,
+			element: <ViewCustomCVPage />,
+		},
+
 
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },

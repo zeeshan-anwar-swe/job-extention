@@ -5,6 +5,7 @@ import LogoAndAsideTogglePart from './_parts/LogoAndAsideToggle.part';
 import DarkModeSwitcherPart from './_parts/DarkModeSwitcher.part';
 import { appPages } from '../../../config/pages.config';
 import Nav, {
+	NavCollapse,
 	NavItem,
 	NavSeparator,
 	NavTitle,
@@ -13,7 +14,6 @@ import Badge from '../../../components/ui/Badge';
 import UserTemplate from '../User/User.template';
 
 const DefaultAsideTemplate = () => {
-
 	return (
 		<Aside>
 			<AsideHead>
@@ -38,7 +38,15 @@ const DefaultAsideTemplate = () => {
 						</Badge>
 					</NavItem>
 					<NavItem {...appPages.AgencyAdmin.KoalaByteAssistantAppPages} />
-					<NavItem {...appPages.AgencyAdmin.customCVAppPages} />
+					<NavCollapse
+						text={appPages.AgencyAdmin.customCVAppPages.text}
+						to={appPages.AgencyAdmin.customCVAppPages.to}
+						icon={appPages.AgencyAdmin.customCVAppPages.icon}>
+						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.rootPage} />
+						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.viewCVPages} />
+						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.createCVPages} />
+					</NavCollapse>
+
 					<NavItem {...appPages.AgencyAdmin.testForCadidateAppPages} />
 					<NavItem {...appPages.AgencyAdmin.integrationsAppPages} />
 

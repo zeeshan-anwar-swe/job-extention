@@ -28,7 +28,28 @@ export const appPages = {
 			id: 'customCVApp',
 			to: '/custom-cv',
 			text: 'Custom CV',
-			icon: 'HeroDocumentText',
+			icon: 'HeroDocument',
+			subsPages: {
+				rootPage: {
+					text: 'CV List',
+					to: '/custom-cv',
+					id: 'customCVApp',
+					icon: 'HeroTableCells',
+				},
+				createCVPages: {
+					to: '/custom-cv/create-cv',
+					icon: 'HeroDocumentPlus',
+					id: 'createCustomCVApp',
+					text: 'Create CV',
+				}
+				,
+				viewCVPages: {
+					text: 'View CV',
+					id: 'viewCustomCVApp',
+					to: '/custom-cv/view-cv',
+					icon: 'HeroDocumentText',
+				}
+			}
 		},
 
 		chatAppPages: {
@@ -195,8 +216,8 @@ export const appPages = {
 
 		aiInterviewAppPages: {
 			id: 'aiInterviewApp',
-			to: '/ai-interview',
 			text: 'AI Interview',
+			to: '/ai-interview',
 			icon: 'HeroBot',
 		},
 
