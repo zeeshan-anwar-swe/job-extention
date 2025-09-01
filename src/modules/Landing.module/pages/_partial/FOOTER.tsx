@@ -1,14 +1,12 @@
-import React from "react";
-
-import axe from "../../../../../../public/assets/axe.png";
-import fb from "../../../../../../public/assets/fb.png";
-import insta from "../../../../../../public/assets/insta.png";
-import lnkdn from "../../../../../../public/assets/lnkdn.png";
-import logo from "../../../../../../public/assets/logo.png";
+import axe from "../../../../../public/assets/axe.png";
+import fb from "../../../../../public/assets/fb.png";
+import insta from "../../../../../public/assets/insta.png";
+import lnkdn from "../../../../../public/assets/lnkdn.png";
+import logo from "../../../../../public/assets/logo.png";
 
 function FOOTER() {
   return (
-    <section className="pt-5 md:pt-10 lg:pt-16 bg-[#E0E2F4] max-w-[1280px] mx-auto  px-5 md:px-10 lg:px-14 ">
+    <section className="pt-5 md:pt-10 lg:pt-16 bg-[#E0E2F4] w-full mx-auto  px-5 md:px-10 lg:px-14 ">
       <div className="flex items-center flex-col space-y-5 md:space-y-7">
         <div>
           <img src={logo} alt="logo" />

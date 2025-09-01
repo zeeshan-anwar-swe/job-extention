@@ -1,5 +1,4 @@
-import React from "react";
-import startbg from "../../../../../../public/assets/startbg.jpg";
+import startbg from "../../../../../public/assets/startbg.jpg";
 function STARTED() {
   return (
     <section

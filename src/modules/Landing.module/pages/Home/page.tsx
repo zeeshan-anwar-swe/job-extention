@@ -97,7 +97,7 @@ function LandingPage() {
 
 									<div>
 										<a
-											href='https://koalabyte.ai/signup'
+											href='/signup'
 											className='cursor-pointer rounded-lg bg-gradient-to-r from-[#1E51E8] to-[#0BA5EC] px-4 py-2 text-white'>
 											Get Started &gt;
 										</a>
@@ -184,7 +184,7 @@ function LandingPage() {
 						</h2>
 					</div>
 					<a
-						href='https://koalabyte.ai/signup'
+						href='/signup'
 						className='flex cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-[#1E51E8] to-[#0BA5EC] px-5 py-2.5 text-white'>
 						Get Started &gt;
 					</a>
@@ -413,10 +413,7 @@ function LandingPage() {
 					<STARTED />
 				</section>
 
-				{/* Footer */}
-				<section>
-					<FOOTER />
-				</section>
+			
 			</div>
 		</div>
 	);

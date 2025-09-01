@@ -1,5 +1,10 @@
 import { RouteProps } from 'react-router-dom';
-import { appPages, authPages } from '../config/pages.config';
+import { appPages, authPages, LandingPages } from '../config/pages.config';
+
+const leadingPagesRoutes = Object.values(LandingPages).map(({ to }) => ({
+	path: to,
+	element: null,
+}));
 
 const headerRoutes: RouteProps[] = [
 	{ path: authPages.loginPage.to, element: null },
@@ -48,6 +53,7 @@ const headerRoutes: RouteProps[] = [
 	},
 	{ path: '*', element: null },
 	{ path: appPages.AgencyAdmin.pamentAppPages.to, element: null },
+	...leadingPagesRoutes,
 ];
 
 export default headerRoutes;

@@ -74,7 +74,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 					if (typeof setUserToken === 'function') {
 						await setUserToken(response.data.data.token);
 						toast.success('Login Successfully');
-						navigate('/');
+						navigate('/dashboard');
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-import arrow from "../../../../../../public/assets/arrow.png";
+import arrow from "../../../../../public/assets/arrow.png";
 import { useNavigate } from "react-router-dom";
 
 function LatestCard({

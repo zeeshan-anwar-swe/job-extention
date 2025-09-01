@@ -18,6 +18,8 @@ function PRICING() {
 		'Priority email support for assistance.',
 	];
 	return (
+		<div className='bg-[#E0E2F4] '>
+
 		<section className='mx-auto max-w-[1280px] bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 			{/* pricing setion start */}
 			<section className=''>
@@ -82,14 +84,10 @@ function PRICING() {
 			</section>
 			{/* Started section ends */}
 
-			{/* Footer section start */}
-			<section>
-				<FOOTER />
-			</section>
-			{/* Footer section ends */}
-
 			{/* main secrion ends */}
 		</section>
+		</div>
+
 	);
 }
 export default PRICING;

@@ -1,13 +1,16 @@
 import FOOTER from '../_partial/FOOTER';
-import driven from './assets/driven.png';
-import future from './assets/future.png';
+import driven from '../../../../../public/assets/driven.png';
+import future from '../../../../../public/assets/future.png';
 import STARTED from '../_partial/STARTED';
-import tradition from './assets/tradition.png';
+import tradition from '../../../../../public/assets/tradition.png';
 import LatestCard from '../_partial/LatestCard';
-import searchicon from './assets/searchicon.png';
+import searchicon from '../../../../../public/assets/searchicon.png';
 
 function BLOG() {
 	return (
+
+    <div className='bg-[#E0E2F4]'>
+
 		<section className='mx-auto max-w-[1280px] bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 			{/* BLOG section start */}
 			<section className=''>
@@ -170,6 +173,8 @@ function BLOG() {
 				<FOOTER />
 			</section>
 		</section>
+    </div>
+
 	);
 }
 export default BLOG;

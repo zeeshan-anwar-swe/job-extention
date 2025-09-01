@@ -1,4 +1,4 @@
-import check from "../../../../../../public/assets/check.png";
+import check from "../../../../../public/assets/check.png";
 
 function PricingCard({
   planName,

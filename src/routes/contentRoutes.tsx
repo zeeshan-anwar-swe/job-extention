@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
 import NotFoundPage from '../modules/AgencyAdmin.module/pages/NotFound.page';
-import { appPages, authPages } from '../config/pages.config';
+import { appPages, authPages, LandingPages } from '../config/pages.config';
 import CandidatesProfilePage from '../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page';
 import CandidateCVEditPage from '../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page';
 import JobsViewCandidatesPage from '../modules/AgencyAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page';
@@ -52,6 +52,10 @@ import CustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/page'
 import CreateCustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/CreateCustomCVPage/page';
 import ViewCustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page';
 import LandingPage from '../modules/Landing.module/pages/Home/page';
+import CONTACT from '../modules/Landing.module/pages/Contact/page';
+import BLOG from '../modules/Landing.module/pages/Blogs/page';
+import PRICING from '../modules/Landing.module/pages/Pricing/page';
+import BLOGPOST from '../modules/Landing.module/pages/BlogPosts/page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -60,6 +64,31 @@ const CandidatesPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/CandidatesPage/Candidates.page'),
 );
 const JobsPage = lazy(() => import('../modules/AgencyAdmin.module/pages/Jobs/Jobs.page'));
+
+const landingPagesRoutes = [
+	{
+		path: LandingPages.home.to,
+		element: 
+		<LandingPage />,
+	},
+	{
+		path: LandingPages.contact.to,
+		element: <CONTACT />,
+	},
+
+	{
+		path: LandingPages.blogs.to,
+		element: <BLOG />,
+	},
+	{
+		path: LandingPages.blogPosts.to,
+		element: <BLOGPOST />,
+	},
+	{
+		path: LandingPages.pricing.to,
+		element: <PRICING />,
+	},
+];
 
 interface ContentRoutesType {
 	Admin: RouteProps[];
@@ -72,6 +101,7 @@ interface ContentRoutesType {
 
 const contentRoutes: ContentRoutesType = {
 	AgencyAdmin: [
+		...landingPagesRoutes,
 		{
 			path: appPages.AgencyAdmin.chatAppPages.to + '/*',
 			element: <ChatMain />,
@@ -210,7 +240,6 @@ const contentRoutes: ContentRoutesType = {
 			element: <ViewCustomCVPage />,
 		},
 
-
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.ssoWaitingPage.to, element: <SSOWaitingPage /> },
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
@@ -218,11 +247,10 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
 
-
-		
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	Client: [
+		...landingPagesRoutes,
 		{
 			path: appPages.AgencyAdmin.dashboardAppPages.to,
 			element: <DashboardPage />,
@@ -335,6 +363,7 @@ const contentRoutes: ContentRoutesType = {
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	Team: [
+		...landingPagesRoutes,
 		{
 			path: appPages.Team.dashboardAppPages.to,
 			element: <TeamDashboardPage />,
@@ -386,16 +415,14 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.userVerify.to, element: <UserVerificationPage /> },
 		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
 
-
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	Admin: [
+		...landingPagesRoutes,
 		{
 			path: appPages.AgencyAdmin.dashboardAppPages.to,
 			element: <DashboardPage />,
 		},
-
-
 
 		{
 			path: appPages.AgencyAdmin.pamentAppPages.to,
@@ -505,13 +532,14 @@ const contentRoutes: ContentRoutesType = {
 		{ path: '*', element: <NotFoundPage /> },
 	],
 	SuperAdmin: [
+		...landingPagesRoutes,
 		{
 			path: appPages.SuperAdmin.dashboardAppPages.to,
 			element: <SuperAdminDashboardPage />,
 		},
 		{
-			path:"/test",
-			element:<LandingPage/>
+			path: '/',
+			element: <LandingPage />,
 		},
 
 		{
@@ -592,6 +620,7 @@ const contentRoutes: ContentRoutesType = {
 	],
 
 	default: [
+		...landingPagesRoutes,
 		{ path: authPages.loginPage.to, element: <LoginPage /> },
 		{ path: authPages.signupPage.to, element: <SignupPage /> },
 		{ path: authPages.userPasswrodSet.to, element: <SetUserPassword /> },
@@ -599,7 +628,5 @@ const contentRoutes: ContentRoutesType = {
 		{ path: authPages.signupPage.subPages.confirmationPage.to, element: <ConfirmtionPage /> },
 		{ path: '*', element: <NotFoundPage /> },
 	],
-
-	
 };
 export default contentRoutes;
