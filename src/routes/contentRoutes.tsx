@@ -51,6 +51,7 @@ import TeamSettingPage from '../modules/Team.module/pages/SettingPage/Setting.pa
 import CustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/page';
 import CreateCustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/CreateCustomCVPage/page';
 import ViewCustomCVPage from '../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page';
+import LandingPage from '../modules/Landing.module/pages/Home/page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -394,6 +395,8 @@ const contentRoutes: ContentRoutesType = {
 			element: <DashboardPage />,
 		},
 
+
+
 		{
 			path: appPages.AgencyAdmin.pamentAppPages.to,
 			element: <PaymentPage />,
@@ -505,6 +508,10 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.SuperAdmin.dashboardAppPages.to,
 			element: <SuperAdminDashboardPage />,
+		},
+		{
+			path:"/test",
+			element:<LandingPage/>
 		},
 
 		{
