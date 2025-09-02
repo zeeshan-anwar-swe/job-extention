@@ -68,7 +68,7 @@ const CandidateCardPartial = ({ candidate }: { candidate: any }) => {
 					}}>
 					{isAssigned ? 'Assigned' : 'Assign'}
 				</Button>
-				<Link to={'/candidates/profile/10'}>
+				<Link to={'/dashboard/candidates/profile/10'}>
 					<Button variant='outline' borderWidth='border' color='zinc'>
 						View Profile
 					</Button>

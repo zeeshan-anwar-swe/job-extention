@@ -30,10 +30,10 @@ const TableDataActionsPartial = ({
 		<>
 			<div className='flex justify-center'>
 				<Button onClick={() => setAssignClientModal(true)}>Assign to Client</Button>
-				<Link to='/candidates/cv-edit' state={{ candidate, selectedJob }}>
+				<Link to='/dashboard/candidates/cv-edit' state={{ candidate, selectedJob }}>
 					<Button>Edit CV</Button>
 				</Link>
-				<Link to='/candidates/profile' state={{ candidate, selectedJob }}>
+				<Link to='/dashboard/candidates/profile' state={{ candidate, selectedJob }}>
 					<Button>View CV</Button>
 				</Link>
 				<Button onClick={() => setDeleteModal(true)}>Remove Candidate</Button>

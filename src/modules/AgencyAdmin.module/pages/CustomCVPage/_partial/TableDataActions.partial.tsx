@@ -11,10 +11,10 @@ const TableDataActionsPartial = ({ candidate }: { candidate: TCustomCVUser }) =>
 	return (
 		<div className='flex justify-center'>
 			{/* <Button onClick={() => setAssignClientModal(true)}>Assign to Client</Button> */}
-			<Link to='/custom-cv/edit' state={candidate}>
+			<Link to='/dashboard/custom-cv/edit' state={candidate}>
 				<Button>Edit CV</Button>
 			</Link>
-			<Link to='/custom-cv/view' state={candidate}>
+			<Link to='/dashboard/custom-cv/view' state={candidate}>
 				<Button>View CV</Button>
 			</Link>
 			<Button onClick={() => setDeleteModal(true)}>Remove CV</Button>

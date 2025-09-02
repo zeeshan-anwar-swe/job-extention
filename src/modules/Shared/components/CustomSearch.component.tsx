@@ -69,7 +69,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 	return (
 		<form className='flex items-center gap-2' onSubmit={handleSearch}>
 			<FieldWrap
-				// firstSuffix={<Icon className='mx-2 rounded-full' onClick={handleSearch} icon='HeroMagnifyingGlass' />}
+				firstSuffix={<Icon className='mx-2'  icon='HeroMagnifyingGlass' />}
 				lastSuffix={
 					searchValue || searchBy ? (
 						<Icon

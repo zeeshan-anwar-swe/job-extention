@@ -33,7 +33,7 @@ const SuperAdminRecruiterProfilePage = () => {
 			<PageWrapper name='Recruiter Profile'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/manage-team'>
+						<Link to='/dashboard/manage-team'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Manage Team
 							</Button>

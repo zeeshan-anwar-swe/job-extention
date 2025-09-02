@@ -18,7 +18,7 @@ const TableDataProfilePartial = ({
 
 	return (
 		<Link
-			to='/manage-team/profile'
+			to='/dashboard/manage-team/profile'
 			state={{ id }}
 			className='flex items-center justify-center gap-x-6'>
 			<ImageLoaderWraper height='h-14' loading={loading}>

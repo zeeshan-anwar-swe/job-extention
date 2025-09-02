@@ -49,7 +49,7 @@ const ClientProfilePageCardPartial = () => {
 			</CardBody>
 			<CardFooter className='border-t-2 !py-2'>
 				<CardFooterChild>
-					<Link to='/jobs/view-cadidates/web-developer'>
+					<Link to='/dashboard/jobs/view-cadidates/web-developer'>
 						<Button className='!px-0  !font-medium' rightIcon='HeroArrowUpRight'>
 							Job Details
 						</Button>

@@ -66,7 +66,7 @@ const JobsViewCandidatesPage = () => {
 			<PageWrapper name={formatString(pathname)}>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/jobs'>
+						<Link to='/dashboard/jobs'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Jobs
 							</Button>
@@ -100,7 +100,7 @@ const JobsViewCandidatesPage = () => {
 											modal={deleteModal}
 											setModal={setDeleteModal}
 											title='remove job'
-											isRedirect={'/jobs'}
+											isRedirect={'/dashboard/jobs'}
 											action={deleteJob(jobDetails.id)}
 										/>
 									)}

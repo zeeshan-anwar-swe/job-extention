@@ -59,7 +59,7 @@ const CustomCVPage = () => {
 						<Button
 							variant='solid'
 							rightIcon='HeroPlus'
-							onClick={() => navigateTo('/custom-cv/create')}>
+							onClick={() => navigateTo('/dashboard/custom-cv/create')}>
 							Create Custom CV
 						</Button>
 					</SubheaderRight>

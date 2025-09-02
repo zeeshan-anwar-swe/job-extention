@@ -386,12 +386,12 @@ export const removeAgencyCandidate = createAsyncThunk(
 export const updateCandidateProfile = createAsyncThunk(
 	'candidates/updateCandidateProfile',
 	async (
-		{ candidateId, payload }: { candidateId: string; payload: any },
+		{ payload }: { payload: any },
 		{ rejectWithValue },
 	) => {
 		try {
-			const response = await axiosInstance.put(
-				'linkedin-candidate/profile/edit/' + candidateId,
+			const response = await axiosInstance.post(
+				'linkedin-candidate/profile/create-or-update/',
 				payload,
 			);
 

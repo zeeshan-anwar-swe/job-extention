@@ -26,7 +26,7 @@ const ViewCustomCVPage = () => {
 
 	useLayoutEffect(() => {
 		if (!state) {
-			navigateTo('/custom-cv');
+			navigateTo('/dashboard/custom-cv');
 		} else {
 			dispatch(getCustomCVById(state.id));
 		}
@@ -58,14 +58,14 @@ const ViewCustomCVPage = () => {
 						<div className='flex w-full justify-end gap-4'>
 							<Button
 								variant='solid'
-								onClick={() => navigateTo('/custom-cv/edit', { state: data })}
+								onClick={() => navigateTo('/dashboard/custom-cv/edit', { state: data })}
 								icon='HeroPencilSquare'>
 								Edit CV
 							</Button>
 							<Button
 								variant='solid'
 								color='zinc'
-								onClick={() => navigateTo('/custom-cv')}
+								onClick={() => navigateTo('/dashboard/custom-cv')}
 								icon='HeroArrowLeft'>
 								Back
 							</Button>

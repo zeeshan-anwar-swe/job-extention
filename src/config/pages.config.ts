@@ -27,7 +27,7 @@ export const appPages = {
 			id: 'customCVApp',
 			to: '/dashboard/custom-cv',
 			text: 'Custom CV',
-			icon: 'HeroDocument',
+			icon: 'HeroDocumentText',
 			subsPages: {
 				rootPage: {
 					text: 'List',
@@ -954,7 +954,7 @@ export const LandingPages = {
 	},
 	blogPosts: {
 		id: 'blogPosts',
-		to: '/blogspots',
+		to: '/blog-post',
 		text: 'Blog Posts',
 		icon: 'HeroUser',
 	},

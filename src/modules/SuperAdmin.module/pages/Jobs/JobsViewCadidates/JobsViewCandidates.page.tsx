@@ -59,7 +59,7 @@ const JobsViewCandidatesPage = () => {
 			<PageWrapper name='Job Details'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/jobs'>
+						<Link to='/dashboard/jobs'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Jobs
 							</Button>

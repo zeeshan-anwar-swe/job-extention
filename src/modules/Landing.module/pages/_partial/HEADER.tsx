@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import menu from '../../../../../public/assets/menu.png';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../../../../../public/assets/logo.png';
+import { useAuth } from '../../../../context/authContext';
+import UserTemplate from '../../../../templates/layouts/User/User.template';
+import Card, { CardBody } from '../../../../components/ui/Card';
+import { AuthUserTemplate } from './AuthUserTemplate';
 
 function HEADER() {
+	const {userStorage, userTokenStorage} = useAuth()
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const location = useLocation();
 
@@ -27,7 +32,7 @@ function HEADER() {
 	return (
 		<section
 			id='header'
-			className='mx-auto w-full bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-2 lg:px-14 lg:py-4'>
+			className='sticky top-0 z-50 mx-auto w-full bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-2 lg:px-14 lg:py-4'>
 			<div className='mx-auto flex flex-col items-center justify-between md:flex-row'>
 				{/* Logo and Menu Button */}
 				<div className='flex w-full items-center justify-between md:w-auto'>
@@ -89,7 +94,6 @@ function HEADER() {
 					<NavLink
 						to='/contact'
 						className={({ isActive }) =>
-             
 							isActive
 								? 'bg-white/27 block rounded-3xl border border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
 								: 'block border border-transparent py-2 text-base font-medium text-[#010314]'
@@ -100,6 +104,12 @@ function HEADER() {
 				</nav>
 
 				{/* Sign In Button */}
+
+				{
+					userStorage && userTokenStorage ? (
+						<AuthUserTemplate/>
+					):
+				
 				<div
 					className={`${
 						isMenuOpen ? 'fixed bottom-5 left-5 right-5 z-20' : 'hidden'
@@ -110,6 +120,7 @@ function HEADER() {
 						Sign in
 					</a>
 				</div>
+				}
 			</div>
 		</section>
 	);

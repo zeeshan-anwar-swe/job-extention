@@ -67,7 +67,7 @@ type TCVFormValues = {
 const CreateCustomCVPage = () => {
 	const { loading, data } = useSelector((state: RootState) => state.customCV.cvDetails);
 	const { state, pathname } = useLocation();
-	const isEditPage = pathname === '/custom-cv/edit';
+	const isEditPage = pathname === '/dashboard/custom-cv/edit';
 
 	const navigateTo = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
@@ -126,7 +126,7 @@ const CreateCustomCVPage = () => {
 				} else {
 					await dispatch(createCustomCV(values));
 				}
-				navigateTo('/custom-cv');
+				navigateTo('/dashboard/custom-cv');
 			} catch (e) {
 				console.log({ e });
 			}
@@ -185,7 +185,7 @@ const CreateCustomCVPage = () => {
 			dispatch(getCustomCVById(state.id));
 		} else {
 			if (isEditPage) {
-				navigateTo('/custom-cv');
+				navigateTo('/dashboard/custom-cv');
 			}
 			formik.resetForm();
 		}
@@ -731,7 +731,7 @@ const CreateCustomCVPage = () => {
 										{isEditPage ? 'Update CV' : 'Create CV'}
 									</Button>
 									<Button
-										onClick={() => navigateTo('/custom-cv')}
+										onClick={() => navigateTo('/dashboard/custom-cv')}
 										variant='solid'
 										color='zinc'
 										type='button'>

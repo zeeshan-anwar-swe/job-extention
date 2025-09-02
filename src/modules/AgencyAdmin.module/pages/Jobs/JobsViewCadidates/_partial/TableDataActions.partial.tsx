@@ -11,7 +11,7 @@ const TableDataActionsPartial = ({ candidate , selectedJob}: { candidate: any; s
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 	return (
 		<div className='flex justify-center'>
-			<Link to={'/candidates/cv-edit'} state={{candidate, selectedJob}}>
+			<Link to={'/dashboard/candidates/cv-edit'} state={{candidate, selectedJob}}>
 				<Button>Edit CV</Button>
 			</Link>
 			<Button onClick={() => setDeleteModal(true)}>Remove Candidate</Button>

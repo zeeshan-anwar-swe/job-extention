@@ -54,7 +54,7 @@ const CreateJobLeftSidePartial = () => {
 		// prettier-ignore
 		await dispatch(createJobs( isAssigned ? {...formData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: formData));
 
-		navigate('/jobs');
+		navigate('/dashboard/jobs');
 	};
 
 	return (
@@ -127,7 +127,7 @@ const CreateJobLeftSidePartial = () => {
 				</CardFooterChild>
 				<CardFooterChild className='ml-auto'>
 					<Button
-						onClick={() => navigate('/jobs')}
+						onClick={() => navigate('/dashboard/jobs')}
 						variant='outline'
 						color='zinc'
 						borderWidth='border'>

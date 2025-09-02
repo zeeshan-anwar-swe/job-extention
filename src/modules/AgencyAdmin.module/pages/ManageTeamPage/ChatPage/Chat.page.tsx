@@ -7,7 +7,7 @@ const ChatPage = () => {
 	if (state) {
 		return <ReusableChatPage receiverName={state.user.name} receiverId={state.user.id} />;
 	} else {
-		navigateTo('/manage-team');
+		navigateTo('/dashboard/manage-team');
 	}
 };
 

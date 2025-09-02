@@ -1,47 +1,45 @@
-import arrow from "../../../../../public/assets/arrow.png";
-import { useNavigate } from "react-router-dom";
+import arrow from '../../../../../public/assets/arrow.png';
+import { useNavigate } from 'react-router-dom';
+import useImageValidation from '../../../../hooks/useImageValidation';
+import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
 
-function LatestCard({
-  image,
-  headingA,
-  headingB,
-  title,
-  description,
-  navigatePath,
-}:any) {
-  const navigate = useNavigate();
+function LatestCard({ image, headingA, headingB, title, description, navigatePath }: any) {
+	const navigate = useNavigate();
 
-  const handleTitleClick = () => {
-    if (navigatePath) {
-      navigate(navigatePath);
-    }
-  };
+	const handleTitleClick = () => {
+		if (navigatePath) {
+			navigate(navigatePath);
+		}
+	};
 
-  return (
-    <div className="flex-1 rounded-2xl border-2 border-white bg-white/50 cursor-pointer">
-      <img src={image} alt="crm" className="w-full p-2" />
-      <div className="flex flex-col gap-2 p-6">
-        <div className="flex items-center w-fit rounded-full bg-neutral-300 border-b-black px-1 py-1 lg:px-1.5 lg:py-1.5">
-          <div className="rounded-full px-2 lg:px-3 mr-1 lg:mr-2 bg-[#010314] text-white font-medium text-xs text-center">
-            {headingA}
-          </div>
-          <span className="text-[#010314]/50 font-medium text-xs">
-            {headingB}
-          </span>
-        </div>
-        <div
-          className="flex items-center "
-          onClick={handleTitleClick}
-        >
-          <h1 className="text-xl font-medium">{title}</h1>
-          <img src={arrow} alt="arrow" className="ml-2" />
-        </div>
-        <p className="text-justify text-base font-normal text-[#7E808A]">
-          {description}
-        </p>
-      </div>
-    </div>
-  );
+	const { loading, imageUrl } = useImageValidation(image);
+
+	return (
+		<div className='flex-1 cursor-pointer rounded-2xl border-2 border-white bg-white/50'>
+			<ImageLoaderWraper
+				rounded='rounded-2xl'
+				className='mx-auto aspect-video w-full rounded-2xl'
+				loading={loading}
+				height='h-40'>
+				<img src={imageUrl} alt='crm' className='aspect-video w-full rounded-2xl p-2 object-cover' />
+			</ImageLoaderWraper>
+
+			<div className='flex flex-col gap-2 p-6'>
+				<div className='flex w-fit items-center rounded-full border-b-black bg-neutral-300 px-1 py-1 lg:px-1.5 lg:py-1.5'>
+					<div className='mr-1 rounded-full bg-[#010314] px-2 text-center text-xs font-medium text-white lg:mr-2 lg:px-3'>
+						{headingA}
+					</div>
+					<span className='text-xs font-medium text-[#010314]/50'>{headingB}</span>
+				</div>
+				<div className='flex items-center ' onClick={handleTitleClick}>
+					<h1 className='text-xl font-medium'>{title}</h1>
+
+					<img src={arrow} alt='arrow' className='ml-2' />
+				</div>
+				<p className='text-justify text-base font-normal text-[#7E808A]'>{description}</p>
+			</div>
+		</div>
+	);
 }
 
 export default LatestCard;

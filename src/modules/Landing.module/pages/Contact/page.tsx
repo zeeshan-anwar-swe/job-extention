@@ -15,7 +15,7 @@ function CONTACT() {
 		}
 
 		const subject = `New Message from ${name}`;
-		const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+		const body = `Name: ${name}\nEmail: ${email}n\nMessage:\n${message}`;
 
 		window.location.href = `mailto:aadi.hadi7111@gmail.com?subject=${encodeURIComponent(
 			subject,
@@ -33,8 +33,8 @@ function CONTACT() {
 	};
 
 	return (
-		<div className='bg-[#E0E2F4]'>
-			<section className='mx-auto max-w-[1280px] bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
+		<div className='bg-[#E0E2F4] w-full h-[calc(75vh)]'>
+			<section className='mx-auto max-w-[1280px]  bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 				{/* contact section start */}
 				<section>
 					<div className='container mx-auto flex flex-col items-start justify-between space-x-0 space-y-5 md:flex-row md:space-x-10'>

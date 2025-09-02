@@ -45,7 +45,7 @@ const NotificationItem: FC<INotificationItemProps> = ({
 				</ImageLoaderWraper>
 			</div>
 			<div
-				onClick={isJobNofication ? () => navigateTo('/jobs') : undefined}
+				onClick={isJobNofication ? () => navigateTo('/dashboard/jobs') : undefined}
 				className={cn(isJobNofication ? 'cursor-pointer' : '', 'grow')}>
 				<div className='flex gap-2'>{firstLine}</div>
 				<div className='flex gap-2'>{secondLine}</div>

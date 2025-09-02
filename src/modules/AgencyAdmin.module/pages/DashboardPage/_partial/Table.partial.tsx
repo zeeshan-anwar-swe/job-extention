@@ -45,7 +45,7 @@ const TablePartial = () => {
 						setSearchActionForPagination={setCandidatesSearch}
 						searchListAction={getSearchedAgencyCandidatesList}
 					/>
-					<Link to={'/candidates'}>
+					<Link to={'/dashboard/candidates'}>
 						<Button variant='solid'>View All Candidates</Button>
 					</Link>
 				</CardHeaderChild>

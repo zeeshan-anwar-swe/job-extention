@@ -3,6 +3,7 @@ import Button from './Button';
 import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
 import Card, { CardFooter } from './Card';
+import { cn } from '../../utils/cn';
 
 const Pagination = ({
 	count,
@@ -74,7 +75,7 @@ const Pagination = ({
 	}, [search]);
 
 	return (
-		<Card className={`${totalPages < 2 && '!hidden'} ml-auto w-full bg-transparent`}>
+		<Card className={cn(`${totalPages < 2 && '!hidden'} ml-auto w-full !bg-transparent`)}>
 			<CardFooter>
 				<div className='ml-auto flex items-center gap-2 '>
 					<Button

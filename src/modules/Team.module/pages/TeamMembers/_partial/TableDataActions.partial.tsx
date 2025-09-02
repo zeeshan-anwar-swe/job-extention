@@ -7,8 +7,8 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	const navigateTo = useNavigate();
 	return (
 		<div className='flex justify-center'>
-			<Button onClick={() => navigateTo(`/chat/${teamMember.user.id}`, { state: teamMember })}>
-				Message
+			<Button onClick={() => navigateTo(`/dashboard/chat/${teamMember.user.id}`, { state: teamMember })}>
+				Messageasdasd
 			</Button>
 			{/* <Button onClick={() => setModal(true)}>Assign Job</Button>
 			<Button>Remove Member</Button> */}

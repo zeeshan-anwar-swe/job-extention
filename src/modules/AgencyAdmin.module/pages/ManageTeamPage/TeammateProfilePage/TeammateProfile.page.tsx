@@ -42,7 +42,7 @@ const TeammateProfilePage = () => {
 
 	useEffect(() => {
 		if (!state) {
-			navigateTo('/manage-team');
+			navigateTo('/dashboard/manage-team');
 		} else {
 			dispatch(getTeamMemberDetails(state.id));
 		}
@@ -62,7 +62,7 @@ const TeammateProfilePage = () => {
 				<PageWrapper name='Team Profile'>
 					<Subheader>
 						<SubheaderLeft>
-							<Link to='/manage-team'>
+							<Link to='/dashboard/manage-team'>
 								<Button rounded='rounded-full' icon='HeroArrowLeft'>
 									Back To Manage Team
 								</Button>

@@ -101,28 +101,28 @@ const TeamCandidateCVEditPage = () => {
 				'LinkedIn',
 			);
 
-			await dispatch(
-				updateCandidateProfile({
-					candidateId: state.selectedJob.id,
-					payload: {
-						cv: cvText,
-						about,
-						roles,
-						experience,
-						education,
-						socialProfiles: [
-							preGitHub
-								? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
-								: { provider: 'GitHub', link: GitHub },
-							preLinkedIn
-								? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
-								: { provider: 'LinkedIn', link: LinkedIn },
-						],
-					},
-				}),
-			);
+			// await dispatch(
+			// 	updateCandidateProfile({
+			// 		candidateId: state.selectedJob.id,
+			// 		payload: {
+			// 			cv: cvText,
+			// 			about,
+			// 			roles,
+			// 			experience,
+			// 			education,
+			// 			socialProfiles: [
+			// 				preGitHub
+			// 					? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
+			// 					: { provider: 'GitHub', link: GitHub },
+			// 				preLinkedIn
+			// 					? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
+			// 					: { provider: 'LinkedIn', link: LinkedIn },
+			// 			],
+			// 		},
+			// 	}),
+			// );
 
-			navigateTo('/candidates');
+			navigateTo('/dashboard/candidates');
 		},
 	});
 
@@ -132,7 +132,7 @@ const TeamCandidateCVEditPage = () => {
 			
 			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
 		} else {
-			navigateTo('/candidates');
+			navigateTo('/dashboard/candidates');
 		}
 
 		return () => {
@@ -153,7 +153,7 @@ const TeamCandidateCVEditPage = () => {
 			<PageWrapper name='Edit CV'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/candidates'>
+						<Link to='/dashboard/candidates'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Candidates
 							</Button>

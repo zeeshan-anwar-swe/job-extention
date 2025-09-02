@@ -22,8 +22,10 @@ import { getSocialLinkWithId } from '../../../../../utils/helper';
 import { Descendant } from 'slate';
 
 export type EditCVFormValues = {
-	isShowImage: boolean;
+	isShowImage: '0' | '1';
+	action: 'create' | 'update' | '';
 	name: string;
+	file: File | null;
 	about: string;
 	location: string;
 	availabilty: string;
@@ -46,8 +48,10 @@ const CandidateCVEditPage = () => {
 
 	const formik = useFormik({
 		initialValues: {
-			isShowImage: false,
+			action: '',
+			isShowImage: '1',
 			name: '',
+			file: null,
 			about: '',
 			availabilty: '',
 			location: '',
@@ -70,7 +74,7 @@ const CandidateCVEditPage = () => {
 			// // Add validation for required GitHub field
 			if (!values.GitHub) {
 				errors.GitHub = 'GitHub profile is required';
-			} 
+			}
 
 			// // Add validation for required LinkedIn field
 			// if (!values.LinkedIn) {
@@ -83,6 +87,9 @@ const CandidateCVEditPage = () => {
 		},
 		onSubmit: async (values: EditCVFormValues) => {
 			const {
+				file,
+				name,
+				action,
 				cvText,
 				isShowImage,
 				roles,
@@ -99,36 +106,47 @@ const CandidateCVEditPage = () => {
 				cadnidateProfile?.profile?.socialProfiles ?? [],
 				'GitHub',
 			);
-			// const preLinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
-			// 	cadnidateProfile?.profile?.socialProfiles ?? [],
-			// 	'LinkedIn',
-			// );
 
 			const stringifiedCVText = await JSON.stringify(cvText);
 
+			
+
+			const formData = new FormData();
+
+			formData.append('cv', stringifiedCVText);
+			formData.append('isShowImage', isShowImage);
+			formData.append('about', about);
+			formData.append('name', name);
+			formData.append('jobProfileId', state.candidate.id);
+			formData.append('action', action);
+			action === 'create' && formData.append('jobId', state.selectedJob.id);
+			formData.append('roles', JSON.stringify(roles));
+			formData.append('experience', experience.toString());
+			formData.append('education', education);
+			formData.append('availabilty', availabilty);
+			formData.append('location', location);
+			formData.append(
+				'socialProfiles',
+				JSON.stringify([
+					preGitHub
+						? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
+						: { provider: 'GitHub', link: GitHub },
+					// preLinkedIn
+					// 	? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
+					// 	: { provider: 'LinkedIn', link: LinkedIn },
+				]),
+			);
+
+			console.log({ formData , values});
+			
+
 			await dispatch(
 				updateCandidateProfile({
-					candidateId: state.selectedJob.id,
-					payload: {
-						cv: stringifiedCVText,
-						isShowImage,
-						about,
-						roles,
-						experience,
-						education,
-						socialProfiles: [
-							preGitHub
-								? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
-								: { provider: 'GitHub', link: GitHub },
-							// preLinkedIn
-							// 	? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
-							// 	: { provider: 'LinkedIn', link: LinkedIn },
-						],
-					},
+					payload: formData,
 				}),
 			);
 
-			navigateTo('/candidates');
+			// navigateTo('/dashboard/candidates');
 		},
 	});
 
@@ -138,7 +156,7 @@ const CandidateCVEditPage = () => {
 				getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }),
 			);
 		} else {
-			navigateTo('/candidates');
+			navigateTo('/dashboard/candidates');
 		}
 
 		return () => {
@@ -159,7 +177,7 @@ const CandidateCVEditPage = () => {
 			<PageWrapper name='Candidate CV'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/candidates'>
+						<Link to='/dashboard/candidates'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Candidates
 							</Button>

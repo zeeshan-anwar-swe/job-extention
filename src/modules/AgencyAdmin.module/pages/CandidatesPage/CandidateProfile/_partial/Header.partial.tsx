@@ -66,7 +66,7 @@ const HeaderPartial = ({ state }: any) => {
 						Send To ATS
 					</Button> */}
 					<Button
-						onClick={() => navgiateTo('/candidates/cv-edit', { state: state })}
+						onClick={() => navgiateTo('/dashboard/candidates/cv-edit', { state: state })}
 						rightIcon='HeroPencilSquare'
 						className='h-fit max-sm:w-full'
 						variant='outline'

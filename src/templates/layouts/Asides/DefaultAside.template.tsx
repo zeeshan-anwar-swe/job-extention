@@ -38,15 +38,7 @@ const DefaultAsideTemplate = () => {
 						</Badge>
 					</NavItem>
 					<NavItem {...appPages.AgencyAdmin.KoalaByteAssistantAppPages} />
-					<NavCollapse
-						text={appPages.AgencyAdmin.customCVAppPages.text}
-						to={appPages.AgencyAdmin.customCVAppPages.to}
-						icon={appPages.AgencyAdmin.customCVAppPages.icon}>
-						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.rootPage} />
-						{/* <NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.viewCVPages} /> */}
-						<NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.createCVPages} />
-						{/* <NavItem {...appPages.AgencyAdmin.customCVAppPages.subsPages.editCVPages} /> */}
-					</NavCollapse>
+					<NavItem {...appPages.AgencyAdmin.customCVAppPages} />
 
 					<NavItem {...appPages.AgencyAdmin.testForCadidateAppPages} />
 					<NavItem {...appPages.AgencyAdmin.integrationsAppPages} />

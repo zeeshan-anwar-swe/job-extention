@@ -5,7 +5,7 @@ const TableDataActionsPartial = () => {
 	return (
 		<div className='flex justify-center'>
 			<Button>Remove</Button>
-			<Link to='/candidates/profile'>
+			<Link to='/dashboard/candidates/profile'>
 				<Button>View Profile</Button>
 			</Link>
 		</div>

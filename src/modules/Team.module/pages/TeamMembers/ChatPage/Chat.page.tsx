@@ -38,7 +38,7 @@ const ChatPage = () => {
 
 	useEffect(() => {
 		if (!state) {
-			navigateTo('/manage-team');
+			navigateTo('/dashboard/manage-team');
 		} else {
 			socket.on('receive_message', (message) => {
 				if (

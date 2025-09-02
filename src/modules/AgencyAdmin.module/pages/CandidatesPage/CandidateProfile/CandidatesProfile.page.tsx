@@ -43,7 +43,7 @@ const CandidatesProfilePage = () => {
 				getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }),
 			);
 		} else {
-			navigateTo('/candidates');
+			navigateTo('/dashboard/candidates');
 		}
 	}, [state]);
 	const handleDownloadCV = async () => {
@@ -71,7 +71,7 @@ const CandidatesProfilePage = () => {
 			<PageWrapper name='Candidate Profile'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/candidates'>
+						<Link to='/dashboard/candidates'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Candidates
 							</Button>

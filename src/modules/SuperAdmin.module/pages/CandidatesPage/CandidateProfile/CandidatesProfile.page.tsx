@@ -36,7 +36,7 @@ const SuperAdminCandidatesProfilePage = () => {
 			<PageWrapper name='Candidates Profile'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/candidates'>
+						<Link to='/dashboard/candidates'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Candidates
 							</Button>

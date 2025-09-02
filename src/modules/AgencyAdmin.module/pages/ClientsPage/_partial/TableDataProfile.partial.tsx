@@ -8,7 +8,7 @@ const TableDataProfilePartial = ({ client }: { client: ClientListItemType }) => 
 	const { loading, imageUrl } = useImageValidation(client?.image);
 	return (
 		<Link
-			to='/clients/profile'
+			to='/dashboard/clients/profile'
 			state={client}
 			className='flex items-center justify-start gap-x-6 max-lg:flex-col'>
 			<ImageLoaderWraper height='h-14' loading={loading}>

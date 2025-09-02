@@ -13,7 +13,7 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
 	
 	return (
 		<div className='flex justify-center'>
-			<Button onClick={() => navigateTo(`/chat/${teamMember.user.id}`, { state: {userName: teamMember.user.name, userId: teamMember.user.id} })}>
+			<Button onClick={() => navigateTo(`/dashboard/chat/${teamMember.user.id}`, { state: {userName: teamMember.user.name, userId: teamMember.user.id} })}>
 				Message
 			</Button>
 			<Button onClick={() => setModal(true)}>Assign Job</Button>

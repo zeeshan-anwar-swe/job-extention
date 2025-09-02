@@ -97,7 +97,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 				payload: { ...formData, status: jobDetails.status, description },
 			}),
 		);
-		navigateTo('/jobs');
+		navigateTo('/dashboard/jobs');
 		// dispatch(getJobDetails(jobDetails.id));
 	};
 
@@ -199,7 +199,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 			</CardBody>
 			<CardFooter>
 				<CardFooterChild>
-					<Button onClick={() => navigateTo('/jobs')} variant='solid' color='zinc'>
+					<Button onClick={() => navigateTo('/dashboard/jobs')} variant='solid' color='zinc'>
 						Back
 					</Button>
 					{isEditPage && (

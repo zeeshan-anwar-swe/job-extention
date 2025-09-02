@@ -34,7 +34,7 @@ const ClientJobCardPartial = ({ job }: { job: ClientJob }) => {
 			</CardBody>
 			<CardFooter className='border-t-2 !py-2'>
 				<CardFooterChild>
-					<Link to='/jobs/view-job-details' state={job}>
+					<Link to='/dashboard/jobs/view-job-details' state={job}>
 						<Button className='!px-0  !font-medium' rightIcon='HeroArrowUpRight'>
 							Job Details
 						</Button>

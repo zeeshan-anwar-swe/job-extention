@@ -108,7 +108,7 @@ const JobsPage = () => {
 						</CardSubTitle>
 					</SubheaderLeft>
 					<SubheaderRight>
-						<Link to='/jobs/create-job'>
+						<Link to='/dashboard/jobs/create-job'>
 							<Button variant='solid' rightIcon='HeroPlus'>
 								Create a new job
 							</Button>

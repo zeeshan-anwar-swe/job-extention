@@ -64,7 +64,7 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
 			</CardBody>
 			<CardFooter>
 				<CardFooterChild className='flex w-full items-center'>
-					<Link to='/candidates'>
+					<Link to='/dashboard/candidates'>
 						<Button variant='outline' color='zinc'>
 							Cancel
 						</Button>

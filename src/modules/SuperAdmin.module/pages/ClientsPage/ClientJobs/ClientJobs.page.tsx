@@ -30,7 +30,7 @@ const ClientJobsPage = () => {
 			dispatch(getJobsByClientId({ clientId: state.id }));
 			dispatch(getClientDetails(state?.id));
 		} else {
-			navigateTo('/clients');
+			navigateTo('/dashboard/clients');
 		}
 	}, []);
 
@@ -47,7 +47,7 @@ const ClientJobsPage = () => {
 			<PageWrapper name='Client Jobs'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/clients'>
+						<Link to='/dashboard/clients'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Clients
 							</Button>

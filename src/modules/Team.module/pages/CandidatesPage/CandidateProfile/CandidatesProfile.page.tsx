@@ -45,7 +45,7 @@ const TeamCandidatesProfilePage = () => {
 		if (state) {
 			dispatch(getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }));
 		} else {
-			navigateTo('/candidates');
+			navigateTo('/dashboard/candidates');
 		}
 	}, [state]);
 	return (
@@ -61,7 +61,7 @@ const TeamCandidatesProfilePage = () => {
 			<PageWrapper name='Candidate Profile'>
 				<Subheader>
 					<SubheaderLeft>
-						<Link to='/candidates'>
+						<Link to='/dashboard/candidates'>
 							<Button rounded='rounded-full' icon='HeroArrowLeft'>
 								Back To Candidates
 							</Button>
