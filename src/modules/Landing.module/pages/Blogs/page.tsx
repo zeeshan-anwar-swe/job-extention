@@ -49,7 +49,7 @@ function BLOG() {
 							{rows.map((blogPost: TBlogPost) => (
 								<LatestCard
 									image={blogPost.image}
-									headingA={blogPost.title}
+									headingA={blogPost.category}
 									headingB={blogPost.readingTime}
 									title={blogPost.title}
 									description={blogPost.content}
