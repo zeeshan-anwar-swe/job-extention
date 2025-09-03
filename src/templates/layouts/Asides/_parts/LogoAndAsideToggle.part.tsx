@@ -11,7 +11,7 @@ const LogoAndAsideTogglePart = () => {
 		<>
 			<Visible is={asideStatus}>
 				<Link to='/' aria-label='Logo'>
-					<LogoTemplate className='h-12' />
+					<LogoTemplate className='h-10' />
 				</Link>
 			</Visible>
 			<button

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import menu from '../../../../../public/assets/menu.png';
 import { NavLink, useLocation } from 'react-router-dom';
-import logo from '../../../../../public/assets/logo.png';
+import logo from '../../../../assets/logo-new.png';
 import { useAuth } from '../../../../context/authContext';
 import UserTemplate from '../../../../templates/layouts/User/User.template';
 import Card, { CardBody } from '../../../../components/ui/Card';
