@@ -32,8 +32,8 @@ function HEADER() {
 	return (
 		<section
 			id='header'
-			className='sticky top-0 z-50 mx-auto w-full bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-2 lg:px-14 lg:py-4'>
-			<div className='mx-auto flex flex-col items-center justify-between md:flex-row'>
+			className='sticky top-0 z-50 border-b border-b-slate-300 mx-auto w-full bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-2 lg:px-14 lg:py-2'>
+			<div className='mx-auto flex  items-center justify-between md:flex-row'>
 				{/* Logo and Menu Button */}
 				<div className='flex w-full items-center justify-between md:w-auto'>
 					<div className='mb-4 flex items-center md:mb-0'>
