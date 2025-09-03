@@ -17,14 +17,17 @@ interface CustomSearchComponentProps {
 		limit: number;
 		page: number;
 		searchBy?: string;
+		idForList?: string;
 	}) => void;
 	setSearchActionForPagination: (payload: any) => void;
 	searchByFilterOptions?: string[];
 	placeholder?: string;
 	searchLimit?: number;
+	idForList?: string;
 }
 
 const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
+	idForList,
 	searchListAction,
 	setSearchActionForPagination,
 	placeholder = 'Search...',
@@ -44,6 +47,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 					limit: searchLimit,
 					page: 1,
 					searchBy,
+					idForList,
 				}),
 			);
 		}
@@ -52,7 +56,11 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 	const clearSearch = async () => {
 		setSearchValue('');
 		setSearchBy('');
-		dispatch(searchListAction({ limit: searchLimit, page: 1 }));
+		if (idForList) {
+			dispatch(searchListAction({ limit: searchLimit, page: 1, idForList }));
+		} else {
+			dispatch(searchListAction({ limit: searchLimit, page: 1 }));
+		}
 	};
 
 	const handleChange = (data: string) => {
@@ -69,7 +77,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 	return (
 		<form className='flex items-center gap-2' onSubmit={handleSearch}>
 			<FieldWrap
-				firstSuffix={<Icon className='mx-2'  icon='HeroMagnifyingGlass' />}
+				firstSuffix={<Icon className='mx-2' icon='HeroMagnifyingGlass' />}
 				lastSuffix={
 					searchValue || searchBy ? (
 						<Icon

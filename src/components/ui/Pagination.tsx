@@ -6,6 +6,7 @@ import Card, { CardFooter } from './Card';
 import { cn } from '../../utils/cn';
 
 const Pagination = ({
+	idForList,
 	count,
 	limit,
 	filterOptions,
@@ -14,6 +15,7 @@ const Pagination = ({
 	getListAction,
 	searchBy,
 }: {
+	idForList?: string | null | undefined;
 	limit: number;
 	count: number;
 	filterOptions?: any;
@@ -21,16 +23,17 @@ const Pagination = ({
 	searchBy?: string;
 	setCurrentPageAction?: any;
 	getListAction: ({
+		idForList,
 		page,
 		limit,
 		search,
-		searchBy
-				
+		searchBy,
 	}: {
 		page: number;
 		limit: number;
 		search?: string;
-		searchBy?: string
+		idForList?: any | null | undefined;
+		searchBy?: string;
 	}) => void;
 }) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -45,13 +48,25 @@ const Pagination = ({
 				dispatch(getListAction({ page, limit, ...filterOptions }));
 			} else {
 				if (search) {
-					if(searchBy){
-						dispatch(getListAction({ page, limit, searchBy, search }))
-					}else{
-						dispatch(getListAction({ page, limit, search }));
-					} 
+					if (searchBy) {
+						if (idForList) {
+							dispatch(getListAction({ page, limit, search, idForList, searchBy }));
+						} else {
+							dispatch(getListAction({ page, limit, searchBy, search }));
+						}
+					} else {
+						if (idForList) {
+							dispatch(getListAction({ page, limit, search, idForList }));
+						} else {
+							dispatch(getListAction({ page, limit, search }));
+						}
+					}
 				} else {
-					dispatch(getListAction({ page, limit }));
+					if (idForList) {
+						dispatch(getListAction({ page, limit, idForList }));
+					} else {
+						dispatch(getListAction({ page, limit }));
+					}
 				}
 			}
 		}
@@ -66,8 +81,12 @@ const Pagination = ({
 	};
 
 	useEffect(() => {
-		dispatch(getListAction({ page: 1, limit }));
-	}, [dispatch, getListAction, limit]);
+		if (idForList) {
+			dispatch(getListAction({ page: 1, limit, idForList }));
+		} else {
+			dispatch(getListAction({ page: 1, limit }));
+		}
+	}, [dispatch, getListAction, limit, idForList]);
 
 	useEffect(() => {
 		setCurrentPage(1);

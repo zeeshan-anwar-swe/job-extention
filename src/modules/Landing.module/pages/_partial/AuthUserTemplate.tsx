@@ -16,7 +16,11 @@ export const AuthUserTemplate = () => {
 
 	return (
 		<div className='relative h-12 w-44'>
-			<div className={cn('absolute z-50  bg-white !p-0', isOpen? "rounded-xl": "rounded-xl")}>
+			<div
+				className={cn(
+					'absolute z-50  bg-white !p-0',
+					isOpen ? 'rounded-xl' : 'rounded-xl',
+				)}>
 				<div
 					onClick={() => setIsOpen(!isOpen)}
 					className='flex cursor-pointer items-center gap-4 rounded-full py-1  pl-1 pr-6'>
