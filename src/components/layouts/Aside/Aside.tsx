@@ -81,7 +81,7 @@ const Aside: FC<IAsideProps> = (props) => {
 				'peer',
 				'fixed bottom-0 top-0 z-30 md:z-20',
 				'flex flex-col',
-				'border-zinc-300/25 bg-white',
+				'border-zinc-300/25 bg-primary-bg',
 				'py-6',
 				'ltr:border-r rtl:border-l',
 				'dark:border-zinc-800/50 dark:bg-zinc-900 dark:text-white',

@@ -23,11 +23,11 @@ import { Descendant } from 'slate';
 
 export type EditCVFormValues = {
 	isShowImage: '0' | '1';
+	selectedJob: { label: string; value: string };
 	action: 'create' | 'update' | '';
 	name: string;
 	file: File | null;
 	about: string;
-	location: string;
 	availabilty: string;
 	roles: string[];
 	experience: number;
@@ -48,19 +48,19 @@ const CandidateCVEditPage = () => {
 
 	const formik = useFormik({
 		initialValues: {
-			action: '',
+			action: 'update',
 			isShowImage: '1',
 			name: '',
 			file: null,
 			about: '',
 			availabilty: '',
-			location: '',
 			roles: [],
 			experience: 0,
 			education: '',
-			cvText: JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[],
 			LinkedIn: '',
 			GitHub: '',
+			selectedJob: { label: 'search jobs', value: '' },
+			cvText: JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[],
 		},
 
 		validate: (values: EditCVFormValues) => {
@@ -76,12 +76,11 @@ const CandidateCVEditPage = () => {
 				errors.GitHub = 'GitHub profile is required';
 			}
 
-			// // Add validation for required LinkedIn field
-			// if (!values.LinkedIn) {
-			// 	errors.LinkedIn = 'LinkedIn profile is required';
-			// } else if (!values.LinkedIn.includes('linkedin.com')) {
-			// 	errors.LinkedIn = 'Must be a valid URL ex: linkedin.com/in/user-name';
-			// }
+			if (values.action === 'create') {
+				if (!values.selectedJob.value) {
+					errors.selectedJob = { label: '', value: 'Required' };
+				}
+			}
 
 			return errors;
 		},
@@ -95,11 +94,9 @@ const CandidateCVEditPage = () => {
 				roles,
 				experience,
 				education,
-				LinkedIn,
 				GitHub,
 				about,
-				availabilty,
-				location,
+				selectedJob,
 			} = values;
 
 			const preGitHub: { id: string; link: string } | null = getSocialLinkWithId(
@@ -109,36 +106,37 @@ const CandidateCVEditPage = () => {
 
 			const stringifiedCVText = await JSON.stringify(cvText);
 
-			
-
 			const formData = new FormData();
+
+			if (isShowImage) {
+				if (file) {
+					formData.append('file', file);
+				}
+			}
+
+			if (action === 'update') {
+				action === 'update' && formData.append('jobProfileId', state.selectedJob.id);
+			} else if (action === 'create') {
+				formData.append('jobId', selectedJob.value);
+				formData.append('candidateId', state.candidate.id);
+			}
 
 			formData.append('cv', stringifiedCVText);
 			formData.append('isShowImage', isShowImage);
 			formData.append('about', about);
 			formData.append('name', name);
-			formData.append('jobProfileId', state.candidate.id);
 			formData.append('action', action);
-			action === 'create' && formData.append('jobId', state.selectedJob.id);
 			formData.append('roles', JSON.stringify(roles));
 			formData.append('experience', experience.toString());
 			formData.append('education', education);
-			formData.append('availabilty', availabilty);
-			formData.append('location', location);
 			formData.append(
 				'socialProfiles',
 				JSON.stringify([
 					preGitHub
 						? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
 						: { provider: 'GitHub', link: GitHub },
-					// preLinkedIn
-					// 	? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
-					// 	: { provider: 'LinkedIn', link: LinkedIn },
 				]),
 			);
-
-			console.log({ formData , values});
-			
 
 			await dispatch(
 				updateCandidateProfile({

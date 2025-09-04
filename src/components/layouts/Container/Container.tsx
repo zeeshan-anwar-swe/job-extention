@@ -23,7 +23,7 @@ const Container = forwardRef<HTMLDivElement, IContainerProps>((props, ref) => {
 		<div
 			ref={ref}
 			data-component-name='Container'
-			className={classNames('mx-auto p-4', breakpoint, className)}
+			className={classNames('mx-auto p-4 ', breakpoint, className)}
 			{...rest}>
 			{children}
 		</div>

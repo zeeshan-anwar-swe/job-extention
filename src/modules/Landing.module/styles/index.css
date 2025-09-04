@@ -14,9 +14,8 @@
   font-style: normal;
 }
 
-@import "tailwindcss";
 
 body {
-  background-color: #e0e2f4;
+  /* background-color: #e0e2f4; */
   font-family: "Inter", system-ui, sans-serif;
 }

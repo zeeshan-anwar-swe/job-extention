@@ -52,7 +52,7 @@ const scaleIn = {
 export const HomeIntroductionSection = () => {
   return (
     <motion.section
-      className="overflow-hidden rounded-2xl border-2 border-white bg-white/50"
+      className="overflow-hidden rounded-2xl border-2 border-white "
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"

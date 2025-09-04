@@ -8,8 +8,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import CardB from '../../_partial/CardB';
 import LatestCard from '../../_partial/LatestCard';
 import SlideCard from '../../_partial/SlideCard';
+import { useNavigate } from 'react-router-dom';
 
 export const HomeOtherSections = () => {
+	const navigateTo = useNavigate();
 	const basicPlanFeatures = ['5 jobs', 'Limited Candidates access', 'Basic analytics'];
 	const premiumPlanFeatures = [
 		'Unlimited jobs',
@@ -236,6 +238,7 @@ export const HomeOtherSections = () => {
 					</div>
 					<div className='flex items-center space-x-3'>
 						<motion.button
+							onClick={() => navigateTo('/blogs')}
 							className='flex cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-[#1E51E8] to-[#0BA5EC] px-4 py-2 text-white'
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}>
@@ -268,7 +271,7 @@ export const HomeOtherSections = () => {
 							description={
 								'Compare the benefits of AI-powered recruitment with traditional methods and see how KoalaByte gives recruiters a competitive edge.'
 							}
-							navigatePath='*'
+							// navigatePath='*'
 						/>
 					</motion.div>
 					<motion.div variants={itemVariants}>
@@ -280,7 +283,7 @@ export const HomeOtherSections = () => {
 							description={
 								'Learn how analytics and AI can optimize your hiring process for better outcomes.'
 							}
-							navigatePath='/Blog/BlogPost'
+							// navigatePath='/Blog/BlogPost'
 						/>
 					</motion.div>
 					<motion.div variants={itemVariants}>

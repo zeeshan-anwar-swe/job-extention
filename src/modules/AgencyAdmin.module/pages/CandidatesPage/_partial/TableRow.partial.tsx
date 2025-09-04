@@ -17,7 +17,6 @@ const TableRowPartial = ({ candidate }: { candidate: TCandidateListItem }) => {
 
 	
 	const [selectedJob, setSelectedJob] = useState<null | TCandidateJobProfile>(null);
-	console.log({ selectedJob });
 
 	return (
 		<Tr>

@@ -52,7 +52,7 @@ function BLOG() {
 	
 
 	return (
-		<div className='bg-[#E0E2F4]'>
+		<div className='bg-primary-bg'>
 			<section className='mx-auto max-w-[1280px] space-y-4 bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 				{/* BLOG section start */}
 				<motion.section
