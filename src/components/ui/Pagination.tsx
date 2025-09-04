@@ -84,7 +84,12 @@ const Pagination = ({
 		if (idForList) {
 			dispatch(getListAction({ page: 1, limit, idForList }));
 		} else {
-			dispatch(getListAction({ page: 1, limit }));
+			if(search){
+				dispatch(getListAction({ page: 1, limit, search }));
+
+			}else{
+				dispatch(getListAction({ page: 1, limit }));
+			}
 		}
 	}, [dispatch, getListAction, limit, idForList]);
 

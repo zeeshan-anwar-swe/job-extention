@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants, leftVariants, rightVariants } from './_partial/animation';
@@ -8,6 +7,8 @@ import Button from '../../../../components/ui/Button';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../store';
 import { sendEmail } from '../../../../store/slices/User.slice';
+import '../../styles/App.css';
+import '../../styles/index.css';
 
 // Define the type for the form values
 interface FormValues {
@@ -66,7 +67,7 @@ function CONTACT() {
 	};
 
 	return (
-		<div className='h-[calc(75vh)] w-full bg-[#e0e2f4]'>
+		<div className='h-[calc(75vh)] w-full flex flex-col justify-center bg-[#e0e2f4]'>
 			<section className='mx-auto max-w-[1280px]  bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 				{/* contact section start */}
 				<motion.section
@@ -74,17 +75,17 @@ function CONTACT() {
 					initial='hidden'
 					whileInView='visible'
 					viewport={{ once: true, amount: 0.3 }}>
-					<div className='container mx-auto flex flex-col  items-start justify-between space-x-0 space-y-5 md:flex-row md:space-x-10'>
+					<div className='mx-auto flex flex-col  items-center justify-between space-x-0 space-y-5 md:flex-row md:space-x-10'>
 						<motion.div
 							variants={leftVariants}
-							className='rounded-4xl relative min-h-[600px] w-full overflow-hidden md:w-1/2'>
+							className='rounded-4xl relative min-h-[450px] w-full overflow-hidden md:w-1/2'>
 							<div
-								className='absolute inset-0 rounded-lg border-2 border-white bg-cover bg-center bg-no-repeat opacity-30'
+								className='absolute inset-0 rounded-lg border-2 border-white bg-cover bg-center bg-no-repeat opacity-40'
 								style={{ backgroundImage: `url(/assets/contactbg.jpg)` }}></div>
 
-							<div className='relative z-10 h-full'>
+							<div className='relative z-10 h-[450px]'>
 								<motion.div
-									className='flex h-full items-end justify-center p-4'
+									className='flex h-full items-center justify-center p-4'
 									whileHover={{ scale: 1.05 }}
 									transition={{ duration: 0.3 }}>
 									<img
@@ -93,14 +94,13 @@ function CONTACT() {
 										className='w-full max-w-[380px] object-contain md:max-w-[450px] lg:max-w-[800px]'
 									/>
 								</motion.div>
-								<div className='px-2 md:px-4'>
-									<img src='/assets/shines.png' alt='shines' />
-								</div>
-								<motion.div
-									className='font-inter px-2 text-[30px] font-normal leading-[38px] tracking-normal text-white md:px-4'
-									variants={itemVariants}>
-									<p>Contact Us Today — We Would Love asdto Hear from You!</p>
-								</motion.div>
+                <div className='absolute bottom-0 px-4'>
+
+								<img src='/assets/shines.png' alt='shines' />
+								<p className='font-inter text-[30px] font-normal leading-[38px] tracking-normal text-white'>
+									Contact Us Today — We Would Love asdto Hear from You!
+								</p>
+                </div>
 							</div>
 						</motion.div>
 

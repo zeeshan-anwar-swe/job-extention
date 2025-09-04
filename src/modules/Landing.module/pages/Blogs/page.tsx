@@ -49,14 +49,7 @@ function BLOG() {
 		(state: RootState) => state.blog.blogPosts,
 	);
 
-  const dispatch: AppDispatch = useDispatch();
-
-	// useEffect(() => {
-  //   if(tab){
-  //     dispatch(getBlogPosts({ limit: 10, page: 1, idForList: tab.id }));
-  //   }
-    
-  // }, [tab]);
+	
 
 	return (
 		<div className='bg-[#E0E2F4]'>
@@ -102,7 +95,19 @@ function BLOG() {
 						<BlogHeaderPartial />
 					</motion.div>
 
-					<PageLoader loading={loading} data={rows} error={error}>
+					<PageLoader
+						messageForEmptyData={
+							tab
+								? search
+									? `No blog found for keyword: "${search}" category: "${tab.name}"`
+									: 'No blog found for category: ' + tab.name
+								: search
+									? `No blog found for keyword: "${search}"`
+									: 'No blog found'
+						}
+						loading={loading}
+						data={rows}
+						error={error}>
 						<motion.div
 							className='grid grid-cols-1 gap-4 md:grid-cols-3'
 							initial='hidden'
