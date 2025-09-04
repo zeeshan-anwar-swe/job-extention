@@ -76,12 +76,12 @@ const CandidateCVEditPage = () => {
 				errors.GitHub = 'GitHub profile is required';
 			}
 
-			// // Add validation for required LinkedIn field
-			// if (!values.LinkedIn) {
-			// 	errors.LinkedIn = 'LinkedIn profile is required';
-			// } else if (!values.LinkedIn.includes('linkedin.com')) {
-			// 	errors.LinkedIn = 'Must be a valid URL ex: linkedin.com/in/user-name';
-			// }
+			// Add validation for required LinkedIn field
+			if (!values.LinkedIn) {
+				errors.LinkedIn = 'LinkedIn profile is required';
+			} else if (!values.LinkedIn.includes('linkedin.com')) {
+				errors.LinkedIn = 'Must be a valid URL ex: linkedin.com/in/user-name';
+			}
 
 			return errors;
 		},
@@ -107,9 +107,11 @@ const CandidateCVEditPage = () => {
 				'GitHub',
 			);
 
+			const preLinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
+				cadnidateProfile?.profile?.socialProfiles ?? [],
+				'LinkedIn',
+			);
 			const stringifiedCVText = await JSON.stringify(cvText);
-
-			
 
 			const formData = new FormData();
 
@@ -117,13 +119,16 @@ const CandidateCVEditPage = () => {
 			formData.append('isShowImage', isShowImage);
 			formData.append('about', about);
 			formData.append('name', name);
-			formData.append('jobProfileId', state.candidate.id);
+			action === 'update' && formData.append('jobProfileId', state.selectedJob.id);
 			formData.append('action', action);
-			action === 'create' && formData.append('jobId', state.selectedJob.id);
+			action === 'create' && formData.append('jobId', "???");
+			action === 'create' && formData.append('candidateId', "???");
+
 			formData.append('roles', JSON.stringify(roles));
 			formData.append('experience', experience.toString());
 			formData.append('education', education);
-			formData.append('availabilty', availabilty);
+
+			file && formData.append('file', file);
 			formData.append('location', location);
 			formData.append(
 				'socialProfiles',
@@ -131,14 +136,13 @@ const CandidateCVEditPage = () => {
 					preGitHub
 						? { id: preGitHub.id, provider: 'GitHub', link: GitHub }
 						: { provider: 'GitHub', link: GitHub },
-					// preLinkedIn
-					// 	? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
-					// 	: { provider: 'LinkedIn', link: LinkedIn },
+					preLinkedIn
+						? { id: preLinkedIn.id, provider: 'LinkedIn', link: LinkedIn }
+						: { provider: 'LinkedIn', link: LinkedIn },
 				]),
 			);
 
-			console.log({ formData , values});
-			
+			console.log({ formData, values });
 
 			await dispatch(
 				updateCandidateProfile({
