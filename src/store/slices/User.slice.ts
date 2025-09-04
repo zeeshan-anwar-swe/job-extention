@@ -57,6 +57,26 @@ export const getMyProfile = createAsyncThunk(
 	},
 );
 
+export const sendEmail = createAsyncThunk(
+	'user/sendEmail',
+	async (
+		{ name, email, message }: { name: string; email: string; message: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.post('/user/contact-us', {
+				name,
+				email,
+				message,
+			});
+			toast.success('Message sent successfully!');
+		} catch (error: any) {
+			toast.error(error.response?.data?.message || 'Failed to update profile');
+			withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
 export const updateUserProfile = createAsyncThunk(
 	'user/updateUserProfile',
 	async (profileData: any) => {
