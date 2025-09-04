@@ -50,7 +50,7 @@ export interface TBlogPost {
 export interface TBlogInitialState {
 	blogPosts: {
 		count: number;
-		tab: string;
+		tab: TBlogCategory | null;
 		search: string;
 		loading: boolean;
 		rows: TBlogPost[];

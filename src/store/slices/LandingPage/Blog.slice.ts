@@ -2,11 +2,14 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../../../utils/axiosInstance';
 import axiosInstanceNoAuth from '../../../utils/axiosInstanceNoAuth';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { TBlogInitialState } from '../../../types/slices.type/agency/blog.slice.type';
+import {
+	TBlogCategory,
+	TBlogInitialState,
+} from '../../../types/slices.type/agency/blog.slice.type';
 import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
 
 const initialState: TBlogInitialState = {
-	blogPosts: { loading: true, error: null, count: 0, rows: [], search: '', tab: 'view-all' },
+	blogPosts: { loading: true, error: null, count: 0, rows: [], search: '', tab: null },
 	blogDetails: { loading: false, error: null, data: null },
 	blogCategoryList: { loading: true, error: null, count: 0, rows: [], search: '' },
 	blogCategoryDetails: { loading: false, error: null, data: null },
@@ -15,13 +18,31 @@ const initialState: TBlogInitialState = {
 export const getBlogCategoryList = createAsyncThunk(
 	'blog/getBlogCategoryList',
 	async (
-		{ page, limit, search }: { limit: number; page: number; search?: string },
+		{
+			page,
+			limit,
+			search,
+			idForList,
+		}: { limit: number; page: number; search?: string; idForList?: string },
 		{ rejectWithValue },
 	) => {
 		try {
-			const url = search
-				? `/blogs/categories/list?page=${page}&limit=${limit}&search=${search}`
-				: `/blogs/categories/list?page=${page}&limit=${limit}`;
+			// Use URLSearchParams to build the query string
+			const params = new URLSearchParams({
+				page: String(page),
+				limit: String(limit),
+			});
+
+			if (search) {
+				params.append('search', search);
+			}
+
+			if (idForList) {
+				params.append('categoryId', idForList);
+			}
+
+			const url = `/blogs/categories/list?${params.toString()}`;
+
 			const response = await axiosInstanceNoAuth.get(url);
 			return response.data.data;
 		} catch (error: any) {
@@ -45,13 +66,30 @@ export const getBlogCategoryDetails = createAsyncThunk(
 export const getBlogPosts = createAsyncThunk(
 	'blog/getBlogPosts',
 	async (
-		{ page, limit, search }: { limit: number; page: number; search?: string },
+		{
+			page,
+			limit,
+			search,
+			idForList,
+		}: { limit: number; page: number; search?: string; idForList?: string },
 		{ rejectWithValue },
 	) => {
 		try {
-			const url = search
-				? `/blogs?page=${page}&limit=${limit}&search=${search}`
-				: `/blogs?page=${page}&limit=${limit}`;
+			// Use URLSearchParams to build the query string
+			const params = new URLSearchParams({
+				page: String(page),
+				limit: String(limit),
+			});
+
+			if (search) {
+				params.append('search', search);
+			}
+
+			if (idForList) {
+				params.append('categoryId', idForList);
+			}
+
+			const url = `/blogs?${params.toString()}`;
 			const response = await axiosInstanceNoAuth.get(url);
 			return response.data.data;
 		} catch (error: any) {
@@ -79,7 +117,7 @@ const blogSlice = createSlice({
 		setBlogSearch: (state, action: PayloadAction<string>) => {
 			state.blogPosts.search = action.payload;
 		},
-		setBlogTab: (state, action: PayloadAction<string>) => {
+		setBlogTab: (state, action: PayloadAction<TBlogCategory | null>) => {
 			state.blogPosts.tab = action.payload;
 		},
 		setBlogCategorySearch: (state, action: PayloadAction<string>) => {

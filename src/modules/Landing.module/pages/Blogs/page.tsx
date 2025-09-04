@@ -1,80 +1,158 @@
-import FOOTER from '../_partial/FOOTER';
-import driven from '../../../../../public/assets/driven.png';
-import future from '../../../../../public/assets/future.png';
+import { motion } from 'framer-motion';
 import STARTED from '../_partial/STARTED';
-import tradition from '../../../../../public/assets/tradition.png';
 import LatestCard from '../_partial/LatestCard';
-import searchicon from '../../../../../public/assets/searchicon.png';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../../../../store';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
 import { getBlogPosts } from '../../../../store/slices/LandingPage/Blog.slice';
-import { TBlogPost } from '../../../../types/slices.type/agency/blog.slice.type';
+import type { TBlogPost } from '../../../../types/slices.type/agency/blog.slice.type';
 import { BlogHeaderPartial } from './_partial/BlogHeader.partial';
+import { useEffect } from 'react';
+
+const containerVariants = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.1,
+			delayChildren: 0.2,
+		},
+	},
+};
+
+const itemVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			duration: 0.6,
+			ease: [0.25, 0.46, 0.45, 0.94],
+		},
+	},
+};
+
+const gridVariants = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.15,
+			delayChildren: 0.3,
+		},
+	},
+};
 
 function BLOG() {
-	const { error, rows, search, loading, count } = useSelector(
+	const { error, rows, search, loading, count, tab } = useSelector(
 		(state: RootState) => state.blog.blogPosts,
 	);
+
+  const dispatch: AppDispatch = useDispatch();
+
+	// useEffect(() => {
+  //   if(tab){
+  //     dispatch(getBlogPosts({ limit: 10, page: 1, idForList: tab.id }));
+  //   }
+    
+  // }, [tab]);
+
 	return (
 		<div className='bg-[#E0E2F4]'>
 			<section className='mx-auto max-w-[1280px] space-y-4 bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 				{/* BLOG section start */}
-				<section className=''>
+				<motion.section
+					className=''
+					initial='hidden'
+					whileInView='visible'
+					viewport={{ once: true, amount: 0.3 }}
+					variants={containerVariants}>
 					<div className='container mx-auto'>
-						<div className='flex flex-col justify-center space-y-2 text-center md:space-y-5'>
-							<span className='font-inter bg-gradient-to-r from-[#1297C6] to-[#477EF5] bg-clip-text text-base font-semibold leading-6 text-transparent'>
+						<motion.div
+							className='flex flex-col justify-center space-y-2 text-center md:space-y-5'
+							variants={itemVariants}>
+							<motion.span
+								className='font-inter bg-gradient-to-r from-[#1297C6] to-[#477EF5] bg-clip-text text-base font-semibold leading-6 text-transparent'
+								variants={itemVariants}>
 								Our Blog
-							</span>
+							</motion.span>
 
-							<h1 className='font-inter text-center font-medium  text-[#101828] md:text-lg lg:text-5xl'>
+							<motion.h1
+								className='font-inter text-center font-medium text-[#101828] md:text-lg lg:text-5xl'
+								variants={itemVariants}>
 								Navigating the Path to Optimal <br />
-							</h1>
-							<h1 className='font-inter text-center font-medium  text-[#101828] md:text-lg lg:text-5xl'>
+							</motion.h1>
+							<motion.h1
+								className='font-inter text-center font-medium text-[#101828] md:text-lg lg:text-5xl'
+								variants={itemVariants}>
 								Hiring Process
-							</h1>
+							</motion.h1>
 
-							<span className='font-inter text-lg font-normal leading-7 text-[#475467] lg:text-xl'>
+							<motion.span
+								className='font-inter text-lg font-normal leading-7 text-[#475467] lg:text-xl'
+								variants={itemVariants}>
 								Explore cutting-edge developments and inspiring stories from the
 								world of KoalaByte AI.
-							</span>
-						</div>
+							</motion.span>
+						</motion.div>
 					</div>
 
-					<BlogHeaderPartial />
+					<motion.div variants={itemVariants}>
+						<BlogHeaderPartial />
+					</motion.div>
 
 					<PageLoader loading={loading} data={rows} error={error}>
-						<div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-							{rows.map((blogPost: TBlogPost) => (
-								<LatestCard
-									image={blogPost.image}
-									headingA={blogPost.title}
-									headingB={blogPost.readingTime}
-									title={blogPost.title}
-									description={blogPost.content}
-									navigatePath='/blog-post'
-								/>
+						<motion.div
+							className='grid grid-cols-1 gap-4 md:grid-cols-3'
+							initial='hidden'
+							whileInView='visible'
+							viewport={{ once: true, amount: 0.2 }}
+							variants={gridVariants}>
+							{rows.map((blogPost: TBlogPost, index: number) => (
+								<motion.div
+									key={blogPost.id || index}
+									variants={itemVariants}
+									whileHover={{
+										y: -5,
+										transition: { duration: 0.2 },
+									}}>
+									<LatestCard
+										image={blogPost.image}
+										headingA={blogPost.category?.name}
+										headingB={blogPost.readingTime}
+										title={blogPost.title}
+										description={blogPost.content}
+										navigatePath='/blog-post'
+									/>
+								</motion.div>
 							))}
-						</div>
+						</motion.div>
 					</PageLoader>
-					<Pagination
-						count={count}
-						getListAction={getBlogPosts}
-						limit={9}
-						search={search}
-					/>
-				</section>
+
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ duration: 0.6, delay: 0.2 }}>
+						<Pagination
+							count={count}
+							idForList={tab?.id}
+							getListAction={getBlogPosts}
+							limit={9}
+							search={search}
+						/>
+					</motion.div>
+				</motion.section>
 
 				{/* started section start */}
-				<section>
+				<motion.section
+					initial={{ opacity: 0, y: 30 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, amount: 0.3 }}
+					transition={{ duration: 0.8, delay: 0.2 }}>
 					<STARTED />
-				</section>
-
-				{/* footer section start */}
-				<section>
-					<FOOTER />
-				</section>
+				</motion.section>
 			</section>
 		</div>
 	);

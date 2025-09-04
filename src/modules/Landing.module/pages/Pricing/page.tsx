@@ -2,6 +2,7 @@ import FAQ from '../_partial/FAQ';
 import STARTED from '../_partial/STARTED';
 import PricingCard from '../_partial/PricingCard';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
+import { motion } from 'framer-motion';
 
 function PRICING() {
 	const basicPlanFeatures = [
@@ -39,7 +40,14 @@ function PRICING() {
 							</div>
 						</div>
 
-						<div className=' mx-auto flex flex-col gap-6 py-5 md:flex-row'>
+						{/* FAQ setion start */}
+
+						<motion.section
+							className='mx-auto flex flex-col gap-6 py-5 md:flex-row'
+							initial={{ opacity: 0, y: 50 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: '-100px' }}
+							transition={{ duration: 0.6, ease: 'easeOut' }}>
 							<PricingCard
 								planName={'Basic plan'}
 								price={'Free'}
@@ -50,6 +58,7 @@ function PRICING() {
 								buttonText={'Current Plan'}
 								features={basicPlanFeatures}
 							/>
+
 							<PricingCard
 								planName={'Premium plan'}
 								price={'$20'}
@@ -62,6 +71,7 @@ function PRICING() {
 								buttonText={'Upgrade Plan'}
 								features={premiumPlanFeatures}
 							/>
+
 							<PricingCard
 								planName={'Premium plan'}
 								price={'$20'}
@@ -74,15 +84,12 @@ function PRICING() {
 								buttonText={'Upgrade Plan'}
 								features={premiumPlanFeatures}
 							/>
-						</div>
+						</motion.section>
 
 						{/* Pricing. section ends */}
 					</section>
 
-					{/* FAQ setion start */}
-					<section className='py-3 md:py-6 lg:py-10'>
-						<FAQ />
-					</section>
+					<FAQ />
 
 					{/* Started section start */}
 					<section>
