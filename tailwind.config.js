@@ -9,6 +9,35 @@ module.exports = {
     extend: {
       colors: {
         "primary-bg": "#E0E2F4",
+        "prim-bg-100": "#E0E2F4",
+        "prim-bg-200": "#B7BCE6",
+        "prim-bg-300": "#928FD8",
+        "prim-bg-400": "#6C76CB",
+        "prim-bg-500": "#4752BE",
+        "prim-bg-600": "#37419A",
+        "prim-bg-700": "#293175",
+        "prim-bg-800": "#1C214F",
+        "prim-bg-900": "#0F1129",
+
+        "blue-100": "#E0E2F4",
+        "blue-200": "#B7BCE6",
+        "blue-300": "#928FD8",
+        "blue-400": "#6C76CB",
+        "blue-500": "#4752BE",
+        "blue-600": "#37419A",
+        "blue-700": "#293175",
+        "blue-800": "#1C214F",
+        "blue-900": "#0F1129",
+
+        // "zinc-100": "#E0E2F4",
+        // "zinc-200": "#B7BCE6",
+        // "zinc-300": "#928FD8",
+        // "zinc-400": "#6C76CB",
+        // "zinc-500": "#4752BE",
+        // "zinc-600": "#37419A",
+        // "zinc-700": "#293175",
+        // "zinc-800": "#1C214F",
+        // "zinc-900": "#0F1129",
       },
       keyframes: {
         "caret-blink": {

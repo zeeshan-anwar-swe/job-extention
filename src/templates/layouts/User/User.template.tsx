@@ -26,7 +26,7 @@ const UserTemplate = () => {
 	return (
 		<User
 			name={userProfile?.firstName}
-			nameSuffix={<Icon icon='HeroCheckBadge' color='blue' />}
+			nameSuffix={<Icon icon='HeroCheckBadge' className='text-prim-bg-600' />}
 			position={userProfile?.role}
 			src={profileImageUrlValidationCheck(userProfile?.image)}
 			suffix={

@@ -26,7 +26,7 @@ function FOOTER() {
           </div>
         </div>
         <div className="text-center font-inter font-normal text-xs   text-[#010314]">
-          KoalaByte AI simplifies hiring with automated candidate sourcing,
+          Koalify  AI simplifies hiring with automated candidate sourcing,
           real-time CV editing, and seamless CRM integration. <br /> Its
           AI-powered talking avatar helps recruiters navigate, manage tasks, and
           find top talent effortlessly.

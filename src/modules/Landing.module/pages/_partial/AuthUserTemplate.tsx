@@ -18,7 +18,7 @@ export const AuthUserTemplate = () => {
 		<div className='relative h-12 w-44'>
 			<div
 				className={cn(
-					'absolute z-50 bg-white !p-0',
+					'absolute z-50 bg-prim-bg-100 border-prim-bg-300 border !p-0',
 					isOpen ? 'rounded-xl' : 'rounded-xl',
 				)}>
 				<div

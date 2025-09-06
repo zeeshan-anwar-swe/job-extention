@@ -86,7 +86,7 @@ function BLOG() {
 								className='font-inter text-lg font-normal leading-7 text-[#475467] lg:text-xl'
 								variants={itemVariants}>
 								Explore cutting-edge developments and inspiring stories from the
-								world of KoalaByte AI.
+								world of Koalify AI.
 							</motion.span>
 						</motion.div>
 					</div>

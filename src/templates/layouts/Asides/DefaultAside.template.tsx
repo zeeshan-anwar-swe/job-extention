@@ -32,8 +32,8 @@ const DefaultAsideTemplate = () => {
 					<NavItem {...appPages.AgencyAdmin.aiInterviewAppPages}>
 						<Badge
 							variant='outline'
-							color='amber'
-							className='border-transparent leading-none'>
+							
+							className='border-transparent text-prim-bg-600 dark:text-prim-bg-100 leading-none'>
 							NEW
 						</Badge>
 					</NavItem>

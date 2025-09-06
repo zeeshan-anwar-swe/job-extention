@@ -49,24 +49,24 @@ function FAQItem({ question, answer, index }: any) {
 function FAQ() {
   const faqs = [
     {
-      question: "What is KoalaByte?",
-      answer: "KoalaByte is an AI-powered recruitment platform designed to streamline your hiring process.",
+      question: "What is Koalify?",
+      answer: "Koalify is an AI-powered recruitment platform designed to streamline your hiring process.",
     },
     {
-      question: "How does KoalaByte fetch candidate profiles?",
-      answer: "KoalaByte uses AI to search and analyze profiles from various professional networks and databases.",
+      question: "How does Koalify fetch candidate profiles?",
+      answer: "Koalify uses AI to search and analyze profiles from various professional networks and databases.",
     },
     {
       question: "What role does the AI assistant play?",
       answer: "The AI assistant helps screen candidates, suggest matches, and automate initial communications.",
     },
     {
-      question: "Is KoalaByte suitable for small businesses?",
-      answer: "Yes, KoalaByte offers plans that scale from individual recruiters to large enterprises.",
+      question: "Is Koalify suitable for small businesses?",
+      answer: "Yes, Koalify offers plans that scale from individual recruiters to large enterprises.",
     },
     {
-      question: "Does KoalaByte integrate with existing CRM systems?",
-      answer: "Yes, KoalaByte provides API integrations with most popular CRM systems.",
+      question: "Does Koalify integrate with existing CRM systems?",
+      answer: "Yes, Koalify provides API integrations with most popular CRM systems.",
     },
     {
       question: "Can I edit and customize candidate CVs?",

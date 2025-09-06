@@ -64,13 +64,13 @@ export const HomeIntroductionSection = () => {
             className="bg-gradient-to-r from-[#1297C6] to-[#477EF5] bg-clip-text text-sm font-semibold text-transparent md:text-base"
             variants={fadeInUp}
           >
-            Introducing KoalaByte AI
+            Introducing Koalify AI
           </motion.span>
           <motion.h2 className="mb-4 mt-2 text-2xl font-medium text-[#010314] md:text-3xl" variants={fadeInUp}>
             Empower Your Hiring and Job Tracking with AI
           </motion.h2>
           <motion.p className="mb-6 text-base text-[#8F8F8F] md:text-lg" variants={fadeInUp}>
-            KoalaByte AI offers a range of core advantages that set us apart in the human resource technology landscape.
+            Koalify AI offers a range of core advantages that set us apart in the human resource technology landscape.
             These advantages are designed to make your processes more efficient, data-driven, and ultimately more
             successful.
           </motion.p>
