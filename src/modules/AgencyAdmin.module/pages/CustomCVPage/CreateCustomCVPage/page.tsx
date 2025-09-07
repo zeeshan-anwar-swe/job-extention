@@ -156,7 +156,7 @@ const CreateCustomCVPage = () => {
         } else {
           await dispatch(createCustomCV(values));
         }
-        // navigateTo('/dashboard/custom-cv');
+        navigateTo('/dashboard/custom-cv');
       } catch (e) {
         console.log({ e });
       }
