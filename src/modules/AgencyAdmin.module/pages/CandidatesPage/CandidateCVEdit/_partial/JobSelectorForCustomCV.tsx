@@ -6,12 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../../store';
 import { getJobsList } from '../../../../../../store/slices/Jobs.slice';
 import Validation from '../../../../../../components/form/Validation';
+import getMissingObjects from '../../../../../../utils/array.util';
 
 export const JobSelectorForCustomCV = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const dispatch: AppDispatch = useDispatch();
 
 	const { paginatedList, pageLoading } = useSelector((state: RootState) => state.jobsSlice);
-	const options = paginatedList.map((job) => ({ label: job.title, value: job.id }));
+	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
+
+
+	const missedCandidate = getMissingObjects(cadnidateProfile?.assignedJobs, paginatedList, 'id');
+
+	const options = missedCandidate.map((job) => ({ label: job.title, value: job.id }));
 
 	const debounced = useDebouncedCallback((value) => {
 		if (value) {

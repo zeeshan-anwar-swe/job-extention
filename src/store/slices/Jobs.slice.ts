@@ -134,6 +134,8 @@ export const getJobDetails = createAsyncThunk(
 export const createJobs = createAsyncThunk(
 	'jobs/create',
 	async (payload: { type: string; payload: void }, { rejectWithValue }) => {
+		console.log({payload});
+		
 		try {
 			const response = await axiosInstance.post('/job', payload);
 			return response.data.data;

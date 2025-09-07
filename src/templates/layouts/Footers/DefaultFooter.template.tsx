@@ -6,11 +6,11 @@ const DefaultFooterTemplate = () => {
 	return (
 		<Footer>
 			<FooterLeft className='text-zinc-500'>
-				<div>Copyright © {dayjs().format('YYYY')}</div>
+				<div>Copyright © {dayjs().format('YYYY')} Koality.</div>
 			</FooterLeft>
 			<FooterRight className='text-zinc-500'>
 				<span>
-					<b>KoalaByte</b> Recuirement
+					<b>Koalify</b> Recuirement
 				</span>
 			</FooterRight>
 		</Footer>

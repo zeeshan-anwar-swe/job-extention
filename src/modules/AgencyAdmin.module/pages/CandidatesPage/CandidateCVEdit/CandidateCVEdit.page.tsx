@@ -104,10 +104,9 @@ const CandidateCVEditPage = () => {
 				'GitHub',
 			);
 
-			const stringifiedCVText = await JSON.stringify(cvText);
-
+			
 			const formData = new FormData();
-
+			
 			if (isShowImage) {
 				if (file) {
 					formData.append('file', file);
@@ -120,7 +119,8 @@ const CandidateCVEditPage = () => {
 				formData.append('jobId', selectedJob.value);
 				formData.append('candidateId', state.candidate.id);
 			}
-
+			
+			const stringifiedCVText = await JSON.stringify(cvText);
 			formData.append('cv', stringifiedCVText);
 			formData.append('isShowImage', isShowImage);
 			formData.append('about', about);
