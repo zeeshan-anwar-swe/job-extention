@@ -17,15 +17,15 @@ import { getMyProfile } from "../../../../store/slices/User.slice";
 export const AuthUserTemplate = () => {
   const { userStorage, onLogout, userTokenStorage } = useAuth();
   const dispatch: AppDispatch = useDispatch();
-	 console.log({userTokenStorage});
-	 
-  const [isOpen, setIsOpen] = React.useState(false);
 
+  const [isOpen, setIsOpen] = React.useState(false);
   const { imageUrl } = useImageValidation(userStorage.image);
 
   useEffect(() => {
     if (userTokenStorage) {
-      dispatch(getMyProfile());
+      if (userStorage.email.length < 2) {
+        dispatch(getMyProfile());
+      }
     }
   }, [userTokenStorage]);
 
