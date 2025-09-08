@@ -1,25 +1,22 @@
-import Card, {
-	CardBody,
-	CardHeader,
-	CardSubTitle,
-	CardTitle,
-} from '../../../../../../components/ui/Card';
 import classNames from 'classnames';
-import Validation from '../../../../../../components/form/Validation';
-import FieldWrap from '../../../../../../components/form/FieldWrap';
-import Input from '../../../../../../components/form/Input';
-import Label from '../../../../../../components/form/Label';
-import Textarea from '../../../../../../components/form/Textarea';
+import {  Descendant } from 'slate';
 import { FormikProps } from 'formik';
-import { EditCVFormValues } from '../CandidateCVEdit.page';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../../store';
 import { useEffect, useState } from 'react';
-import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
-import { getSocialLinkWithId } from '../../../../../../utils/helper';
-import Tooltip from '../../../../../../components/ui/Tooltip';
+import { RootState } from '../../../../../../store';
+import { EditCVFormValues } from '../CandidateCVEdit.page';
+import Label from '../../../../../../components/form/Label';
+import Input from '../../../../../../components/form/Input';
 import RichText from '../../../../../../components/RichText';
-import { createEditor, Descendant } from 'slate';
+import Tooltip from '../../../../../../components/ui/Tooltip';
+import Textarea from '../../../../../../components/form/Textarea';
+import { JobSelectorForCustomCV } from './JobSelectorForCustomCV';
+import Checkbox  from '../../../../../../components/form/Checkbox';
+import FieldWrap from '../../../../../../components/form/FieldWrap';
+import { getSocialLinkWithId } from '../../../../../../utils/helper';
+import Validation from '../../../../../../components/form/Validation';
+import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
+import Card, { CardBody, CardHeader, CardSubTitle, CardTitle } from '../../../../../../components/ui/Card';
 
 export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
 	const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
@@ -35,26 +32,17 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 				cadnidateProfile?.socialProfiles ?? [],
 				'GitHub',
 			);
-			const LinkedIn: { id: string; link: string } | null = getSocialLinkWithId(
-				cadnidateProfile?.socialProfiles ?? [],
-				'LinkedIn',
-			);
 
 			GitHub && formik.setFieldValue('GitHub', GitHub.link);
-			LinkedIn && formik.setFieldValue('LinkedIn', LinkedIn.link);
+
+			formik.setFieldValue('LinkedIn', cadnidateProfile.publicProfileUrl);
 
 			formik.setFieldValue('roles', cadnidateProfile?.roles ?? []);
 			formik.setFieldValue('name', cadnidateProfile?.candidate?.name ?? '');
 			formik.setFieldValue('experience', cadnidateProfile?.experience ?? '');
 			formik.setFieldValue('education', cadnidateProfile?.education ?? '');
-			// formik.setFieldValue('location', cadnidateProfile?.location ?? '');
-			// formik.setFieldValue('availabilty', cadnidateProfile?.availabilty ?? '');
+
 			formik.setFieldValue('about', cadnidateProfile?.about ?? '');
-			// if (cadnidateProfile?.cv) {
-			// 	const parsedCv = JSON.parse(cadnidateProfile?.cv);
-			// 	formik.setFieldValue('cvText', parsedCv);
-			// 	setCvTextValue(parsedCv);
-			// }
 		}
 	}, [cadnidateProfile]); // Added formik.setValues to the dependency array
 
@@ -66,6 +54,25 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 			</CardHeader>
 			<CardBody>
 				<form className='flex flex-col gap-4' noValidate onSubmit={formik.handleSubmit}>
+					<div className='grid grid-cols-1 gap-4'>
+						<Checkbox
+							variant='default'
+							label='Create as Custom CV'
+							id='optionA'
+							onChange={(e) => {
+								if (e.target.checked) {
+									formik.setFieldValue('action', 'create');
+								} else {
+									formik.setFieldValue('action', 'update');
+								}
+							}}
+							checked={formik.values.action === 'create' ? true : false}
+						/>
+						{formik.values.action === 'create' && (
+							<JobSelectorForCustomCV formik={formik} />
+						)}
+					</div>
+
 					<div className='flex gap-4'>
 						<div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
 							<Label htmlFor='name'>Name</Label>
@@ -81,7 +88,7 @@ export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormVa
 										name='name'
 										placeholder='Name'
 										value={formik.values.name}
-										// onChange={formik.handleChange}
+										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
 								</FieldWrap>

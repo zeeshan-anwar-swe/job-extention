@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import { DateRangePicker, Range } from 'react-date-range';
-import colors from 'tailwindcss/colors';
 import Container from '../../../../components/layouts/Container/Container';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import ChartPartial from './_partial/Chart.partial';
@@ -12,21 +9,13 @@ import Balance2Partial from './_partial/Balance2.partial';
 import Balance3Partial from './_partial/Balance3.partial';
 import Balance4Partial from './_partial/Balance4.partial';
 import MessagePartial from './_partial/Messages.partial';
-import Subheader, {
-	SubheaderLeft,
-	SubheaderRight,
-} from '../../../../components/layouts/Subheader/Subheader';
+
 import CommentPartial from './_partial/Comment.partial';
-import PeriodButtonsPartial from './_partial/PeriodButtons.partial';
 import PERIOD, { TPeriod } from '../../../../constants/periods.constant';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import Dropdown, { DropdownMenu, DropdownToggle } from '../../../../components/ui/Dropdown';
-import Button from '../../../../components/ui/Button';
-import themeConfig from '../../../../config/theme.config';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import Card from '../../../../components/ui/Card';
-import { formatDateStringToYYYYMMDD } from '../../../../utils/helper';
 import { AppDispatch, RootState } from '../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/Statics.slice';

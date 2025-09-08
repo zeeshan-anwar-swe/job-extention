@@ -49,7 +49,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 
 			<CardHeader className='mt-4 gap-4 max-md:!flex-col-reverse'>
 				<Alert icon='HeroFolder' variant='solid' />
-				<div className='flex-1 hover:cursor-pointer' onClick={() => navigateTo(`/dashbord/jobs/view-job-details`, { state: item })}>
+				<div className='flex-1 hover:cursor-pointer' onClick={() => navigateTo(`/dashboard/jobs/view-job-details`, { state: item })}>
 					<h4 className='max-md:text-sm'>{textValidationCheck(item?.title)}</h4>
 					<Button
 						rounded='rounded-full'
@@ -72,7 +72,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 					<CardDropdownPartial item={item} />
 				</div>
 			</CardHeader>
-			<CardBody onClick={() => navigateTo(`/dashbord/jobs/view-job-details`, { state: item })} className='flex flex-col hover:cursor-pointer gap-4'>
+			<CardBody onClick={() => navigateTo(`/dashboard/jobs/view-job-details`, { state: item })} className='flex flex-col hover:cursor-pointer gap-4'>
 				<div className='flex items-center gap-2 max-md:flex-col max-md:items-start'>
 					<CardBodyTagPartial title='No. of Positions:' value='4' />
 					<CardBodyTagPartial title='Experience:' value={item?.experience} />
@@ -86,7 +86,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 				<CardFooterChild>
 					<Button
 						onClick={() => {
-							navigateTo(`/dashbord/jobs/view-job-details`, { state: item });
+							navigateTo(`/dashboard/jobs/view-job-details`, { state: item });
 						}}
 						size='lg'
 						className='!px-0 !text-xl !font-bold'
@@ -113,7 +113,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 						<Button
 							variant='solid'
 							onClick={() => {
-								navigateTo(`/dashbord/jobs/view-job-details`, { state: item });
+								navigateTo(`/dashboard/jobs/view-job-details`, { state: item });
 							}}
 							// onClick={() => setAssignCandidateModal(true)}
 							rounded='rounded-full'
@@ -123,7 +123,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 						<Button
 							className='ml-2'
 							onClick={() => {
-								navigateTo(`/dashbord/jobs/edit-job`, { state: item });
+								navigateTo(`/dashboard/jobs/edit-job`, { state: item });
 							}}
 							variant='solid'
 							rounded='rounded-full'

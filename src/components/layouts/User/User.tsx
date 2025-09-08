@@ -42,7 +42,7 @@ const User: FC<IUserProps> = (props) => {
 		<div data-component-name='User' className={classNames('relative', className)} {...rest}>
 			<div
 				className={classNames(
-					'mb-2 min-w-[4.5rem] overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-950',
+					'mb-2 min-w-[4.5rem] overflow-hidden rounded-xl bg-prim-bg-200 dark:bg-zinc-950',
 					{
 						'ltr:translate-x-[-0.625rem] rtl:translate-x-[0.625rem]': !asideStatus,
 					},
@@ -51,7 +51,7 @@ const User: FC<IUserProps> = (props) => {
 				<div
 					className={classNames(
 						'flex cursor-pointer gap-3 p-3',
-						'text-zinc-500 hover:text-zinc-950 dark:hover:text-zinc-100',
+						'text-prim-bg-600 hover:text-prim-bg-900 dark:hover:text-zinc-100',
 						'transition-all duration-300 ease-in-out',
 					)}
 					onClick={() => setIsOpen((prevState) => !prevState)}

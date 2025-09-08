@@ -49,7 +49,7 @@ const JobFilterDropdownPartial = () => {
 		{ title: '8 Year', value: 8 },
 		{ title: '9 Year', value: 9 },
 		{ title: '10 Year', value: 10 },
-		{ title: '10+ Year', value: 11 },
+		{ title: '10+ Year', value: 100 },
 	];
 
 	const handleMouseLeave = () => {
@@ -155,6 +155,10 @@ const JobFilterDropdownPartial = () => {
 				tenure,
 			}),
 		);
+
+		dropdownOpen && setDropdownOpen(false);
+		dispatch(setCandidatesLocations([]))
+
 	};
 
 	const clearAllFilters = async () => {

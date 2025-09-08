@@ -63,7 +63,7 @@ const JobsPageCardPartial: FC<JobsPageCardPartialProps> = ({ item }) => {
 				<CardFooterChild>
 					<Button
 						onClick={() => {
-							navigateTo(`/dashbord/jobs/view-job-details`, { state: item });
+							navigateTo(`/dashboard/jobs/view-job-details`, { state: item });
 						}}
 						size='lg'
 						className='!px-0 !text-xl !font-bold'

@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
 import Button from './Button';
+import { cn } from '../../utils/cn';
 import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
 import Card, { CardFooter } from './Card';
-import { cn } from '../../utils/cn';
+import { useEffect, useState } from 'react';
 
 const Pagination = ({
 	idForList,
 	count,
 	limit,
-	filterOptions,
-	setCurrentPageAction,
 	search,
-	getListAction,
 	searchBy,
+	filterOptions,
+	getListAction,
+	setCurrentPageAction,
 }: {
-	idForList?: string | null | undefined;
 	limit: number;
 	count: number;
 	filterOptions?: any;
 	search?: string;
 	searchBy?: string;
 	setCurrentPageAction?: any;
+	idForList?: string | null | undefined;
 	getListAction: ({
 		idForList,
 		page,
@@ -84,7 +84,12 @@ const Pagination = ({
 		if (idForList) {
 			dispatch(getListAction({ page: 1, limit, idForList }));
 		} else {
-			dispatch(getListAction({ page: 1, limit }));
+			if(search){
+				dispatch(getListAction({ page: 1, limit, search }));
+
+			}else{
+				dispatch(getListAction({ page: 1, limit }));
+			}
 		}
 	}, [dispatch, getListAction, limit, idForList]);
 

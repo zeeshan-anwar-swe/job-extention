@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@font-face {
+  font-family: "Inter";
+  src: url("../src/assets/fonts/Inter_28pt-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  src: url("../src/assets/fonts/Urbanist-SemiBold.ttf") format("truetype");
+  font-weight: 600; /* SemiBold weight */
+  font-style: normal;
+}
+
+
+body {
+  /* background-color: #e0e2f4; */
+  font-family: "Inter", system-ui, sans-serif;
+}

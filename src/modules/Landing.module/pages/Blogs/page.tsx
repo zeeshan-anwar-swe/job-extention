@@ -49,17 +49,10 @@ function BLOG() {
 		(state: RootState) => state.blog.blogPosts,
 	);
 
-  const dispatch: AppDispatch = useDispatch();
-
-	// useEffect(() => {
-  //   if(tab){
-  //     dispatch(getBlogPosts({ limit: 10, page: 1, idForList: tab.id }));
-  //   }
-    
-  // }, [tab]);
+	
 
 	return (
-		<div className='bg-[#E0E2F4]'>
+		<div className='bg-primary-bg'>
 			<section className='mx-auto max-w-[1280px] space-y-4 bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-6 lg:px-14 lg:py-10'>
 				{/* BLOG section start */}
 				<motion.section
@@ -93,7 +86,7 @@ function BLOG() {
 								className='font-inter text-lg font-normal leading-7 text-[#475467] lg:text-xl'
 								variants={itemVariants}>
 								Explore cutting-edge developments and inspiring stories from the
-								world of KoalaByte AI.
+								world of Koalify AI.
 							</motion.span>
 						</motion.div>
 					</div>
@@ -102,7 +95,19 @@ function BLOG() {
 						<BlogHeaderPartial />
 					</motion.div>
 
-					<PageLoader loading={loading} data={rows} error={error}>
+					<PageLoader
+						messageForEmptyData={
+							tab
+								? search
+									? `No blog found for keyword: "${search}" category: "${tab.name}"`
+									: 'No blog found for category: ' + tab.name
+								: search
+									? `No blog found for keyword: "${search}"`
+									: 'No blog found'
+						}
+						loading={loading}
+						data={rows}
+						error={error}>
 						<motion.div
 							className='grid grid-cols-1 gap-4 md:grid-cols-3'
 							initial='hidden'

@@ -18,7 +18,7 @@ export const HomeHeroSection = () => {
   // Variants for individual item animations
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   }
 
   return (
@@ -71,11 +71,11 @@ export const HomeHeroSection = () => {
                   className="block font-[Urbanist] text-3xl font-semibold text-[#1E1E1E] md:text-4xl lg:text-6xl"
                   variants={itemVariants}
                 >
-                  KoalaByte
+                  Koalify
                 </motion.span>
               </div>
               <motion.div className="py-5 text-justify text-[#475467] lg:text-lg" variants={itemVariants}>
-                KoalaByte revolutionizes recruitment with an AI-powered talking avatar assistant —search candidates,
+                Koalify revolutionizes recruitment with an AI-powered talking avatar assistant —search candidates,
                 manage jobs, and navigate effortlessly using just your voice.
               </motion.div>
               <motion.div variants={itemVariants}>

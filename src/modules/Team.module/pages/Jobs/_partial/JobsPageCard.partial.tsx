@@ -58,7 +58,7 @@ const JobsPageCardPartial = ({ teamJob }: { teamJob: TeamJob }) => {
 				<CardFooterChild>
 					<Button
 						onClick={() => {
-							navigateTo(`/dashbord/jobs/view-job-details`, { state: teamJob });
+							navigateTo(`/dashboard/jobs/view-job-details`, { state: teamJob });
 						}}
 						size='lg'
 						className='!px-0 !text-xl !font-bold'

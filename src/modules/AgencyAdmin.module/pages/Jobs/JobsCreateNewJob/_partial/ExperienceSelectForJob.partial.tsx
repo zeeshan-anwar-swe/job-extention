@@ -63,7 +63,7 @@ export const ExperienceSelectForJobPartial = ({
 						{ value: '8', label: '8 Years' },
 						{ value: '9', label: '9 Years' },
 						{ value: '10', label: '10 Years' },
-						{ value: '11', label: '10+ Years' },
+						{ value: '100', label: '10+ Years' },
 					]}
 				/>
 			</FieldWrap>

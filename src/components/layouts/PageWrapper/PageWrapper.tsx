@@ -26,7 +26,7 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 	return (
 		<main
 			data-component-name='PageWrapper'
-			className={classNames('flex shrink-0 grow flex-col', className)}
+			className={classNames('flex  shrink-0 grow flex-col', className)}
 			{...rest}>
 			{children}
 		</main>
