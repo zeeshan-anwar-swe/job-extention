@@ -10,7 +10,7 @@ const SSOWaitingPage = () => {
 
 	const handleSSOLogin = async () => {
 		await localStorage.setItem('token', JSON.stringify(token) ?? '');
-		window.location.href = '/';
+		window.location.href = '/dashboard';
 	};
 
 	useEffect(() => {
