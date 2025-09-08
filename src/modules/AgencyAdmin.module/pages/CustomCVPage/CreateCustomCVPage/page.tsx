@@ -149,7 +149,6 @@ const CreateCustomCVPage = () => {
       return errors;
     },
     onSubmit: async (values) => {
-      console.log({ values });
       try {
         if (isEditPage) {
           await dispatch(updateCustomCV({ id: state.id, data: values }));

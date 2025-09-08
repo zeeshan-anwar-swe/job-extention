@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 import { FC, useState } from 'react';
 import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
-import { FilterOptionsType } from '../../store/slices/Candiates.slice';
+import { FilterOptionsType, TCandidateSource } from '../../store/slices/Candiates.slice';
 
 interface CursorBasePaginationProps {
 	use: string;
@@ -12,11 +12,13 @@ interface CursorBasePaginationProps {
 	nextPage: number;
 	cursor: string | null;
 	filterOptions: FilterOptionsType;
+	candidateSource?: TCandidateSource;
 	getMoreListAction: (payload: {
 		page: number;
 		limit: number;
 		filterOptions: FilterOptionsType;
 		cursor: string | null;
+		candidateSource?: TCandidateSource;
 	}) => void;
 }
 
@@ -25,6 +27,7 @@ export const CursorBasePagination: FC<CursorBasePaginationProps> = ({
 	cursor,
 	nextPage,
 	filterOptions,
+	candidateSource,
 	getMoreListAction,
 }) => {
 	const dispatch: AppDispatch = useDispatch();
@@ -40,6 +43,7 @@ export const CursorBasePagination: FC<CursorBasePaginationProps> = ({
 					cursor,
 					filterOptions,
 					page: nextPage,
+					candidateSource,
 				}),
 			);
 		} catch (error) {
