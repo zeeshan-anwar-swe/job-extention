@@ -8,7 +8,6 @@ import CreateJobRightSidePartial from './_partial/CreateJobRightSide.partial';
 import Container from '../../../../../components/layouts/Container/Container';
 import Breadcrumb from '../../../../../components/layouts/Breadcrumb/Breadcrumb';
 import PageWrapper from '../../../../../components/layouts/PageWrapper/PageWrapper';
-import { useSpeechTitleAndExperience } from '../../../../../hooks/useSpeechTitleAndExperience';
 import Subheader, { SubheaderLeft } from '../../../../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../../../../components/layouts/Header/Header';
 import {
@@ -18,7 +17,6 @@ import {
 import DefaultHeaderRightCommon from '../../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 
 const JobsCreateNewJobPage = () => {
-	useSpeechTitleAndExperience()
 	const dispatch: AppDispatch = useDispatch();
 	useEffect(() => {
 		return () => {

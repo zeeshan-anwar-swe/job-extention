@@ -8,14 +8,13 @@ import HeaderRouter from '../components/router/HeaderRouter';
 import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
 import { Toaster } from 'react-hot-toast';
-import { useEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
-import { useNavigate } from 'react-router-dom';
+import { useGlobalVoice } from '../hooks/useGlobalVoice';
 const App = () => {
-	const navigate = useNavigate();
 	getOS();
 
 	const { userStorage: user } = useAuth();
+<<<<<<< Updated upstream
 	const [transcriptText, setTranscriptText] = useState('');
 
 	const commandToRouteMap: Record<string, string> = {
@@ -310,6 +309,9 @@ const App = () => {
 		window.addEventListener('FROM_IFRAME_SPEECH', handleSpeech);
 		return () => window.removeEventListener('FROM_IFRAME_SPEECH', handleSpeech);
 	}, [navigate]);
+=======
+	const { transcriptText } = useGlobalVoice();
+>>>>>>> Stashed changes
 
 	const { fontSize } = useFontSize();
 	dayjs.extend(localizedFormat);

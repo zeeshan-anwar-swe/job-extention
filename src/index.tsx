@@ -17,6 +17,7 @@ import { ThemeContextProvider } from './context/themeContext';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
+<<<<<<< Updated upstream
 	<StrictMode>
 		<Provider store={store}>
 			<ThemeContextProvider>
@@ -30,6 +31,19 @@ root.render(
 			</ThemeContextProvider>
 		</Provider>
 	</StrictMode>,
+=======
+	<Provider store={store}>
+		<ThemeContextProvider>
+			<BrowserRouter>
+				<AuthProvider>
+					<SocketProvider>
+						<App />
+					</SocketProvider>
+				</AuthProvider>
+			</BrowserRouter>
+		</ThemeContextProvider>
+	</Provider>,
+>>>>>>> Stashed changes
 );
 
 reportWebVitals();
