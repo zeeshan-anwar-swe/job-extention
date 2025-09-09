@@ -1,3 +1,5 @@
+import { TCandidateSource } from "../../store/slices/Candiates.slice";
+
 interface ClientUser {
   firstName: string;
   lastName: string;
@@ -107,6 +109,7 @@ export interface GetAllCandidatesParamsType {
   page: number;
   limit: number;
   filterOptions?: FilterOptionsType;
+  candidateSource?: TCandidateSource;
 }
 
 
@@ -115,4 +118,5 @@ export interface GetMoreCandidatesParamsType {
   limit: number;
   cursor: string | null;
   filterOptions: FilterOptionsType;
+  candidateSource?: TCandidateSource;
 }

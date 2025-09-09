@@ -27,7 +27,7 @@ const Validation: FC<IValidationProps> = (props) => {
 							data-component-name='Validation'
 							className=' mt-2 text-base text-red-500/70'>
 							{invalidFeedback
-								.split('.')
+								.split(',')
 								.filter((i) => i !== '')
 								.map((i) => (
 									<p key={i}>{i}.</p>

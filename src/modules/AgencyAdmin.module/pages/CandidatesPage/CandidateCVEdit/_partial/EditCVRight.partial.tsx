@@ -93,7 +93,7 @@ export const EditCVRightPartial = ({
   }, [preview]);
 
   return (
-    <Card className="col-span-3 h-full w-full max-lg:col-span-12 ">
+    <Card className="col-span-3 !sticky top-0 h-fit w-full max-lg:col-span-12 ">
       <CardHeader
         onClick={handleDownloadCV}
         className="!items-start hover:cursor-pointer"
@@ -133,12 +133,12 @@ export const EditCVRightPartial = ({
       </CardBody>
 
       <CardFooter>
-        <Button onClick={handleUploadClick} color="zinc" variant="outline">
+        <Button className="w-full"  onClick={handleUploadClick} color="zinc" variant="outline">
           Upload New Picture
         </Button>
 
         {preview || formik.values.file ? (
-          <Button onClick={handleRemoveImage} color="red" variant="solid">
+          <Button className="w-full" onClick={handleRemoveImage} color="red" variant="solid">
             Remove Uploaded Picture
           </Button>
         ) : null}

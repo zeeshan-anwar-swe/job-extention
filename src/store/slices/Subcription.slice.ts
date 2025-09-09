@@ -1,6 +1,7 @@
 import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
+import axiosInstanceNoAuth from '../../utils/axiosInstanceNoAuth';
 import toast from 'react-hot-toast';
 import { SubcriptionInitialStateType } from '../../types/slices.type/subcription.slice.type';
 
@@ -36,7 +37,7 @@ export const getSubscriptionPlan = createAsyncThunk(
 	'subscription/getSubscriptionPlan',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await axiosInstance.get('/stripe-payment/plans');
+			const response = await axiosInstanceNoAuth.get('/stripe-payment/plans');
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);

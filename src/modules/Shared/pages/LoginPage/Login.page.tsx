@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
 import LogoTemplate from '../../../../templates/layouts/Logo/Logo.template';
 import LoginFormPartial from './partial/LoginForm.partial';
@@ -12,6 +12,7 @@ import LoginWitLinkedIn from './partial/LoginWithLinkedIn';
 
 const LoginPage = () => {
 	const [param] = useSearchParams();
+	const navigateTo = useNavigate();
 	const status = param.get('status');
 	const { formType } = useSelector((state: RootState) => state.forgotPasswordSlice);
 
@@ -23,7 +24,8 @@ const LoginPage = () => {
 			<div className='py-16 max-md:hidden'>
 				<div className="relative ml-auto h-full w-8/12 rounded-2xl	bg-[url('/images/bear-bg.png')] bg-cover bg-center px-8">
 					<img
-						className='absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 object-cover'
+						onClick={() => navigateTo('/')}
+						className='absolute hover:cursor-pointer left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 object-cover'
 						src='/images/animated-bear.gif'
 						alt=''
 					/>
@@ -42,7 +44,7 @@ const LoginPage = () => {
 					{formType !== 'otp' && (
 						<>
 							<div>
-								<LogoTemplate className='h-12' />
+								<LogoTemplate onClick={() => navigateTo('/')} className='h-12 cursor-pointer' />
 							</div>
 							<div>
 								<span className='text-4xl font-semibold'>

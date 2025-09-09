@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import check from '../../../../../public/assets/check.png';
 import { useAuth } from '../../../../context/authContext';
 import { Roles } from '../../../../constants/role.enums';
 import toast from 'react-hot-toast';
@@ -72,7 +71,7 @@ function PricingCard({
 				<div
 					key={index}
 					className='font-inter flex items-center text-base font-normal leading-6 text-[#475467]'>
-					<img src={check} alt='check' className='mr-2' /> {feature}
+					<img src="/assets/check.png" alt='check' className='mr-2' /> {feature}
 				</div>
 			))}
 		</div>

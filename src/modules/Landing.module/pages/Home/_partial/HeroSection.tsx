@@ -90,12 +90,12 @@ export const HomeHeroSection = () => {
 
             {/* Right Column with staggered animation */}
             <motion.div
-              className="rounded-4xl relative flex h-full min-h-[400px] w-full flex-col items-center justify-between bg-[url('./assets/Frame.png')] bg-cover bg-center bg-no-repeat py-6 md:w-1/2 md:py-12"
+              className="rounded-4xl relative flex min-h-[400px]  w-full flex-col items-center justify-between bg-[url('./assets/Frame.png')] bg-cover bg-center rounded-lg bg-no-repeat py-6 md:w-4/12 md:py-12"
               variants={containerVariants}
             >
               {/* Top Text */}
               <motion.div
-                className="z-10 w-auto rounded-full bg-[#0073FF] px-3 text-sm text-white md:text-lg"
+                className="z-10 text-right ml-auto w-auto rounded-full bg-[#0073FF] px-3 text-sm text-white md:text-lg"
                 variants={itemVariants}
               >
                 Looking for top talent?
@@ -108,7 +108,7 @@ export const HomeHeroSection = () => {
                 <img
                   src="/images/animated-bear.gif"
                   alt="beargif"
-                  className="h-full max-h-[300px] w-auto object-contain"
+                  className="h-[450px] -top-[100px] absolute  object-cover"
                 />
               </motion.div>
               {/* Bottom Button */}

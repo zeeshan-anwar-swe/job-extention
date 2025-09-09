@@ -12,8 +12,8 @@ const leadingPagesRoutes = Object.values(LandingPages).map(({ to }) => ({
 }));
 
 const AgencyRoutes: RouteProps[] = [
-	{ path: authPages.loginPage.to, element: null },
 	{ path: 'signin', element: null },
+	{ path: authPages.loginPage.to, element: null },
 	{ path: authPages.ssoWaitingPage.to, element: null },
 	{ path: authPages.signupPage.to + '/*', element: null },
 	{ path: authPages.userVerify.to + '/*', element: null },
@@ -24,8 +24,8 @@ const AgencyRoutes: RouteProps[] = [
 ];
 
 const TeamRoutes: RouteProps[] = [
-	{ path: authPages.loginPage.to, element: null },
 	{ path: 'signin', element: null },
+	{ path: authPages.loginPage.to, element: null },
 	{ path: authPages.ssoWaitingPage.to, element: null },
 	{ path: authPages.userVerify.to + '/*', element: null },
 	{ path: authPages.signupPage.to + '/*', element: null },
@@ -36,8 +36,8 @@ const TeamRoutes: RouteProps[] = [
 ];
 
 const SuperAdminRoutes: RouteProps[] = [
-	{ path: authPages.loginPage.to, element: null },
 	{ path: 'signin', element: null },
+	{ path: authPages.loginPage.to, element: null },
 	{ path: authPages.ssoWaitingPage.to, element: null },
 	{ path: authPages.signupPage.to + '/*', element: null },
 	{ path: authPages.userVerify.to + '/*', element: null },
@@ -49,7 +49,7 @@ const SuperAdminRoutes: RouteProps[] = [
 
 const asideRoutes = {
 	[Roles.TEAM]: TeamRoutes,
-	[Roles.ADMIN]: AgencyRoutes,
+	[Roles.ADMIN]: SuperAdminRoutes,
 	[Roles.CLIENT]: AgencyRoutes,
 	[Roles.AGENCY_ADMIN]: AgencyRoutes,
 	[Roles.SUPER_ADMIN]: SuperAdminRoutes,

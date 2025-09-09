@@ -122,6 +122,7 @@ const userSlice = createSlice({
 			})
 			.addCase(getMyProfile.fulfilled, (state, action) => {
 				state.userProfile = action.payload;
+				localStorage.setItem('user', JSON.stringify(action.payload));
 				state.loading = false;
 			})
 			.addCase(getMyProfile.rejected, (state) => {

@@ -10,13 +10,10 @@ import { getCustomCVById } from '../../../../../store/slices/Agency/CustomCV.sli
 import Header, { HeaderLeft, HeaderRight } from '../../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
 import Card, { CardBody, CardHeader, CardTitle } from '../../../../../components/ui/Card';
-import Avatar from '../../../../../components/Avatar';
-import { HeroMapPin, HeroUser } from '../../../../../components/icon/heroicons';
 import Badge from '../../../../../components/ui/Badge';
 import Button from '../../../../../components/ui/Button';
 import Icon from '../../../../../components/icon/Icon';
 import { CVProfilePhoto } from './_partial/CVProfilePhoto';
-import Subheader, { SubheaderLeft } from '../../../../../components/layouts/Subheader/Subheader';
 
 const ViewCustomCVPage = () => {
 	const { loading, data, error } = useSelector((state: RootState) => state.customCV.cvDetails);
