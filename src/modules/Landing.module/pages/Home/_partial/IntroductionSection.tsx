@@ -1,6 +1,4 @@
 import { motion } from "framer-motion"
-import play from "../../../../../../public/assets/play.png"
-import dashboard from "../../../../../../public/assets/dashboard.png"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -86,7 +84,7 @@ export const HomeIntroductionSection = () => {
           >
             <span className="font-semibold">Watch Demo</span>
             <motion.img
-              src={play}
+              src="/assets/play.png"
               alt="Play icon"
               className="ml-2 h-4 w-4"
               whileHover={{ rotate: 360 }}
@@ -96,7 +94,7 @@ export const HomeIntroductionSection = () => {
         </motion.div>
         <motion.div className="relative min-h-[300px] w-full md:w-1/2" variants={slideInRight}>
           <motion.img
-            src={dashboard}
+            src="/assets/dashboard.png"
             alt="Dashboard"
             className="h-full w-full rounded-3xl object-cover pt-4 lg:object-contain lg:object-right"
             whileHover={{ scale: 1.02 }}
@@ -114,7 +112,7 @@ export const HomeIntroductionSection = () => {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <motion.img
-                src={play}
+                src="/assets/play.png"
                 alt="Play icon"
                 className="h-6 w-6"
                 whileHover={{ scale: 1.1 }}

@@ -1,6 +1,4 @@
-import { Card } from "antd";
 import React, { useEffect } from "react";
-import { CardBody, CardHeader } from "../../../../components/ui/Card";
 import { useAuth } from "../../../../context/authContext";
 import useImageValidation from "../../../../hooks/useImageValidation";
 import Collapse from "../../../../components/utils/Collapse";
@@ -10,20 +8,21 @@ import {
   NavSeparator,
 } from "../../../../components/layouts/Navigation/Nav";
 import { cn } from "../../../../utils/cn";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store";
 import { getMyProfile } from "../../../../store/slices/User.slice";
 
 export const AuthUserTemplate = () => {
   const { userStorage, onLogout, userTokenStorage } = useAuth();
+  const {userProfile} = useSelector((state: RootState) => state.user);
   const dispatch: AppDispatch = useDispatch();
 
   const [isOpen, setIsOpen] = React.useState(false);
-  const { imageUrl } = useImageValidation(userStorage.image);
+  const { imageUrl } = useImageValidation(userProfile.image);
 
   useEffect(() => {
     if (userTokenStorage) {
-      if (userStorage.email.length < 2) {
+      if (userProfile.email.length < 2) {
         dispatch(getMyProfile());
       }
     }
@@ -46,7 +45,7 @@ export const AuthUserTemplate = () => {
             src={imageUrl}
             alt="profile-image"
           />
-          <h6>{userStorage.firstName}</h6>
+          <h6>{userProfile.firstName}</h6>
         </div>
         <Collapse isOpen={isOpen}>
           <NavSeparator />

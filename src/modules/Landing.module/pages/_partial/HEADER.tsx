@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import menu from '../../../../../public/assets/menu.png';
+import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import logo from '../../../../assets/logo-new.png';
 import { useAuth } from '../../../../context/authContext';
-import UserTemplate from '../../../../templates/layouts/User/User.template';
-import Card, { CardBody } from '../../../../components/ui/Card';
 import { AuthUserTemplate } from './AuthUserTemplate';
 
 function HEADER() {
@@ -37,11 +33,11 @@ function HEADER() {
 				{/* Logo and Menu Button */}
 				<div className='flex w-full items-center justify-between md:w-auto'>
 					<div className='mb-4 flex items-center md:mb-0'>
-						<img src={logo} alt='Logo' className='h-8' />
+						<img src="/assets/logo-new.png" alt='Logo' className='h-8' />
 					</div>
 
 					<button className='p-2 md:hidden' onClick={toggleMenu} aria-label='Toggle menu'>
-						<img src={menu} alt='Menu' className='h-6 w-6' />
+						<img src="/assets/menu.png" alt='Menu' className='h-6 w-6' />
 					</button>
 				</div>
 

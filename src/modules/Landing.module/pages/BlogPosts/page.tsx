@@ -1,12 +1,4 @@
-import driven from '../../../../../public/assets/driven.png';
-import link from '../../../../../public/assets/link.png';
-import man from '../../../../../public/assets/man.png';
-import avatar from '../../../../../public/assets/avatar.png';
-import logo from '../../../../../public/assets/logo.png';
-import linkdna from '../../../../../public/assets/linkdna.png';
-import facebook from '../../../../../public/assets/facebook.png';
-import twiter from '../../../../../public/assets/twiter.png';
-import copy from '../../../../../public/assets/copy.png';
+
 import STARTED from '../_partial/STARTED';
 
 function BLOGPOST() {
@@ -46,19 +38,19 @@ function BLOGPOST() {
 											className='font-inter flex-grow rounded-lg border border-gray-300 bg-amber-50 text-center text-xs font-semibold text-[#344054]'
 										/>
 										<img
-											src={copy}
+											src="/assets/copy.png"
 											alt='Copy'
 											className='absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 transform'
 										/>
 									</div>
 									<div>
-										<img src={twiter} alt='twiter' className='h-6 w-6' />
+										<img src="/assets/twitter.png" alt='twiter' className='h-6 w-6' />
 									</div>
 									<div>
-										<img src={facebook} alt='facebook' className='h-6 w-6' />
+										<img src="/assets/facebook.png" alt='facebook' className='h-6 w-6' />
 									</div>
 									<div>
-										<img src={linkdna} alt='linkdna' className='h-6 w-6' />
+										<img src="/assets/linkdna.png" alt='linkdna' className='h-6 w-6' />
 									</div>
 								</div>
 							</div>
@@ -84,7 +76,7 @@ function BLOGPOST() {
 						</div>
 						<div className='flex w-full flex-col space-y-2 rounded-xl border-2 border-white bg-white/60 p-4 md:w-2/5 md:space-y-5 md:p-6'>
 							<div>
-								<img src={logo} alt='logo' className='items-center' />
+								<img src="/assets/logo.png" alt='logo' className='items-center' />
 							</div>
 							<div className='font-inter text-2xl font-semibold leading-8 text-[#101828]'>
 								Try AI-Powered Human <br className='md:hidden' /> Resource
@@ -104,11 +96,11 @@ function BLOGPOST() {
 
 					<div className='container flex w-full flex-col space-y-2.5 py-4 md:w-3/5 md:space-y-4 md:py-8'>
 						<div>
-							<img src={driven} alt='driven' className='w-full rounded-lg' />
+							<img src="/assets/driven.png" alt='driven' className='w-full rounded-lg' />
 						</div>
 
 						<div className='flex items-center'>
-							<img src={link} alt='link' className='mr-2' />
+							<img src="/assets/link.png" alt='link' className='mr-2' />
 							<span className='font-inter text-sm font-normal leading-5 text-[#475467]'>
 								Image courtesy of Moose Photos via Pexels
 							</span>
@@ -131,7 +123,7 @@ function BLOGPOST() {
 							</div>
 							<div className='mt-6 flex items-center'>
 								<img
-									src={avatar}
+									src="/assets/avatar.png"
 									alt='Demi'
 									className='mr-4 h-12 w-12 rounded-full'
 								/>
@@ -196,11 +188,11 @@ function BLOGPOST() {
 						</div>
 
 						<div>
-							<img src={man} alt='man' className='w-full rounded-lg' />
+							<img src="/assets/man.png" alt='man' className='w-full rounded-lg' />
 						</div>
 
 						<div className='flex items-center'>
-							<img src={link} alt='link' className='mr-2' />
+							<img src="/assets/link.png" alt='link' className='mr-2' />
 							<span className='font-inter text-sm font-normal leading-5 text-[#475467]'>
 								Image courtesy of Moose Photos via Pexels
 							</span>

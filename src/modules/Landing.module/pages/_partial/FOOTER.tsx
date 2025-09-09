@@ -1,28 +1,23 @@
-import axe from "../../../../../public/assets/axe.png";
-import fb from "../../../../../public/assets/fb.png";
-import insta from "../../../../../public/assets/insta.png";
-import lnkdn from "../../../../../public/assets/lnkdn.png";
-import logo from "../../../../../public/assets/logo-new.png";
 
 function FOOTER() {
   return (
     <section className="pt-5 md:pt-10 lg:pt-16 bg-[#E0E2F4] w-full mx-auto  px-5 md:px-10 lg:px-14 ">
       <div className="flex items-center flex-col space-y-5 md:space-y-7">
         <div>
-          <img className="h-12" src={logo} alt="logo" />
+          <img className="h-12" src="/assets/logo-new.png" alt="logo" />
         </div>
         <div className="flex flex-row justify-between items-center space-x-3 md:space-x-5">
           <div>
-            <img src={fb} alt="Facebook" />
+            <img src="/assets/fb.png" alt="Facebook" />
           </div>
           <div>
-            <img src={insta} alt="Instagram" />
+            <img src="/assets/insta.png" alt="Instagram" />
           </div>
           <div>
-            <img src={axe} alt="Axe" />
+            <img src="/assets/axe.png" alt="Axe" />
           </div>
           <div>
-            <img src={lnkdn} alt="LinkedIn" />
+            <img src="/assets/lnkdn.png" alt="LinkedIn" />
           </div>
         </div>
         <div className="text-center font-inter font-normal text-xs   text-[#010314]">

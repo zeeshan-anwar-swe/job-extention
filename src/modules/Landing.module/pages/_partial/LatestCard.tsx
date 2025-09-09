@@ -1,4 +1,3 @@
-import arrow from '../../../../../public/assets/arrow.png';
 import { useNavigate } from 'react-router-dom';
 import useImageValidation from '../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../components/ui/ImageLoaderWraper';
@@ -34,7 +33,7 @@ function LatestCard({ image, headingA, headingB, title, description, navigatePat
 				<div className='flex items-center ' onClick={handleTitleClick}>
 					<h1 className='text-xl font-medium'>{title}</h1>
 
-					<img src={arrow} alt='arrow' className='ml-2' />
+					<img src="/assets/arrow.png" alt='arrow' className='ml-2' />
 				</div>
 				<p className='text-justify text-base font-normal text-[#7E808A]'>{description}</p>
 			</div>
