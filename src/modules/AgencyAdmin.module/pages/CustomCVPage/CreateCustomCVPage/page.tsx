@@ -155,7 +155,7 @@ const CreateCustomCVPage = () => {
         } else {
           await dispatch(createCustomCV(values));
         }
-        navigateTo('/dashboard/custom-cv');
+        navigateTo("/dashboard/custom-cv");
       } catch (e) {
         console.log({ e });
       }
@@ -230,8 +230,14 @@ const CreateCustomCVPage = () => {
       formik.setFieldValue("industry", data?.industry ?? "");
       formik.setFieldValue("headline", data?.headline ?? "");
       formik.setFieldValue("publicProfileUrl", data?.publicProfileUrl ?? "");
-      formik.setFieldValue("workExperience", data?.workExperience ?? []);
       formik.setFieldValue("education", data?.education ?? []);
+      formik.setFieldValue(
+        "workExperience",
+        data?.workExperience.map((exp: any) => ({
+          ...exp,
+          skills: exp.skills.map((skill: any) => skill.name),
+        })) ?? [],
+      );
       formik.setFieldValue(
         "skills",
         data?.skills.map((skill: TCustomCVSkill) => skill.name) ?? [],
@@ -251,7 +257,6 @@ const CreateCustomCVPage = () => {
     return undefined;
   };
 
-  
   return (
     <>
       <Header>
@@ -445,14 +450,24 @@ const CreateCustomCVPage = () => {
                     name="skills"
                     isMulti
                     placeholder="Add your skills..."
-                    options={formik.values.skills.map((s) => ({
-                      value: s,
-                      label: s,
-                    }))}
-                    value={formik.values.skills.map((s) => ({
-                      value: s,
-                      label: s,
-                    }))}
+                    // value={formik.values.skills.map((s) => ({
+                    //   value: s,
+                    //   label: s,
+                    // }))}
+
+                    value={formik.values.skills.map((skill: any) => {
+                      if (typeof skill === "string") {
+                        return {
+                          value: skill,
+                          label: skill,
+                        };
+                      } else {
+                        return {
+                          value: skill.name,
+                          label: skill.name,
+                        };
+                      }
+                    })}
                     onChange={(newValue: any) => {
                       formik.setFieldValue(
                         "skills",
@@ -783,14 +798,29 @@ const CreateCustomCVPage = () => {
                         name={`workExperience[${index}].skills`}
                         isMulti
                         placeholder="Add skills used in this role..."
-                        options={exp.skills.map((s) => ({
-                          value: s,
-                          label: s,
-                        }))}
-                        value={exp.skills.map((s) => ({
-                          value: s,
-                          label: s,
-                        }))}
+                        // options={exp.skills.map((s) => ({
+                        //   value: s,
+                        //   label: s,
+                        // }))}
+
+                        // value={exp.skills.map((s) => ({
+                        //   value: s,
+                        //   label: s,
+                        // }))}
+
+                        value={exp.skills.map((skill: any) => {
+                          if (typeof skill === "string") {
+                            return {
+                              value: skill,
+                              label: skill,
+                            };
+                          } else {
+                            return {
+                              value: skill.name,
+                              label: skill.name,
+                            };
+                          }
+                        })}
                         onChange={(newValue: any) => {
                           formik.setFieldValue(
                             `workExperience[${index}].skills`,

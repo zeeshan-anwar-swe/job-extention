@@ -219,7 +219,7 @@ const CandidateCVEditPage = () => {
           </SubheaderLeft>
         </Subheader>
         <PageLoader loading={pageLoading} data={cadnidateProfile} error={error}>
-          <Container className="grid grid-cols-12 gap-4">
+          <Container className="grid grid-cols-12 gap-4 relative">
             <EditCVFormPartial formik={formik} />
             <EditCVRightPartial formik={formik} />
           </Container>
