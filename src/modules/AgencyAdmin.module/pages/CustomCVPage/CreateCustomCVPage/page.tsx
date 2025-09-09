@@ -892,6 +892,14 @@ const CreateCustomCVPage = () => {
                 {/* --- */}
                 <div className="mt-4 flex justify-between gap-2 lg:col-span-2">
                   <Button
+                    onClick={() => navigateTo("/dashboard/custom-cv")}
+                    variant="solid"
+                    color="zinc"
+                    type="button"
+                  >
+                    Back
+                  </Button>
+                  <Button
                     isDisable={formik.isSubmitting || loading}
                     isLoading={formik.isSubmitting}
                     variant="solid"
@@ -899,14 +907,6 @@ const CreateCustomCVPage = () => {
                     type="submit"
                   >
                     {isEditPage ? "Update CV" : "Create CV"}
-                  </Button>
-                  <Button
-                    onClick={() => navigateTo("/dashboard/custom-cv")}
-                    variant="solid"
-                    color="zinc"
-                    type="button"
-                  >
-                    Back
                   </Button>
                 </div>
               </form>

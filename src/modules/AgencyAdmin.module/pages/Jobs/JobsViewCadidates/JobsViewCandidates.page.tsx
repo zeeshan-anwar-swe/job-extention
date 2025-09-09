@@ -108,8 +108,9 @@ const JobsViewCandidatesPage = () => {
 										onClick={() => setModal(true)}
 										size='lg'
 										variant='solid'
+										// icon='HeroPlus'
 										rightIcon='HeroPlus'>
-										Assign to Candidate
+										Add More Candidates
 									</Button>
 									{jobDetails && (
 										<AssignLinkedInCandiatesToJobModalPartial

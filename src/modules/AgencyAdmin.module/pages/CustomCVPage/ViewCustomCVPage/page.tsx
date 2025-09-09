@@ -1,19 +1,18 @@
 import { useLayoutEffect } from 'react';
+import Badge from '../../../../../components/ui/Badge';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Button from '../../../../../components/ui/Button';
+import { CVProfilePhoto } from './_partial/CVProfilePhoto';
 import { AppDispatch, RootState } from '../../../../../store';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import Container from '../../../../../components/layouts/Container/Container';
 import Breadcrumb from '../../../../../components/layouts/Breadcrumb/Breadcrumb';
 import PageWrapper from '../../../../../components/layouts/PageWrapper/PageWrapper';
 import { getCustomCVById } from '../../../../../store/slices/Agency/CustomCV.slice';
+import Card, { CardBody, CardHeader, CardTitle } from '../../../../../components/ui/Card';
 import Header, { HeaderLeft, HeaderRight } from '../../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
-import Card, { CardBody, CardHeader, CardTitle } from '../../../../../components/ui/Card';
-import Badge from '../../../../../components/ui/Badge';
-import Button from '../../../../../components/ui/Button';
-import Icon from '../../../../../components/icon/Icon';
-import { CVProfilePhoto } from './_partial/CVProfilePhoto';
 
 const ViewCustomCVPage = () => {
 	const { loading, data, error } = useSelector((state: RootState) => state.customCV.cvDetails);

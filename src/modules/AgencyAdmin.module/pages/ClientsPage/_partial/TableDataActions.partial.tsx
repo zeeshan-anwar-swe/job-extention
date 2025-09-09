@@ -26,7 +26,7 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemType }) => 
 	return (
 		<div className='no-scrollbar flex overflow-x-scroll text-nowrap'>
 			
-			<Link to={`/clients/jobs`} state={client}>
+			<Link to={`/dashboard/clients/jobs`} state={client}>
 				<Button color='blue'>View Jobs</Button>
 			</Link>
 

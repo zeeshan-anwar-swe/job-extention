@@ -163,15 +163,17 @@ const JobFilterDropdownPartial = () => {
 
 	const clearAllFilters = async () => {
 		await dispatch(setCandidatesFilterOptions(emptyFilterOptions));
-		dispatch(setCandidatesLocations([]))
-		dispatch(setCandidatesSearch(''));
-		dispatch(
+		await dispatch(setCandidatesLocations([]))
+		await dispatch(setCandidatesSearch(''));
+		dropdownOpen && setDropdownOpen(false);
+		await dispatch(
 			getAllCandidatesList({
 				page: 1,
 				limit: 10,
 				filterOptions: emptyFilterOptions,
 			}),
 		);
+
 	};
 
 	return (

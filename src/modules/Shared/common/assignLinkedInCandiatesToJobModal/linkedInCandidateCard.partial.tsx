@@ -32,12 +32,12 @@ export const LinkedInCandidateCardPartial = ({ candidate }: { candidate: LinkedI
 	const { imageUrl } = useImageValidation(candidate.profilePictureUrl);
 
 	return (
-		<Card className='bg-zinc-100 dark:bg-zinc-950'>
+		<Card className='bg-zinc-100 dark:bg-zinc-800 dark:border dark:border-zinc-100'>
 			<CardHeader className='gap-4'>
 				<img
 					className='aspect-square w-14 rounded-xl border'
-					src={imageUrl}
 					alt='profile-image'
+					src={imageUrl}
 				/>
 				<div className='flex-1'>
 					<h5>{textValidationCheck(candidate.name)}</h5>

@@ -18,7 +18,7 @@ const TableDataActionsPartial = ({ client }: { client: ClientListItemTypeSuperAd
 	return (
 		<div className='no-scrollbar flex font-medium justify-center text-nowrap'>
 			<Button>Remove Client</Button>
-			<Link to={`/clients/profile`} state={client}>
+			<Link to={`/dashboard/clients/profile`} state={client}>
 				<Button color='blue'>View Profile</Button>
 			</Link>
 			{/* <Link to={`/chat/${client.id}`} state={{userName: client?.clientUser.firstName, userId: client?.id}}>

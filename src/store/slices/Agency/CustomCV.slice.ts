@@ -44,8 +44,7 @@ export const createCustomCV = createAsyncThunk(
 	async (data: any, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.post(`/custom-cv/create`, data);
-			console.log({ response });
-
+			toast.success("CV created successfully")
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -58,8 +57,7 @@ export const updateCustomCV = createAsyncThunk(
 	async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.put(`/custom-cv/${id}/update`, data);
-			console.log({ updateCustomCV: response });
-
+			toast.success("CV updated successfully")
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);
