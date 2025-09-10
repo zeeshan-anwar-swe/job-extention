@@ -9,6 +9,7 @@ import Card, {
 } from "../../../../../../components/ui/Card";
 import {
   getAllCandidatesList,
+  getCustomProfiles,
   getMoreAllCandidatesList,
   LinkedInProfile,
   setCandidatesFilterOptions,
@@ -21,23 +22,34 @@ import { CursorBasePagination } from "../../../../../../components/ui/CusrorBase
 import SearchPartial from "../../../../../Shared/common/assignLinkedInCandiatesToJobModal/Search.partial";
 import { useEffect } from "react";
 import { CandidateTypeSwitch } from "./CandidateTypeSwitch";
+import Pagination from "../../../../../../components/ui/Pagination";
 
 const CreateJobRightSidePartial = () => {
   const dispatch: AppDispatch = useDispatch();
   const {
     next,
-    allCadidateList,
-    filteredCandidate,
-    filterOptions,
-    pageLoading,
-	candidateSource,
     error,
+    pageLoading,
+    filterOptions,
+    allCadidateList,
+    candidateSource,
+    paginationCount,
+    filteredCandidate,
   } = useSelector((state: RootState) => state.candidates);
 
   const isFiltered = filteredCandidate?.length > 0;
 
   useEffect(() => {
-    dispatch(getAllCandidatesList({ page: 1, limit: 10, filterOptions, candidateSource }));
+    if (candidateSource === "linkedin") {
+      dispatch(
+        getAllCandidatesList({
+          page: 1,
+          limit: 10,
+          filterOptions,
+          candidateSource,
+        }),
+      );
+    }
   }, [candidateSource]);
 
   return (
@@ -50,11 +62,11 @@ const CreateJobRightSidePartial = () => {
         <CardHeaderChild className="!flex w-full !gap-2">
           <div className="flex-1">
             <SearchPartial
-              placeholder="Search Candidate..."
-              filterOptions={filterOptions}
-              searchListAction={getAllCandidatesList}
-              setFilterOptions={setCandidatesFilterOptions}
               searchLimit={10}
+              filterOptions={filterOptions}
+              placeholder="Search Candidate..."
+              searchListAction={candidateSource === "linkedin" ? getAllCandidatesList: getCustomProfiles}
+              setFilterOptions={setCandidatesFilterOptions}
             />
           </div>
           <JobFilterDropdownPartial />
@@ -75,16 +87,26 @@ const CreateJobRightSidePartial = () => {
             ),
           )}
         </MainLoader>
-        {!pageLoading && next && (
-          <CursorBasePagination
+        {candidateSource === "custom" ? (
+          <Pagination
             limit={10}
-            use={next.use}
-            nextPage={next.page}
-            cursor={next.unipileCursor}
+            count={paginationCount}
             filterOptions={filterOptions}
-			candidateSource={candidateSource}
-            getMoreListAction={getMoreAllCandidatesList}
+            getListAction={getCustomProfiles}
           />
+        ) : (
+          !pageLoading &&
+          next && (
+            <CursorBasePagination
+              limit={10}
+              use={next.use}
+              nextPage={next.page}
+              cursor={next.unipileCursor}
+              filterOptions={filterOptions}
+              candidateSource={candidateSource}
+              getMoreListAction={getMoreAllCandidatesList}
+            />
+          )
         )}
       </CardBody>
     </Card>

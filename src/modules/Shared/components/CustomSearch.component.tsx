@@ -92,6 +92,7 @@ const CustomSearchComponent: FC<CustomSearchComponentProps> = ({
 					rounded='rounded-full'
 					id='example'
 					name='example'
+					variant='outilned'
 					placeholder={placeholder}
 					value={searchValue}
 					className='px-4'

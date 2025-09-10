@@ -112,7 +112,7 @@ const JobsViewCandidatesPage = () => {
 										rightIcon='HeroPlus'>
 										Add More Candidates
 									</Button>
-									{jobDetails && (
+									{jobDetails && modal&& (
 										<AssignLinkedInCandiatesToJobModalPartial
 											reFreshList={reFreshList}
 											jobId={jobDetails.id}

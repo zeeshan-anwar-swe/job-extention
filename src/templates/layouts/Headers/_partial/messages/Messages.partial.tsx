@@ -13,7 +13,7 @@ const MessagesPartial = () => {
 	const inboxMessages = inbox ? Object.values(inbox) : [];
  
 	const handleClick = (id: string, name: string) => {
-		navigate(`/chat/${id}`, {
+		navigate(`/dashboard/chat/${id}`, {
 			state: { userName: name, userId: id },
 		});
 	};

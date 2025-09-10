@@ -23,17 +23,17 @@ const Pagination = ({
 	setCurrentPageAction?: any;
 	idForList?: string | null | undefined;
 	getListAction: ({
-		idForList,
 		page,
 		limit,
 		search,
 		searchBy,
+		idForList,
 	}: {
 		page: number;
 		limit: number;
 		search?: string;
-		idForList?: any | null | undefined;
 		searchBy?: string;
+		idForList?: any | null | undefined;
 	}) => void;
 }) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);

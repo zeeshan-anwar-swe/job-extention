@@ -9,6 +9,7 @@ import CardB from '../../_partial/CardB';
 import LatestCard from '../../_partial/LatestCard';
 import SlideCard from '../../_partial/SlideCard';
 import { useNavigate } from 'react-router-dom';
+import { CaseStudieSection } from './CaseStudieSection';
 
 export const HomeOtherSections = () => {
 	const navigateTo = useNavigate();
@@ -218,87 +219,7 @@ export const HomeOtherSections = () => {
 			</motion.section>
 
 			{/* Case Studies */}
-			<motion.section
-				className='rounded-lg bg-white/50 p-6 md:p-8'
-				variants={containerVariants}
-				initial='hidden'
-				whileInView='visible'
-				viewport={{ once: true, amount: 0.2 }}>
-				<motion.div
-					className='mb-8 flex flex-col items-start justify-between md:flex-row md:items-center'
-					variants={itemVariants}>
-					<div className='mb-6 md:mb-0'>
-						<h2 className='mb-2 text-2xl font-medium text-[#010314] md:text-3xl'>
-							Latest Case Studies
-						</h2>
-						<p className='text-lg text-[#010314]/50'>
-							Real-world examples showcasing the impact of the Solomon AI concept on
-							businesses.
-						</p>
-					</div>
-					<div className='flex items-center space-x-3'>
-						<motion.button
-							onClick={() => navigateTo('/blogs')}
-							className='flex cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-[#1E51E8] to-[#0BA5EC] px-4 py-2 text-white'
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}>
-							All Posts &gt;
-						</motion.button>
-						<motion.button
-							className='cursor-pointer rounded-full bg-white p-2 shadow-sm'
-							whileHover={{ scale: 1.1 }}
-							whileTap={{ scale: 0.9 }}>
-							<img src='/assets/lefticon.png' alt='lefticon' className='h-4 w-4' />
-						</motion.button>
-						<motion.button
-							className='cursor-pointer rounded-full bg-white p-2 shadow-sm'
-							whileHover={{ scale: 1.1 }}
-							whileTap={{ scale: 0.9 }}>
-							<img src='/assets/righticon.png' alt='righticon' className='h-4 w-4' />
-						</motion.button>
-					</div>
-				</motion.div>
-
-				<motion.div
-					className='grid grid-cols-1 gap-6 md:grid-cols-3'
-					variants={containerVariants}>
-					<motion.div variants={itemVariants}>
-						<LatestCard
-							image='/assets/tradition.png'
-							headingA={'Technology'}
-							headingB={'8 min read'}
-							title={'AI vs. Traditional Hiring'}
-							description={
-								'Compare the benefits of AI-powered recruitment with traditional methods and see how KoalaByte gives recruiters a competitive edge.'
-							}
-							// navigatePath='*'
-						/>
-					</motion.div>
-					<motion.div variants={itemVariants}>
-						<LatestCard
-							image='/assets/driven.png'
-							headingA={'Human Resource Strategies'}
-							headingB={'8 min read'}
-							title={'Data-Driven Hiring: How to Make Smarter Recruitment Decisions'}
-							description={
-								'Learn how analytics and AI can optimize your hiring process for better outcomes.'
-							}
-							// navigatePath='/Blog/BlogPost'
-						/>
-					</motion.div>
-					<motion.div variants={itemVariants}>
-						<LatestCard
-							image='/assets/man.png'
-							headingA={'Technology'}
-							headingB={'8 min read'}
-							title={'Future of Interviews in Hiring Process'}
-							description={
-								'Understand how AI is transforming recruitment and improving decision-making.'
-							}
-						/>
-					</motion.div>
-				</motion.div>
-			</motion.section>
+			<CaseStudieSection/>
 
 			{/* Pricing Section */}
 			<motion.section

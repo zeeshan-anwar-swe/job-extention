@@ -61,8 +61,6 @@ export const EditCVFormPartial = ({
     }
   }, [cadnidateProfile]); // Added formik.setValues to the dependency array
 
-  
-
   return (
     <Card className="col-span-9 flex flex-col gap-2 max-lg:col-span-12">
       <CardHeader className="!block">
@@ -90,7 +88,27 @@ export const EditCVFormPartial = ({
               checked={formik.values.action === "create" ? true : false}
             />
             {formik.values.action === "create" && (
-              <JobSelectorForCustomCV formik={formik} />
+              <div>
+                <Label htmlFor="customCVTitle">Custom CV Title</Label>
+                <Validation
+                  isValid={formik.isValid}
+                  isTouched={formik.touched.customCVTitle}
+                  invalidFeedback={formik.errors.customCVTitle}
+                  validFeedback=""
+                >
+                  <FieldWrap>
+                    <Input
+                      dimension="lg"
+                      id="customCVTitle"
+                      name="customCVTitle"
+                      placeholder="Enter CV Title"
+                      value={formik.values.customCVTitle}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                  </FieldWrap>
+                </Validation>
+              </div>
             )}
           </div>
 

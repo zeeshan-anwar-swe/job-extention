@@ -13,7 +13,7 @@ const ChatWithRecruiterPage = () => {
 	);
 
 	if (data) {
-		navigateTo(`/chat/${data.id}`, {
+		navigateTo(`/dashboard/chat/${data.id}`, {
 			state: { userName: data.firstName + ' ' + data.lastName, userId: data.id },
 		});
 	}

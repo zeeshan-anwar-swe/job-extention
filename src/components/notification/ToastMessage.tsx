@@ -35,8 +35,8 @@ export const ToastMessage = ({ t, msg }: { t: any; msg: Message }) => {
     const handleClick = () => {
         // toast.dismiss(t.id)
 
-		if(pathname !== `/chat/${msg?.senderId}`){
-			navigateTo(`/chat/${msg?.senderId}`, {state: {userName: msg.sender.firstName+" "+msg.sender.lastName, userId: msg.senderId}});
+		if(pathname !== `/dashboard/chat/${msg?.senderId}`){
+			navigateTo(`/dashboard/chat/${msg?.senderId}`, {state: {userName: msg.sender.firstName+" "+msg.sender.lastName, userId: msg.senderId}});
 		}
 		
     }

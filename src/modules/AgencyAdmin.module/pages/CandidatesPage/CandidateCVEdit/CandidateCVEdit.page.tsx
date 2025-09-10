@@ -34,6 +34,7 @@ interface SocialLink {
 
 export type EditCVFormValues = {
   isShowImage: "0" | "1";
+  customCVTitle:string;
   selectedJob: { label: string; value: string };
   action: "create" | "update" | "";
   name: string;
@@ -61,6 +62,7 @@ const CandidateCVEditPage = () => {
 
   const formik = useFormik({
     initialValues: {
+      customCVTitle:"",
       action: "update",
       isShowImage: "1",
       name: "",
@@ -101,8 +103,8 @@ const CandidateCVEditPage = () => {
       }
 
       if (values.action === "create") {
-        if (!values.selectedJob.value) {
-          errors.selectedJob = { label: "", value: "Required" };
+        if (!values.customCVTitle) {
+          errors.customCVTitle = "Custom CV Title is required";
         }
       }
 
@@ -114,9 +116,9 @@ const CandidateCVEditPage = () => {
         name,
         action,
         cvText,
-
         isShowImage,
         roles,
+        customCVTitle,
         experience,
         education,
         skills,
@@ -143,10 +145,9 @@ const CandidateCVEditPage = () => {
         action === "update" &&
           formData.append("jobProfileId", state.selectedJob.id);
       } else if (action === "create") {
-        formData.append("jobId", selectedJob.value);
+        formData.append("customCVTitle", customCVTitle);
         formData.append("candidateId", state.candidate.id);
       }
-
       const stringifiedCVText = await JSON.stringify(cvText);
       formData.append("cv", stringifiedCVText);
       formData.append("isShowImage", isShowImage);

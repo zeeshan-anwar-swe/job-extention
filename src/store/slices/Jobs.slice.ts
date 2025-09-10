@@ -28,7 +28,9 @@ interface InitialStateType {
 	paginationCount: number;
 	locallySearchedJobs: any[];
 	assignedCandidatesWhileCreatingJob: LinkedInProfile[];
+	assignedCustomCandidatesWhileCreatingJob: LinkedInProfile[];
 	assignedCandidatesWhileUpdatingJob: any[];
+	assignedCustomCandidatesWhileUpdatingJob: any[];
 	assignedClientWhileCreatingJob: any | null;
 	jobDetails: JobDetailsType | null;
 	clientJobs: ClientJobsStateType;
@@ -47,7 +49,9 @@ const initialState: InitialStateType = {
 	searchedTeamListForJob: [],
 	locallySearchedJobs: [],
 	assignedCandidatesWhileCreatingJob: [],
+	assignedCustomCandidatesWhileCreatingJob: [],
 	assignedCandidatesWhileUpdatingJob: [],
+	assignedCustomCandidatesWhileUpdatingJob: [],
 	assignedClientWhileCreatingJob: null,
 	jobDetails: null,
 	pageLoading: false,
@@ -239,13 +243,22 @@ export const jobsSlice = createSlice({
 				action.payload,
 			);
 		},
+
 		setAssignedCandidatesWhileCreatingJob: (state, action: PayloadAction<LinkedInProfile[]>) => {
 			state.assignedCandidatesWhileCreatingJob = action.payload;
 		},
 
 		setAssignedCandidatesWhileUpdatingJob: (state, action: PayloadAction<any[]>) => {
-			state.assignedCandidatesWhileUpdatingJob = action.payload;
+			state.assignedCustomCandidatesWhileUpdatingJob = action.payload;
 		},
+		setCustomCandidatesWhileCreatingJob: (state, action: PayloadAction<LinkedInProfile[]>) => {
+			state.assignedCustomCandidatesWhileCreatingJob = action.payload;
+		},
+
+		setCustomCandidatesWhileUpdatingJob: (state, action: PayloadAction<LinkedInProfile[]>) => {
+			state.assignedCustomCandidatesWhileUpdatingJob = action.payload;
+		},
+
 
 		setClientWhileCreatingJob: (state, action: PayloadAction<any>) => {
 			state.assignedClientWhileCreatingJob = action.payload;
@@ -261,6 +274,20 @@ export const jobsSlice = createSlice({
 		assignCandidateWhileUpdatingJob: (state, action: PayloadAction<any[]>) => {
 			state.assignedCandidatesWhileUpdatingJob = addOrRemoveObjectId(
 				state.assignedCandidatesWhileUpdatingJob,
+				action.payload,
+			);
+		},
+
+		assignCustomCandidateWhileCreatingJob: (state, action: PayloadAction<LinkedInProfile>) => {
+			state.assignedCustomCandidatesWhileCreatingJob = addOrRemoveObject(
+				state.assignedCustomCandidatesWhileCreatingJob,
+				action.payload,
+			);
+		},
+
+		assignCustomCandidateWhileUpdatingJob: (state, action: PayloadAction<any[]>) => {
+			state.assignedCustomCandidatesWhileUpdatingJob = addOrRemoveObjectId(
+				state.assignedCustomCandidatesWhileUpdatingJob,
 				action.payload,
 			);
 		},
@@ -494,6 +521,10 @@ export const {
 	assignCandidateWhileCreatingJob,
 	setClientWhileCreatingJob,
 	setSearchedTeamListForJob,
+	setCustomCandidatesWhileCreatingJob,
+	setCustomCandidatesWhileUpdatingJob,
+	assignCustomCandidateWhileCreatingJob,
+	assignCustomCandidateWhileUpdatingJob,
 	setJobDetailsById,
 	searchStoredJobs,
 	setCurrentPage,

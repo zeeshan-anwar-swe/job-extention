@@ -3,9 +3,9 @@ import { AppDispatch } from '../../../../store';
 import { FC, useEffect, useState } from 'react';
 import Icon from '../../../../components/icon/Icon';
 import Input from '../../../../components/form/Input';
+import Button from '../../../../components/ui/Button';
 import FieldWrap from '../../../../components/form/FieldWrap';
 import { FilterOptionsType } from '../../../../types/slices.type/candidate.slice.type';
-import Button from '../../../../components/ui/Button';
 
 interface SearchComponentProps {
 	filterOptions: FilterOptionsType;
@@ -23,10 +23,10 @@ const SearchPartial: FC<SearchComponentProps> = ({
 	setFilterOptions,
 }) => {
 	const emptyFilterOptions: FilterOptionsType = {
-		keywords: '',
-		tenure: { min: 0, max: 0 },
-		location: [],
 		skills: [],
+		keywords: '',
+		location: [],
+		tenure: { min: 0, max: 0 },
 	};
 	const [searchValue, setSearchValue] = useState<string>('');
 	const dispatch: AppDispatch = useDispatch();
@@ -46,10 +46,12 @@ const SearchPartial: FC<SearchComponentProps> = ({
 	};
 
 	const clearSearch = async () => {
-		dispatch(
-			searchListAction({ limit: searchLimit, page: 1, filterOptions: emptyFilterOptions }),
-		);
+		setSearchValue("")
 		dispatch(setFilterOptions(emptyFilterOptions));
+
+		dispatch(
+			searchListAction({ limit: searchLimit, page: 1}),
+		);
 	};
 
 	const handleChange = (data: string) => {

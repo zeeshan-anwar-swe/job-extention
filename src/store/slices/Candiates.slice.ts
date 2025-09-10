@@ -8,6 +8,7 @@ import {
   GetMoreCandidatesParamsType,
   TCandidateListItem,
 } from "../../types/slices.type/candidate.slice.type";
+import { values } from "lodash";
 
 type UseType = "cursor" | "page";
 
@@ -32,7 +33,7 @@ export interface FilterOptionsType {
   keywords?: string;
   skills?: string[];
   tenure?: FilterOptionTenure;
-  location?: FilterOptionLocation[];
+  location: FilterOptionLocation[];
 }
 
 export interface LocationTypeBase {
@@ -46,6 +47,7 @@ export type LocationType =
 
 export interface LinkedInProfile {
   id: string;
+  experience?:number;
   recordId: string;
   name: string;
   firstName: string;
@@ -472,10 +474,53 @@ export const getMoreAllCandidatesList = createAsyncThunk(
 
       const newUrl = candidateSource ? `${url}&source=${candidateSource}` : url;
 
-	  console.log({newUrl});
+      console.log({ newUrl });
       const response = await axiosInstance.post(newUrl, filterOptions);
-	  
 
+      return response.data.data;
+    } catch (error: any) {
+      return withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+export const getCustomProfiles = createAsyncThunk(
+  "candidates/getCustomProfiles",
+  async (
+    { page, limit, filterOptions }: GetAllCandidatesParamsType,
+    { rejectWithValue },
+  ) => {
+    try {
+      const newFilterOptions: {
+        keywords: string;
+        skills: string[];
+        location: FilterOptionLocation[];
+        tenure: FilterOptionTenure | null;
+      } = {
+        keywords: "",
+        skills: [],
+        location: [],
+        tenure: { min: 0, max: 0 },
+      };
+
+      if (filterOptions) {
+        newFilterOptions.keywords = filterOptions.keywords || "";
+        newFilterOptions.skills = filterOptions.skills || [];
+        newFilterOptions.location = filterOptions.location || [];
+        if (filterOptions.tenure) {
+          if (filterOptions.tenure?.min === 0) {
+            newFilterOptions.tenure = null;
+          } else {
+            newFilterOptions.tenure = filterOptions.tenure;
+          }
+        }
+      }
+
+      const url = `/linkedin-candidate/custom-profile/list?page=${page}&limit=${limit}`;
+      const response = await axiosInstance.post(
+        url,
+        filterOptions ? newFilterOptions : null,
+      );
       return response.data.data;
     } catch (error: any) {
       return withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -488,6 +533,7 @@ export const candidatesSlice = createSlice({
   initialState,
   reducers: {
     setCandidateSource: (state, action: PayloadAction<TCandidateSource>) => {
+      // state.pageLoading = true;
       state.candidateSource = action.payload;
     },
     setLoactionLoading: (state, action: PayloadAction<boolean>) => {
@@ -621,6 +667,24 @@ export const candidatesSlice = createSlice({
         state.pageLoading = false;
       })
       .addCase(getMoreAllCandidatesList.rejected, (state, action) => {
+        state.pageLoading = false;
+        state.error = action.payload || {
+          message: "Unknown error occurred while inviting client",
+        };
+      })
+
+      .addCase(getCustomProfiles.pending, (state) => {
+        state.pageLoading = true;
+        state.filteredCandidate = [];
+        state.allCadidateList= [];
+        state.error = null;
+      })
+      .addCase(getCustomProfiles.fulfilled, (state, action) => {
+        state.allCadidateList = action.payload.rows;
+        state.paginationCount = action.payload.count;
+        state.pageLoading = false;
+      })
+      .addCase(getCustomProfiles.rejected, (state, action) => {
         state.pageLoading = false;
         state.error = action.payload || {
           message: "Unknown error occurred while inviting client",

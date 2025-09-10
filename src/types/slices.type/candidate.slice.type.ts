@@ -99,7 +99,7 @@ export interface FilterOptionsType {
 	keywords?: string;
 	skills?: string[];
 	tenure?: FilterOptionTenure;
-	location?: FilterOptionLocation[];
+	location: FilterOptionLocation[];
 }
 
 
@@ -116,7 +116,8 @@ export interface GetAllCandidatesParamsType {
 export interface GetMoreCandidatesParamsType {
   page: number;
   limit: number;
-  cursor: string | null;
+  cursor?: string | null;
   filterOptions: FilterOptionsType;
   candidateSource?: TCandidateSource;
 }
+

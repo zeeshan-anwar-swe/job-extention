@@ -40,7 +40,7 @@ export interface FormData {
 }
 
 const CreateJobLeftSidePartial = () => {
-  const { assignedCandidatesWhileCreatingJob, assignedClientWhileCreatingJob } =
+  const { assignedCandidatesWhileCreatingJob, assignedClientWhileCreatingJob, assignedCustomCandidatesWhileCreatingJob } =
     useSelector((state: RootState) => state.jobsSlice);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -58,9 +58,14 @@ const CreateJobLeftSidePartial = () => {
     skills: [],
   });
 
+console.log({assignedCustomCandidatesWhileCreatingJob});
+
+
   const dispatchCreateJob = async () => {
     setIsSubmitting(true);
     const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
+    const customCandidateIds = await assignedCustomCandidatesWhileCreatingJob.map((c: any) => c.id);
+
 
     if (formData.title.length < 3) {
       toast.error("Enter at least 3 characters for title");
@@ -97,13 +102,13 @@ const CreateJobLeftSidePartial = () => {
     const newFormData = await {
       ...formData,
       description: strigifiedDescription,
+      customCandidateIds,
     };
 
-    console.log({ newFormData });
-
+    
     // @ts-ignore
     // prettier-ignore
-    await dispatch(createJobs( isAssigned ? {...newFormData,clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: newFormData));
+    await dispatch(createJobs( isAssigned ? {...newFormData, clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: newFormData));
     setIsSubmitting(false);
     navigate('/dashboard/jobs');
   };
@@ -177,12 +182,23 @@ const CreateJobLeftSidePartial = () => {
       <CardFooter className="!flex-col !items-start">
         <CardFooterChild>
           {assignedCandidatesWhileCreatingJob.length > 0 && (
-            <CardTitle>Assigned Candidates</CardTitle>
+            <CardTitle>Assigned LinkedIn Candidates</CardTitle>
           )}
 
           <div className="flex w-full flex-wrap items-center gap-4 max-md:flex-col max-md:items-start">
             {assignedCandidatesWhileCreatingJob.map((candidate: any) => (
-              <ResultUserDataPartial candidate={candidate} key={candidate.id} />
+              <ResultUserDataPartial isCustomCandidate={false} candidate={candidate} key={candidate.id} />
+            ))}
+          </div>
+        </CardFooterChild>
+        <CardFooterChild>
+          {assignedCustomCandidatesWhileCreatingJob.length > 0 && (
+            <CardTitle>Assigned Custom Candidates</CardTitle>
+          )}
+
+          <div className="flex w-full flex-wrap items-center gap-4 max-md:flex-col max-md:items-start">
+            {assignedCustomCandidatesWhileCreatingJob.map((candidate: any) => (
+              <ResultUserDataPartial isCustomCandidate={true} candidate={candidate} key={candidate.id} />
             ))}
           </div>
         </CardFooterChild>

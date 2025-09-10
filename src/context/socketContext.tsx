@@ -85,12 +85,12 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 			const currentChatMatch = pathname.match(/\/chat\/([^/]+)/);
 
 			const currentChatUserId = currentChatMatch ? currentChatMatch[1] : null;
-			console.log({
-				pathname,
-				'/chat/${msg?.senderId}': `/chat/${msg?.senderId}`,
-				'/chat/${msg?.receiverId}': `/chat/${msg?.receiverId}`,
-			});
-			if (pathname === `/chat/${msg?.senderId}` || pathname === `/chat/${msg?.receiverId}`) {
+			// console.log({
+			// 	pathname,
+			// 	'/dashboard/chat/${msg?.senderId}': `/dashboard/chat/${msg?.senderId}`,
+			// 	'/dashboard/chat/${msg?.receiverId}': `/dashboard/chat/${msg?.receiverId}`,
+			// });
+			if (pathname === `/dashboard/chat/${msg?.senderId}` || pathname === `/dashboard/chat/${msg?.receiverId}`) {
 				if (currentChatUserId !== userId) {
 					playMessageSound();
 					toast.dismiss();
