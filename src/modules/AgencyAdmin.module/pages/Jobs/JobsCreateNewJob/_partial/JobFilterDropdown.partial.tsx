@@ -14,7 +14,6 @@ import {
   FilterOptionsType,
   getAllCandidatesList,
   getCustomProfiles,
-  getFilteredCandidates,
   setCandidatesFilterOptions,
   setCandidatesLocations,
   setCandidatesSearch,
@@ -154,17 +153,13 @@ const JobFilterDropdownPartial = () => {
   };
 
   const applyFilter = () => {
-    const { location, tenure, skills, keywords } = filterOptions;
 
     if (candidateSource === "linkedin") {
       dispatch(
-        getFilteredCandidates({
+        getAllCandidatesList({
           page: 1,
           limit: 10,
-          skills,
-          location,
-          keywords,
-          tenure,
+          filterOptions
         }),
       );
     } else {

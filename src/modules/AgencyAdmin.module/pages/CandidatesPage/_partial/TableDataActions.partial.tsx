@@ -4,11 +4,15 @@ import { useState } from "react";
 
 import {
   getAgencyCandidatesList,
+  inviteAndChangeCandidateStatus,
   removeAgencyCandidate,
 } from "../../../../../store/slices/Candiates.slice";
 import ConfirmationModal from "../../../../../components/modal/ConfirmationModal";
 import { AssignClientModalPartial } from "../../../common/AssignClientModal/Modal.partial";
 import { TCandidateJobProfile } from "../../../../../types/slices.type/candidate.slice.type";
+import { ChangeCandidatesStatusModalPartial } from "../../../../Shared/common/changeCandidateStatusModal/Modal.partial";
+import { cn } from "../../../../../utils/cn";
+import { CandidateJobStatus } from "../../../../../types/enums/candidateJobStatus.enum";
 
 const TableDataActionsPartial = ({
   candidate,
@@ -18,13 +22,20 @@ const TableDataActionsPartial = ({
   selectedJob: TCandidateJobProfile;
 }) => {
   const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
+  const [inviteModal, setInviteModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
-  console.log("TableDataActionsPartial", { candidate });
+  inviteModal && console.log({ candidate, selectedJob });
 
   return (
     <>
       <div className="flex justify-center">
+        <Button
+          className={cn(selectedJob?.status !== CandidateJobStatus.SHORTLISTED ? "hidden" : "")}
+          onClick={() => setInviteModal(true)}
+        >
+          Invite for Interview
+        </Button>
         <Button onClick={() => setAssignClientModal(true)}>
           Assign to Client
         </Button>
@@ -55,6 +66,18 @@ const TableDataActionsPartial = ({
           assignTo={candidate.id}
           modal={assignClientModal}
           setModal={setAssignClientModal}
+        />
+      )}
+
+      {inviteModal && (
+        <ChangeCandidatesStatusModalPartial
+          modal={inviteModal}
+          setModal={setInviteModal}
+          candidateId={selectedJob.id}
+          candidateName={candidate?.name ?? ""}
+          action={inviteAndChangeCandidateStatus}
+          changeStatusTo={CandidateJobStatus.SCHEDULE_INTERVIEW}
+          reFreshList={getAgencyCandidatesList({ page: 1, limit: 10 })}
         />
       )}
     </>

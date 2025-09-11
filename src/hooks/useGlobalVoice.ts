@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { AppDispatch } from "../store";
 import {
-  getFilteredCandidates,
+  getAllCandidatesList,
   getLocationForCandidates,
   setCandidatesFilterOptions,
 } from "../store/slices/Candiates.slice";
@@ -385,7 +385,7 @@ export function useGlobalVoice() {
 
               dispatch(setCandidatesFilterOptions(payload));
               dispatch(
-                getFilteredCandidates({
+                getAllCandidatesList({
                   page: 1,
                   limit: 10,
                   ...payload,

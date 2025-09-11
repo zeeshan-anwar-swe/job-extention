@@ -66,16 +66,8 @@ export const EditCVFormPartial = ({
       <CardHeader className="!block">
         <CardTitle>CV Details</CardTitle>
         <CardSubTitle>Edit and Update Candidate CV</CardSubTitle>
-      </CardHeader>
-      <CardBody>
-        <form
-          className="flex flex-col gap-4"
-          noValidate
-          onSubmit={formik.handleSubmit}
-        >
-          <div className="grid grid-cols-1 gap-4">
-            <Checkbox
-              variant="default"
+        <Checkbox
+              variant="switch"
               label="Create as Custom Candidate"
               id="optionA"
               onChange={(e) => {
@@ -87,6 +79,15 @@ export const EditCVFormPartial = ({
               }}
               checked={formik.values.action === "create" ? true : false}
             />
+      </CardHeader>
+      <CardBody>
+        <form
+          className="flex flex-col gap-4"
+          noValidate
+          onSubmit={formik.handleSubmit}
+        >
+          <div className="grid grid-cols-1 gap-4">
+            
             {formik.values.action === "create" && (
               <div>
                 <Label htmlFor="customCVTitle">Custom CV Title</Label>

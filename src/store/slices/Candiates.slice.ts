@@ -9,6 +9,7 @@ import {
   TCandidateListItem,
 } from "../../types/slices.type/candidate.slice.type";
 import { values } from "lodash";
+import { CandidateJobStatus } from "../../types/enums/candidateJobStatus.enum";
 
 type UseType = "cursor" | "page";
 
@@ -47,7 +48,7 @@ export type LocationType =
 
 export interface LinkedInProfile {
   id: string;
-  experience?:number;
+  experience?: number;
   recordId: string;
   name: string;
   firstName: string;
@@ -287,46 +288,6 @@ export const getAgencyCandidatesCsvList = createAsyncThunk(
   },
 );
 
-export const getFilteredCandidates = createAsyncThunk(
-  "candidates/getFilteredCandidates",
-  async (
-    {
-      page = 1,
-      limit = 10,
-      location = [],
-      tenure = { min: 0, max: 0 },
-      skills = [],
-      keywords = "",
-    }: {
-      page?: number;
-      limit?: number;
-      location?: FilterOptionLocation[];
-      tenure?: FilterOptionTenure;
-      skills?: string[];
-      keywords?: string;
-    },
-    { rejectWithValue },
-  ) => {
-    try {
-      const response = await axiosInstance.post(
-        `/unipile-linkedin/search?page=${page}&limit=${limit}`,
-        {
-          location,
-          keywords,
-          tenure,
-          skills,
-        },
-      );
-      if (response.data.data.data.length < 1) {
-        toast.error("No candidates found");
-      }
-      return response.data.data;
-    } catch (error: any) {
-      return await withAsyncThunkErrorHandler(error, rejectWithValue);
-    }
-  },
-);
-
 export const assignJobToCandidate = createAsyncThunk(
   "candidates/assignJobToCandidate",
   async (
@@ -440,13 +401,11 @@ export const updateCandidateProfile = createAsyncThunk(
 export const getAllCandidatesList = createAsyncThunk(
   "candidates/getAllCandidatesList",
   async (
-    { page, limit, filterOptions, candidateSource }: GetAllCandidatesParamsType,
+    { page, limit, filterOptions }: GetAllCandidatesParamsType,
     { rejectWithValue },
   ) => {
     try {
-      const url = `/unipile-linkedin/search?page=${page}&limit=${limit}${
-        candidateSource ? `&source=${candidateSource}` : ""
-      }`;
+      const url = `/unipile-linkedin/search?page=${page}&limit=${limit}`;
       const response = await axiosInstance.post(url, filterOptions);
       return response.data.data;
     } catch (error: any) {
@@ -458,24 +417,14 @@ export const getAllCandidatesList = createAsyncThunk(
 export const getMoreAllCandidatesList = createAsyncThunk(
   "candidates/getMoreAllCandidatesList",
   async (
-    {
-      page,
-      limit,
-      cursor,
-      filterOptions,
-      candidateSource,
-    }: GetMoreCandidatesParamsType,
+    { page, limit, cursor, filterOptions }: GetMoreCandidatesParamsType,
     { rejectWithValue },
   ) => {
     try {
       const url = `/unipile-linkedin/search?page=${page}&limit=${limit}${
         cursor ? `&cursor=${cursor}` : ""
       }`;
-
-      const newUrl = candidateSource ? `${url}&source=${candidateSource}` : url;
-
-      console.log({ newUrl });
-      const response = await axiosInstance.post(newUrl, filterOptions);
+      const response = await axiosInstance.post(url, filterOptions);
 
       return response.data.data;
     } catch (error: any) {
@@ -522,6 +471,31 @@ export const getCustomProfiles = createAsyncThunk(
         filterOptions ? newFilterOptions : null,
       );
       return response.data.data;
+    } catch (error: any) {
+      return withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+export const inviteAndChangeCandidateStatus = createAsyncThunk(
+  "candidates/inviteAndChangeCandidateStatus",
+  async (
+    {
+      meetingLink,
+      candidateId,
+      status,
+    }: { meetingLink: string; candidateId: string; status: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await axiosInstance.put(
+        `/linkedin-candidate/${candidateId}/status`,
+        {
+          status,
+          meetingLink,
+        },
+      );
+      return response.data;
     } catch (error: any) {
       return withAsyncThunkErrorHandler(error, rejectWithValue);
     }
@@ -622,23 +596,6 @@ export const candidatesSlice = createSlice({
         state.modalLoading = false;
       })
 
-      .addCase(getFilteredCandidates.pending, (state) => {
-        state.pageLoading = true;
-        state.error = null;
-      })
-      .addCase(getFilteredCandidates.fulfilled, (state, action) => {
-        state.allCadidateList = [];
-        state.filteredCandidate = action.payload.data;
-        state.paginationCount = action.payload.count;
-        state.pageLoading = false;
-      })
-      .addCase(getFilteredCandidates.rejected, (state, action) => {
-        state.pageLoading = false;
-        state.error = action.payload || {
-          message: "Unknown error occurred while inviting client",
-        };
-      })
-
       .addCase(getAllCandidatesList.pending, (state) => {
         state.pageLoading = true;
         state.error = null;
@@ -676,7 +633,7 @@ export const candidatesSlice = createSlice({
       .addCase(getCustomProfiles.pending, (state) => {
         state.pageLoading = true;
         state.filteredCandidate = [];
-        state.allCadidateList= [];
+        state.allCadidateList = [];
         state.error = null;
       })
       .addCase(getCustomProfiles.fulfilled, (state, action) => {

@@ -14,14 +14,11 @@ import Icon from '../../../../../../components/icon/Icon';
 import { AppDispatch } from '../../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	FilterOptionsType,
 	getAllCandidatesList,
-	getFilteredCandidates,
 	setCandidatesFilterOptions,
 } from '../../../../../../store/slices/Candiates.slice';
 import { RootState } from '../../../../../../store';
 import { JobsFilterDropdownLocation } from './JobsFilterDropdownLocation';
-import toast from 'react-hot-toast';
 
 interface ExperienceItem {
 	title: string;
@@ -55,9 +52,6 @@ const JobFilterDropdownPartial = () => {
 		{ title: '10+ Year', value: 11 },
 	];
 
-	const handleMouseEnter = () => {
-		setDropdownOpen(true);
-	};
 
 	const handleMouseLeave = () => {
 		setDropdownOpen(true);
@@ -146,20 +140,11 @@ const JobFilterDropdownPartial = () => {
 		);
 	};
 
-	const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value } = event.target;
-		// dispatch(setCandidatesFilterOptions({ ...filterOptions, location: value }));
-	};
-
-	const handleSkillsChange = () => {
-		dispatch(setCandidatesFilterOptions({ ...filterOptions, skills: formData.skills }));
-	};
+	
 
 	const applyFilter = () => {
-		const { location, tenure, skills, keywords } = filterOptions;
-		
 
-		dispatch(getFilteredCandidates({ page: 1, limit: 10, skills, keywords, tenure }));
+		dispatch(getAllCandidatesList({ page: 1, limit: 10, filterOptions }));
 		setDropdownOpen(false);
 	};
 
