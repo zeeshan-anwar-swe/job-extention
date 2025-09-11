@@ -44,7 +44,7 @@ const JobsViewCandidatesPage = () => {
 
 	const dispatch: AppDispatch = useDispatch();
 
-	console.log('jobDetails', jobDetails);
+
 	
 	useEffect(() => {
 		dispatch(getJobDetails(state?.id ?? ''));
@@ -53,6 +53,9 @@ const JobsViewCandidatesPage = () => {
 	const reFreshList = () => dispatch(getJobDetails(state?.id ?? ''));
 
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+	console.log({jobDetails});
+	
 
 	return (
 		<>
@@ -138,6 +141,7 @@ const JobsViewCandidatesPage = () => {
 							</CardFooter>
 						</Card>
 						<JobFormPartial jobDetails={jobDetails} />
+
 					</Container>
 				</PageLoader>
 			</PageWrapper>

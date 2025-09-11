@@ -6,13 +6,14 @@ import { setCandidateSource } from "../../../../../../store/slices/Candiates.sli
 
 export const CandidateTypeSwitch = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { candidateSource } = useSelector(
+  const { candidateSource, pageLoading } = useSelector(
     (state: RootState) => state.candidates,
   );
   return (
     <Card className="w-full ">
       <CardHeaderChild>
         <Button
+          isDisable={pageLoading}
           onClick={() => dispatch(setCandidateSource("linkedin"))}
           variant={candidateSource === "linkedin" ? "solid" : "outline"}
           icon="HeroLinkedIn"
@@ -22,6 +23,7 @@ export const CandidateTypeSwitch = () => {
         </Button>
 
         <Button
+          isDisable={pageLoading}
           onClick={() => dispatch(setCandidateSource("custom"))}
           variant={candidateSource === "custom" ? "solid" : "outline"}
           icon="HeroDocumentText"

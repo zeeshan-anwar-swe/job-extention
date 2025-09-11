@@ -117,7 +117,9 @@ const JobFormPartial = ({ jobDetails }: any) => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardHeader className=' !justify-start'>
-				<Button
+				{
+					jobDetails?.client&&
+					<Button
 					variant='outline'
 					color='zinc'
 					rounded='rounded-full'
@@ -131,7 +133,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					</ImageLoaderWraper>
 					<span>{textValidationCheck(jobDetails.client?.clientUser?.firstName)}</span>
 					<span>{textValidationCheck(jobDetails.client?.clientUser?.lastName)}</span>
-				</Button>
+				</Button>}
 
 				<Button
 					variant='solid'

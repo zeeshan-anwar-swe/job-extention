@@ -62,7 +62,7 @@ const TableDataActionsPartial = ({
       </div>
       {assignClientModal && (
         <AssignClientModalPartial
-          title={`Assign Client to Candiate: ${candidate?.name ?? ""}`}
+          title={`Assign candidate to client: ${candidate?.name ?? ""}`}
           assignTo={candidate.id}
           modal={assignClientModal}
           setModal={setAssignClientModal}
