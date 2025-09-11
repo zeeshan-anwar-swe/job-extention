@@ -12,20 +12,22 @@ import {
   assignManyCandidatesToJob,
   setAssignedCandidatesWhileCreatingJob,
   setAssignedCandidatesWhileUpdatingJob,
+  setCustomCandidatesWhileCreatingJob,
+  setCustomCandidatesWhileUpdatingJob,
 } from "../../../../store/slices/Jobs.slice";
 import {
+  assignManyCustomCanidatesToJob,
   getAllCandidatesList,
   getCustomProfiles,
   getMoreAllCandidatesList,
+  setAllCandidates,
   setCandidatesFilterOptions,
-  setCandidatesSearch,
 } from "../../../../store/slices/Candiates.slice";
 import PageLoader from "../../../../templates/layouts/main/PageLoader";
 import { cn } from "../../../../utils/cn";
 import { LinkedInCandidateCardPartial } from "./linkedInCandidateCard.partial";
 import { useEffect, useState } from "react";
 import { CursorBasePagination } from "../../../../components/ui/CusrorBasePagination";
-import { get } from "lodash";
 import JobFilterDropdownPartial from "../../../AgencyAdmin.module/pages/Jobs/JobsCreateNewJob/_partial/JobFilterDropdown.partial";
 import { CandidateTypeSwitch } from "../../../AgencyAdmin.module/pages/Jobs/JobsCreateNewJob/_partial/CandidateTypeSwitch";
 import { NavSeparator } from "../../../../components/layouts/Navigation/Nav";
@@ -46,7 +48,6 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
 }) => {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const {
-    filteredCandidate,
     allCadidateList,
     candidateSource,
     paginationCount,
@@ -56,11 +57,10 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
     next,
   } = useSelector((state: RootState) => state.candidates);
 
-  const isFiltered = filteredCandidate?.length > 0;
 
   const dispatch: AppDispatch = useDispatch();
 
-  const { assignedCandidatesWhileCreatingJob } = useSelector(
+  const { assignedCandidatesWhileCreatingJob, assignedCustomCandidatesWhileCreatingJob } = useSelector(
     (state: RootState) => state.jobsSlice,
   );
 
@@ -78,10 +78,26 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
         }),
       );
     }
+
+     if (assignedCustomCandidatesWhileCreatingJob.length > 0) {
+      const profileIds = await assignedCustomCandidatesWhileCreatingJob.map(
+        (candidate) => candidate.id,
+      );
+
+      await dispatch(
+        assignManyCustomCanidatesToJob({
+          jobId,
+          profileIds,
+        }),
+      );
+    }
+
     setSubmitLoading(false);
     setModal(false);
     await dispatch(setAssignedCandidatesWhileUpdatingJob([]));
     await dispatch(setAssignedCandidatesWhileCreatingJob([]));
+    await dispatch(setCustomCandidatesWhileCreatingJob([]));
+    await dispatch(setCustomCandidatesWhileUpdatingJob([]));
     reFreshList && reFreshList();
   };
 
@@ -90,6 +106,10 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
       if (candidateSource === "linkedin") {
         dispatch(getAllCandidatesList({ page: 1, limit: 10, filterOptions }));
       }
+    }
+
+    return () => {
+      dispatch(setAllCandidates([]));
     }
   }, [candidateSource]);
 
@@ -119,16 +139,16 @@ export const AssignLinkedInCandiatesToJobModalPartial = ({
         className={cn(
           "!flex !w-full !flex-col !gap-4",
           pageLoading || error || allCadidateList.length === 0
-            ? "max-h-[500px] !min-h-[500px] justify-center"
-            : "max-h-[500px] !min-h-[500px]",
+            ? "max-h-[500px] justify-center"
+            : "max-h-[500px] ",
         )}
       >
         <PageLoader
-          data={!isFiltered ? allCadidateList : filteredCandidate}
+          data={allCadidateList}
           loading={pageLoading}
           error={error}
         >
-          {(!isFiltered ? allCadidateList : filteredCandidate).map(
+          {allCadidateList.map(
             (candidate) => (
               <LinkedInCandidateCardPartial
                 candidate={candidate}

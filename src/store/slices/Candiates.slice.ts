@@ -502,6 +502,27 @@ export const inviteAndChangeCandidateStatus = createAsyncThunk(
   },
 );
 
+export const assignManyCustomCanidatesToJob = createAsyncThunk(
+  "candidates/assignManyCustomCanidatesToJob",
+  async (
+    { jobId, profileIds }: { jobId: string; profileIds: string[] },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await axiosInstance.post(
+        "/linkedin-candidate/assign-job/custom/many",
+        {
+          jobId,
+          profileIds,
+        },
+      );
+      return response.data;
+    } catch (error: any) {
+      return withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
 export const candidatesSlice = createSlice({
   name: "candidates",
   initialState,
@@ -529,6 +550,9 @@ export const candidatesSlice = createSlice({
 
     setCandidatesLocations: (state, action: PayloadAction<any[]>) => {
       state.location.rows = action.payload;
+    },
+    setAllCandidates: (state, action: PayloadAction<any[]>) => {
+      state.allCadidateList = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -601,7 +625,6 @@ export const candidatesSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllCandidatesList.fulfilled, (state, action) => {
-        state.filteredCandidate = [];
         state.allCadidateList = action.payload.data;
         state.next = action.payload.next;
         state.pageLoading = false;
@@ -618,7 +641,6 @@ export const candidatesSlice = createSlice({
         state.error = null;
       })
       .addCase(getMoreAllCandidatesList.fulfilled, (state, action) => {
-        state.filteredCandidate = [];
         state.allCadidateList.push(...action.payload.data);
         state.next = action.payload.next;
         state.pageLoading = false;
@@ -632,9 +654,8 @@ export const candidatesSlice = createSlice({
 
       .addCase(getCustomProfiles.pending, (state) => {
         state.pageLoading = true;
-        state.filteredCandidate = [];
-        state.allCadidateList = [];
         state.error = null;
+        state.allCadidateList = [];
       })
       .addCase(getCustomProfiles.fulfilled, (state, action) => {
         state.allCadidateList = action.payload.rows;
@@ -713,6 +734,7 @@ export const candidatesSlice = createSlice({
 });
 
 export const {
+  setAllCandidates,
   setLoactionLoading,
   setCandidateSource,
   setCandidateProfile,

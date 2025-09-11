@@ -10,7 +10,7 @@ import { NavSeparator } from "../../../../components/layouts/Navigation/Nav";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store";
-import { assignCandidateWhileCreatingJob } from "../../../../store/slices/Jobs.slice";
+import { assignCandidateWhileCreatingJob, assignCustomCandidateWhileCreatingJob } from "../../../../store/slices/Jobs.slice";
 import { objectExistsInArray } from "../../../../utils/helper";
 import { LinkedInProfile } from "../../../../store/slices/Candiates.slice";
 import useImageValidation from "../../../../hooks/useImageValidation";
@@ -23,11 +23,13 @@ export const LinkedInCandidateCardPartial = ({
 }) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { assignedCandidatesWhileCreatingJob } = useSelector(
-    (state: RootState) => state.jobsSlice,
+  const { candidateSource } = useSelector(
+    (state: RootState) => state.candidates,
   );
 
-  const { jobDetails } = useSelector((state: RootState) => state.jobsSlice);
+  const { jobDetails, assignedCandidatesWhileCreatingJob,assignedCustomCandidatesWhileCreatingJob } = useSelector(
+    (state: RootState) => state.jobsSlice,
+  );
 
   const preAssignedCandidates: any =
     jobDetails?.candidateJobProfiles?.map((candidate: any) => {
@@ -38,6 +40,11 @@ export const LinkedInCandidateCardPartial = ({
 
   const isAssigned = objectExistsInArray(
     assignedCandidatesWhileCreatingJob,
+    candidate,
+  );
+
+  const isAssigned2 = objectExistsInArray(
+    assignedCustomCandidatesWhileCreatingJob,
     candidate,
   );
   const { imageUrl } = useImageValidation(candidate.profilePictureUrl);
@@ -67,7 +74,7 @@ export const LinkedInCandidateCardPartial = ({
           <b>
             {" "}
             {candidate.experience
-              ? candidate.experience+" Years"
+              ? candidate.experience + " Years"
               : calculateTotalExperience(candidate.workExperience)}
           </b>
         </Button>
@@ -91,16 +98,20 @@ export const LinkedInCandidateCardPartial = ({
       <NavSeparator className="!mx-4 !mb-4" />
       <CardFooter className="!justify-start max-md:!justify-center">
         <Button
-          rightIcon={isPreAssigned || isAssigned ? "HeroTwiceCheck" : undefined}
-          color={isPreAssigned ? "zinc" : isAssigned ? "emerald" : "blue"}
+          rightIcon={isPreAssigned || isAssigned2 || isAssigned ? "HeroTwiceCheck" : undefined}
+          color={isPreAssigned ? "zinc" : isAssigned || isAssigned2 ? "emerald" : "blue"}
           variant="solid"
           onClick={() => {
             isPreAssigned
               ? null
-              : dispatch(assignCandidateWhileCreatingJob(candidate));
+              : dispatch(
+                  candidateSource === "linkedin"
+                    ? assignCandidateWhileCreatingJob(candidate)
+                    : assignCustomCandidateWhileCreatingJob(candidate),
+                );
           }}
         >
-          {isPreAssigned ? "Pre Assigned" : isAssigned ? "Assigned" : "Assign"}
+          {isPreAssigned ? "Pre Assigned" : isAssigned || isAssigned2? "Assigned" : "Assign"}
         </Button>
         <Link target="_blank" to={candidate.publicProfileUrl}>
           <Button variant="outline" borderWidth="border" color="zinc">

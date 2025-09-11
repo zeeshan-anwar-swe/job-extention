@@ -33,7 +33,6 @@ const JobsViewCandidatesPage = () => {
 	const [modal, setModal] = useState<boolean>(false);
 	const params = useLocation();
 	const { state, pathname } = params;
-	const isEditPage = pathname.includes('edit');
 
 	const { jobDetails, pageLoading, error } = useSelector((state: RootState) => state.jobsSlice);
 	const hiredCandidates = filterAndExtract({
@@ -45,6 +44,8 @@ const JobsViewCandidatesPage = () => {
 
 	const dispatch: AppDispatch = useDispatch();
 
+	console.log('jobDetails', jobDetails);
+	
 	useEffect(() => {
 		dispatch(getJobDetails(state?.id ?? ''));
 	}, []);
