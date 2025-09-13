@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Container from '../../../../components/layouts/Container/Container';
 import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
@@ -36,7 +36,7 @@ const DashboardPage = () => {
 	);
 
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if(activeTab === PERIOD.RANGE){
 			if(!dateRange.startDate || !dateRange.endDate) return
 		}

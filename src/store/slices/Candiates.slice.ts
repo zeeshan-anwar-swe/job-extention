@@ -3,13 +3,10 @@ import axiosInstance from "../../utils/axiosInstance";
 import toast from "react-hot-toast";
 import { withAsyncThunkErrorHandler } from "../../utils/withAsyncThunkErrorHandler";
 import {
-  CandidateProfile,
   GetAllCandidatesParamsType,
   GetMoreCandidatesParamsType,
   TCandidateListItem,
 } from "../../types/slices.type/candidate.slice.type";
-import { values } from "lodash";
-import { CandidateJobStatus } from "../../types/enums/candidateJobStatus.enum";
 
 type UseType = "cursor" | "page";
 
@@ -522,6 +519,57 @@ export const assignManyCustomCanidatesToJob = createAsyncThunk(
     }
   },
 );
+
+// NEW Apis for showing/hiding candidate to client module
+export const showSingleJobToClient = createAsyncThunk(
+  "candidates/showSingleJobToClient",
+  async (jobProfileId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/linkedin-candidate/${jobProfileId}/assign`,
+      );
+      toast.success("Candidate is shown to client for this job");
+      return response.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+export const showAllJobToClient = createAsyncThunk(
+  "candidates/showAllJobToClient",
+  async (jobProfileId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/linkedin-candidate/${jobProfileId}/candidates/assign`,
+      );
+      toast.success("All jobs are shown to client");
+
+      return response.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+export const hideSingleJobToClient = createAsyncThunk(
+  "candidates/hideSingleJobToClient",
+  async (jobProfileId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/linkedin-candidate/${jobProfileId}/unassign`,
+      );
+      toast.success("Job is hidden from client");
+
+      return response.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+
+// Candidate Slice
 
 export const candidatesSlice = createSlice({
   name: "candidates",

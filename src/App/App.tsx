@@ -8,9 +8,7 @@ import HeaderRouter from '../components/router/HeaderRouter';
 import FooterRouter from '../components/router/FooterRouter';
 import ContentRouter from '../components/router/ContentRouter';
 import { Toaster } from 'react-hot-toast';
-import { useEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
-import { useNavigate } from 'react-router-dom';
 import { useGlobalVoice } from '../hooks/useGlobalVoice';
 const App = () => {
 	getOS();

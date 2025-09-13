@@ -23,6 +23,7 @@ import Card, {
   CardTitle,
 } from "../../../../../../components/ui/Card";
 import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
+import { cn } from "../../../../../../utils/cn";
 
 export const EditCVFormPartial = ({
   formik,
@@ -63,22 +64,29 @@ export const EditCVFormPartial = ({
 
   return (
     <Card className="col-span-9 flex flex-col gap-2 max-lg:col-span-12">
-      <CardHeader className="!block">
-        <CardTitle>CV Details</CardTitle>
-        <CardSubTitle>Edit and Update Candidate CV</CardSubTitle>
+      <CardHeader className="items-end">
+        <div>
+          <CardTitle>CV Details</CardTitle>
+          <CardSubTitle>Edit and Update Candidate CV</CardSubTitle>
+        </div>
         <Checkbox
-              variant="switch"
-              label="Create as Custom Candidate"
-              id="optionA"
-              onChange={(e) => {
-                if (e.target.checked) {
-                  formik.setFieldValue("action", "create");
-                } else {
-                  formik.setFieldValue("action", "update");
-                }
-              }}
-              checked={formik.values.action === "create" ? true : false}
-            />
+          className={cn(
+            formik.values.action === "update"
+              ? "animate-pulse"
+              : "text-zinc-800 dark:text-zinc-100",
+          )}
+          variant="switch"
+          label="Create as Custom Candidate"
+          id="optionA"
+          onChange={(e) => {
+            if (e.target.checked) {
+              formik.setFieldValue("action", "create");
+            } else {
+              formik.setFieldValue("action", "update");
+            }
+          }}
+          checked={formik.values.action === "create" ? true : false}
+        />
       </CardHeader>
       <CardBody>
         <form
@@ -87,7 +95,6 @@ export const EditCVFormPartial = ({
           onSubmit={formik.handleSubmit}
         >
           <div className="grid grid-cols-1 gap-4">
-            
             {formik.values.action === "create" && (
               <div>
                 <Label htmlFor="customCVTitle">Custom CV Title</Label>

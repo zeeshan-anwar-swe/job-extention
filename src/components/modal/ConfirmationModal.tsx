@@ -27,8 +27,9 @@ const ConfirmationModal = ({
 		await dispatch(action);
 		if(onCloseAction){
 			await dispatch(onCloseAction);
-
 		}
+		setLoading(false);
+		setModal(false);
 	};
 
 

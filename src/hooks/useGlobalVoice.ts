@@ -24,6 +24,7 @@ import {
   tokenScore,
   withArticles,
 } from "../extension-helpers/helpers";
+import { filter } from "lodash";
 // import { TEST_SENTENCES } from "../extension-helpers/test";
 
 type RouteKey =
@@ -388,7 +389,7 @@ export function useGlobalVoice() {
                 getAllCandidatesList({
                   page: 1,
                   limit: 10,
-                  ...payload,
+                  filterOptions: {...payload},
                 } as any),
               );
             }
