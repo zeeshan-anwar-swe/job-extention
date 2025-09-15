@@ -3,7 +3,6 @@ import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper'
 import TablePartial from './_partial/Table.partial';
 import Subheader, {
 	SubheaderLeft,
-	SubheaderRight,
 } from '../../../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../../../components/layouts/Header/Header';
 import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_common/DefaultHeaderRight.common';
@@ -22,14 +21,12 @@ import Dropdown, {
 	DropdownMenu,
 	DropdownToggle,
 } from '../../../../components/ui/Dropdown';
-import InviteModalPartial from './_partial/InviteModal.partial';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
 import CustomSearchComponent from '../../../Shared/components/CustomSearch.component';
 
 const TeamClientsPage = () => {
 	const [sortBy, setSortBy] = useState<string>('Default');
-	const [modal, setModal] = useState<boolean>(false);
 	const { paginatedClients, paginationCount, pageLoading, error } = useSelector(
 		(state: RootState) => state.clients,
 	);
@@ -61,15 +58,7 @@ const TeamClientsPage = () => {
 						<CardTitle>Clients</CardTitle>
 						<CardSubTitle>View and manage your client relationships.</CardSubTitle>
 					</SubheaderLeft>
-					<SubheaderRight>
-						<Button
-							onClick={() => setModal(true)}
-							variant='solid'
-							rightIcon='HeroPaperAirplane'>
-							Invite a Client
-						</Button>
-						<InviteModalPartial setModal={setModal} modal={modal} />
-					</SubheaderRight>
+					
 				</Subheader>
 
 				<PageLoader loading={pageLoading} error={error} data={paginatedClients}>

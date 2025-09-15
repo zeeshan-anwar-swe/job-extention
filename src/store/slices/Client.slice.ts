@@ -66,25 +66,36 @@ export const getPaginatedAgencyClientsList = createAsyncThunk(
 );
 
 export const getAssignedClientForTeam = createAsyncThunk(
-	'clients/getAssignedClientForTeam',
-	async (
-		{
-			page,
-			limit,
-			search = '',
-			searchBy = '',
-		}: { page: number; limit: number; search?: string; searchBy?: string },
-		{ rejectWithValue },
-	) => {
-		try {
-			const response = await axiosInstance.get(
-				`/team/clients?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`,
-			);
-			return response.data.data;
-		} catch (error: any) {
-			return withAsyncThunkErrorHandler(error, rejectWithValue);
-		}
-	},
+  'clients/getAssignedClientForTeam',
+  async (
+    {
+      page,
+      limit,
+      search = '',
+      searchBy = '',
+    }: { page: number; limit: number; search?: string; searchBy?: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const queryParams = new URLSearchParams({
+        page: String(page),
+        limit: String(limit),
+      });
+
+      if (search) {
+        queryParams.append('search', search);
+      }
+
+      if (searchBy) {
+        queryParams.append('searchBy', searchBy);
+      }
+
+      const response = await axiosInstance.get(`/team/clients?${queryParams.toString()}`);
+      return response.data.data;
+    } catch (error: any) {
+      return withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
 );
 
 export const getClientDetails = createAsyncThunk(
