@@ -58,7 +58,6 @@ const CreateJobLeftSidePartial = () => {
     skills: [],
   });
 
-console.log({assignedCustomCandidatesWhileCreatingJob});
 
 
   const dispatchCreateJob = async () => {

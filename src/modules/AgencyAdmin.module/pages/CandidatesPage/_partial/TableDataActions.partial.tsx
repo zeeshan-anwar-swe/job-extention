@@ -35,9 +35,7 @@ const TableDataActionsPartial = ({
 
   const [showSingle, setShowSingle] = useState<boolean>(false);
   const [hideSingle, setHideSingle] = useState<boolean>(false);
-  const [showALL, setShowALL] = useState<boolean>(false);
 
-  showSingle && console.log({ candidate, selectedJob });
 
   return (
     <>
@@ -64,19 +62,17 @@ const TableDataActionsPartial = ({
         <Dropdown>
           <DropdownToggle hasIcon={false}>
             <Button rounded={"rounded-full"} color="zinc">
-              Show Job To Client
+              Show To Client
             </Button>
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem onClick={() => setShowSingle(true)}>
-              Show Job To Client
+              Show To Client
             </DropdownItem>
             <DropdownItem onClick={() => setHideSingle(true)}>
-              Hide Job To Client
+              Hide To Client
             </DropdownItem>
-            <DropdownItem onClick={() => setShowALL(true)}>
-              Show Job All Candidates To Client
-            </DropdownItem>
+           
           </DropdownMenu>
         </Dropdown>
         <Link
@@ -102,13 +98,7 @@ const TableDataActionsPartial = ({
           action={showSingleJobToClient(selectedJob.id)}
         />
 
-        <ConfirmationModal
-          // onCloseAction={getAgencyCandidatesList({ page: 1, limit: 10 })}
-          modal={showALL}
-          setModal={setShowALL}
-          title="show candidate all jobs to client!"
-          action={showAllJobToClient(selectedJob.id)}
-        />
+       
 
         <ConfirmationModal
           onCloseAction={getAgencyCandidatesList({ page: 1, limit: 10 })}
