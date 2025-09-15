@@ -23,14 +23,15 @@ interface ApiParamsType {
 	page: number;
 	startDate?: string;
 	endDate?: string;
+	isTeamModule?: boolean;
 }
 
 export const getTaskBoardBackLogJobs = createAsyncThunk(
 	'taskBoard/getTaskBoardBackLogJobs',
-	async ({ limit, page, startDate, endDate }: ApiParamsType, { rejectWithValue }) => {
+	async ({ limit, page, startDate, endDate, isTeamModule }: ApiParamsType, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.BACKLOG}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
+				`/${isTeamModule ? 'team' : 'agency'}/taskboard?page=${page}&limit=${limit}&status=${JobStatus.BACKLOG}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -41,10 +42,10 @@ export const getTaskBoardBackLogJobs = createAsyncThunk(
 
 export const getTaskBoardInProgressJobs = createAsyncThunk(
 	'taskBoard/getTaskBoardInProgressJobs',
-	async ({ limit, page, startDate, endDate }: ApiParamsType, { rejectWithValue }) => {
+	async ({ limit, page, startDate, endDate, isTeamModule }: ApiParamsType, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.IN_PROGRESS}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
+				`/${isTeamModule ? 'team' : 'agency'}/taskboard?page=${page}&limit=${limit}&status=${JobStatus.IN_PROGRESS}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -55,10 +56,10 @@ export const getTaskBoardInProgressJobs = createAsyncThunk(
 
 export const getTaskBoardInReviewJobs = createAsyncThunk(
 	'taskBoard/getTaskBoardInReviewJobs',
-	async ({ limit, page, startDate, endDate }: ApiParamsType, { rejectWithValue }) => {
+	async ({ limit, page, startDate, endDate, isTeamModule }: ApiParamsType, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.IN_REVIEW}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
+				`/${isTeamModule ? 'team' : 'agency'}/taskboard?page=${page}&limit=${limit}&status=${JobStatus.IN_REVIEW}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -69,10 +70,10 @@ export const getTaskBoardInReviewJobs = createAsyncThunk(
 
 export const getTaskBoardCompletedJobs = createAsyncThunk(
 	'taskBoard/getTaskBoardCompletedJobs',
-	async ({ limit, page, startDate, endDate }: ApiParamsType, { rejectWithValue }) => {
+	async ({ limit, page, startDate, endDate, isTeamModule }: ApiParamsType, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.get(
-				`/agency/taskboard?page=${page}&limit=${limit}&status=${JobStatus.COMPLETED}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
+				`/${isTeamModule ? 'team' : 'agency'}/taskboard?page=${page}&limit=${limit}&status=${JobStatus.COMPLETED}${`&startDate=${startDate ?? ''}`}${`&endDate=${endDate ?? ''}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -90,12 +91,12 @@ export const getJobsListExceptStatus = createAsyncThunk(
 			limit,
 			search = '',
 		}: {
-			exceptStatus: JobStatus;
 			page: number;
 			limit: number;
 			search?: string;
 			searchBy?: string;
 			startDate?: string;
+			exceptStatus: JobStatus;
 			endDate?: string;
 		},
 		{ rejectWithValue },

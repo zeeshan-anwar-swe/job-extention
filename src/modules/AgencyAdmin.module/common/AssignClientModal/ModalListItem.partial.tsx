@@ -25,7 +25,7 @@ import {
 } from "../../../../types/slices.type/clients.slice.type";
 import Select from "../../../../components/form/Select";
 import SelectReact from "../../../../components/form/SelectReact";
-import { getAgencyClientsWithJobs } from "../../../../store/slices/Agency/Client.slice";
+import { getAgencyClientsWithJobs } from "../../../../store/slices/Client.slice";
 
 export const AssignClientModalListItemPartial = ({
   client,

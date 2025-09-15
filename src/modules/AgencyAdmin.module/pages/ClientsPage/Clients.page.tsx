@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import {
 	getPaginatedAgencyClientsList,
 	setClientSearch,
-} from '../../../../store/slices/Agency/Client.slice';
+} from '../../../../store/slices/Client.slice';
 import Dropdown, {
 	DropdownItem,
 	DropdownMenu,

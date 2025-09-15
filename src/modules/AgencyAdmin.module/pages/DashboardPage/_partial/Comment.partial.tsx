@@ -13,7 +13,7 @@ import { AppDispatch, RootState } from '../../../../../store';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import useImageValidation from '../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../components/ui/ImageLoaderWraper';
-import { getClientFeedback } from '../../../../../store/slices/Agency/Client.slice';
+import { getClientFeedback } from '../../../../../store/slices/Client.slice';
 import { formatTimeString } from '../../../../../utils/helper';
 import Pagination from '../../../../../components/ui/Pagination';
 

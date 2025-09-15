@@ -11,7 +11,7 @@ import ClientJobCardPartial from './_partial/ClientJobCard.partial';
 import { AppDispatch, RootState } from '../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getClientDetails } from '../../../../../store/slices/Agency/Client.slice';
+import { getClientDetails } from '../../../../../store/slices/Client.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { getJobsByClientId } from '../../../../../store/slices/Jobs.slice';
 import { ClientJob } from '../../../../../types/slices.type/jobs.slice.type';

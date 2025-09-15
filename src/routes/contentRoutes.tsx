@@ -56,6 +56,7 @@ import CONTACT from '../modules/Landing.module/pages/Contact/page';
 import BLOG from '../modules/Landing.module/pages/Blogs/page';
 import PRICING from '../modules/Landing.module/pages/Pricing/page';
 import BLOGPOST from '../modules/Landing.module/pages/BlogPosts/page';
+import TeamClientsPage from '../modules/Team.module/pages/ClientsPage/Clients.page';
 
 const DashboardPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page'),
@@ -388,6 +389,27 @@ const contentRoutes: ContentRoutesType = {
 			path: appPages.Team.candidatesPage.subPages.cadidateProfileAppPage.to,
 			element: <TeamCandidatesProfilePage />,
 		},
+
+		{
+			path: appPages.Team.clientsAppPages.to,
+			element: <TeamClientsPage />,
+		},
+
+		// {
+		// 	path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
+		// 	element: <ClientProfilePage />,
+		// },
+
+		// {
+		// 	path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+		// 	element: <ClientProfilePage />,
+		// },
+
+		// {
+		// 	path: appPages.AgencyAdmin.clientsAppPages.subPages.clientJobsAppPages.to,
+		// 	element: <ClientJobsPage />,
+		// },
+
 
 		{
 			path: appPages.Team.chatAppPages.to + '/*',

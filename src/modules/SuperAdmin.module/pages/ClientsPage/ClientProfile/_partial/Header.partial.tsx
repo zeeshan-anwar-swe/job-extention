@@ -6,8 +6,6 @@ import useImageValidation from '../../../../../../hooks/useImageValidation';
 import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { ClientDetailsType } from '../../../../../../types/slices.type/clients.slice.type';
-// import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
-import { assignJobToClient } from '../../../../../../store/slices/Agency/Client.slice';
 
 const HeaderPartial = ({
 	clientDetails,

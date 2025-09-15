@@ -10,7 +10,7 @@ import {
 	getAgencyClientsWithJobs,
 	getPaginatedAgencyClientsList,
 	setClientSearch,
-} from '../../../../store/slices/Agency/Client.slice';
+} from '../../../../store/slices/Client.slice';
 import Modal, {
 	ModalBody,
 	ModalFooter,

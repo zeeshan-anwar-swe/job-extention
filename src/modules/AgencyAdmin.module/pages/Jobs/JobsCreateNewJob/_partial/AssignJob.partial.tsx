@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import {
 	getPaginatedAgencyClientsList,
 	setClientSearch,
-} from '../../../../../../store/slices/Agency/Client.slice';
+} from '../../../../../../store/slices/Client.slice';
 import PageLoader from '../../../../../../templates/layouts/main/PageLoader';
 import SearchPartial from '../../../../common/Search.partial';
 import Pagination from '../../../../../../components/ui/Pagination';

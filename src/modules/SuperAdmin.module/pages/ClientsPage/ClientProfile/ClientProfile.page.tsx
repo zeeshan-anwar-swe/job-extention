@@ -21,7 +21,7 @@ import ClientProfilePageCardPartial from './_partial/ClientProfilePageCard.parti
 import { AppDispatch, RootState } from '../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getClientDetails } from '../../../../../store/slices/Agency/Client.slice';
+import { getClientDetails } from '../../../../../store/slices/Client.slice';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 
 const ClientProfilePage = () => {

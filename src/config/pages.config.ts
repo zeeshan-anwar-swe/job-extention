@@ -465,6 +465,34 @@ export const appPages = {
 				},
 			},
 		},
+
+		clientsAppPages: {
+			id: 'clientsApp',
+			to: '/dashboard/clients',
+			text: 'Clients',
+			icon: 'HeroBriefcase',
+			subPages: {
+				clientsPage: {
+					id: 'clientsApp',
+					to: '/dashboard/clients',
+					text: 'Clients',
+					icon: 'HeroBriefcase',
+				},
+				clientProfileAppPages: {
+					id: 'clientProfileApp',
+					to: '/dashboard/clients/profile',
+					text: 'Client Profile',
+					icon: 'HeroIdentification',
+				},
+				clientJobsAppPages: {
+					id: 'clientJobsApp',
+					to: '/dashboard/clients/jobs',
+					text: 'Client Profile',
+					icon: 'HeroIdentification',
+				},
+			},
+		},
+
 		chatAppPages: {
 			id: 'chatApp',
 			to: '/dashboard/chat',

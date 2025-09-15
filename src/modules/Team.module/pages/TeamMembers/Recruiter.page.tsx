@@ -59,8 +59,8 @@ const RecruitersPage = () => {
 				<Subheader>
 					<SubheaderLeft>
 						<div>
-							<CardTitle>Recruiters</CardTitle>
-							<CardSubTitle>View top Recruiters suitable for your jobs</CardSubTitle>
+							<CardTitle>Team Members</CardTitle>
+							<CardSubTitle>View Team Members</CardSubTitle>
 						</div>
 					</SubheaderLeft>
 					<SubheaderRight>

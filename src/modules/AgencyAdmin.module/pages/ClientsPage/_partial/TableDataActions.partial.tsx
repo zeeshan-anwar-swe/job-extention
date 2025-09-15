@@ -7,7 +7,7 @@ import {
 	deleteClientClient,
 	getPaginatedAgencyClientsList,
 	unAssignJobToClient,
-} from '../../../../../store/slices/Agency/Client.slice';
+} from '../../../../../store/slices/Client.slice';
 import { AssignTeamModalPartial } from '../../../common/AssignTeamModal/Modal.partial';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

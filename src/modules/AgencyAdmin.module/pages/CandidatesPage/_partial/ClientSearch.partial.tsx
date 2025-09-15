@@ -4,7 +4,7 @@ import Icon from '../../../../../components/icon/Icon';
 import Input from '../../../../../components/form/Input';
 import { AppDispatch } from '../../../../../store';
 import { useDispatch } from 'react-redux';
-import { searchStoredClients } from '../../../../../store/slices/Agency/Client.slice';
+import { searchStoredClients } from '../../../../../store/slices/Client.slice';
 
 export const ClientSearchPartial = () => {
 	const [searchValue, setSearchValue] = useState<string>('');

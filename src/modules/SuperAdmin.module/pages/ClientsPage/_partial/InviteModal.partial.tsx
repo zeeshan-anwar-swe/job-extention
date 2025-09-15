@@ -13,7 +13,7 @@ import Label from '../../../../../components/form/Label';
 import {
 	getPaginatedAgencyClientsList,
 	inviteClient,
-} from '../../../../../store/slices/Agency/Client.slice';
+} from '../../../../../store/slices/Client.slice';
 
 interface TValues {
 	clientName: string;

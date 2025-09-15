@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axiosInstance from '../../../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
-import { withAsyncThunkErrorHandler } from '../../../utils/withAsyncThunkErrorHandler';
-import { searchObjectsByKeyAndValue } from '../../../utils/helper';
+import { withAsyncThunkErrorHandler } from '../../utils/withAsyncThunkErrorHandler';
+import { searchObjectsByKeyAndValue } from '../../utils/helper';
 import {
 	ClientDetailsType,
 	ClientListItemType,
 	TClientWithJobInitialState,
-} from '../../../types/slices.type/clients.slice.type';
+} from '../../types/slices.type/clients.slice.type';
 
 interface InitialStateType {
 	error: null | any;
@@ -57,6 +57,28 @@ export const getPaginatedAgencyClientsList = createAsyncThunk(
 		try {
 			const response = await axiosInstance.get(
 				`/agency/clients?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+export const getAssignedClientForTeam = createAsyncThunk(
+	'clients/getAssignedClientForTeam',
+	async (
+		{
+			page,
+			limit,
+			search = '',
+			searchBy = '',
+		}: { page: number; limit: number; search?: string; searchBy?: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.get(
+				`/team/clients?page=${page}&limit=${limit}&search=${search}${searchBy && `&searchBy=${searchBy}`}`,
 			);
 			return response.data.data;
 		} catch (error: any) {
@@ -217,6 +239,24 @@ export const clientsSlice = createSlice({
 				state.paginationCount = action.payload.count;
 			})
 			.addCase(getPaginatedAgencyClientsList.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message || 'Unknown error');
+			})
+
+
+			.addCase(getAssignedClientForTeam.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getAssignedClientForTeam.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.paginatedClients = action.payload.rows;
+				state.paginationCount = action.payload.count;
+			})
+			.addCase(getAssignedClientForTeam.rejected, (state, action: any) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

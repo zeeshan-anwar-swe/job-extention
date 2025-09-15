@@ -5,7 +5,7 @@ import user from './slices/User.slice';
 import team from './slices/Team.slice';
 import jobsSlice from './slices/Jobs.slice';
 import candidates from './slices/Candiates.slice';
-import clients from './slices/Agency/Client.slice';
+import clients from './slices/Client.slice';
 import teamJobs from './slices/Team/TeamJobs.slice';
 import teamChat from './slices/Team/TeamChat.slice';
 import customCV from './slices/Agency/CustomCV.slice';
