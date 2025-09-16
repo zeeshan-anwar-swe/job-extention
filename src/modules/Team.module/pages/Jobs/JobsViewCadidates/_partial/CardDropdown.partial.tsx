@@ -44,14 +44,14 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						color={item.status === 'IN_PROGRESS' ? 'blue' : 'zinc'}>
 						In Progress
 					</Button>
-					<Button
+					{/* <Button
 						// onClick={() => handleJobStatusChange('TODO')}
 						className='!py-1'
 						rounded='rounded-full'
 						variant={item.status === 'TODO' ? 'solid' : 'outline'}
 						color={item.status === 'TODO' ? 'zinc' : 'zinc'}>
 						To Do
-					</Button>
+					</Button> */}
 				</DropdownItem>
 				<DropdownItem className='gap-2'>
 					<Button

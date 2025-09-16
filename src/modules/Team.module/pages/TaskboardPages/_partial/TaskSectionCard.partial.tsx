@@ -15,7 +15,6 @@ import {
 import Pagination from '../../../../../components/ui/Pagination';
 import PageLoader from '../../../../../templates/layouts/main/PageLoader';
 import { cn } from '../../../../../utils/cn';
-import { useState } from 'react';
 import { JobStatus } from '../../../../../types/enums/jobStatus.enum';
 import { TaskboardCardButton } from './TaskboardCardButton';
 import { formatString } from '../../../../../utils/helper';
@@ -84,7 +83,7 @@ const TaskSectionCardPartial = ({
 				<Pagination
 					limit={ListLimit}
 					count={jobList.count}
-					getListAction={getJobListAction()}
+					getListAction={getJobListAction}
 				/>
 			</CardFooter>
 		</Card>

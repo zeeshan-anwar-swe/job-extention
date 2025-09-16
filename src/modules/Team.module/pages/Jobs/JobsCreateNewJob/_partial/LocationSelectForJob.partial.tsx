@@ -1,4 +1,3 @@
-import React, { ChangeEvent, FC, useState } from "react";
 import Card, {
   CardBody,
   CardHeader,
@@ -7,25 +6,30 @@ import Card, {
 import { AppDispatch, RootState } from "../../../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getAllCandidatesList,
+  getCustomProfiles,
   getLocationForCandidates,
   setCandidatesFilterOptions,
   setLoactionLoading,
 } from "../../../../../../store/slices/Candiates.slice";
 import SelectReact from "../../../../../../components/form/SelectReact";
 import { useDebouncedCallback } from "use-debounce";
+import Label from "../../../../../../components/form/Label";
+import FieldWrap from "../../../../../../components/form/FieldWrap";
+import { FormData } from "./CreateJobLeftSide.partial";
 
-interface TLocationOption {
-  label: string;
-  value: string;
-}
-export const JobsFilterDropdownLocation = () => {
-  const [selectedLocationOption, setSelectedLocationOption] =
-    useState<TLocationOption>({
-      label: "",
-      value: "",
-    });
-  const { loading, count, rows } = useSelector(
+export const LocationSelectForJob = ({
+  formData,
+  setFormData,
+}: {
+  formData: FormData;
+  setFormData: any;
+}) => {
+  const { loading, rows } = useSelector(
     (state: RootState) => state.candidates.location,
+  );
+  const { candidateSource } = useSelector(
+    (state: RootState) => state.candidates,
   );
 
   const dispatch: AppDispatch = useDispatch();
@@ -47,36 +51,53 @@ export const JobsFilterDropdownLocation = () => {
 
   const { filterOptions } = useSelector((state: RootState) => state.candidates);
 
-  console.log({ location: rows });
+  const handleLocationChange = async (event: any) => {
+    console.log({ event });
+    setFormData({ ...formData, location: event.label });
 
-  const handleLocationChange = (event: any) => {
-    setSelectedLocationOption(event);
-    dispatch(
+    await dispatch(
       setCandidatesFilterOptions({
         ...filterOptions,
         location: [{ id: event.value, title: event.label }],
       }),
     );
+    if (candidateSource === "linkedin") {
+      await dispatch(
+        getAllCandidatesList({
+          page: 1,
+          limit: 10,
+          filterOptions: {
+            ...filterOptions,
+            location: [{ id: event.value, title: event.label }],
+          },
+        }),
+      );
+    } else {
+      await dispatch(
+        getCustomProfiles({
+          page: 1,
+          limit: 10,
+          filterOptions: {
+            ...filterOptions,
+            location: [{ id: event.value, title: event.label }],
+          },
+        }),
+      );
+    }
   };
+
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="!text-lg !font-medium">Location</CardTitle>
-      </CardHeader>
-      <CardBody>
+    <div className="w-full">
+      <Label htmlFor="loaction" className="font-light">
+        Location
+      </Label>
+
+      <FieldWrap>
         <SelectReact
           name="location"
           isLoading={loading}
           placeholder="Search Location"
-          // value={selectedLocationOption}
-          value={
-            filterOptions.location.length > 0
-              ? {
-                  label: filterOptions.location[0].title,
-                  value: filterOptions.location[0].id,
-                }
-              : { label: "Search Location..", value: "id" }
-          }
           options={
             rows?.length > 0
               ? rows.map((location) => ({
@@ -88,7 +109,7 @@ export const JobsFilterDropdownLocation = () => {
           onInputChange={(value: string) => handlelocationinputChange(value)}
           onChange={handleLocationChange}
         />
-      </CardBody>
-    </Card>
+      </FieldWrap>
+    </div>
   );
 };

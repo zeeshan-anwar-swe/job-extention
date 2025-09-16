@@ -9,10 +9,10 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../../store';
 import { changeJobStatus } from '../../../../../store/slices/Jobs.slice';
 import {
-	getTaskBoardBackLogJobs,
-	getTaskBoardCompletedJobs,
-	getTaskBoardInProgressJobs,
-	getTaskBoardInReviewJobs,
+	getTeamTaskBoardBackLogJobs,
+	getTeamTaskBoardCompletedJobs,
+	getTeamTaskBoardInProgressJobs,
+	getTeamTaskBoardInReviewJobs,
 } from '../../../../../store/slices/Agency/Taskboard.slice';
 import { TaskBoardJobType } from '../../../../../types/slices.type/agency/taskboard.slice.type';
 import { JobStatus } from '../../../../../types/enums/jobStatus.enum';
@@ -30,13 +30,13 @@ const JobStatusDropdownPartial = ({ item }: { item: TaskBoardJobType }) => {
 
 			//first check if the current status is backlog
 			if (item.status === JobStatus.BACKLOG) {
-				dispatch(getTaskBoardBackLogJobs({ page: 1, limit: 10 }));
+				dispatch(getTeamTaskBoardBackLogJobs({ page: 1, limit: 10 }));
 				if (status === JobStatus.IN_PROGRESS) {
-					dispatch(getTaskBoardInProgressJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardInProgressJobs({ page: 1, limit: 10 }));
 				} else if (status === JobStatus.IN_REVIEW) {
-					dispatch(getTaskBoardInReviewJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardInReviewJobs({ page: 1, limit: 10 }));
 				} else {
-					dispatch(getTaskBoardCompletedJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardCompletedJobs({ page: 1, limit: 10 }));
 				}
 
 				// Second check if the current status is in progress
@@ -44,39 +44,39 @@ const JobStatusDropdownPartial = ({ item }: { item: TaskBoardJobType }) => {
 
 			// Second check if the current status is in progress
 			else if (item.status === JobStatus.IN_PROGRESS) {
-				dispatch(getTaskBoardInProgressJobs({ page: 1, limit: 10 }));
+				dispatch(getTeamTaskBoardInProgressJobs({ page: 1, limit: 10 }));
 
 				if (status === JobStatus.BACKLOG) {
-					dispatch(getTaskBoardBackLogJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardBackLogJobs({ page: 1, limit: 10 }));
 				} else if (status === JobStatus.IN_REVIEW) {
-					dispatch(getTaskBoardInReviewJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardInReviewJobs({ page: 1, limit: 10 }));
 				} else {
-					dispatch(getTaskBoardCompletedJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardCompletedJobs({ page: 1, limit: 10 }));
 				}
 			}
 
 			// Third check if the current status is in review
 			else if (item.status === JobStatus.IN_REVIEW) {
-				dispatch(getTaskBoardInReviewJobs({ page: 1, limit: 10 }));
+				dispatch(getTeamTaskBoardInReviewJobs({ page: 1, limit: 10 }));
 
 				if (status === JobStatus.BACKLOG) {
-					dispatch(getTaskBoardBackLogJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardBackLogJobs({ page: 1, limit: 10 }));
 				} else if (status === JobStatus.IN_PROGRESS) {
-					dispatch(getTaskBoardInProgressJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardInProgressJobs({ page: 1, limit: 10 }));
 				} else {
-					dispatch(getTaskBoardCompletedJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardCompletedJobs({ page: 1, limit: 10 }));
 				}
 			}
 
 			// Fourth check if the current status is completed
 			else if (item.status === JobStatus.COMPLETED) {
-				dispatch(getTaskBoardCompletedJobs({ page: 1, limit: 10 }));
+				dispatch(getTeamTaskBoardCompletedJobs({ page: 1, limit: 10 }));
 				if (status === JobStatus.BACKLOG) {
-					dispatch(getTaskBoardBackLogJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardBackLogJobs({ page: 1, limit: 10 }));
 				} else if (status === JobStatus.IN_PROGRESS) {
-					dispatch(getTaskBoardInProgressJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardInProgressJobs({ page: 1, limit: 10 }));
 				} else {
-					dispatch(getTaskBoardInReviewJobs({ page: 1, limit: 10 }));
+					dispatch(getTeamTaskBoardInReviewJobs({ page: 1, limit: 10 }));
 				}
 			}
 		}

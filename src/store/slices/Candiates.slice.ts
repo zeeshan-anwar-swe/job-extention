@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axiosInstance from "../../utils/axiosInstance";
 import toast from "react-hot-toast";
+import axiosInstance from "../../utils/axiosInstance";
+import axiosInstanceCustomToken from "../../utils/axiosInstanceCustomToken";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { withAsyncThunkErrorHandler } from "../../utils/withAsyncThunkErrorHandler";
 import {
   GetAllCandidatesParamsType,
@@ -403,7 +404,7 @@ export const getAllCandidatesList = createAsyncThunk(
   ) => {
     try {
       const url = `/unipile-linkedin/search?page=${page}&limit=${limit}`;
-      const response = await axiosInstance.post(url, filterOptions);
+      const response = await axiosInstanceCustomToken.post(url, filterOptions);
       return response.data.data;
     } catch (error: any) {
       return await withAsyncThunkErrorHandler(error, rejectWithValue);

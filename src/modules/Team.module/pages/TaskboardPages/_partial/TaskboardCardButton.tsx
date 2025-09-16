@@ -2,6 +2,7 @@ import React from 'react';
 import { JobStatus } from '../../../../../types/enums/jobStatus.enum';
 import { JobStatusChangeModalPartial } from '../../../../Shared/common/JobsStatusChangeModal/Modal.partial';
 import Button from '../../../../../components/ui/Button';
+import { Roles } from '../../../../../constants/role.enums';
 interface Props {
 	cardType: JobStatus;
 }
@@ -20,7 +21,8 @@ export const TaskboardCardButton: React.FC<Props> = ({ cardType }) => {
 				icon='HeroPlus'></Button>
 			{modal && (
 				<JobStatusChangeModalPartial
-					modal={modal}
+				modal={modal}
+				module={Roles.TEAM}
 					setModal={setModal}
 					title={'Add Jobs to ' + cardType}
 					changeStatusTo={cardType}

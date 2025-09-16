@@ -7,13 +7,15 @@ import Modal, {
 	ModalHeader,
 } from '../../../../../../components/ui/Modal';
 import AssignJobModalListItemPartial from './AssignJobModalListItem.partial';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../../../store';
+import { useEffect } from 'react';
 import {
 	getPaginatedAgencyClientsList,
+	setClientSearch,
 } from '../../../../../../store/slices/Client.slice';
 import PageLoader from '../../../../../../templates/layouts/main/PageLoader';
-// import SearchPartial from '../../../../common/Search.partial';
+import SearchPartial from '../../../../../Shared/common/Search.partial';
 import Pagination from '../../../../../../components/ui/Pagination';
 
 const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
@@ -30,7 +32,14 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 			<ModalHeader>
 				<CardHeader>Assign a client</CardHeader>
 			</ModalHeader>
-			
+			<div className='p-4'>
+				<SearchPartial
+					searchLimit={10}
+					searchListAction={getPaginatedAgencyClientsList}
+					setSearchActionForPagination={setClientSearch}
+				/>
+			</div>
+
 			<ModalBody className='h-96 overflow-y-scroll'>
 				<PageLoader data={clientsList} loading={pageLoading} error={error}>
 					<div className='flex w-full flex-col gap-4'>
@@ -41,7 +50,7 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 				</PageLoader>
 			</ModalBody>
 			<ModalFooter className='flex flex-col items-end'>
-				<ModalFooterChild>
+				<ModalFooterChild className='ml-auto'>
 					<Pagination
 						count={paginationCount}
 						search={clentSearch}
@@ -62,13 +71,13 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 					<Button onClick={() => setModal(false)} className='w-full' variant='solid'>
 						Done
 					</Button>
-					<Button
+					{/* <Button
 						rightIcon='HeroPaperAirplane'
 						onClick={() => setModal(false)}
 						className='w-full'
 						variant='solid'>
 						Invite as client
-					</Button>
+					</Button> */}
 				</ModalFooterChild>
 			</ModalFooter>
 		</Modal>

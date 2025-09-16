@@ -15,16 +15,23 @@ import LabelTitlepartial from '../../_partial/LabelTitle.partial';
 import LabelSkillSelectPartial from '../../_partial/LabelSkillSelect.partial';
 import LabelSelectPartial from '../../_partial/LabelSelect.partial';
 import CardDropdownPartial from './CardDropdown.partial';
-import { getStatusColor } from '../../../../../../utils/helper';
+import { formatString, getStatusColor } from '../../../../../../utils/helper';
 import useImageValidation from '../../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../../store';
 import { getJobDetails, updateJob } from '../../../../../../store/slices/Jobs.slice';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { cn } from '../../../../../../utils/cn';
+import RichText from '../../../../../../components/RichText';
+import { Descendant } from 'slate';
+import Label from '../../../../../../components/form/Label';
+import { createDescendants } from '../../../../../../utils/descendant.helper';
+import { TextEditorForJobDetailsPagePartial } from './TextEditorForJobDetailsPage.partial';
 
-interface JobFormData {
+export interface JobFormData {
 	title: string;
-	description: string;
+	description: Descendant[];
 	experience: string;
 	location: string;
 	type: 'REMOTE' | 'ON_SITE' | 'HYBRID';
@@ -33,10 +40,15 @@ interface JobFormData {
 }
 
 const JobFormPartial = ({ jobDetails }: any) => {
+	const params = useLocation();
+	const { pathname } = params;
+	const isEditPage = pathname.includes('edit');
+	const navigateTo = useNavigate();
+
 	const dispatch: AppDispatch = useDispatch();
 	const [formData, setFormData] = useState<JobFormData>({
 		title: '',
-		description: '',
+		description: [],
 		experience: '',
 		location: '',
 		type: 'REMOTE',
@@ -46,12 +58,26 @@ const JobFormPartial = ({ jobDetails }: any) => {
 
 	const { componentLoading, error } = useSelector((state: RootState) => state.jobsSlice);
 
+	const getParsedDescription = () => {
+		try {
+			const parsedDes = JSON.parse(jobDetails.description);
+			console.log({ parsedDes });
+
+			return parsedDes;
+		} catch (e) {
+			console.log('Errrrrrr');
+
+			return [];
+		}
+	};
+
 	useEffect(() => {
 		if (jobDetails) {
-			
+			console.log({ dd: getParsedDescription() });
+
 			setFormData({
 				title: jobDetails.title,
-				description: jobDetails.description,
+				description: getParsedDescription(),
 				experience: jobDetails.experience,
 				location: jobDetails.location,
 				type: jobDetails.type,
@@ -64,17 +90,23 @@ const JobFormPartial = ({ jobDetails }: any) => {
 	const { loading, imageUrl } = useImageValidation(jobDetails?.client?.clientUser?.image);
 
 	const updateJobHandler = async () => {
+		const description = JSON.stringify(createDescendants(formData.description));
 		await dispatch(
 			updateJob({
 				jobId: jobDetails.id,
-				payload: { ...formData, status: jobDetails.status },
+				payload: { ...formData, status: jobDetails.status, description },
 			}),
 		);
-		dispatch(getJobDetails(jobDetails.id));
+		navigateTo('/dashboard/jobs');
+		// dispatch(getJobDetails(jobDetails.id));
+	};
+
+	const handleRichTextChange = (value: any) => {
+		setFormData({ ...formData, description: value });
 	};
 
 	return (
-		<Card className='col-span-4 flex flex-col gap-2  p-4 max-lg:col-span-12'>
+		<Card className={cn('col-span-5 flex !h-fit flex-col gap-2  p-4 max-lg:col-span-12')}>
 			<CardHeader>
 				<CardHeaderChild className='!block'>
 					<CardTitle>Jobs Details</CardTitle>
@@ -85,7 +117,9 @@ const JobFormPartial = ({ jobDetails }: any) => {
 				</CardHeaderChild>
 			</CardHeader>
 			<CardHeader className=' !justify-start'>
-				<Button
+				{
+					jobDetails?.client&&
+					<Button
 					variant='outline'
 					color='zinc'
 					rounded='rounded-full'
@@ -99,17 +133,17 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					</ImageLoaderWraper>
 					<span>{textValidationCheck(jobDetails.client?.clientUser?.firstName)}</span>
 					<span>{textValidationCheck(jobDetails.client?.clientUser?.lastName)}</span>
-				</Button>
+				</Button>}
 
 				<Button
 					variant='solid'
 					color={getStatusColor(jobDetails.status)}
 					rounded='rounded-full'
 					className='!justify-start gap-2  !py-1'>
-					<span>{jobDetails?.status}</span>
+					<span>{formatString(jobDetails?.status)}</span>
 				</Button>
 			</CardHeader>
-			<CardBody className='!h-fit gap-4'>
+			<CardBody className={cn('!h-fit gap-4', !isEditPage && 'pointer-events-none	')}>
 				<NavSeparator className='' />
 				<LabelTitlepartial
 					formData={formData}
@@ -139,7 +173,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					label='Location'
 					detail={formData.location}
 				/>
-				'
+
 				<LabelSelectPartial
 					label='Job Type'
 					formData={formData}
@@ -152,20 +186,32 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					setFormData={setFormData}
 					label='Required Skill'
 				/>
-				<LabelTitlepartial
-					id='description'
-					label='description'
-					formData={formData}
-					setFormData={setFormData}
-					detail={formData.description}
-				/>
+				{Array.isArray(formData.description) && formData.description.length > 0 && (
+					<div className='w-full'>
+						<Label htmlFor='description'>Description</Label>
+						<RichText
+							id='description'
+							value={formData.description}
+							className='min-h-48'
+							handleChange={handleRichTextChange}
+						/>
+					</div>
+				)}
+
 			</CardBody>
 			<CardFooter>
 				<CardFooterChild>
-					<Button variant='outline'>Cancel</Button>
-					<Button onClick={updateJobHandler} isLoading={componentLoading} variant='solid'>
-						Save and update the job
+					<Button onClick={() => navigateTo('/dashboard/jobs')} variant='solid' color='zinc'>
+						Back
 					</Button>
+					{isEditPage && (
+						<Button
+							onClick={updateJobHandler}
+							isLoading={componentLoading}
+							variant='solid'>
+							Save and update the job
+						</Button>
+					)}
 				</CardFooterChild>
 			</CardFooter>
 		</Card>

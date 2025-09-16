@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
-import Dropdown, {
-  DropdownMenu,
-  DropdownToggle,
-} from "../../../../../../components/ui/Dropdown";
+import { useState } from "react";
 import Button from "../../../../../../components/ui/Button";
 import Card, {
   CardBody,
@@ -11,14 +7,23 @@ import Card, {
   CardTitle,
 } from "../../../../../../components/ui/Card";
 import LabelSkillSelectPartial from "./LabelSkillSelect.partial";
+
 import { AppDispatch } from "../../../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  FilterOptionsType,
   getAllCandidatesList,
+  getCustomProfiles,
   setCandidatesFilterOptions,
+  setCandidatesLocations,
+  setCandidatesSearch,
 } from "../../../../../../store/slices/Candiates.slice";
 import { RootState } from "../../../../../../store";
 import { JobsFilterDropdownLocation } from "./JobsFilterDropdownLocation";
+import Dropdown, {
+  DropdownMenu,
+  DropdownToggle,
+} from "../../../../../../components/ui/Dropdown";
 
 interface ExperienceItem {
   title: string;
@@ -26,14 +31,17 @@ interface ExperienceItem {
 }
 
 const JobFilterDropdownPartial = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { filterOptions } = useSelector((state: RootState) => state.candidates);
+  const { filterOptions, candidateSource } = useSelector(
+    (state: RootState) => state.candidates,
+  );
 
-  const [formData, setFromData] = useState<any>({
+  const emptyFilterOptions: FilterOptionsType = {
     skills: [],
-    location: "",
-    experiences: [],
-  });
+    location: [],
+    keywords: "",
+    tenure: { min: 0, max: 0 },
+  };
+  const dispatch: AppDispatch = useDispatch();
 
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const experience: ExperienceItem[] = [
@@ -47,10 +55,11 @@ const JobFilterDropdownPartial = () => {
     { title: "8 Year", value: 8 },
     { title: "9 Year", value: 9 },
     { title: "10 Year", value: 10 },
-    { title: "10+ Year", value: 11 },
+    { title: "10+ Year", value: 100 },
   ];
 
   const handleMouseLeave = () => {
+    dropdownOpen&&
     setDropdownOpen(true);
   };
 
@@ -139,29 +148,55 @@ const JobFilterDropdownPartial = () => {
     );
   };
 
+  const handleSkillsChange = (skillChangeEvet: any) => {
+    dispatch(setCandidatesFilterOptions(skillChangeEvet));
+  };
+
   const applyFilter = () => {
-    dispatch(getAllCandidatesList({ page: 1, limit: 10, filterOptions }));
-    setDropdownOpen(false);
+
+    if (candidateSource === "linkedin") {
+      dispatch(
+        getAllCandidatesList({
+          page: 1,
+          limit: 10,
+          filterOptions
+        }),
+      );
+    } else {
+      dispatch(getCustomProfiles({ page: 1, limit: 10, filterOptions }));
+    }
+
+    dropdownOpen && setDropdownOpen(false);
+    // dispatch(setCandidatesLocations([]));
   };
 
   const clearAllFilters = async () => {
-    await dispatch(
-      setCandidatesFilterOptions({
-        location: [],
-        tenure: { min: 0, max: 0 },
-        skills: [],
-      }),
-    );
-    dispatch(getAllCandidatesList({ page: 1, limit: 10 }));
+    await dispatch(setCandidatesFilterOptions(emptyFilterOptions));
+    await dispatch(setCandidatesLocations([{title:"Search location...", id:""}]));
+    await dispatch(setCandidatesSearch(""));
+    dropdownOpen && setDropdownOpen(false);
+    if (candidateSource === "linkedin") {
+      await dispatch(
+        getAllCandidatesList({
+          page: 1,
+          limit: 10,
+          filterOptions: emptyFilterOptions,
+        }),
+      );
+    } else {
+      await dispatch(
+        getCustomProfiles({
+          page: 1,
+          limit: 10,
+          filterOptions: emptyFilterOptions,
+        }),
+      );
+    }
   };
 
-  useEffect(() => {
-    // handleSkillsChange();
-  }, [formData.skills]);
-
   return (
-    <div onMouseLeave={handleMouseLeave}>
-      <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen}>
+    <div onMouseLeave={handleMouseLeave} >
+      <Dropdown onMouseOver={()=>null} isOpen={dropdownOpen} setIsOpen={setDropdownOpen}>
         <DropdownToggle hasIcon={false}>
           <Button
             rounded="rounded-full"
@@ -211,9 +246,9 @@ const JobFilterDropdownPartial = () => {
             </CardHeader>
             <CardBody>
               <LabelSkillSelectPartial
-                setFormData={setFromData}
+                setFormData={handleSkillsChange}
                 id="skills"
-                formData={formData}
+                formData={filterOptions}
                 label=""
               />
             </CardBody>

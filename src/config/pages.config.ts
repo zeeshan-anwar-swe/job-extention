@@ -466,6 +466,13 @@ export const appPages = {
 			},
 		},
 
+		taskBoardAppPages: {
+			id: 'taskBoardApp',
+			to: '/dashboard/task-board',
+			text: 'Task Board',
+			icon: 'HeroTableCells',
+		},
+
 		clientsAppPages: {
 			id: 'clientsApp',
 			to: '/dashboard/clients',
