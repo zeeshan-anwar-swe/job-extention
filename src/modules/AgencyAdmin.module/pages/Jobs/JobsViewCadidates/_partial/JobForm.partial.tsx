@@ -27,7 +27,6 @@ import RichText from '../../../../../../components/RichText';
 import { Descendant } from 'slate';
 import Label from '../../../../../../components/form/Label';
 import { createDescendants } from '../../../../../../utils/descendant.helper';
-import { TextEditorForJobDetailsPagePartial } from './TextEditorForJobDetailsPage.partial';
 
 export interface JobFormData {
 	title: string;
@@ -146,11 +145,11 @@ const JobFormPartial = ({ jobDetails }: any) => {
 			<CardBody className={cn('!h-fit gap-4', !isEditPage && 'pointer-events-none	')}>
 				<NavSeparator className='' />
 				<LabelTitlepartial
-					formData={formData}
-					setFormData={setFormData}
 					id='title'
 					label='Job Title'
+					formData={formData}
 					detail={formData.title}
+					setFormData={setFormData}
 				/>
 				<LabelTitlepartial
 					formData={formData}

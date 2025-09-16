@@ -2,16 +2,9 @@ import { textValidationCheck } from '../../../../../utils/validationCheck';
 import Label from '../../../../../components/form/Label';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import SelectReact from '../../../../../components/form/SelectReact';
+import { FormData } from '../JobsCreateNewJob/_partial/CreateJobLeftSide.partial';
 
-interface FormData {
-	title: string;
-	description: string;
-	experience: string;
-	type: string;
-	location: string;
-	positions: string;
-	skills: string[];
-}
+
 
 type AllowedId = 'type';
 

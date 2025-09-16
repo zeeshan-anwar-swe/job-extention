@@ -6,10 +6,11 @@ import useImageValidation from '../../../../../../hooks/useImageValidation';
 import { textValidationCheck } from '../../../../../../utils/validationCheck';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { ClientDetailsType } from '../../../../../../types/slices.type/clients.slice.type';
-import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
+// import { AssignJobModalPartial } from '../../../../common/AssignJobModal/Modal.partial';
 import { assignJobToClient, getClientDetails } from '../../../../../../store/slices/Client.slice';
 import { AppDispatch } from '../../../../../../store';
 import { useDispatch } from 'react-redux';
+import { AssignJobModalPartial } from '../../../../../Shared/common/AssignJobModal/Modal.partial';
 
 const HeaderPartial = ({
 	clientDetails,
@@ -50,15 +51,15 @@ const HeaderPartial = ({
 						className='!text-amber-950 max-md:p-2  max-sm:w-full'>
 						{Number(state?.hiringRate)}% Hiring Percentage
 					</Badge>
-					<Button
+					{/* <Button
 						onClick={() => setModal(true)}
 						className='h-fit max-sm:w-full'
 						variant='solid'>
 						Assign a job
-					</Button>
+					</Button> */}
 				</div>
 			</div>
-			<AssignJobModalPartial
+			{/* <AssignJobModalPartial
 				title={`Assign Jobs to client: ${clientDetails?.clientUser?.firstName ?? ''}`}
 				assignToModule='client'
 				refreshData={refreshData}
@@ -66,7 +67,7 @@ const HeaderPartial = ({
 				setModal={setModal}
 				assignTo={clientDetails?.id}
 				jobAssignAction={assignJobToClient}
-			/>
+			/> */}
 		</Card>
 	);
 };

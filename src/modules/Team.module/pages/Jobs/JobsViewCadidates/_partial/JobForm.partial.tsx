@@ -20,7 +20,7 @@ import useImageValidation from '../../../../../../hooks/useImageValidation';
 import ImageLoaderWraper from '../../../../../../components/ui/ImageLoaderWraper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../../store';
-import { getJobDetails, updateJob } from '../../../../../../store/slices/Jobs.slice';
+import { updateJob } from '../../../../../../store/slices/Jobs.slice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../../../../../../utils/cn';
 import RichText from '../../../../../../components/RichText';

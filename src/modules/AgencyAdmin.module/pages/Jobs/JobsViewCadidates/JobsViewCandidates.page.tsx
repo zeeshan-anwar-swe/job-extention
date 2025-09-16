@@ -111,7 +111,7 @@ const JobsViewCandidatesPage = () => {
                   >
                     Remove Job
                   </Button>
-				  <Button
+                  <Button
                     onClick={() => setShowALL(true)}
                     size="lg"
                     variant="solid"
