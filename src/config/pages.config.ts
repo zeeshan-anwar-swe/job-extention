@@ -466,6 +466,38 @@ export const appPages = {
 			},
 		},
 
+		customCVAppPages: {
+			id: 'customCVApp',
+			to: '/dashboard/custom-cv',
+			text: 'Custom CV',
+			icon: 'HeroDocumentText',
+			subsPages: {
+				rootPage: {
+					text: 'List',
+					to: '/dashboard/custom-cv',
+					id: 'customCVApp',
+					icon: 'HeroTableCells',
+				},
+				createCVPages: {
+					to: '/dashboard/custom-cv/create',
+					icon: 'HeroDocumentPlus',
+					id: 'createCustomCVApp',
+					text: 'Create',
+				},
+				editCVPages: {
+					text: 'Edit',
+					id: 'viewCustomCVApp',
+					to: '/dashboard/custom-cv/edit',
+					icon: 'HeroDocumentCheck',
+				},
+				viewCVPages: {
+					text: 'View',
+					id: 'viewCustomCVApp',
+					to: '/dashboard/custom-cv/view',
+					icon: 'HeroDocumentMagnifyingGlass',
+				},
+			},
+		},
 		taskBoardAppPages: {
 			id: 'taskBoardApp',
 			to: '/dashboard/task-board',

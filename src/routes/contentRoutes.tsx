@@ -419,6 +419,27 @@ const contentRoutes: ContentRoutesType = {
       element: <TeamClientsPage />,
     },
 
+
+     {
+      path: `${appPages.Team.customCVAppPages.to}`,
+      element: <CustomCVPage />,
+    },
+
+    {
+      path: `${appPages.Team.customCVAppPages.subsPages.createCVPages.to}`,
+      element: <CreateCustomCVPage />,
+    },
+
+    {
+      path: `${appPages.Team.customCVAppPages.subsPages.editCVPages.to}`,
+      element: <CreateCustomCVPage />,
+    },
+
+    {
+      path: `${appPages.Team.customCVAppPages.subsPages.viewCVPages.to}`,
+      element: <ViewCustomCVPage />,
+    },
+
     // {
     // 	path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
     // 	element: <ClientProfilePage />,
