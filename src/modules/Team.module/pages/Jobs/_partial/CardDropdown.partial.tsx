@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Dropdown, {
 	DropdownItem,
 	DropdownMenu,
@@ -9,18 +9,17 @@ import DropdownSearchPartial from './DropdownSearch.partial';
 import DropDownITemUserMetaPartial from './DropDownITemUserMeta.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
-import { changeJobStatus } from '../../../../../store/slices/Jobs.slice';
-
+import { changeJobStatus} from '../../../../../store/slices/Jobs.slice';
+import { changeTeamJobStatus } from '../../../../../store/slices/Team/TeamJobs.slice';
 const CardDropdownPartial = ({ item }: { item: any }) => {
 	const [dropdown, setDropdown] = useState<boolean>(false);
-
 	const dispatch: AppDispatch = useDispatch();
 
 	const { searchedTeamListForJob } = useSelector((state: RootState) => state.jobsSlice);
 
 	const handleJobStatusChange = (status: string) => {
 		if (item?.status !== status) {
-			dispatch(changeJobStatus({ jobId: item.id, status }));
+			dispatch(changeTeamJobStatus({ jobId: item.id, status }));
 		}
 	};
 
@@ -48,14 +47,6 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						color={item?.status === 'IN_PROGRESS' ? 'blue' : 'zinc'}>
 						In Progress
 					</Button>
-					{/* <Button
-						// onClick={() => handleJobStatusChange('TODO')}
-						className='!py-1'
-						rounded='rounded-full'
-						variant={item?.status === 'TODO' ? 'solid' : 'outline'}
-						color={item?.status === 'TODO' ? 'zinc' : 'zinc'}>
-						To Do
-					</Button> */}
 				</DropdownItem>
 				<DropdownItem className='gap-2'>
 					<Button
@@ -75,7 +66,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						Completed
 					</Button>
 				</DropdownItem>
-				{/* <div className='border-t-2 border-zinc-500/25 px-4 py-2 text-sm font-bold dark:border-zinc-500/50'>
+				<div className='border-t-2 border-zinc-500/25 px-4 py-2 text-sm font-bold dark:border-zinc-500/50'>
 					Asign to a team member
 				</div>
 				<DropdownItem>
@@ -89,7 +80,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 							key={teamMember.id}
 						/>
 					))}
-				</div> */}
+				</div>
 			</DropdownMenu>
 		</Dropdown>
 	);

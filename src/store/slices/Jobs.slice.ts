@@ -208,6 +208,7 @@ export const deleteJob = createAsyncThunk(
 	async (jobId: string, { rejectWithValue }) => {
 		try {
 			const response = await axiosInstance.delete('/job/' + jobId);
+			toast.success('Job Deleted Successfully');
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);

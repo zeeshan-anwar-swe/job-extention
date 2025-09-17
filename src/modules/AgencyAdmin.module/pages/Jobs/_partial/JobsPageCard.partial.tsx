@@ -92,7 +92,7 @@ const JobsPageCardPartial = ({ item }: any) => {
 						className='!px-0 !text-xl !font-bold'
 						rightIcon='HeroArrowUpRight'>
 						View Cadidates
-					</Button>
+					</Button> 
 				</CardFooterChild>
 				<CardFooterChild>
 					<div className='flex items-center'>
