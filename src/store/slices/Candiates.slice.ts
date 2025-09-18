@@ -404,7 +404,7 @@ export const getAllCandidatesList = createAsyncThunk(
   ) => {
     try {
       const url = `/unipile-linkedin/search?page=${page}&limit=${limit}`;
-      const response = await axiosInstanceCustomToken.post(url, filterOptions);
+      const response = await axiosInstance.post(url, filterOptions);
       return response.data.data;
     } catch (error: any) {
       return await withAsyncThunkErrorHandler(error, rejectWithValue);

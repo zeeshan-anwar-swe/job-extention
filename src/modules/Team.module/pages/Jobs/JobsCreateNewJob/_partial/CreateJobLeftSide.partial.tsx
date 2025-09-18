@@ -28,6 +28,7 @@ import { SkillsSelectForJob } from "./SkillSelectForJob.partial";
 import RichText from "../../../../../../components/RichText";
 import { Descendant } from "slate";
 import Label from "../../../../../../components/form/Label";
+import { Roles } from "../../../../../../constants/role.enums";
 
 export interface FormData {
   title: string;
@@ -220,7 +221,7 @@ const CreateJobLeftSidePartial = () => {
           <Button variant="solid" onClick={() => setModal(true)}>
             Assign To client
           </Button>
-          <AssignClientModalPartial setModal={setModal} modal={modal} />
+          <AssignClientModalPartial moduleType={Roles.TEAM} setModal={setModal} modal={modal} />
         </CardFooterChild>
       </CardFooter>
     </Card>

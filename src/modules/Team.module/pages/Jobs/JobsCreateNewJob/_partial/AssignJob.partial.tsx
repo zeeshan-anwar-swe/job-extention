@@ -11,14 +11,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../../store';
 import { useEffect } from 'react';
 import {
+	getAssignedClientForTeam,
 	getPaginatedAgencyClientsList,
 	setClientSearch,
 } from '../../../../../../store/slices/Client.slice';
 import PageLoader from '../../../../../../templates/layouts/main/PageLoader';
 import SearchPartial from '../../../../../Shared/common/Search.partial';
 import Pagination from '../../../../../../components/ui/Pagination';
+import { Roles } from '../../../../../../constants/role.enums';
 
-const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
+const AssignClientModalPartial = ({ modal, setModal, moduleType }: { modal: boolean; setModal: any; moduleType?: string }) => {
+	
+	const isTeamModule = moduleType === Roles.TEAM;
 	const {
 		paginatedClients: clientsList,
 		pageLoading,
@@ -55,7 +59,7 @@ const AssignClientModalPartial = ({ modal, setModal }: { modal: boolean; setModa
 						count={paginationCount}
 						search={clentSearch}
 						limit={10}
-						getListAction={getPaginatedAgencyClientsList}
+						getListAction={ isTeamModule? getAssignedClientForTeam: getPaginatedAgencyClientsList}
 					/>
 				</ModalFooterChild>
 				<ModalFooterChild className='w-full'>
