@@ -15,12 +15,11 @@ const LabelTitlepartial = ({ label, detail }: { label?: string; detail?: string 
 			<FieldWrap>
 				<Input
 					dimension='lg'
-					
 					id='name'
 					autoComplete='name'
 					name='name'
 					value={detailText || ''}
-					placeholder='Enter your name'
+					placeholder={label || ''}
 					// onChange={(e) => setDetailText(e.target.value)}
 				/>
 			</FieldWrap>

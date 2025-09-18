@@ -59,6 +59,7 @@ import TeamClientsPage from "../modules/Team.module/pages/ClientsPage/Clients.pa
 import TeamJobsCreatePage from "../modules/Team.module/pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page";
 import TeamJobDelatils from "../modules/Team.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page";
 import TeamTaskboardPage from "../modules/Team.module/pages/TaskboardPages/Taskboard.page";
+import TeamClientProfilePage from "../modules/Team.module/pages/ClientsPage/ClientProfile/ClientProfile.page";
 
 const DashboardPage = lazy(
   () =>
@@ -419,6 +420,11 @@ const contentRoutes: ContentRoutesType = {
       element: <TeamClientsPage />,
     },
 
+    {
+      path: appPages.Team.clientsAppPages.subPages.clientProfileAppPages.to,
+      element: <TeamClientProfilePage />,
+    },
+
 
      {
       path: `${appPages.Team.customCVAppPages.to}`,
@@ -440,20 +446,7 @@ const contentRoutes: ContentRoutesType = {
       element: <ViewCustomCVPage />,
     },
 
-    // {
-    // 	path: `${appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to}/:id`,
-    // 	element: <ClientProfilePage />,
-    // },
-
-    // {
-    // 	path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
-    // 	element: <ClientProfilePage />,
-    // },
-
-    // {
-    // 	path: appPages.AgencyAdmin.clientsAppPages.subPages.clientJobsAppPages.to,
-    // 	element: <ClientJobsPage />,
-    // },
+    
 
     {
       path: appPages.Team.chatAppPages.to + "/*",

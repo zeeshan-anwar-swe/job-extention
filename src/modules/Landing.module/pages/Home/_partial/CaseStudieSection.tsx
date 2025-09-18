@@ -64,14 +64,14 @@ export const CaseStudieSection = () => {
           variants={containerVariants}
         >
           {rows.map((blog: TBlogPost) => (
-            <motion.div variants={itemVariants}>
+            <motion.div onClick={()=>navigateTo("/blog-post", { state: blog })} variants={itemVariants}>
               <LatestCard
                 image={blog.image}
                 headingA={blog.category.name}
                 headingB={blog.readingTime}
                 title={blog.title}
                 description={blog.content}
-                // navigatePath='*'
+                // navigatePath='/blog-post'
               />
             </motion.div>
           ))}

@@ -50,6 +50,10 @@ interface ClientUser {
 	industry: string;
 	location: string;
 	about: string;
+	linkedinUrl: null|string;
+	twitterUrl: null | string;
+	githubUrl: null | string;
+	otherUrl?: null | string;
 }
 
 

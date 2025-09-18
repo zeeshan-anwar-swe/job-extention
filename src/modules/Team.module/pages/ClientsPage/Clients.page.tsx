@@ -58,7 +58,6 @@ const TeamClientsPage = () => {
 						<CardTitle>Clients</CardTitle>
 						<CardSubTitle>View and manage your client relationships.</CardSubTitle>
 					</SubheaderLeft>
-					
 				</Subheader>
 
 				<PageLoader loading={pageLoading} error={error} data={paginatedClients}>

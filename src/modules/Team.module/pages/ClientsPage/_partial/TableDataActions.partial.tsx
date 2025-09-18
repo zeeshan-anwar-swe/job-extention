@@ -24,8 +24,8 @@ const TableDataActionsPartial = ({
       </Link> */}
 
       <Link
-        to={`/dashboard/chat/${client?.userId}`}
-        state={{ userName: client?.name, userId: client?.userId }}
+        to={`/dashboard/chat/${client.id}`}
+        state={{ userName: client.name, userId: client.id }}
       >
         <Button color="blue">Message</Button>
       </Link>

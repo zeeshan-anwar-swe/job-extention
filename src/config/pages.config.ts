@@ -534,8 +534,8 @@ export const appPages = {
 
 		chatAppPages: {
 			id: 'chatApp',
-			to: '/dashboard/chat',
 			text: 'Chat',
+			to: '/dashboard/chat',
 			icon: 'HeroChatBubbleLeftRight',
 		},
 		chatPage: {

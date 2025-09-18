@@ -9,7 +9,6 @@ import DropdownSearchPartial from './DropdownSearch.partial';
 import DropDownITemUserMetaPartial from './DropDownITemUserMeta.partial';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
-import { changeJobStatus} from '../../../../../store/slices/Jobs.slice';
 import { changeTeamJobStatus } from '../../../../../store/slices/Team/TeamJobs.slice';
 const CardDropdownPartial = ({ item }: { item: any }) => {
 	const [dropdown, setDropdown] = useState<boolean>(false);
