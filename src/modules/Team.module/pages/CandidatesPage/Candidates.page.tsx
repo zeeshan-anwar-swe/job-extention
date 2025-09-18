@@ -10,24 +10,30 @@ import DefaultHeaderRightCommon from '../../../../templates/layouts/Headers/_com
 import Button from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/layouts/Breadcrumb/Breadcrumb';
 import { CardSubTitle, CardTitle } from '../../../../components/ui/Card';
+import {
+	getAgencyCandidatesList,
+	setCandidatesSearch,
+} from '../../../../store/slices/Candiates.slice';
 import { RootState } from '../../../../store';
 import { useSelector } from 'react-redux';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Pagination from '../../../../components/ui/Pagination';
 import DownloadCsvModal from './_partial/CSVDownload.partial';
 import { useState } from 'react';
+import { CandidateJobStatus } from '../../../../types/enums/candidateJobStatus.enum';
+import { getLabedOptionFromEnum } from '../../../../utils/enum.helper';
 import CustomSearchComponent from '../../../Shared/components/CustomSearch.component';
+import { CustomFilterDropdownComponent } from '../../../Shared/components/CustomFilterDropdown.component';
 import { getTeamCandidates, setSearch } from '../../../../store/slices/Team/Candidates.slice';
 
-const TeamCandidatesPage = () => {
-	const {
-		loading: pageLoading,
-		error,
-		rows: candidatesList,
-		count: paginationCount,
-		search,
-	} = useSelector((state: RootState) => state.teamCandidates.list);
+const CandidatesPage = () => {
+	const { loading, rows, error, count, search } = useSelector(
+		(state: RootState) => state.teamCandidates.list,
+	);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+
+	const statuses = Object.values(CandidateJobStatus);
+	console.log(typeof CandidateJobStatus);
 
 	return (
 		<>
@@ -47,21 +53,21 @@ const TeamCandidatesPage = () => {
 							setSearchActionForPagination={setSearch}
 							searchListAction={getTeamCandidates}
 							searchLimit={10}
-							searchByFilterOptions={[
-								'name',
-								'email',
-								'status',
-								'jobTitle',
-								'clientName',
-								'clientEmail',
-							]}
-							placeholder='Search Candidates...'
+						/>
+						<CustomFilterDropdownComponent
+							limit={10}
+							filterBy='status'
+							search={search}
+							setSearch={setSearch}
+							getListAction={getTeamCandidates}
+							options={getLabedOptionFromEnum(CandidateJobStatus)}
 						/>
 					</SubheaderLeft>
 					<SubheaderRight>
 						<div></div>
 					</SubheaderRight>
 				</Subheader>
+
 				<Subheader className='!-z-0'>
 					<SubheaderLeft className='!block'>
 						<CardTitle>Candidates</CardTitle>
@@ -76,10 +82,10 @@ const TeamCandidatesPage = () => {
 				</Subheader>
 
 				<PageLoader
-					loading={pageLoading}
+					loading={loading}
 					error={error}
-					data={candidatesList}
-					messageForEmptyData='No candidates data found kindly create a job and assign candidates while creating it'>
+					data={rows}
+					messageForEmptyData='No candidates data found'>
 					<Container>
 						<TablePartial />
 					</Container>
@@ -88,7 +94,7 @@ const TeamCandidatesPage = () => {
 				<Pagination
 					search={search}
 					getListAction={getTeamCandidates}
-					count={paginationCount}
+					count={count}
 					limit={10}
 				/>
 			</PageWrapper>
@@ -96,4 +102,4 @@ const TeamCandidatesPage = () => {
 	);
 };
 
-export default TeamCandidatesPage;
+export default CandidatesPage;

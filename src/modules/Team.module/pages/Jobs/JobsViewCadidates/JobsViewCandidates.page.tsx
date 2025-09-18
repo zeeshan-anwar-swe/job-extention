@@ -36,13 +36,15 @@ import { ConfirmationModal } from "../../../../Shared/components/CustomModal/con
 import { AssignLinkedInCandiatesToJobModalPartial } from "../../../../Shared/common/assignLinkedInCandiatesToJobModal/assignLinkedInCandiatesToJobModal.partial";
 import { cn } from "../../../../../utils/cn";
 import { showAllJobToClient } from "../../../../../store/slices/Candiates.slice";
+import { useAuth } from "../../../../../context/authContext";
 
 const TeamJobDelatils = () => {
-  const [modal, setModal] = useState<boolean>(false);
-  const [showALL, setShowALL] = useState<boolean>(false);
-
   const params = useLocation();
   const { state, pathname } = params;
+  const { userStorage } = useAuth();
+  const isDeleteable = userStorage.id === state?.createdBy;
+  const [modal, setModal] = useState<boolean>(false);
+  const [showALL, setShowALL] = useState<boolean>(false);
 
   const { jobDetails, pageLoading, error } = useSelector(
     (state: RootState) => state.jobsSlice,
@@ -64,7 +66,7 @@ const TeamJobDelatils = () => {
 
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
-  console.log({ jobDetails });
+  console.log({ jobDetails, state });
 
   return (
     <>
@@ -101,16 +103,18 @@ const TeamJobDelatils = () => {
                   </CardSubTitle>
                 </CardHeaderChild>
                 <CardHeaderChild>
+                  {isDeleteable && (
+                    <Button
+                      onClick={() => setDeleteModal(true)}
+                      size="lg"
+                      color="red"
+                      variant="solid"
+                      rightIcon="HeroTrash"
+                    >
+                      Remove Job
+                    </Button>
+                  )}
                   <Button
-                    onClick={() => setDeleteModal(true)}
-                    size="lg"
-                    color="red"
-                    variant="solid"
-                    rightIcon="HeroTrash"
-                  >
-                    Remove Job
-                  </Button>
-				  <Button
                     onClick={() => setShowALL(true)}
                     size="lg"
                     variant="solid"

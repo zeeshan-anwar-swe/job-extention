@@ -60,6 +60,7 @@ import TeamJobsCreatePage from "../modules/Team.module/pages/Jobs/JobsCreateNewJ
 import TeamJobDelatils from "../modules/Team.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page";
 import TeamTaskboardPage from "../modules/Team.module/pages/TaskboardPages/Taskboard.page";
 import TeamClientProfilePage from "../modules/Team.module/pages/ClientsPage/ClientProfile/ClientProfile.page";
+import TeamCandidateCVEditPage from "../modules/Team.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page";
 
 const DashboardPage = lazy(
   () =>
@@ -413,6 +414,11 @@ const contentRoutes: ContentRoutesType = {
     {
       path: appPages.Team.candidatesPage.subPages.cadidateProfileAppPage.to,
       element: <TeamCandidatesProfilePage />,
+    },
+
+    {
+      path: appPages.Team.candidatesPage.subPages.candidateCVEditAppPage.to,
+      element: <TeamCandidateCVEditPage />,
     },
 
     {

@@ -5,6 +5,7 @@ import Modal, {
 	ModalFooterChild,
 	ModalHeader,
 } from '../../../../../../components/ui/Modal';
+import SearchPartial from '../../../Jobs/_partial/Search.partial';
 import AssignJobToClientModalListItemPartial from './AssignJobToClientModalListItem.partial';
 
 const AssignJobToClientModalPartial = ({ modal, setModal }: { modal: boolean; setModal: any }) => {
@@ -12,6 +13,7 @@ const AssignJobToClientModalPartial = ({ modal, setModal }: { modal: boolean; se
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
 			<ModalHeader>Assign Job to a Client</ModalHeader>
 			<div className='p-4'>
+				<SearchPartial />
 			</div>
 
 			<ModalBody>

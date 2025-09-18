@@ -21,11 +21,15 @@ export const LinkedInCandidateCardPartial = ({
 }: {
   candidate: LinkedInProfile;
 }) => {
+  console.log({ candidate });
+  
   const dispatch: AppDispatch = useDispatch();
 
   const { candidateSource } = useSelector(
     (state: RootState) => state.candidates,
   );
+
+  
 
   const { jobDetails, assignedCandidatesWhileCreatingJob,assignedCustomCandidatesWhileCreatingJob } = useSelector(
     (state: RootState) => state.jobsSlice,

@@ -15,18 +15,18 @@ interface Client {
     clientUser: ClientUser;
 }
 
-interface Job {
+export interface TCandidateJob {
     id: string;
     title: string;
     teamId: string;
-    client: Client;
+    client: Client | null;
 }
 
-interface JobProfile {
+export interface TTeamCandidateJobProfile {
     id: string;
     roles: null;
     status: string;
-    job: Job;
+    job: TCandidateJob;
 }
 
 export interface TeamCandidate {
@@ -34,7 +34,9 @@ export interface TeamCandidate {
     name: string;
     email: string;
     image: string;
-    jobProfiles: JobProfile[];
+    profilePictureUrl: string;
+    publicProfileUrl: string;
+    jobProfiles: TTeamCandidateJobProfile[];
 }
 
 export interface TeamCandidatesStateType {

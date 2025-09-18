@@ -24,7 +24,7 @@ const TablePartial = () => {
 					<Tr key={candidate.id}>
 						<Td>
 							<TableDataProfilePartial
-								imageUrl={candidate?.candidate?.profilePictureUrl}
+								imageUrl={candidate?.profilePictureUrl}
 								title={candidate.candidate.name}
 								subTitle={candidate.candidate.email}
 							/>

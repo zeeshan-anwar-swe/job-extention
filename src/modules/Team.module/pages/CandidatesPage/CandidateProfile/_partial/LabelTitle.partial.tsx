@@ -3,7 +3,7 @@ import Label from '../../../../../../components/form/Label';
 import FieldWrap from '../../../../../../components/form/FieldWrap';
 import Input from '../../../../../../components/form/Input';
 
-const LabelTitlepartial = ({ label, detail }: { label: string; detail?: string|number }) => {
+const LabelTitlepartial = ({ label, detail }: { label: string; detail?: string | number }) => {
 	return (
 		<div className='w-full'>
 			<Label htmlFor='title' className='font-light'>
