@@ -1,233 +1,255 @@
-import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
-import { io, Socket } from 'socket.io-client';
-import { apiBaseUrl } from '../constants/crential.constant.ts';
-import { useAuth } from './authContext';
-import { getInboxMessages } from '../services/message.ts';
-import { getNotifications } from '../services/notification.ts';
-import { useLocation } from 'react-router-dom';
-import { playMessageSound, playNotifcationSound } from '../utils/socketTunes.ts';
-import toast from 'react-hot-toast';
-import { ToastMessage } from '../components/notification/ToastMessage.tsx';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  ReactNode,
+} from "react";
+import { io, Socket } from "socket.io-client";
+import { apiBaseUrl } from "../constants/crential.constant.ts";
+import { useAuth } from "./authContext";
+import { getInboxMessages } from "../services/message.ts";
+import { getNotifications } from "../services/notification.ts";
+import { useLocation } from "react-router-dom";
+import {
+  playMessageSound,
+  playNotifcationSound,
+} from "../utils/socketTunes.ts";
+import toast from "react-hot-toast";
+import { ToastMessage } from "../components/notification/ToastMessage.tsx";
 
 export interface InboxEntry {
-	userId: string;
-	lastMessage: string;
-	unreadCount: number;
-	image: string | null;
-	name: string;
-	createdAt: string;
+  userId: string;
+  lastMessage: string;
+  unreadCount: number;
+  image: string | null;
+  name: string;
+  createdAt: string;
 }
 
 interface Notification {
-	id: string;
-	notification: string;
-	type: string;
-	targetId: string | null;
-	createdAt: string;
-	isRead: boolean;
-	user: {
-		firstName: string;
-		lastName: string;
-		image: string | null;
-	};
+  id: string;
+  notification: string;
+  type: string;
+  targetId: string | null;
+  createdAt: string;
+  isRead: boolean;
+  user: {
+    firstName: string;
+    lastName: string;
+    image: string | null;
+  };
 }
 
 interface SocketContextType {
-	socket: Socket | null;
-	inbox: Record<string, InboxEntry>;
-	notifications: Notification[];
-	resetUnread: (userId: string) => void;
-	loading: boolean;
-	onlineStatusMap: Map<string, boolean>;
-	setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
+  socket: Socket | null;
+  inbox: Record<string, InboxEntry>;
+  notifications: Notification[];
+  resetUnread: (userId: string) => void;
+  loading: boolean;
+  onlineStatusMap: Map<string, boolean>;
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
 }
 
 const SocketContext = createContext<SocketContextType>({
-	socket: null,
-	inbox: {},
-	notifications: [],
-	resetUnread: () => {},
-	loading: true,
-	onlineStatusMap: new Map(),
-	setNotifications: () => {},
+  socket: null,
+  inbox: {},
+  notifications: [],
+  resetUnread: () => {},
+  loading: true,
+  onlineStatusMap: new Map(),
+  setNotifications: () => {},
 });
 
 export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const { pathname } = useLocation();
+  const { pathname } = useLocation();
 
-	const [inbox, setInbox] = useState<Record<string, InboxEntry>>({});
-	const [notifications, setNotifications] = useState<Notification[]>([]);
-	const [onlineStatusMap, setOnlineStatusMap] = useState<Map<string, boolean>>(new Map());
+  const [inbox, setInbox] = useState<Record<string, InboxEntry>>({});
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [onlineStatusMap, setOnlineStatusMap] = useState<Map<string, boolean>>(
+    new Map(),
+  );
 
-	const socketRef = useRef<Socket | null>(null);
-	const { userStorage: userData } = useAuth();
-	const [loading, setLoading] = useState(true);
+  const socketRef = useRef<Socket | null>(null);
+  const { userStorage: userData } = useAuth();
+  const [loading, setLoading] = useState(true);
 
-	const token = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) : '';
-	const location = useLocation();
+  const token = localStorage.getItem("token")
+    ? JSON.parse(localStorage.getItem("token")!)
+    : "";
+  const location = useLocation();
 
-	useEffect(() => {
-		if (!token || !userData?.id) return;
+  useEffect(() => {
+    if (!token || !userData?.id) return;
 
-		const socket = io(apiBaseUrl, {
-			auth: { token },
-		});
-		socketRef.current = socket;
-		fetchNotifications();
-		fetchInbox();
-		socket.on('receive_message', (msg: any) => {
-			const isSender = msg.senderId === userData.id;
-			const user = isSender ? msg.receiver : msg.sender;
-			const userId = user.id;
+    const socket = io(apiBaseUrl, {
+      auth: { token },
+    });
+    socketRef.current = socket;
+    fetchNotifications();
+    fetchInbox();
+    socket.on("receive_message", (msg: any) => {
+      const isSender = msg.senderId === userData.id;
+      const user = isSender ? msg.receiver : msg.sender;
+      const userId = user.id;
 
-			const currentChatMatch = pathname.match(/\/chat\/([^/]+)/);
+      const currentChatMatch = pathname.match(/\/chat\/([^/]+)/);
 
-			const currentChatUserId = currentChatMatch ? currentChatMatch[1] : null;
-			// console.log({
-			// 	pathname,
-			// 	'/dashboard/chat/${msg?.senderId}': `/dashboard/chat/${msg?.senderId}`,
-			// 	'/dashboard/chat/${msg?.receiverId}': `/dashboard/chat/${msg?.receiverId}`,
-			// });
-			if (pathname === `/dashboard/chat/${msg?.senderId}` || pathname === `/dashboard/chat/${msg?.receiverId}`) {
-				if (currentChatUserId !== userId) {
-					playMessageSound();
-					toast.dismiss();
-					toast.custom((t) => <ToastMessage t={t} msg={msg} />);
-				}
-			} else {
-					playMessageSound();
-					toast.custom((t) => <ToastMessage t={t} msg={msg} />);
-			}
+      const currentChatUserId = currentChatMatch ? currentChatMatch[1] : null;
+      // console.log({
+      // 	pathname,
+      // 	'/dashboard/chat/${msg?.senderId}': `/dashboard/chat/${msg?.senderId}`,
+      // 	'/dashboard/chat/${msg?.receiverId}': `/dashboard/chat/${msg?.receiverId}`,
+      // });
 
-			setInbox((prev) => {
-				const existing = prev[userId] || {
-					userId,
-					lastMessage: '',
-					unreadCount: 0,
-					image: user.image,
-					name: `${user.firstName} ${user.lastName}`,
-					createdAt: msg.createdAt,
-				};
+      if (
+        pathname === `/dashboard/chat/${msg?.senderId}` ||
+        pathname === `/dashboard/chat/${msg?.receiverId}`
+      ) {
+        if (currentChatUserId !== userId) {
+          playMessageSound();
+          toast.dismiss();
+          // toast.custom((t) => <ToastMessage t={t} msg={msg} />);
+        } else {
+          playMessageSound();
+          toast.custom((t) => <ToastMessage t={t} msg={msg} />);
+        }
+      } else {
+      }
 
-				return {
-					...prev,
-					[userId]: {
-						...existing,
-						lastMessage: msg.text || '',
-						unreadCount: isSender ? existing.unreadCount : existing.unreadCount + 1,
-						createdAt: msg.createdAt,
-					},
-				};
-			});
-		});
+      setInbox((prev) => {
+        const existing = prev[userId] || {
+          userId,
+          lastMessage: "",
+          unreadCount: 0,
+          image: user.image,
+          name: `${user.firstName} ${user.lastName}`,
+          createdAt: msg.createdAt,
+        };
 
-		socket.on('notification', (notif: any) => {
-			const parsedNotif = JSON.parse(notif);
-			toast(parsedNotif.notification, {
-				icon: '🔔',
-			});
+        return {
+          ...prev,
+          [userId]: {
+            ...existing,
+            lastMessage: msg.text || "",
+            unreadCount: isSender
+              ? existing.unreadCount
+              : existing.unreadCount + 1,
+            createdAt: msg.createdAt,
+          },
+        };
+      });
+    });
 
-			setNotifications((prev) => [JSON.parse(notif), ...prev]);
-			playNotifcationSound();
-		});
-		socket.on('user_status', ({ userId, status }) => {
-			setOnlineStatusMap((prev) => {
-				const newMap = new Map(prev);
-				newMap.set(userId, status === 'online');
-				return newMap;
-			});
-		});
+    socket.on("notification", (notif: any) => {
+      const parsedNotif = JSON.parse(notif);
+      toast(parsedNotif.notification, {
+        icon: "🔔",
+      });
 
-		socket.on(
-			'user_status_bulk',
-			(statuses: { userId: string; status: 'online' | 'offline' }[]) => {
-				setOnlineStatusMap((prev) => {
-					const newMap = new Map(prev);
-					statuses.forEach(({ userId, status }) => {
-						newMap.set(userId, status === 'online');
-					});
-					return newMap;
-				});
-			},
-		);
+      setNotifications((prev) => [JSON.parse(notif), ...prev]);
+      playNotifcationSound();
+    });
+    socket.on("user_status", ({ userId, status }) => {
+      setOnlineStatusMap((prev) => {
+        const newMap = new Map(prev);
+        newMap.set(userId, status === "online");
+        return newMap;
+      });
+    });
 
-		socket.emit('check_user_status', {
-			userIds: Object.keys(inbox),
-		});
+    socket.on(
+      "user_status_bulk",
+      (statuses: { userId: string; status: "online" | "offline" }[]) => {
+        setOnlineStatusMap((prev) => {
+          const newMap = new Map(prev);
+          statuses.forEach(({ userId, status }) => {
+            newMap.set(userId, status === "online");
+          });
+          return newMap;
+        });
+      },
+    );
 
-		return () => {
-			socket.disconnect();
-			socketRef.current = null;
-		};
-	}, [userData, pathname]);
+    socket.emit("check_user_status", {
+      userIds: Object.keys(inbox),
+    });
 
-	const fetchInbox = async () => {
-		try {
-			const response = await getInboxMessages();
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [userData, pathname]);
 
-			const rows = response.data.rows;
-			const result: Record<string, InboxEntry> = {};
+  const fetchInbox = async () => {
+    try {
+      const response = await getInboxMessages();
 
-			for (const entry of rows) {
-				const isSender = entry.senderId === userData?.id;
-				const other = isSender ? entry.receiver : entry.sender;
-				const userId = other.id;
+      const rows = response.data.rows;
+      const result: Record<string, InboxEntry> = {};
 
-				result[userId] = {
-					userId,
-					lastMessage: entry.text || '',
-					unreadCount: entry.unreadCount,
-					image: other.image,
-					name: `${other.firstName} ${other.lastName}`,
-					createdAt: entry.createdAt,
-				};
-			}
-			setInbox(result);
-			setLoading(false);
-		} catch (error) {
-			console.error('Failed to fetch inbox', error);
-		} finally {
-			setLoading(false);
-		}
-	};
+      for (const entry of rows) {
+        const isSender = entry.senderId === userData?.id;
+        const other = isSender ? entry.receiver : entry.sender;
+        const userId = other.id;
 
-	const fetchNotifications = async () => {
-		try {
-			const res = await getNotifications();
-			setNotifications(res.data.rows);
-		} catch (err) {
-			console.error('Failed to fetch notifications', err);
-		}
-	};
+        result[userId] = {
+          userId,
+          lastMessage: entry.text || "",
+          unreadCount: entry.unreadCount,
+          image: other.image,
+          name: `${other.firstName} ${other.lastName}`,
+          createdAt: entry.createdAt,
+        };
+      }
+      setInbox(result);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch inbox", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-	const resetUnread = (userId: string) => {
-		setInbox((prev) => {
-			const entry = prev[userId];
-			if (!entry) return prev;
-			return {
-				...prev,
-				[userId]: {
-					...entry,
-					unreadCount: 0,
-				},
-			};
-		});
-	};
+  const fetchNotifications = async () => {
+    try {
+      const res = await getNotifications();
+      setNotifications(res.data.rows);
+    } catch (err) {
+      console.error("Failed to fetch notifications", err);
+    }
+  };
 
-	return (
-		<SocketContext.Provider
-			value={{
-				socket: socketRef.current,
-				inbox,
-				notifications,
-				resetUnread,
-				loading,
-				onlineStatusMap,
-				setNotifications,
-			}}>
-			{children}
-		</SocketContext.Provider>
-	);
+  const resetUnread = (userId: string) => {
+    setInbox((prev) => {
+      const entry = prev[userId];
+      if (!entry) return prev;
+      return {
+        ...prev,
+        [userId]: {
+          ...entry,
+          unreadCount: 0,
+        },
+      };
+    });
+  };
+
+  return (
+    <SocketContext.Provider
+      value={{
+        socket: socketRef.current,
+        inbox,
+        notifications,
+        resetUnread,
+        loading,
+        onlineStatusMap,
+        setNotifications,
+      }}
+    >
+      {children}
+    </SocketContext.Provider>
+  );
 };

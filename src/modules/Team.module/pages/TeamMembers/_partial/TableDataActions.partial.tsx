@@ -10,7 +10,7 @@ const TableDataActionsPartial = ({ teamMember }: { teamMember: any }) => {
       <Button
         onClick={() =>
           navigateTo(`/dashboard/chat/${teamMember.user.id}`, {
-            state: teamMember,
+            state: {userId: teamMember.user.id, userName: teamMember.user.name},
           })
         }
       >
