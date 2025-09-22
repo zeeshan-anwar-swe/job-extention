@@ -286,6 +286,20 @@ export const getAgencyCandidatesCsvList = createAsyncThunk(
   },
 );
 
+export const getTeamCandidatesCsvList = createAsyncThunk(
+  "candidates/getTeamCandidatesCsvList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(
+        "/team/test/candidates?fetchAll=true",
+      );
+      return response.data.data.rows;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
 export const assignJobToCandidate = createAsyncThunk(
   "candidates/assignJobToCandidate",
   async (
@@ -668,6 +682,25 @@ export const candidatesSlice = createSlice({
         };
         state.modalLoading = false;
       })
+
+
+
+       .addCase(getTeamCandidatesCsvList.pending, (state) => {
+        state.modalLoading = true;
+        state.error = null;
+      })
+      .addCase(getTeamCandidatesCsvList.fulfilled, (state, action) => {
+        state.csvData = action.payload;
+        state.modalLoading = false;
+      })
+      .addCase(getTeamCandidatesCsvList.rejected, (state, action) => {
+        state.error = action.payload || {
+          message: "Unknown error occurred while inviting client",
+        };
+        state.modalLoading = false;
+      })
+
+
 
       .addCase(getAllCandidatesList.pending, (state) => {
         state.pageLoading = true;

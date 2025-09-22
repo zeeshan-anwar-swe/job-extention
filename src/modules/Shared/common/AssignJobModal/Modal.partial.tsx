@@ -10,10 +10,12 @@ import { JobDetailsType2 } from '../../../../types/slices.type/jobs.slice.type';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store';
-import { getJobsList, setCurrentPage, setJobSearch } from '../../../../store/slices/Jobs.slice';
+import { getJobsList, getTeamJobsList, setCurrentPage, setJobSearch } from '../../../../store/slices/Jobs.slice';
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import Search from '../Search.partial';
 import Pagination from '../../../../components/ui/Pagination';
+import { Roles } from '../../../../constants/role.enums';
+import toast from 'react-hot-toast';
 
 export const AssignJobModalPartial = ({
 	modal,
@@ -23,6 +25,7 @@ export const AssignJobModalPartial = ({
 	assignToModule,
 	unAssignAction,
 	jobAssignAction,
+	role,
 }: {
 	assignToModule: 'candidate' | 'client' | 'teamMember';
 	title?: string;
@@ -31,6 +34,7 @@ export const AssignJobModalPartial = ({
 	unAssignAction?: any;
 	jobAssignAction: any;
 	assignTo: string;
+	role?:Roles;
 }) => {
 	const { paginatedList, pageLoading, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
@@ -39,7 +43,13 @@ export const AssignJobModalPartial = ({
 
 	useEffect(() => {
 		if (modal) {
-			dispatch(getJobsList({ limit: 10, page: 1 }));
+			if(role === Roles.TEAM){
+				dispatch(getTeamJobsList({ limit: 10, page: 1 }));
+
+			}else{
+				dispatch(getJobsList({ limit: 10, page: 1 }));
+
+			}
 		}
 	}, [modal]);
 
@@ -50,7 +60,7 @@ export const AssignJobModalPartial = ({
 				<Search
 					searchLimit={10}
 					setSearchActionForPagination={setJobSearch}
-					searchListAction={getJobsList}
+					searchListAction={role === Roles.TEAM ? getTeamJobsList : getJobsList}
 					placeholder='Search Jobs...'
 				/>
 			</div>
@@ -75,7 +85,7 @@ export const AssignJobModalPartial = ({
 						count={paginationCount}
 						limit={10}
 						search={search}
-						getListAction={getJobsList}
+						getListAction={role === Roles.TEAM ? getTeamJobsList : getJobsList}
 					/>
 				</ModalFooterChild>
 				<ModalFooterChild className='w-full'>

@@ -65,7 +65,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 						Completed
 					</Button>
 				</DropdownItem>
-				<div className='border-t-2 border-zinc-500/25 px-4 py-2 text-sm font-bold dark:border-zinc-500/50'>
+				{/* <div className='border-t-2 border-zinc-500/25 px-4 py-2 text-sm font-bold dark:border-zinc-500/50'>
 					Asign to a team member
 				</div>
 				<DropdownItem>
@@ -79,7 +79,7 @@ const CardDropdownPartial = ({ item }: { item: any }) => {
 							key={teamMember.id}
 						/>
 					))}
-				</div>
+				</div> */}
 			</DropdownMenu>
 		</Dropdown>
 	);

@@ -37,6 +37,7 @@ import { AssignLinkedInCandiatesToJobModalPartial } from "../../../../Shared/com
 import { cn } from "../../../../../utils/cn";
 import { showAllJobToClient } from "../../../../../store/slices/Candiates.slice";
 import { useAuth } from "../../../../../context/authContext";
+import { AssignClientsToJobModalPartial } from "../../../../Shared/common/AssignClientsToModal/Modal.partial";
 
 const TeamJobDelatils = () => {
   const params = useLocation();
@@ -44,6 +45,7 @@ const TeamJobDelatils = () => {
   const { userStorage } = useAuth();
   const isDeleteable = userStorage.id === state?.createdBy;
   const [modal, setModal] = useState<boolean>(false);
+  const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
   const [showALL, setShowALL] = useState<boolean>(false);
 
   const { jobDetails, pageLoading, error } = useSelector(
@@ -96,7 +98,7 @@ const TeamJobDelatils = () => {
               )}
             >
               <CardHeader>
-                <CardHeaderChild className="!flex-col !items-start ">
+                <CardHeaderChild className="flex-1 !flex-col !items-start ">
                   <CardTitle>{`${jobDetails?.title as string} - Candidates`}</CardTitle>
                   <CardSubTitle>
                     Effortlessly manage candidates: assign and track{" "}
@@ -149,6 +151,13 @@ const TeamJobDelatils = () => {
                   >
                     Add More Candidates
                   </Button>
+                  <Button
+                    onClick={() => setAssignClientModal(true)}
+                    size="lg"
+                    variant="solid"
+                  >
+                    Assign Client
+                  </Button>
                   {jobDetails && modal && (
                     <AssignLinkedInCandiatesToJobModalPartial
                       reFreshList={reFreshList}
@@ -156,6 +165,15 @@ const TeamJobDelatils = () => {
                       jobTitle={jobDetails?.title}
                       modal={modal}
                       setModal={setModal}
+                    />
+                  )}
+
+                  {jobDetails && assignClientModal && (
+                    <AssignClientsToJobModalPartial
+                      assignTo={jobDetails.id}
+                      modal={assignClientModal}
+                      setModal={setAssignClientModal}
+                      assignedId={jobDetails?.client.clientUser.id}
                     />
                   )}
                 </CardHeaderChild>

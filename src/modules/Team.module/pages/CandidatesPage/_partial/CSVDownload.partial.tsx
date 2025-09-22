@@ -4,7 +4,7 @@ import Modal, { ModalBody, ModalFooter, ModalHeader } from '../../../../../compo
 import { CardTitle } from '../../../../../components/ui/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../../store';
-import { getAgencyCandidatesCsvList } from '../../../../../store/slices/Candiates.slice';
+import { getAgencyCandidatesCsvList, getTeamCandidatesCsvList } from '../../../../../store/slices/Candiates.slice';
 import Icon from '../../../../../components/icon/Icon';
 
 const DataToCsvService = () => {
@@ -170,7 +170,7 @@ const DownloadCsvModal = ({ isOpen, onClose }: any) => {
 
 	useEffect(() => {
 		if (isOpen) {
-			dispatch(getAgencyCandidatesCsvList());
+			dispatch(getTeamCandidatesCsvList());
 		}
 	}, [dispatch, isOpen]);
 

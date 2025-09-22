@@ -12,13 +12,13 @@ import {
 import { getCandidateCV } from "../../../../../AgencyAdmin.module/services/candidates";
 import { AssignJobModalPartial } from "../../../../../Shared/common/AssignJobModal/Modal.partial";
 import { AssignClientModalPartial } from "../../../../../Shared/common/AssignClientModal/Modal.partial";
+import { Roles } from "../../../../../../constants/role.enums";
 
 const HeaderPartial = ({ state }: any) => {
   const [modal, setModal] = useState<boolean>(false);
   const [clientModal, setClientModal] = useState<boolean>(false);
   const navgiateTo = useNavigate();
 
-  console.log({ state });
 
   const handleDownloadCV = async () => {
     const response = await getCandidateCV(state.selectedJob.id);
@@ -98,6 +98,7 @@ const HeaderPartial = ({ state }: any) => {
         assignTo={state?.candidate?.id ?? ""}
         setModal={setModal}
         modal={modal}
+        role={Roles.TEAM}
       />
       <AssignClientModalPartial
         title={`Assign Client to Candiate: ${state.candidate?.name ?? ""}`}

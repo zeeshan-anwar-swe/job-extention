@@ -64,6 +64,25 @@ const initialState: InitialStateType = {
 	},
 };
 
+export const getTeamJobsList = createAsyncThunk(
+	'jobs/getTeamJobsList',
+	async (
+		{ page, limit, search = '', searchBy='', startDate = '', endDate = '' }: { page: number; limit: number; search?: string; searchBy?: string; startDate?: string; endDate?: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.get(
+				`/job/team-member/list?page=${page}&limit=${limit}&search=${search}&startDate=${startDate}&endDate=${endDate}${searchBy &&`&searchBy=${searchBy} `}`,
+			);
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+
+
 export const getJobsList = createAsyncThunk(
 	'jobs/getJobsList',
 	async (
@@ -80,6 +99,7 @@ export const getJobsList = createAsyncThunk(
 		}
 	},
 );
+
 
 export const getSuperAdminJobsList = createAsyncThunk(
 	'jobs/getSuperAdminJobsList',
@@ -228,6 +248,27 @@ export const updateJob = createAsyncThunk(
 	},
 );
 
+
+
+export const assignJobToClients = createAsyncThunk(
+	'jobs/assignJobToClients',
+	async (
+		{ clientId, jobId }: { clientId: string; jobId?: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const response = await axiosInstance.post('/job/assign-client', {
+				jobId,
+				clientId,
+			});
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+
 export const jobsSlice = createSlice({
 	name: 'jobs',
 	initialState,
@@ -325,6 +366,26 @@ export const jobsSlice = createSlice({
 				state.paginationCount = action.payload.count;
 			})
 			.addCase(getJobsList.rejected, (state, action: any) => {
+				state.pageLoading = false;
+				state.error = action.payload || {
+					message: 'Unknown error occurred while inviting client',
+				};
+				toast.error(action.payload.message);
+			});
+
+
+
+			builder
+			.addCase(getTeamJobsList.pending, (state) => {
+				state.pageLoading = true;
+				state.error = null;
+			})
+			.addCase(getTeamJobsList.fulfilled, (state, action) => {
+				state.pageLoading = false;
+				state.paginatedList = action.payload.rows;
+				state.paginationCount = action.payload.count;
+			})
+			.addCase(getTeamJobsList.rejected, (state, action: any) => {
 				state.pageLoading = false;
 				state.error = action.payload || {
 					message: 'Unknown error occurred while inviting client',

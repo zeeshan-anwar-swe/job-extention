@@ -459,10 +459,10 @@ const contentRoutes: ContentRoutesType = {
       element: <ChatMain />,
     },
 
-    {
-      path: appPages.Team.recruiterAppPages.to,
-      element: <RecruitersPage />,
-    },
+    // {
+    //   path: appPages.Team.recruiterAppPages.to,
+    //   element: <RecruitersPage />,
+    // },
 
     {
       path: appPages.Team.settingAppPages.subPages.settingPage.to,
