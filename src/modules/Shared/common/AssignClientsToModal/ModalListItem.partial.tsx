@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../../../components/ui/Button";
 import { JobDetailsType2 } from "../../../../types/slices.type/jobs.slice.type";
 import { textValidationCheck } from "../../../../utils/validationCheck";
@@ -23,9 +23,13 @@ import {
 import Select from "../../../../components/form/Select";
 import SelectReact from "../../../../components/form/SelectReact";
 import { assignJobToClients } from "../../../../store/slices/Jobs.slice";
+import { useAppSelector } from "../../../../hooks/useReduxStore";
 
 export const AssignClientModalListItemPartial = ({ item, assignTo, assignedId }: { item: any, assignedId: string, assignTo: string }) => {
+  const {componentLoading} = useAppSelector((state) => state.jobsSlice);
   const dispatch: AppDispatch = useDispatch();
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const isAssiged = item?.id === assignedId;
 
@@ -34,7 +38,9 @@ export const AssignClientModalListItemPartial = ({ item, assignTo, assignedId }:
   );
 
   const handleAssignToClient = async () => {
-    await dispatch(assignJobToClients({clientId:item.id, jobId:assignTo}));
+    setLoading(true);
+    await dispatch(assignJobToClients({client:item, jobId:assignTo}));
+    setLoading(false);
   };
 
   return (
@@ -55,6 +61,8 @@ export const AssignClientModalListItemPartial = ({ item, assignTo, assignedId }:
        
         <CardHeaderChild>
           <Button
+            isDisable={componentLoading}
+            isLoading={loading}
             rightIcon={isAssiged ? "HeroTwiceCheck" : undefined}
             color={isAssiged ? "emerald" : "blue"}
             onClick={isAssiged ? undefined : handleAssignToClient}

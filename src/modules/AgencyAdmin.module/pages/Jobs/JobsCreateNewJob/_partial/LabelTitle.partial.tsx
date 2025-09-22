@@ -6,7 +6,7 @@ import Input from '../../../../../../components/form/Input';
 import { TInputTypes } from '../../../../../../types/input.type';
 import { FormData } from './CreateJobLeftSide.partial';
 
-type AllowedId = 'title' | 'type' | 'experience' | 'location' | 'positions' | 'skills';
+type AllowedId = 'title' | 'type'  | 'location'  | 'skills';
 
 const LabelTitlepartial = ({
 	id,

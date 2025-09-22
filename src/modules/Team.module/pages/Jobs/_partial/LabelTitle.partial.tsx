@@ -11,9 +11,7 @@ import { JobFormData } from '../JobsViewCadidates/_partial/JobForm.partial';
 type AllowedId =
 	| 'title'
 	| 'type'
-	| 'experience'
 	| 'location'
-	| 'positions'
 	| 'skills';
 
 const LabelTitlepartial = ({

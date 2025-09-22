@@ -56,9 +56,9 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 				'focus:bg-transparent dark:focus:bg-transparent',
 			),
 			validation: classNames({
-				'!border-red-500 ring-4 ring-red-500/30 animate-shake':
+				'!border-red-500  ring-4 ring-red-500/30 animate-shake':
 					!isValid && isTouched && invalidFeedback,
-				'!border-blue-500 focus:ring-4 focus:ring-blue-500/30':
+				'!border-blue-500  focus:ring-4 focus:ring-blue-500/30':
 					!isValid && isTouched && !invalidFeedback,
 			}),
 		},
@@ -71,7 +71,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 					[`border-${color as TColors}-${colorIntensity as TColorIntensity}/50`]:
 						!isActive,
 				},
-				'text-black dark:text-white',
+				'text-black dark:text-white dark:!border-white',
 				// Hover
 				[`hover:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
 				// Active

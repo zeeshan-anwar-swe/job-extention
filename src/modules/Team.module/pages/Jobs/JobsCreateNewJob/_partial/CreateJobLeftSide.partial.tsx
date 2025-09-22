@@ -8,7 +8,6 @@ import Card, {
   CardSubTitle,
   CardTitle,
 } from "../../../../../../components/ui/Card";
-import LabelTitlepartial from "./LabelTitle.partial";
 import { NavSeparator } from "../../../../../../components/layouts/Navigation/Nav";
 import ResultUserDataPartial from "./ResultUserData.partial";
 import Button from "../../../../../../components/ui/Button";
@@ -17,32 +16,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../store";
 import { createJobs } from "../../../../../../store/slices/Jobs.slice";
 import LabelSelectPartial from "./LabelSelect.partial";
-import LabelSkillSelectPartial from "./LabelSkillSelect.partial";
-import LabelTitleTextareaPartial from "./LabelTitleTextarea.partial";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { TitleInputForJobPartial } from "./TitleInputForJob.partial";
-import { ExperienceSelectForJobPartial } from "./ExperienceSelectForJob.partial";
 import { LocationSelectForJob } from "./LocationSelectForJob.partial";
 import { SkillsSelectForJob } from "./SkillSelectForJob.partial";
 import RichText from "../../../../../../components/RichText";
 import { Descendant } from "slate";
 import Label from "../../../../../../components/form/Label";
+import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
+import { MultiValue } from "react-select";
+import SelectReact from "../../../../../../components/form/SelectReact";
 import { Roles } from "../../../../../../constants/role.enums";
 
 export interface FormData {
   title: string;
   description: Descendant[];
-  experience: string;
+  spokenLanguage: string[];
+  // experience: string;
   type: string;
   location: string;
-  positions: string;
+  // positions: string;
   skills: string[];
+  experienceFrom: string;
+  experienceTo: string;
 }
 
+type SpokenLanguage = { value: string; label: string };
+
 const CreateJobLeftSidePartial = () => {
-  const { assignedCandidatesWhileCreatingJob, assignedClientWhileCreatingJob, assignedCustomCandidatesWhileCreatingJob } =
-    useSelector((state: RootState) => state.jobsSlice);
+  const {
+    assignedCandidatesWhileCreatingJob,
+    assignedClientWhileCreatingJob,
+    assignedCustomCandidatesWhileCreatingJob,
+  } = useSelector((state: RootState) => state.jobsSlice);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -52,37 +59,27 @@ const CreateJobLeftSidePartial = () => {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: [],
-    experience: "",
+    // experience: "",
     location: "",
     type: "",
-    positions: "",
+    // positions: "",
     skills: [],
+    spokenLanguage: [],
+    experienceFrom: "",
+    experienceTo: "",
   });
-
-
 
   const dispatchCreateJob = async () => {
     setIsSubmitting(true);
     const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
-    const customCandidateIds = await assignedCustomCandidatesWhileCreatingJob.map((c: any) => c.id);
-
+    const customCandidateIds =
+      await assignedCustomCandidatesWhileCreatingJob.map((c: any) => c.id);
 
     if (formData.title.length < 3) {
       toast.error("Enter at least 3 characters for title");
       setIsSubmitting(false);
       return;
-    }
-    if (formData.positions === "" || +formData.positions < 1) {
-      toast.error("Position shoud empty or less than 1");
-      setIsSubmitting(false);
-
-      return;
-    } else if (formData.experience.length < 1) {
-      toast.error("Enter experience");
-      setIsSubmitting(false);
-
-      return;
-    } else if (formData.skills.length < 1) {
+    }  else if (formData.skills.length < 1) {
       toast.error("Enter at least one skill");
       setIsSubmitting(false);
 
@@ -95,7 +92,6 @@ const CreateJobLeftSidePartial = () => {
     } else if (formData.type === "") {
       toast.error("Job type should not be empty");
       setIsSubmitting(false);
-
       return;
     }
     const strigifiedDescription = await JSON.stringify(formData.description);
@@ -105,12 +101,11 @@ const CreateJobLeftSidePartial = () => {
       customCandidateIds,
     };
 
-    
     // @ts-ignore
     // prettier-ignore
-    await dispatch(createJobs( isAssigned ? {...newFormData, clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: newFormData));
+    await dispatch(createJobs( isAssigned ? {...newFormData, clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: {...newFormData,clientId: assignedClientWhileCreatingJob?.id??null}));
     setIsSubmitting(false);
-    navigate('/dashboard/jobs');
+    navigate("/dashboard/jobs");
   };
 
   const handleDescriptionChange = (newValue: any) => {
@@ -136,20 +131,125 @@ const CreateJobLeftSidePartial = () => {
           formData={formData}
         />
         <div className="flex items-center gap-4 max-md:flex-col">
-          <LabelTitlepartial
-            id="positions"
-            placeholder="10..."
-            inputType="number"
-            formData={formData}
-            label="No. of Positions"
-            setFormData={setFormData}
-          />
-
-          <ExperienceSelectForJobPartial
-            setFormData={setFormData}
-            formData={formData}
-          />
+          <div className="w-full">
+            <Label htmlFor="positions">Required Spoken Languages</Label>
+            <SelectReactCreateable
+              name="spokenLanguage"
+              isMulti
+              value={
+                formData.spokenLanguage.map((lang) => ({
+                  label: lang,
+                  value: lang,
+                })) as SpokenLanguage[]
+              }
+              onChange={(selectedOptions: any) => {
+                const languages = selectedOptions
+                  ? (selectedOptions as SpokenLanguage[]).map(
+                      (option: SpokenLanguage) => option.value,
+                    )
+                  : [];
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  spokenLanguage: languages,
+                }));
+              }}
+              options={[
+                { value: "English", label: "English" },
+                { value: "Romansh", label: "Romansh" },
+                { value: "Spanish", label: "Spanish" },
+                { value: "French", label: "French" },
+                { value: "German", label: "German" },
+                { value: "Italian", label: "Italian" },
+                { value: "Urdu", label: "Urdu" },
+                { value: "Hindi", label: "Hindi" },
+                { value: "Portuguese", label: "Portuguese" },
+              ]}
+            />
+          </div>
         </div>
+
+        <div className="flex items-center gap-4 max-md:flex-col">
+          <div className="w-full">
+            <Label htmlFor="experienceFrom">Experience From</Label>
+            <SelectReact
+              isClearable
+              name="experienceFrom"
+              placeholder="Select minimum experience"
+              options={[
+                { value: "0", label: "0" },
+                { value: "1", label: "1" },
+                { value: "2", label: "2" },
+                { value: "3", label: "3" },
+                { value: "4", label: "4" },
+                { value: "5", label: "5" },
+                { value: "6", label: "6" },
+                { value: "7", label: "7" },
+                { value: "8", label: "8" },
+                { value: "9", label: "9" },
+                { value: "10", label: "10" },
+              ].filter((option) =>
+                formData.experienceTo
+                  ? Number(option.value) < Number(formData.experienceTo)
+                  : true,
+              )}
+              value={
+                formData.experienceFrom
+                  ? {
+                      value: formData.experienceFrom,
+                      label: formData.experienceFrom,
+                    }
+                  : null
+              }
+              onChange={(selectedOption: any) => {
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  experienceFrom: selectedOption ? selectedOption.value : "",
+                }));
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Label htmlFor="experienceTo">Experience To</Label>
+            <SelectReact
+              isClearable
+              name="experienceTo"
+              placeholder="Select maximum experience"
+              options={[
+                { value: "0", label: "0" },
+                { value: "1", label: "1" },
+                { value: "2", label: "2" },
+                { value: "3", label: "3" },
+                { value: "4", label: "4" },
+                { value: "5", label: "5" },
+                { value: "6", label: "6" },
+                { value: "7", label: "7" },
+                { value: "8", label: "8" },
+                { value: "9", label: "9" },
+                { value: "10", label: "10" },
+                { value: "20", label: "10+" },
+              ].filter((option) =>
+                formData.experienceFrom
+                  ? Number(option.value) > Number(formData.experienceFrom)
+                  : true,
+              )}
+              value={
+                formData.experienceTo
+                  ? {
+                      value: formData.experienceTo,
+                      label: formData.experienceTo,
+                    }
+                  : null
+              }
+              onChange={(selectedOption: any) => {
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  experienceTo: selectedOption ? selectedOption.value : "",
+                }));
+              }}
+            />
+          </div>
+        </div>
+
         <div className="flex items-center gap-4 max-md:flex-col">
           <LabelSelectPartial
             placeholder="Select Job Type"
@@ -187,7 +287,11 @@ const CreateJobLeftSidePartial = () => {
 
           <div className="flex w-full flex-wrap items-center gap-4 max-md:flex-col max-md:items-start">
             {assignedCandidatesWhileCreatingJob.map((candidate: any) => (
-              <ResultUserDataPartial isCustomCandidate={false} candidate={candidate} key={candidate.id} />
+              <ResultUserDataPartial
+                isCustomCandidate={false}
+                candidate={candidate}
+                key={candidate.id}
+              />
             ))}
           </div>
         </CardFooterChild>
@@ -198,7 +302,11 @@ const CreateJobLeftSidePartial = () => {
 
           <div className="flex w-full flex-wrap items-center gap-4 max-md:flex-col max-md:items-start">
             {assignedCustomCandidatesWhileCreatingJob.map((candidate: any) => (
-              <ResultUserDataPartial isCustomCandidate={true} candidate={candidate} key={candidate.id} />
+              <ResultUserDataPartial
+                isCustomCandidate={true}
+                candidate={candidate}
+                key={candidate.id}
+              />
             ))}
           </div>
         </CardFooterChild>

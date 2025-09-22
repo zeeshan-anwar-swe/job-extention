@@ -59,7 +59,7 @@ const CreateJobRightSidePartial = () => {
           <CardTitle>Assign Candidates</CardTitle>
           <CardSubTitle>Add Candidates to the Job</CardSubTitle>
         </CardHeaderChild>
-        <CardHeaderChild className="!flex w-full !gap-2">
+        <CardHeaderChild className="!flex !items-start w-full !gap-2">
           <div className="flex-1">
             <SearchPartial
               searchLimit={10}

@@ -37,9 +37,11 @@ import { ConfirmationModal } from "../../../../Shared/components/CustomModal/con
 import { AssignLinkedInCandiatesToJobModalPartial } from "../../../../Shared/common/assignLinkedInCandiatesToJobModal/assignLinkedInCandiatesToJobModal.partial";
 import { cn } from "../../../../../utils/cn";
 import { showAllJobToClient } from "../../../../../store/slices/Candiates.slice";
+import { AssignClientsToJobModalPartial } from "../../../../Shared/common/AssignClientsToModal/Modal.partial";
 
 const JobsViewCandidatesPage = () => {
   const [modal, setModal] = useState<boolean>(false);
+  const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
   const [showALL, setShowALL] = useState<boolean>(false);
 
   const params = useLocation();
@@ -95,7 +97,7 @@ const JobsViewCandidatesPage = () => {
               )}
             >
               <CardHeader>
-                <CardHeaderChild className="!flex-col !items-start ">
+                <CardHeaderChild className="!flex-col !items-start">
                   <CardTitle>{`${jobDetails?.title as string} - Candidates`}</CardTitle>
                   <CardSubTitle>
                     Effortlessly manage candidates: assign and track{" "}
@@ -146,6 +148,14 @@ const JobsViewCandidatesPage = () => {
                   >
                     Add More Candidates
                   </Button>
+
+                  <Button
+                    onClick={() => setAssignClientModal(true)}
+                    size="lg"
+                    variant="solid"
+                  >
+                    Assign Client
+                  </Button>
                   {jobDetails && modal && (
                     <AssignLinkedInCandiatesToJobModalPartial
                       reFreshList={reFreshList}
@@ -153,6 +163,15 @@ const JobsViewCandidatesPage = () => {
                       jobTitle={jobDetails?.title}
                       modal={modal}
                       setModal={setModal}
+                    />
+                  )}
+
+                  {jobDetails && assignClientModal && (
+                    <AssignClientsToJobModalPartial
+                      assignTo={jobDetails.id}
+                      modal={assignClientModal}
+                      setModal={setAssignClientModal}
+                      assignedId={jobDetails?.client?.id}
                     />
                   )}
                 </CardHeaderChild>

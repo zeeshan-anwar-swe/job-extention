@@ -8,9 +8,7 @@ import { FormData } from './CreateJobLeftSide.partial';
 type AllowedId =
 	| 'title'
 	| 'type'
-	| 'experience'
 	| 'location'
-	| 'positions'
 	| 'skills';
 
 const LabelSelectPartial = ({

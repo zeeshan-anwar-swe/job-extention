@@ -100,6 +100,7 @@ export interface FilterOptionsType {
 	skills?: string[];
 	tenure?: FilterOptionTenure;
 	location: FilterOptionLocation[];
+  spokenLanguages?: string[];
 }
 
 

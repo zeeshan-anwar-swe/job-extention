@@ -97,7 +97,7 @@ const TeamJobDelatils = () => {
                 "col-span-7 flex flex-col gap-2  p-4 max-lg:col-span-12",
               )}
             >
-              <CardHeader>
+              <CardHeader className={cn("!flex-col !items-start")}>
                 <CardHeaderChild className="flex-1 !flex-col !items-start ">
                   <CardTitle>{`${jobDetails?.title as string} - Candidates`}</CardTitle>
                   <CardSubTitle>
@@ -173,7 +173,7 @@ const TeamJobDelatils = () => {
                       assignTo={jobDetails.id}
                       modal={assignClientModal}
                       setModal={setAssignClientModal}
-                      assignedId={jobDetails?.client.clientUser.id}
+                      assignedId={jobDetails?.client.id}
                     />
                   )}
                 </CardHeaderChild>

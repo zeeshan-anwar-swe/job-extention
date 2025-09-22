@@ -39,6 +39,7 @@ export interface JobFormData {
 }
 
 const JobFormPartial = ({ jobDetails }: any) => {
+	
 	const params = useLocation();
 	const { pathname } = params;
 	const isEditPage = pathname.includes('edit');
@@ -84,7 +85,7 @@ const JobFormPartial = ({ jobDetails }: any) => {
 				skills: jobDetails.skills,
 			});
 		}
-	}, []);
+	}, [jobDetails]);
 
 	const { loading, imageUrl } = useImageValidation(jobDetails?.client?.clientUser?.image);
 

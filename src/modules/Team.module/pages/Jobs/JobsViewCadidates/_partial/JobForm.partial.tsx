@@ -27,16 +27,18 @@ import RichText from '../../../../../../components/RichText';
 import { Descendant } from 'slate';
 import Label from '../../../../../../components/form/Label';
 import { createDescendants } from '../../../../../../utils/descendant.helper';
-import { TextEditorForJobDetailsPagePartial } from './TextEditorForJobDetailsPage.partial';
 
 export interface JobFormData {
-	title: string;
-	description: Descendant[];
-	experience: string;
-	location: string;
-	type: 'REMOTE' | 'ON_SITE' | 'HYBRID';
-	positions: string;
-	skills: string[];
+	 title: string;
+  description: Descendant[];
+  spokenLanguage: string[];
+  // experience: string;
+  type: string;
+  location: string;
+  // positions: string;
+  skills: string[];
+  experienceFrom: string;
+  experienceTo: string;
 }
 
 const JobFormPartial = ({ jobDetails }: any) => {
@@ -49,11 +51,14 @@ const JobFormPartial = ({ jobDetails }: any) => {
 	const [formData, setFormData] = useState<JobFormData>({
 		title: '',
 		description: [],
-		experience: '',
 		location: '',
 		type: 'REMOTE',
-		positions: '',
 		skills: [],
+		spokenLanguage: [],
+		// experience: '',
+		experienceFrom: '',
+		experienceTo: '',
+		// positions: '',
 	});
 
 	const { componentLoading, error } = useSelector((state: RootState) => state.jobsSlice);
@@ -78,11 +83,14 @@ const JobFormPartial = ({ jobDetails }: any) => {
 			setFormData({
 				title: jobDetails.title,
 				description: getParsedDescription(),
-				experience: jobDetails.experience,
 				location: jobDetails.location,
 				type: jobDetails.type,
-				positions: jobDetails.positions,
 				skills: jobDetails.skills,
+				spokenLanguage: jobDetails.spokenLanguage,
+				// experience: jobDetails.experience,
+				experienceFrom: jobDetails.experienceFrom,
+				experienceTo: jobDetails.experienceTo,
+				// positions: jobDetails.positions,
 			});
 		}
 	}, []);
@@ -152,20 +160,8 @@ const JobFormPartial = ({ jobDetails }: any) => {
 					label='Job Title'
 					detail={formData.title}
 				/>
-				<LabelTitlepartial
-					formData={formData}
-					setFormData={setFormData}
-					id='positions'
-					label='No of position'
-					detail={jobDetails?.positions}
-				/>
-				<LabelTitlepartial
-					formData={formData}
-					setFormData={setFormData}
-					id={'experience'}
-					label='Experience'
-					detail={formData.experience}
-				/>
+				
+				
 				<LabelTitlepartial
 					formData={formData}
 					setFormData={setFormData}

@@ -6,7 +6,7 @@ import { FormData } from '../JobsCreateNewJob/_partial/CreateJobLeftSide.partial
 
 
 
-type AllowedId = 'type';
+
 
 const LabelSelectPartial = ({
 	label,
@@ -15,7 +15,7 @@ const LabelSelectPartial = ({
 	setFormData,
 }: {
 	label?: string;
-	id: AllowedId;
+	id: string;
 	formData: FormData;
 	setFormData: any;
 }) => {

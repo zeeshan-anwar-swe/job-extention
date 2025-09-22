@@ -35,7 +35,6 @@ export const SkillsSelectForJob = ({
       });
       setInputValue("");
       setSelectInputValue(""); // Clear the SelectReact input
-	  
     }
   };
 
@@ -84,9 +83,47 @@ export const SkillsSelectForJob = ({
           IndicatorSeparator: () => null,
         }}
         options={[
-          { label: "React", value: "React" },
-          { label: "Node", value: "Node" },
-          { label: "Tailwind", value: "Tailwind" },
+          {
+            label: "Artificial Intelligence",
+            value: "Artificial Intelligence",
+          },
+          {
+            label: "Data Science & Analytics",
+            value: "Data Science & Analytics",
+          },
+          { label: "Cybersecurity", value: "Cybersecurity" },
+          {
+            label: "Cloud Computing (AWS, Azure, GCP)",
+            value: "Cloud Computing (AWS, Azure, GCP)",
+          },
+          { label: "DevOps", value: "DevOps" },
+          { label: "Full-Stack Development", value: "Full-Stack Development" },
+          {
+            label: "JavaScript (React, Node)",
+            value: "JavaScript (React, Node)",
+          },
+          { label: "Python", value: "Python" },
+          { label: "UI/UX Design", value: "UI/UX Design" },
+          { label: "Blockchain", value: "Blockchain" },
+          { label: "Digital Marketing", value: "Digital Marketing" },
+          { label: "Project Management", value: "Project Management" },
+          { label: "Business Analysis", value: "Business Analysis" },
+          {
+            label: "Internet of Things (IoT)",
+            value: "Internet of Things (IoT)",
+          },
+          {
+            label: "Extended Reality (AR/VR)",
+            value: "Extended Reality (AR/VR)",
+          },
+          { label: "C++ & C#", value: "C++ & C#" },
+          { label: "Java", value: "Java" },
+          { label: "Data Visualization", value: "Data Visualization" },
+          { label: "Problem-Solving", value: "Problem-Solving" },
+          {
+            label: "Communication & Collaboration",
+            value: "Communication & Collaboration",
+          },
         ]}
         isMulti
         isClearable

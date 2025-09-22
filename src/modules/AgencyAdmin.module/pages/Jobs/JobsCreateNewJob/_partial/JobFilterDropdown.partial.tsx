@@ -195,7 +195,7 @@ const JobFilterDropdownPartial = () => {
   };
 
   return (
-    <div onMouseLeave={handleMouseLeave} >
+    <div  onMouseLeave={handleMouseLeave} >
       <Dropdown onMouseOver={()=>null} isOpen={dropdownOpen} setIsOpen={setDropdownOpen}>
         <DropdownToggle hasIcon={false}>
           <Button
