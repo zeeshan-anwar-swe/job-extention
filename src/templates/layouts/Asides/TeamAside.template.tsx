@@ -5,7 +5,6 @@ import { appPages } from '../../../config/pages.config';
 import Nav, {
 	NavItem,
 } from '../../../components/layouts/Navigation/Nav';
-import Badge from '../../../components/ui/Badge';
 import UserTemplate from '../User/User.template';
 
 export const TeamAsideTemplate = () => {

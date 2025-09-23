@@ -8,6 +8,7 @@ import Card, {
   CardSubTitle,
   CardTitle,
 } from "../../../../../../components/ui/Card";
+import LabelTitlepartial from "./LabelTitle.partial";
 import { NavSeparator } from "../../../../../../components/layouts/Navigation/Nav";
 import ResultUserDataPartial from "./ResultUserData.partial";
 import Button from "../../../../../../components/ui/Button";
@@ -16,9 +17,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../store";
 import { createJobs } from "../../../../../../store/slices/Jobs.slice";
 import LabelSelectPartial from "./LabelSelect.partial";
+import LabelSkillSelectPartial from "./LabelSkillSelect.partial";
+import LabelTitleTextareaPartial from "./LabelTitleTextarea.partial";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { TitleInputForJobPartial } from "./TitleInputForJob.partial";
+import { ExperienceSelectForJobPartial } from "./ExperienceSelectForJob.partial";
 import { LocationSelectForJob } from "./LocationSelectForJob.partial";
 import { SkillsSelectForJob } from "./SkillSelectForJob.partial";
 import RichText from "../../../../../../components/RichText";
@@ -27,22 +31,35 @@ import Label from "../../../../../../components/form/Label";
 import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
 import { MultiValue } from "react-select";
 import SelectReact from "../../../../../../components/form/SelectReact";
-import { Roles } from "../../../../../../constants/role.enums";
 
 export interface FormData {
   title: string;
   description: Descendant[];
-  spokenLanguage: string[];
+  spokenLanguages: string[];
   // experience: string;
   type: string;
   location: string;
   // positions: string;
   skills: string[];
-  experienceFrom: string;
-  experienceTo: string;
+  experienceMin: number;
+  experienceMax: number;
 }
 
 type SpokenLanguage = { value: string; label: string };
+
+const allExperienceOptions = [
+  { value: 0, label: "0" },
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "4" },
+  { value: 5, label: "5" },
+  { value: 6, label: "6" },
+  { value: 7, label: "7" },
+  { value: 8, label: "8" },
+  { value: 9, label: "9" },
+  { value: 10, label: "10" },
+];
 
 const CreateJobLeftSidePartial = () => {
   const {
@@ -64,9 +81,9 @@ const CreateJobLeftSidePartial = () => {
     type: "",
     // positions: "",
     skills: [],
-    spokenLanguage: [],
-    experienceFrom: "",
-    experienceTo: "",
+    spokenLanguages: [],
+    experienceMin: 0,
+    experienceMax: 0,
   });
 
   const dispatchCreateJob = async () => {
@@ -79,7 +96,7 @@ const CreateJobLeftSidePartial = () => {
       toast.error("Enter at least 3 characters for title");
       setIsSubmitting(false);
       return;
-    }  else if (formData.skills.length < 1) {
+    } else if (formData.skills.length < 1) {
       toast.error("Enter at least one skill");
       setIsSubmitting(false);
 
@@ -115,6 +132,21 @@ const CreateJobLeftSidePartial = () => {
     }));
   };
 
+  // Filtered options for Experience Min dropdown
+  const filteredExperienceMinOptions = allExperienceOptions.filter(
+    (option) =>
+      formData.experienceMax === 0 || option.value < formData.experienceMax
+  );
+
+  // Filtered options for Experience Max dropdown
+  const filteredExperienceMaxOptions = [
+    ...allExperienceOptions,
+    { value: 20, label: "10+" },
+  ].filter(
+    (option) =>
+      formData.experienceMin === 0 || option.value > formData.experienceMin
+  );
+
   return (
     <Card className="col-span-8 flex flex-col gap-2 max-lg:col-span-12">
       <CardHeader>
@@ -137,7 +169,7 @@ const CreateJobLeftSidePartial = () => {
               name="spokenLanguage"
               isMulti
               value={
-                formData.spokenLanguage.map((lang) => ({
+                formData.spokenLanguages.map((lang) => ({
                   label: lang,
                   value: lang,
                 })) as SpokenLanguage[]
@@ -145,7 +177,7 @@ const CreateJobLeftSidePartial = () => {
               onChange={(selectedOptions: any) => {
                 const languages = selectedOptions
                   ? (selectedOptions as SpokenLanguage[]).map(
-                      (option: SpokenLanguage) => option.value,
+                      (option: SpokenLanguage) => option.value
                     )
                   : [];
                 setFormData((prevFormData) => ({
@@ -175,35 +207,24 @@ const CreateJobLeftSidePartial = () => {
               isClearable
               name="experienceFrom"
               placeholder="Select minimum experience"
-              options={[
-                { value: "0", label: "0" },
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-                { value: "4", label: "4" },
-                { value: "5", label: "5" },
-                { value: "6", label: "6" },
-                { value: "7", label: "7" },
-                { value: "8", label: "8" },
-                { value: "9", label: "9" },
-                { value: "10", label: "10" },
-              ].filter((option) =>
-                formData.experienceTo
-                  ? Number(option.value) < Number(formData.experienceTo)
-                  : true,
-              )}
+              options={filteredExperienceMinOptions}
               value={
-                formData.experienceFrom
+                formData.experienceMin
                   ? {
-                      value: formData.experienceFrom,
-                      label: formData.experienceFrom,
+                      value: formData.experienceMin,
+                      label: formData.experienceMin.toString(),
                     }
                   : null
               }
               onChange={(selectedOption: any) => {
                 setFormData((prevFormData) => ({
                   ...prevFormData,
-                  experienceFrom: selectedOption ? selectedOption.value : "",
+                  experienceMin: selectedOption ? selectedOption.value : 0,
+                  experienceMax:
+                    selectedOption &&
+                    selectedOption.value >= prevFormData.experienceMax
+                      ? 0
+                      : prevFormData.experienceMax,
                 }));
               }}
             />
@@ -214,36 +235,24 @@ const CreateJobLeftSidePartial = () => {
               isClearable
               name="experienceTo"
               placeholder="Select maximum experience"
-              options={[
-                { value: "0", label: "0" },
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-                { value: "4", label: "4" },
-                { value: "5", label: "5" },
-                { value: "6", label: "6" },
-                { value: "7", label: "7" },
-                { value: "8", label: "8" },
-                { value: "9", label: "9" },
-                { value: "10", label: "10" },
-                { value: "20", label: "10+" },
-              ].filter((option) =>
-                formData.experienceFrom
-                  ? Number(option.value) > Number(formData.experienceFrom)
-                  : true,
-              )}
+              options={filteredExperienceMaxOptions}
               value={
-                formData.experienceTo
+                formData.experienceMax
                   ? {
-                      value: formData.experienceTo,
-                      label: formData.experienceTo,
+                      value: formData.experienceMax,
+                      label: `${formData.experienceMax === 20 ? "10+" : formData.experienceMax}`,
                     }
                   : null
               }
               onChange={(selectedOption: any) => {
                 setFormData((prevFormData) => ({
                   ...prevFormData,
-                  experienceTo: selectedOption ? selectedOption.value : "",
+                  experienceMax: selectedOption ? selectedOption.value : 0,
+                  experienceMin:
+                    selectedOption &&
+                    selectedOption.value <= prevFormData.experienceMin
+                      ? 0
+                      : prevFormData.experienceMin,
                 }));
               }}
             />
@@ -329,7 +338,7 @@ const CreateJobLeftSidePartial = () => {
           <Button variant="solid" onClick={() => setModal(true)}>
             Assign To client
           </Button>
-          <AssignClientModalPartial moduleType={Roles.TEAM} setModal={setModal} modal={modal} />
+          <AssignClientModalPartial setModal={setModal} modal={modal} />
         </CardFooterChild>
       </CardFooter>
     </Card>

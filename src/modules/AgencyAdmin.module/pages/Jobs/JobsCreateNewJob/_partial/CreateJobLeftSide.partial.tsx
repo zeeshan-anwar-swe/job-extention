@@ -31,21 +31,22 @@ import Label from "../../../../../../components/form/Label";
 import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
 import { MultiValue } from "react-select";
 import SelectReact from "../../../../../../components/form/SelectReact";
+import { ExperienceRangeSelector } from "./ExperienceRangeSelector";
 
 export interface FormData {
   title: string;
   description: Descendant[];
-  spokenLanguage: string[];
-  // experience: string;
+  spokenLanguages: string[];
   type: string;
   location: string;
-  // positions: string;
   skills: string[];
-  experienceFrom: string;
-  experienceTo: string;
+  experienceMin: number;
+  experienceMax: number;
 }
 
 type SpokenLanguage = { value: string; label: string };
+
+
 
 const CreateJobLeftSidePartial = () => {
   const {
@@ -62,14 +63,12 @@ const CreateJobLeftSidePartial = () => {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: [],
-    // experience: "",
     location: "",
     type: "",
-    // positions: "",
     skills: [],
-    spokenLanguage: [],
-    experienceFrom: "",
-    experienceTo: "",
+    spokenLanguages: [],
+    experienceMin: 0,
+    experienceMax: 0,
   });
 
   const dispatchCreateJob = async () => {
@@ -82,7 +81,7 @@ const CreateJobLeftSidePartial = () => {
       toast.error("Enter at least 3 characters for title");
       setIsSubmitting(false);
       return;
-    }  else if (formData.skills.length < 1) {
+    } else if (formData.skills.length < 1) {
       toast.error("Enter at least one skill");
       setIsSubmitting(false);
 
@@ -118,6 +117,8 @@ const CreateJobLeftSidePartial = () => {
     }));
   };
 
+ 
+
   return (
     <Card className="col-span-8 flex flex-col gap-2 max-lg:col-span-12">
       <CardHeader>
@@ -137,10 +138,10 @@ const CreateJobLeftSidePartial = () => {
           <div className="w-full">
             <Label htmlFor="positions">Required Spoken Languages</Label>
             <SelectReactCreateable
-              name="spokenLanguage"
+              name="spokenLanguages"
               isMulti
               value={
-                formData.spokenLanguage.map((lang) => ({
+                formData.spokenLanguages.map((lang) => ({
                   label: lang,
                   value: lang,
                 })) as SpokenLanguage[]
@@ -153,7 +154,7 @@ const CreateJobLeftSidePartial = () => {
                   : [];
                 setFormData((prevFormData) => ({
                   ...prevFormData,
-                  spokenLanguage: languages,
+                  spokenLanguages: languages,
                 }));
               }}
               options={[
@@ -169,94 +170,12 @@ const CreateJobLeftSidePartial = () => {
               ]}
             />
           </div>
-
-          {/* <ExperienceSelectForJobPartial
-            setFormData={setFormData}
-            formData={formData}
-          /> */}
         </div>
 
-        <div className="flex items-center gap-4 max-md:flex-col">
-          <div className="w-full">
-            <Label htmlFor="experienceFrom">Experience From</Label>
-            <SelectReact
-              isClearable
-              name="experienceFrom"
-              placeholder="Select minimum experience"
-              options={[
-                { value: "0", label: "0" },
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-                { value: "4", label: "4" },
-                { value: "5", label: "5" },
-                { value: "6", label: "6" },
-                { value: "7", label: "7" },
-                { value: "8", label: "8" },
-                { value: "9", label: "9" },
-                { value: "10", label: "10" },
-              ].filter((option) =>
-                formData.experienceTo
-                  ? Number(option.value) < Number(formData.experienceTo)
-                  : true,
-              )}
-              value={
-                formData.experienceFrom
-                  ? {
-                      value: formData.experienceFrom,
-                      label: formData.experienceFrom,
-                    }
-                  : null
-              }
-              onChange={(selectedOption: any) => {
-                setFormData((prevFormData) => ({
-                  ...prevFormData,
-                  experienceFrom: selectedOption ? selectedOption.value : "",
-                }));
-              }}
-            />
-          </div>
-          <div className="w-full">
-            <Label htmlFor="experienceTo">Experience To</Label>
-            <SelectReact
-              isClearable
-              name="experienceTo"
-              placeholder="Select maximum experience"
-              options={[
-                { value: "0", label: "0" },
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-                { value: "4", label: "4" },
-                { value: "5", label: "5" },
-                { value: "6", label: "6" },
-                { value: "7", label: "7" },
-                { value: "8", label: "8" },
-                { value: "9", label: "9" },
-                { value: "10", label: "10" },
-                { value: "20", label: "10+" },
-              ].filter((option) =>
-                formData.experienceFrom
-                  ? Number(option.value) > Number(formData.experienceFrom)
-                  : true,
-              )}
-              value={
-                formData.experienceTo
-                  ? {
-                      value: formData.experienceTo,
-                      label: formData.experienceTo,
-                    }
-                  : null
-              }
-              onChange={(selectedOption: any) => {
-                setFormData((prevFormData) => ({
-                  ...prevFormData,
-                  experienceTo: selectedOption ? selectedOption.value : "",
-                }));
-              }}
-            />
-          </div>
-        </div>
+        <ExperienceRangeSelector
+          formData={formData}
+          setFormData={setFormData}
+        />
 
         <div className="flex items-center gap-4 max-md:flex-col">
           <LabelSelectPartial
