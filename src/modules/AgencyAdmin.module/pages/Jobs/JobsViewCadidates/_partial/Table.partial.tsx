@@ -31,7 +31,7 @@ const TablePartial = () => {
 						</Td>
 
 						<Td>
-							<TableDataFeedbackPartial title='Fair' />
+							<TableDataFeedbackPartial title={candidate.status} />
 						</Td>
 						<Td>
 							<TableDataSourcePartial linkedInUrl={candidate?.resumeLink} />

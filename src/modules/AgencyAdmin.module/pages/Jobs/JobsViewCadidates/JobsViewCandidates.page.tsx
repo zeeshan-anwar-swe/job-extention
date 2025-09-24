@@ -32,7 +32,6 @@ import {
 import PageLoader from "../../../../../templates/layouts/main/PageLoader";
 import JobFormPartial from "./_partial/JobForm.partial";
 import { filterAndExtract, formatString } from "../../../../../utils/helper";
-import AssignCandidatesModalPartial from "../../../../Shared/common/assignCandidateModal/AssignCandiatesModal.partial";
 import { ConfirmationModal } from "../../../../Shared/components/CustomModal/confirmationModal";
 import { AssignLinkedInCandiatesToJobModalPartial } from "../../../../Shared/common/assignLinkedInCandiatesToJobModal/assignLinkedInCandiatesToJobModal.partial";
 import { cn } from "../../../../../utils/cn";
@@ -53,8 +52,8 @@ const JobsViewCandidatesPage = () => {
   const hiredCandidates = filterAndExtract({
     list: jobDetails?.candidateJobProfiles,
     numberOfReturnedItem: 2,
-    key: "status",
     valueForMatch: "hired",
+    key: "status",
   });
 
   const dispatch: AppDispatch = useDispatch();
@@ -67,7 +66,6 @@ const JobsViewCandidatesPage = () => {
 
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
-  console.log({ jobDetails });
 
   return (
     <>

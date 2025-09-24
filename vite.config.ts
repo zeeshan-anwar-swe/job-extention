@@ -1,15 +1,17 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import EnvironmentPlugin from 'vite-plugin-environment';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import EnvironmentPlugin from "vite-plugin-environment";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), EnvironmentPlugin({})],
-	assetsInclude: ['**/*.md'],
-	server: {
-		port: 7111
-	  },
-	  preview: {
-		port: 7111
-	  }
+  plugins: [react(), EnvironmentPlugin({})],
+  assetsInclude: ["**/*.md"],
+  server: {
+    port: 7111,
+  },
+  preview: {
+    port: 7111,
+  },
+
+  
 });

@@ -1,81 +1,289 @@
 import { lazy } from "react";
 import { RouteProps } from "react-router-dom";
-import NotFoundPage from "../modules/AgencyAdmin.module/pages/NotFound.page";
 import { appPages, authPages, LandingPages } from "../config/pages.config";
-import CandidatesProfilePage from "../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page";
-import CandidateCVEditPage from "../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page";
-import JobsViewCandidatesPage from "../modules/AgencyAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page";
-import JobsCreateNewJobPage from "../modules/AgencyAdmin.module/pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page";
-import ClientsPage from "../modules/AgencyAdmin.module/pages/ClientsPage/Clients.page";
-import ClientProfilePage from "../modules/AgencyAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page";
-import TaskboardPage from "../modules/AgencyAdmin.module/pages/TaskboardPages/Taskboard.page";
-import KoolabyteAssistantPage from "../modules/AgencyAdmin.module/pages/KoolabyteAssistantPage/KoolabyteAssistant.page";
-import ReportAndAnalyticsPage from "../modules/AgencyAdmin.module/pages/ReportAndAnalyticsPage/ReportAndAnalytics.page";
-import ManageTeamPage from "../modules/AgencyAdmin.module/pages/ManageTeamPage/ManageTeam.page";
-import TeammateProfilePage from "../modules/AgencyAdmin.module/pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page";
-import ChatPage from "../modules/AgencyAdmin.module/pages/ManageTeamPage/ChatPage/Chat.page";
-import SettingPage from "../modules/AgencyAdmin.module/pages/SettingPage/Setting.page";
-import ConnectCRMPage from "../modules/AgencyAdmin.module/pages/SettingPage/ConnectCRMPage/ConnectCRM.page";
-import SubcriptionPage from "../modules/AgencyAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page";
-import PaymentPage from "../modules/AgencyAdmin.module/pages/PaymentPage/Payment.page";
-import SSOWaitingPage from "../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWaiting.page";
-import RecruitersPage from "../modules/Team.module/pages/TeamMembers/Recruiter.page";
-import ChatWithRecruiterPage from "../modules/Team.module/pages/ChatPage/Chat.page";
-import ClientJobsPage from "../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page";
-import ChatMain from "../modules/Shared/pages/ChatPage2/ChatMain";
-import TeamDashboardPage from "../modules/Team.module/pages/DashboardPage/Dashboard.page";
-import TeamCandidatesPage from "../modules/Team.module/pages/CandidatesPage/Candidates.page";
-import TeamCandidatesProfilePage from "../modules/Team.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page";
-import TeamJobsPage from "../modules/Team.module/pages/Jobs/Jobs.page";
-import SuperAdminDashboardPage from "../modules/SuperAdmin.module/pages/DashboardPage/Dashboard.page";
-import SuperAdminRecruitersPage from "../modules/SuperAdmin.module/pages/RecruitersPage/Recruiters.page";
-import AdminPage from "../modules/SuperAdmin.module/pages/AdminPage/Admin.page";
-import SuperAdminCandidatesPage from "../modules/SuperAdmin.module/pages/CandidatesPage/Candidates.page";
-import SuperAdminJobsPage from "../modules/SuperAdmin.module/pages/Jobs/Jobs.page";
-import SuperAdminClientsPage from "../modules/SuperAdmin.module/pages/ClientsPage/Clients.page";
-import SuperAdminAiInterviewPage from "../modules/SuperAdmin.module/pages/AiInterview/AiInterview.page";
-import SuperAdminKoolabyteAssistantPage from "../modules/SuperAdmin.module/pages/KoolabyteAssistantPage/KoolabyteAssistant.page";
-import SuperAdminSettingPage from "../modules/Shared/pages/SettingPage/Setting.page";
-import SuperAdminRecruiterProfilePage from "../modules/SuperAdmin.module/pages/RecruitersPage/RecruiterProfilePage/RecruiterProfile.page";
-import SuperAdminCandidatesProfilePage from "../modules/SuperAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page";
-import SuperAdminViewJobPage from "../modules/SuperAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page";
-import SuperAdminClientProfilePage from "../modules/SuperAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page";
-import SuperAdminSubcriptionPage from "../modules/SuperAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page";
-import LoginPage from "../modules/Shared/pages/LoginPage/Login.page";
-import ConfirmtionPage from "../modules/Shared/pages/SignupPage/Confirmation.page";
-import SignupPage from "../modules/Shared/pages/SignupPage/Signup.page";
-import SetUserPassword from "../modules/Shared/pages/user/SetUserPassword.page";
+
+// --- Lazy Loaded Components ---
+const NotFoundPage = lazy(
+  () => import("../modules/AgencyAdmin.module/pages/NotFound.page")
+);
+const CandidatesProfilePage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page"
+    )
+);
+const CandidateCVEditPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page"
+    )
+);
+const JobsViewCandidatesPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page"
+    )
+);
+const JobsCreateNewJobPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page"
+    )
+);
+const ClientsPage = lazy(
+  () => import("../modules/AgencyAdmin.module/pages/ClientsPage/Clients.page")
+);
+const ClientProfilePage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page"
+    )
+);
+const TaskboardPage = lazy(
+  () =>
+    import("../modules/AgencyAdmin.module/pages/TaskboardPages/Taskboard.page")
+);
+const KoolabyteAssistantPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/KoolabyteAssistantPage/KoolabyteAssistant.page"
+    )
+);
+const ReportAndAnalyticsPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/ReportAndAnalyticsPage/ReportAndAnalytics.page"
+    )
+);
+const ManageTeamPage = lazy(
+  () =>
+    import("../modules/AgencyAdmin.module/pages/ManageTeamPage/ManageTeam.page")
+);
+const TeammateProfilePage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/ManageTeamPage/TeammateProfilePage/TeammateProfile.page"
+    )
+);
+const ChatPage = lazy(
+  () =>
+    import("../modules/AgencyAdmin.module/pages/ManageTeamPage/ChatPage/Chat.page")
+);
+const SettingPage = lazy(
+  () =>
+    import("../modules/AgencyAdmin.module/pages/SettingPage/Setting.page")
+);
+const ConnectCRMPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/SettingPage/ConnectCRMPage/ConnectCRM.page"
+    )
+);
+const SubcriptionPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page"
+    )
+);
+const PaymentPage = lazy(
+  () => import("../modules/AgencyAdmin.module/pages/PaymentPage/Payment.page")
+);
+const SSOWaitingPage = lazy(
+  () => import("../modules/AgencyAdmin.module/pages/SSOWaiting/SSOWaiting.page")
+);
+const ChatWithRecruiterPage = lazy(
+  () => import("../modules/Team.module/pages/ChatPage/Chat.page")
+);
+const ClientJobsPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page"
+    )
+);
+const ChatMain = lazy(() => import("../modules/Shared/pages/ChatPage2/ChatMain"));
+const TeamDashboardPage = lazy(
+  () => import("../modules/Team.module/pages/DashboardPage/Dashboard.page")
+);
+const TeamCandidatesPage = lazy(
+  () =>
+    import("../modules/Team.module/pages/CandidatesPage/Candidates.page")
+);
+const TeamCandidatesProfilePage = lazy(
+  () =>
+    import(
+      "../modules/Team.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page"
+    )
+);
+const TeamJobsPage = lazy(
+  () => import("../modules/Team.module/pages/Jobs/Jobs.page")
+);
+const SuperAdminDashboardPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/DashboardPage/Dashboard.page"
+    )
+);
+const SuperAdminRecruitersPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/RecruitersPage/Recruiters.page"
+    )
+);
+const AdminPage = lazy(
+  () => import("../modules/SuperAdmin.module/pages/AdminPage/Admin.page")
+);
+const SuperAdminCandidatesPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/CandidatesPage/Candidates.page"
+    )
+);
+const SuperAdminJobsPage = lazy(
+  () => import("../modules/SuperAdmin.module/pages/Jobs/Jobs.page")
+);
+const SuperAdminClientsPage = lazy(
+  () =>
+    import("../modules/SuperAdmin.module/pages/ClientsPage/Clients.page")
+);
+const SuperAdminAiInterviewPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/AiInterview/AiInterview.page"
+    )
+);
+const SuperAdminKoolabyteAssistantPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/KoolabyteAssistantPage/KoolabyteAssistant.page"
+    )
+);
+const SuperAdminSettingPage = lazy(
+  () => import("../modules/Shared/pages/SettingPage/Setting.page")
+);
+const SuperAdminRecruiterProfilePage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/RecruitersPage/RecruiterProfilePage/RecruiterProfile.page"
+    )
+);
+const SuperAdminCandidatesProfilePage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/CandidatesPage/CandidateProfile/CandidatesProfile.page"
+    )
+);
+const SuperAdminViewJobPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page"
+    )
+);
+const SuperAdminClientProfilePage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/ClientsPage/ClientProfile/ClientProfile.page"
+    )
+);
+const SuperAdminSubcriptionPage = lazy(
+  () =>
+    import(
+      "../modules/SuperAdmin.module/pages/SettingPage/SubcriptionPage/Subcription.page"
+    )
+);
+const LoginPage = lazy(
+  () => import("../modules/Shared/pages/LoginPage/Login.page")
+);
+const ConfirmtionPage = lazy(
+  () => import("../modules/Shared/pages/SignupPage/Confirmation.page")
+);
+const SignupPage = lazy(
+  () => import("../modules/Shared/pages/SignupPage/Signup.page")
+);
+const SetUserPassword = lazy(
+  () => import("../modules/Shared/pages/user/SetUserPassword.page")
+);
+
 import { UserVerificationPage } from "../modules/Shared/pages/user/UserVerify.page";
-import TeamSettingPage from "../modules/Team.module/pages/SettingPage/Setting.page";
-import CustomCVPage from "../modules/AgencyAdmin.module/pages/CustomCVPage/page";
-import CreateCustomCVPage from "../modules/AgencyAdmin.module/pages/CustomCVPage/CreateCustomCVPage/page";
-import ViewCustomCVPage from "../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page";
-import LandingPage from "../modules/Landing.module/pages/Home/page";
-import CONTACT from "../modules/Landing.module/pages/Contact/page";
-import BLOG from "../modules/Landing.module/pages/Blogs/page";
-import PRICING from "../modules/Landing.module/pages/Pricing/page";
-import BLOGPOST from "../modules/Landing.module/pages/BlogPosts/page";
-import TeamClientsPage from "../modules/Team.module/pages/ClientsPage/Clients.page";
-import TeamJobsCreatePage from "../modules/Team.module/pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page";
-import TeamJobDelatils from "../modules/Team.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page";
-import TeamTaskboardPage from "../modules/Team.module/pages/TaskboardPages/Taskboard.page";
-import TeamClientProfilePage from "../modules/Team.module/pages/ClientsPage/ClientProfile/ClientProfile.page";
-import TeamCandidateCVEditPage from "../modules/Team.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page";
+
+const TeamSettingPage = lazy(
+  () => import("../modules/Team.module/pages/SettingPage/Setting.page")
+);
+const CustomCVPage = lazy(
+  () => import("../modules/AgencyAdmin.module/pages/CustomCVPage/page")
+);
+const CreateCustomCVPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/CustomCVPage/CreateCustomCVPage/page"
+    )
+);
+const ViewCustomCVPage = lazy(
+  () =>
+    import(
+      "../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page"
+    )
+);
+const LandingPage = lazy(
+  () => import("../modules/Landing.module/pages/Home/page")
+);
+const CONTACT = lazy(
+  () => import("../modules/Landing.module/pages/Contact/page")
+);
+const BLOG = lazy(
+  () => import("../modules/Landing.module/pages/Blogs/page")
+);
+const PRICING = lazy(
+  () => import("../modules/Landing.module/pages/Pricing/page")
+);
+const BLOGPOST = lazy(
+  () => import("../modules/Landing.module/pages/BlogPosts/page")
+);
+const TeamClientsPage = lazy(
+  () => import("../modules/Team.module/pages/ClientsPage/Clients.page")
+);
+const TeamJobsCreatePage = lazy(
+  () =>
+    import(
+      "../modules/Team.module/pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page"
+    )
+);
+const TeamJobDelatils = lazy(
+  () =>
+    import(
+      "../modules/Team.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page"
+    )
+);
+const TeamTaskboardPage = lazy(
+  () => import("../modules/Team.module/pages/TaskboardPages/Taskboard.page")
+);
+const TeamClientProfilePage = lazy(
+  () =>
+    import(
+      "../modules/Team.module/pages/ClientsPage/ClientProfile/ClientProfile.page"
+    )
+);
+const TeamCandidateCVEditPage = lazy(
+  () =>
+    import(
+      "../modules/Team.module/pages/CandidatesPage/CandidateCVEdit/CandidateCVEdit.page"
+    )
+);
 
 const DashboardPage = lazy(
   () =>
-    import("../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page"),
+    import("../modules/AgencyAdmin.module/pages/DashboardPage/Dashboard.page")
 );
 const CandidatesPage = lazy(
   () =>
     import(
       "../modules/AgencyAdmin.module/pages/CandidatesPage/Candidates.page"
-    ),
+    )
 );
 const JobsPage = lazy(
-  () => import("../modules/AgencyAdmin.module/pages/Jobs/Jobs.page"),
+  () => import("../modules/AgencyAdmin.module/pages/Jobs/Jobs.page")
 );
 
+// --- All other code remains the same ---
 const landingPagesRoutes = [
   {
     path: LandingPages.home.to,
@@ -138,8 +346,8 @@ const contentRoutes: ContentRoutesType = {
     },
 
     {
-      path: appPages.AgencyAdmin.candidatesAppPages.subPages
-        .candidateCVEditAppPage.to,
+      path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage
+        .to,
       element: <CandidateCVEditPage />,
     },
 
@@ -288,8 +496,8 @@ const contentRoutes: ContentRoutesType = {
     },
 
     {
-      path: appPages.AgencyAdmin.candidatesAppPages.subPages
-        .candidateCVEditAppPage.to,
+      path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage
+        .to,
       element: <CandidateCVEditPage />,
     },
 
@@ -431,8 +639,7 @@ const contentRoutes: ContentRoutesType = {
       element: <TeamClientProfilePage />,
     },
 
-
-     {
+    {
       path: `${appPages.Team.customCVAppPages.to}`,
       element: <CustomCVPage />,
     },
@@ -452,16 +659,14 @@ const contentRoutes: ContentRoutesType = {
       element: <ViewCustomCVPage />,
     },
 
-    
-
     {
       path: appPages.Team.chatAppPages.to + "/*",
       element: <ChatMain />,
     },
 
     // {
-    //   path: appPages.Team.recruiterAppPages.to,
-    //   element: <RecruitersPage />,
+    // 	path: appPages.Team.recruiterAppPages.to,
+    // 	element: <RecruitersPage />,
     // },
 
     {
@@ -513,8 +718,8 @@ const contentRoutes: ContentRoutesType = {
     },
 
     {
-      path: appPages.AgencyAdmin.candidatesAppPages.subPages
-        .candidateCVEditAppPage.to,
+      path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage
+        .to,
       element: <CandidateCVEditPage />,
     },
 
@@ -638,8 +843,8 @@ const contentRoutes: ContentRoutesType = {
     },
 
     {
-      path: appPages.SuperAdmin.candidatesAppPages.subPages
-        .cadidateProfileAppPage.to,
+      path: appPages.SuperAdmin.candidatesAppPages.subPages.cadidateProfileAppPage
+        .to,
       element: <SuperAdminCandidatesProfilePage />,
     },
 

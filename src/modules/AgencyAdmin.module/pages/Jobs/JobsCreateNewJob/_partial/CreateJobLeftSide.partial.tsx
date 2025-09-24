@@ -108,7 +108,7 @@ const CreateJobLeftSidePartial = () => {
     // prettier-ignore
     await dispatch(createJobs( isAssigned ? {...newFormData, clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: {...newFormData,clientId: assignedClientWhileCreatingJob?.id??null}));
     setIsSubmitting(false);
-    navigate("/dashboard/jobs");
+    // navigate("/dashboard/jobs");
   };
 
   const handleDescriptionChange = (newValue: any) => {
