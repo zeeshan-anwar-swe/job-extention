@@ -19,6 +19,7 @@ import { ConfirmationModal } from "../../../../Shared/components/CustomModal/con
 import { deleteJob } from "../../../../../store/slices/Jobs.slice";
 import { getTeamJobs } from "../../../../../store/slices/Team/TeamJobs.slice";
 import { useAuth } from "../../../../../context/authContext";
+import { formatString } from "../../../../../utils/helper";
 
 const JobsPageCardPartial = ({ teamJob }: { teamJob: TeamJob }) => {
   const { userStorage } = useAuth();
@@ -29,7 +30,12 @@ const JobsPageCardPartial = ({ teamJob }: { teamJob: TeamJob }) => {
     <Card className="col-span-4 max-2xl:last:col-span-12 flex flex-col gap-2 border border-zinc-300 hover:cursor-pointer max-2xl:col-span-6 max-lg:col-span-12">
       <CardHeader className="gap-4 max-md:!flex-col-reverse">
         <Alert icon="HeroFolder" variant="solid" />
-        <div className="flex-1">
+        <div
+          className="flex-1 hover:cursor-pointer"
+          onClick={() =>
+            navigateTo(`/dashboard/jobs/view-job-details`, { state: teamJob })
+          }
+        >
           <h4 className="max-md:text-sm">
             {textValidationCheck(teamJob?.title)}
           </h4>
@@ -57,15 +63,27 @@ const JobsPageCardPartial = ({ teamJob }: { teamJob: TeamJob }) => {
           <CardDropdownPartial item={teamJob} />
         </div>
       </CardHeader>
-      <CardBody className="flex flex-col gap-4">
+      <CardBody
+        onClick={() =>
+          navigateTo(`/dashboard/jobs/view-job-details`, { state: teamJob })
+        }
+        className="flex flex-col hover:cursor-pointer gap-4"
+      >
         <div className="flex items-center gap-2 max-md:flex-col max-md:items-start">
           <CardBodyTagPartial title="No. of Positions:" value="4" />
-          <CardBodyTagPartial title="Experience:" value={teamJob?.experience} />
+          <CardBodyTagPartial
+            title="Experience:"
+            value={`${teamJob.experienceMin} - ${teamJob.experienceMax}`}
+          />
         </div>
-        <div className="flex items-center gap-2 max-md:flex-col max-md:items-start">
+        <div className="flex flex-wrap truncate items-center gap-2 max-md:flex-col max-md:items-start">
           <CardBodyTagPartial title="Location:" value={teamJob?.location} />
-          <CardBodyTagPartial title="Job Type:" value={teamJob?.type} />
+          <CardBodyTagPartial
+            title="Job Type:"
+            value={formatString(teamJob?.type)}
+          />
         </div>
+       
       </CardBody>
       <CardFooter className="border-t-2 !py-2">
         <CardFooterChild>

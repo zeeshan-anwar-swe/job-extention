@@ -57,6 +57,8 @@ export interface TeamJob {
     id: string;
     title: string;
     experience: string;
+    experienceMin: number;
+    experienceMax: number;
     location: string;
     type: string;
     status: string;

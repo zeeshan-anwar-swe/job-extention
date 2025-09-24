@@ -4,7 +4,7 @@ import Label from '../../../../../components/form/Label';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import Input from '../../../../../components/form/Input';
 import { TInputTypes } from '../../../../../types/input.type';
-import { JobFormData } from '../JobsViewCadidates/_partial/JobForm.partial';
+import { FormData } from '../JobsCreateNewJob/_partial/CreateJobLeftSide.partial';
 
 
 
@@ -25,7 +25,7 @@ const LabelTitlepartial = ({
 	label?: string;
 	id: AllowedId;
 	detail?: string;
-	formData: JobFormData;
+	formData: FormData;
 	setFormData: any;
 	inputType?: TInputTypes;
 	

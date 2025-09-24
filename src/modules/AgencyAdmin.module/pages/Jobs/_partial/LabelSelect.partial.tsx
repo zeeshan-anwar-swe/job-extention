@@ -3,7 +3,7 @@ import Label from '../../../../../components/form/Label';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import SelectReact from '../../../../../components/form/SelectReact';
 import { formatString } from '../../../../../utils/helper';
-import { JobFormData } from '../JobsViewCadidates/_partial/JobForm.partial';
+import { FormData } from '../JobsCreateNewJob/_partial/CreateJobLeftSide.partial';
 
 
 type AllowedId = 'type';
@@ -16,7 +16,7 @@ const LabelSelectPartial = ({
 }: {
 	label?: string;
 	id: AllowedId;
-	formData: JobFormData;
+	formData: FormData;
 	setFormData: any;
 }) => {
 	const handleChange = (options: { label: string; value: string }) => {

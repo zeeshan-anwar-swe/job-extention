@@ -106,7 +106,7 @@ const JobsViewCandidatesPage = () => {
                 <CardHeaderChild>
                   <Button
                     onClick={() => setDeleteModal(true)}
-                    size="lg"
+                    // size="lg"
                     color="red"
                     variant="solid"
                     rightIcon="HeroTrash"
@@ -115,7 +115,7 @@ const JobsViewCandidatesPage = () => {
                   </Button>
                   <Button
                     onClick={() => setShowALL(true)}
-                    size="lg"
+                    // size="lg"
                     variant="solid"
                     rightIcon="HeroEye"
                   >
@@ -141,7 +141,7 @@ const JobsViewCandidatesPage = () => {
                   )}
                   <Button
                     onClick={() => setModal(true)}
-                    size="lg"
+                    // size="lg"
                     variant="solid"
                     // icon='HeroPlus'
                     rightIcon="HeroPlus"
@@ -151,7 +151,7 @@ const JobsViewCandidatesPage = () => {
 
                   <Button
                     onClick={() => setAssignClientModal(true)}
-                    size="lg"
+                    // size="lg"
                     variant="solid"
                   >
                     Assign Client

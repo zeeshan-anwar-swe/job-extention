@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import Label from '../../../../../../components/form/Label';
 import RichText from '../../../../../../components/RichText';
-import { JobFormData } from './JobForm.partial';
-import { Descendant } from 'slate';
+import { FormData } from '../../JobsCreateNewJob/_partial/CreateJobLeftSide.partial';
 
 export const TextEditorForJobDetailsPagePartial = (
 	// handleRichTextChange: any,
-	formData: JobFormData
+	formData: FormData
 ) => {
     console.log({ formData });
     

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Card, {
   CardBody,
   CardFooter,
@@ -8,7 +8,6 @@ import Card, {
   CardSubTitle,
   CardTitle,
 } from "../../../../../../components/ui/Card";
-import LabelTitlepartial from "./LabelTitle.partial";
 import { NavSeparator } from "../../../../../../components/layouts/Navigation/Nav";
 import ResultUserDataPartial from "./ResultUserData.partial";
 import Button from "../../../../../../components/ui/Button";
@@ -17,20 +16,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../../store";
 import { createJobs } from "../../../../../../store/slices/Jobs.slice";
 import LabelSelectPartial from "./LabelSelect.partial";
-import LabelSkillSelectPartial from "./LabelSkillSelect.partial";
-import LabelTitleTextareaPartial from "./LabelTitleTextarea.partial";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { TitleInputForJobPartial } from "./TitleInputForJob.partial";
-import { ExperienceSelectForJobPartial } from "./ExperienceSelectForJob.partial";
 import { LocationSelectForJob } from "./LocationSelectForJob.partial";
 import { SkillsSelectForJob } from "./SkillSelectForJob.partial";
 import RichText from "../../../../../../components/RichText";
 import { Descendant } from "slate";
 import Label from "../../../../../../components/form/Label";
 import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
-import { MultiValue } from "react-select";
-import SelectReact from "../../../../../../components/form/SelectReact";
+import { ExperienceRangeSelector } from "./ExperienceRangeSelector";
 
 export interface FormData {
   title: string;
@@ -39,7 +34,7 @@ export interface FormData {
   // experience: string;
   type: string;
   location: string;
-  // positions: string;
+  positions?: string;
   skills: string[];
   experienceMin: number;
   experienceMax: number;
@@ -132,20 +127,6 @@ const CreateJobLeftSidePartial = () => {
     }));
   };
 
-  // Filtered options for Experience Min dropdown
-  const filteredExperienceMinOptions = allExperienceOptions.filter(
-    (option) =>
-      formData.experienceMax === 0 || option.value < formData.experienceMax
-  );
-
-  // Filtered options for Experience Max dropdown
-  const filteredExperienceMaxOptions = [
-    ...allExperienceOptions,
-    { value: 20, label: "10+" },
-  ].filter(
-    (option) =>
-      formData.experienceMin === 0 || option.value > formData.experienceMin
-  );
 
   return (
     <Card className="col-span-8 flex flex-col gap-2 max-lg:col-span-12">
@@ -177,7 +158,7 @@ const CreateJobLeftSidePartial = () => {
               onChange={(selectedOptions: any) => {
                 const languages = selectedOptions
                   ? (selectedOptions as SpokenLanguage[]).map(
-                      (option: SpokenLanguage) => option.value
+                      (option: SpokenLanguage) => option.value,
                     )
                   : [];
                 setFormData((prevFormData) => ({
@@ -200,64 +181,10 @@ const CreateJobLeftSidePartial = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 max-md:flex-col">
-          <div className="w-full">
-            <Label htmlFor="experienceFrom">Experience From</Label>
-            <SelectReact
-              isClearable
-              name="experienceFrom"
-              placeholder="Select minimum experience"
-              options={filteredExperienceMinOptions}
-              value={
-                formData.experienceMin
-                  ? {
-                      value: formData.experienceMin,
-                      label: formData.experienceMin.toString(),
-                    }
-                  : null
-              }
-              onChange={(selectedOption: any) => {
-                setFormData((prevFormData) => ({
-                  ...prevFormData,
-                  experienceMin: selectedOption ? selectedOption.value : 0,
-                  experienceMax:
-                    selectedOption &&
-                    selectedOption.value >= prevFormData.experienceMax
-                      ? 0
-                      : prevFormData.experienceMax,
-                }));
-              }}
-            />
-          </div>
-          <div className="w-full">
-            <Label htmlFor="experienceTo">Experience To</Label>
-            <SelectReact
-              isClearable
-              name="experienceTo"
-              placeholder="Select maximum experience"
-              options={filteredExperienceMaxOptions}
-              value={
-                formData.experienceMax
-                  ? {
-                      value: formData.experienceMax,
-                      label: `${formData.experienceMax === 20 ? "10+" : formData.experienceMax}`,
-                    }
-                  : null
-              }
-              onChange={(selectedOption: any) => {
-                setFormData((prevFormData) => ({
-                  ...prevFormData,
-                  experienceMax: selectedOption ? selectedOption.value : 0,
-                  experienceMin:
-                    selectedOption &&
-                    selectedOption.value <= prevFormData.experienceMin
-                      ? 0
-                      : prevFormData.experienceMin,
-                }));
-              }}
-            />
-          </div>
-        </div>
+        <ExperienceRangeSelector
+          formData={formData}
+          setFormData={setFormData}
+        />
 
         <div className="flex items-center gap-4 max-md:flex-col">
           <LabelSelectPartial

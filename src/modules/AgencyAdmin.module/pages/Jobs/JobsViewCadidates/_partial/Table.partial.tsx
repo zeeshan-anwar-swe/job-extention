@@ -22,7 +22,7 @@ const TablePartial = () => {
 			<TBody>
 				{jobDetails?.candidateJobProfiles?.map((candidate: any) => (
 					<Tr key={candidate.id}>
-						<Td>
+						<Td className='flex justify-start'>
 							<TableDataProfilePartial
 								imageUrl={candidate?.candidate?.profilePictureUrl}
 								title={candidate.candidate.name}

@@ -4,14 +4,13 @@ import Label from '../../../../../components/form/Label';
 import FieldWrap from '../../../../../components/form/FieldWrap';
 import Input from '../../../../../components/form/Input';
 import { TInputTypes } from '../../../../../types/input.type';
-import { JobFormData } from '../JobsViewCadidates/_partial/JobForm.partial';
+import { FormData } from '../JobsCreateNewJob/_partial/CreateJobLeftSide.partial';
 
 
 
 type AllowedId =
 	| 'title'
 	| 'type'
-	| 'experience'
 	| 'location'
 	| 'positions'
 	| 'skills';
@@ -27,7 +26,7 @@ const LabelTitlepartial = ({
 	label?: string;
 	id: AllowedId;
 	detail?: string;
-	formData: JobFormData;
+	formData: FormData;
 	setFormData: any;
 	inputType?: TInputTypes;
 	
@@ -49,7 +48,7 @@ const LabelTitlepartial = ({
 				<Input
 					defaultValue={1}
 					type={inputType ?? 'text'}
-					dimension='lg'
+					// dimension='lg'
 					id={id}
 					min={1}
 					autoComplete='name'

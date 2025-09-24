@@ -38,6 +38,7 @@ export interface FormData {
   description: Descendant[];
   spokenLanguages: string[];
   type: string;
+  positions?: number | string;
   location: string;
   skills: string[];
   experienceMin: number;
