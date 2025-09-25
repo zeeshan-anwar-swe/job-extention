@@ -64,7 +64,7 @@ export const HomeIntroductionSection = () => {
           >
             Introducing Koalify AI
           </motion.span>
-          <motion.h2 className="mb-4 mt-2 text-2xl font-medium text-[#010314] md:text-3xl" variants={fadeInUp}>
+          <motion.h2 className="mb-4 mt-2 text-2xl font-medium text-[#010314] dark:text-[#010314] md:text-3xl" variants={fadeInUp}>
             Empower Your Hiring and Job Tracking with AI
           </motion.h2>
           <motion.p className="mb-6 text-base text-[#8F8F8F] md:text-lg" variants={fadeInUp}>

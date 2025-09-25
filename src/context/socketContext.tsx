@@ -112,12 +112,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         if (currentChatUserId !== userId) {
           playMessageSound();
           toast.dismiss();
-          // toast.custom((t) => <ToastMessage t={t} msg={msg} />);
-        } else {
-          playMessageSound();
           toast.custom((t) => <ToastMessage t={t} msg={msg} />);
+        } else {
         }
       } else {
+        playMessageSound();
+        toast.custom((t) => <ToastMessage t={t} msg={msg} />);
+
       }
 
       setInbox((prev) => {

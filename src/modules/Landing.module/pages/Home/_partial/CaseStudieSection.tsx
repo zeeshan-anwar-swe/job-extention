@@ -38,7 +38,7 @@ export const CaseStudieSection = () => {
         variants={itemVariants}
       >
         <div className="mb-6 md:mb-0">
-          <h2 className="mb-2 text-2xl font-medium text-[#010314] md:text-3xl">
+          <h2 className="mb-2 text-2xl font-medium text-[#010314] dark:text-[#010314] md:text-3xl">
             Latest Case Studies
           </h2>
           <p className="text-lg text-[#010314]/50">

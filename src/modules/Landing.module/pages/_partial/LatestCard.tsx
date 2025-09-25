@@ -31,7 +31,7 @@ function LatestCard({ image, headingA, headingB, title, description, navigatePat
 					<span className='text-xs font-medium text-[#010314]/50'>{headingB}</span>
 				</div>
 				<div className='flex items-center ' onClick={handleTitleClick}>
-					<h1 className='text-xl font-medium'>{title}</h1>
+					<h1 className='text-xl font-medium dark:text-[#010314]'>{title}</h1>
 
 					<img src="/assets/arrow.png" alt='arrow' className='ml-2' />
 				</div>

@@ -28,11 +28,11 @@ function HEADER() {
 	return (
 		<section
 			id='header'
-			className='sticky top-0 z-50 border-b border-b-slate-300 mx-auto w-full bg-[#E0E2F4] px-5 py-3 md:px-10 md:py-2 lg:px-14 lg:py-2'>
+			className='sticky top-0 z-50 border-b border-b-slate-300 mx-auto w-full bg-prim-bg-100 dark:bg-prim-bg-900 px-5 py-3 md:px-10 md:py-2 lg:px-14 lg:py-2'>
 			<div className='mx-auto flex  items-center justify-between md:flex-row'>
 				{/* Logo and Menu Button */}
 				<div className='flex w-full items-center justify-between md:w-auto'>
-					<div className='mb-4 flex items-center md:mb-0'>
+					<div className='mb-4 flex items-center md:mb-0 dark:bg-white/20 rounded-lg p-2'>
 						<img src="/assets/logo-new.png" alt='Logo' className='h-8' />
 					</div>
 
@@ -58,8 +58,8 @@ function HEADER() {
 						to='/'
 						className={({ isActive }) =>
 							isActive || isHomeActive
-								? 'bg-white/27 block rounded-3xl border border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
-								: 'block border border-transparent py-2 text-base font-medium text-[#010314]'
+								? 'bg-white/27 block rounded-3xl border border-[#1384EA] dark:border-prim-bg-100 dark:text-prim-bg-100	 px-8 py-2 text-center text-base font-medium text-[#010314] '
+								: 'block border border-transparent dark:text-prim-bg-100 py-2 text-base font-medium text-[#010314]'
 						}
 						onClick={() => setIsMenuOpen(false)}>
 						Home
@@ -69,8 +69,8 @@ function HEADER() {
 						to='/blogs'
 						className={({ isActive }) =>
 							isActive
-								? 'bg-white/27 block rounded-3xl border border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
-								: 'block border border-transparent py-2 text-base font-medium text-[#010314]'
+								? 'bg-white/27 block rounded-3xl border border-[#1384EA] dark:border-prim-bg-100 dark:text-prim-bg-100 px-8 py-2 text-center text-base font-medium text-[#010314]'
+								: 'block border border-transparent py-2 dark:text-prim-bg-100 text-base font-medium text-[#010314]'
 						}
 						onClick={() => setIsMenuOpen(false)}>
 						Blog
@@ -80,8 +80,8 @@ function HEADER() {
 						to='/pricing'
 						className={({ isActive }) =>
 							isActive
-								? 'bg-white/27 block rounded-3xl border border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
-								: 'block border border-transparent py-2 text-base font-medium text-[#010314]'
+								? 'bg-white/27 block rounded-3xl border dark:border-prim-bg-100 dark:text-prim-bg-100 border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
+								: 'block border border-transparent py-2   dark:text-prim-bg-100 text-base font-medium text-[#010314]'
 						}
 						onClick={() => setIsMenuOpen(false)}>
 						Pricing
@@ -91,8 +91,8 @@ function HEADER() {
 						to='/contact'
 						className={({ isActive }) =>
 							isActive
-								? 'bg-white/27 block rounded-3xl border border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
-								: 'block border border-transparent py-2 text-base font-medium text-[#010314]'
+								? 'bg-white/27 block rounded-3xl border dark:text-prim-bg-100 dark:border-prim-bg-100 border-[#1384EA] px-8 py-2 text-center text-base font-medium text-[#010314]'
+								: 'block border border-transparent py-2 dark:text-prim-bg-100 text-base font-medium text-[#010314]'
 						}
 						onClick={() => setIsMenuOpen(false)}>
 						Contact us

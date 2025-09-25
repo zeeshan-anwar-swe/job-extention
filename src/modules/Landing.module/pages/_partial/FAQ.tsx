@@ -90,7 +90,7 @@ function FAQ() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h2 className="font-semibold text-3xl md:text-[36px] leading-[44px] tracking-[-0.02em] text-[#010314]">
+          <h2 className="font-semibold text-3xl md:text-[36px] leading-[44px] tracking-[-0.02em] text-[#010314] dark:text-[#010314]">
             FAQS
           </h2>
           <p className="font-normal text-lg md:text-xl leading-7 text-[#010314] mt-4 mb-2">

@@ -1,20 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ChatPage from './Chat.page';
+import { useAuth } from '../../../../context/authContext';
 
- const ChatMain = () => {
+const ChatMain = () => {
+	const { userStorage } = useAuth();
 	const { state } = useLocation();
 	const navigateTo = useNavigate();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (!state) {
 			navigateTo(-1);
-		}else{
-            console.log(state);
-        }
-	}, []);
+		} else {
+			if (state.userId === userStorage.id) {
+				navigateTo(-1);
+			}
+			console.log(state);
+		}
+	}, [state]);
 
-	return state && <ChatPage receiverName={state.userName} receiverId={state.userId} />;
+	return state && state.userId !== userStorage.id &&  <ChatPage receiverName={state.userName} receiverId={state.userId} />;
 };
 
 export default ChatMain;

@@ -12,6 +12,7 @@ import Nav, {
 } from '../../../components/layouts/Navigation/Nav';
 import Badge from '../../../components/ui/Badge';
 import UserTemplate from '../User/User.template';
+import { Divider } from 'antd';
 
 const DefaultAsideTemplate = () => {
 	return (
@@ -19,12 +20,21 @@ const DefaultAsideTemplate = () => {
 			<AsideHead>
 				<LogoAndAsideTogglePart />
 			</AsideHead>
+			<div className='px-6'>
+				<NavSeparator />
+			</div>
+
 			<AsideBody>
 				<Nav>
 					<NavItem {...appPages.AgencyAdmin.dashboardAppPages} />
-					<NavItem {...appPages.AgencyAdmin.candidatesAppPages.subPages.candidatesPage} />
+					<NavItem
+						{...appPages.AgencyAdmin.candidatesAppPages.subPages
+							.candidatesPage}
+					/>
 					<NavItem {...appPages.AgencyAdmin.jobsAppPages.subPages.jobsPage} />
-					<NavItem {...appPages.AgencyAdmin.clientsAppPages.subPages.clientsPage} />
+					<NavItem
+						{...appPages.AgencyAdmin.clientsAppPages.subPages.clientsPage}
+					/>
 					<NavItem {...appPages.AgencyAdmin.taskBoardAppPages} />
 					<NavItem {...appPages.AgencyAdmin.reportAndAnalyticsAppPages} />
 
@@ -32,8 +42,7 @@ const DefaultAsideTemplate = () => {
 					<NavItem {...appPages.AgencyAdmin.aiInterviewAppPages}>
 						<Badge
 							variant='outline'
-							
-							className='border-transparent text-prim-bg-600 dark:text-prim-bg-100 leading-none'>
+							className='border-transparent leading-none text-prim-bg-600 dark:text-prim-bg-100'>
 							NEW
 						</Badge>
 					</NavItem>
@@ -45,7 +54,10 @@ const DefaultAsideTemplate = () => {
 
 					<NavSeparator />
 					<NavTitle>Team</NavTitle>
-					<NavItem {...appPages.AgencyAdmin.manageTeamAppPages.subPages.manageTeamPage} />
+					<NavItem
+						{...appPages.AgencyAdmin.manageTeamAppPages.subPages
+							.manageTeamPage}
+					/>
 				</Nav>
 			</AsideBody>
 			<AsideFooter>

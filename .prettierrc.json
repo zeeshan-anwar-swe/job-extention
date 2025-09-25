@@ -1,9 +1,0 @@
-{
-  "importOrder": [
-    "<THIRD_PARTY_MODULES>",
-    "^[./].*"
-  ],
-  "importOrderSortSpecifiers": true,
-  "importOrderSortSpecifiersByLength": true,
-  "importOrderGroupNamespaceSpecifiers": true
-}

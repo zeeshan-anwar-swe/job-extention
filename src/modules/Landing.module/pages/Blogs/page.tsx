@@ -72,13 +72,13 @@ function BLOG() {
               </motion.span>
 
               <motion.h1
-                className="font-inter text-center font-medium text-[#101828] md:text-lg lg:text-5xl"
+                className="font-inter text-center font-medium text-[#101828] dark:text-[#101828] md:text-lg lg:text-5xl"
                 variants={itemVariants}
               >
                 Navigating the Path to Optimal <br />
               </motion.h1>
               <motion.h1
-                className="font-inter text-center font-medium text-[#101828] md:text-lg lg:text-5xl"
+                className="font-inter text-center dark:text-[#101828] font-medium text-[#101828] md:text-lg lg:text-5xl"
                 variants={itemVariants}
               >
                 Hiring Process

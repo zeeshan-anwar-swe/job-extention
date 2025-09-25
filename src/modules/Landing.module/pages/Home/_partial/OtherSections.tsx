@@ -81,7 +81,7 @@ export const HomeOtherSections = () => {
 					<span className='block bg-gradient-to-r from-[#1297C6] to-[#477EF5] bg-clip-text text-base font-semibold text-transparent'>
 						Core Features
 					</span>
-					<h2 className='mt-2 text-2xl font-medium text-[#010314] md:text-3xl'>
+					<h2 className='mt-2 text-2xl font-medium text-[#010314] dark:text-[#010314] md:text-3xl'>
 						Core Features That Redefine Your Hiring Process!
 					</h2>
 				</motion.div>
@@ -142,7 +142,7 @@ export const HomeOtherSections = () => {
 					<span className='block bg-gradient-to-r from-[#1297C6] to-[#477EF5] bg-clip-text text-base font-semibold text-transparent'>
 						Core Features
 					</span>
-					<h2 className='mb-2 mt-2 text-2xl font-medium text-[#010314] md:text-3xl'>
+					<h2 className='mb-2 mt-2 text-2xl font-medium text-[#010314] dark:text-[#010314] md:text-3xl'>
 						Why Choose KoalaByte AI?
 					</h2>
 					<p className='text-lg text-[#010314]/50'>
