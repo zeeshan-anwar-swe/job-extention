@@ -73,42 +73,50 @@ const CreateJobLeftSidePartial = () => {
   });
 
   const dispatchCreateJob = async () => {
-    setIsSubmitting(true);
-    const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
-    const customCandidateIds =
-      await assignedCustomCandidatesWhileCreatingJob.map((c: any) => c.id);
+    try{
+      setIsSubmitting(true);
 
-    if (formData.title.length < 3) {
-      toast.error("Enter at least 3 characters for title");
-      setIsSubmitting(false);
-      return;
-    } else if (formData.skills.length < 1) {
-      toast.error("Enter at least one skill");
+      const isAssigned = assignedCandidatesWhileCreatingJob.length > 0;
+      const customCandidateIds =
+        await assignedCustomCandidatesWhileCreatingJob.map((c: any) => c.id);
+  
+      if (formData.title.length < 3) {
+        toast.error("Enter at least 3 characters for title");
+        setIsSubmitting(false);
+        return;
+      } else if (formData.skills.length < 1) {
+        toast.error("Enter at least one skill");
+        setIsSubmitting(false);
+  
+        return;
+      } else if (formData.location.length < 3) {
+        toast.error("Enter at least 3 characters for location");
+        setIsSubmitting(false);
+  
+        return;
+      } else if (formData.type === "") {
+        toast.error("Job type should not be empty");
+        setIsSubmitting(false);
+        return;
+      }
+      const strigifiedDescription = await JSON.stringify(formData.description);
+      const newFormData = await {
+        ...formData,
+        description: strigifiedDescription,
+        customCandidateIds,
+      };
+  
+      // @ts-ignore
+      // prettier-ignore
+      await dispatch(createJobs( isAssigned ? {...newFormData, clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: {...newFormData,clientId: assignedClientWhileCreatingJob?.id??null}));
+      navigate("/dashboard/jobs");
+    }catch (error){
+      console.log({error});
+      
+    }finally{
       setIsSubmitting(false);
 
-      return;
-    } else if (formData.location.length < 3) {
-      toast.error("Enter at least 3 characters for location");
-      setIsSubmitting(false);
-
-      return;
-    } else if (formData.type === "") {
-      toast.error("Job type should not be empty");
-      setIsSubmitting(false);
-      return;
     }
-    const strigifiedDescription = await JSON.stringify(formData.description);
-    const newFormData = await {
-      ...formData,
-      description: strigifiedDescription,
-      customCandidateIds,
-    };
-
-    // @ts-ignore
-    // prettier-ignore
-    await dispatch(createJobs( isAssigned ? {...newFormData, clientId: assignedClientWhileCreatingJob?.id??null,candidateIds: assignedCandidatesWhileCreatingJob.map((c: any) => c.id)}: {...newFormData,clientId: assignedClientWhileCreatingJob?.id??null}));
-    setIsSubmitting(false);
-    // navigate("/dashboard/jobs");
   };
 
   const handleDescriptionChange = (newValue: any) => {

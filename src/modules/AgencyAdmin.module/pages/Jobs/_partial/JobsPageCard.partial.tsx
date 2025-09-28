@@ -20,7 +20,6 @@ import { deleteJob, getJobsList } from "../../../../../store/slices/Jobs.slice";
 
 const JobsPageCardPartial = ({ item }: any) => {
   const navigateTo = useNavigate();
-
   const [deleteModal, setDeleteModal] = useState(false);
 
   return (
@@ -72,16 +71,13 @@ const JobsPageCardPartial = ({ item }: any) => {
         onClick={() =>
           navigateTo(`/dashboard/jobs/view-job-details`, { state: item })
         }
-        className="flex flex-col hover:cursor-pointer gap-4"
+        className="flex justify-center flex-col hover:cursor-pointer gap-4"
       >
-        <div className="flex items-center gap-2 max-md:flex-col max-md:items-start">
-          <CardBodyTagPartial title="No. of Positions:" value="4" />
+          <div className="flex  flex-wrap truncate items-center gap-2 max-md:flex-col max-md:items-start">
           <CardBodyTagPartial
             title="Experience:"
             value={`${item.experienceMin} - ${item.experienceMax}`}
           />
-        </div>
-        <div className="flex flex-wrap truncate items-center gap-2 max-md:flex-col max-md:items-start">
           <CardBodyTagPartial title="Location:" value={item?.location} />
           <CardBodyTagPartial
             title="Job Type:"

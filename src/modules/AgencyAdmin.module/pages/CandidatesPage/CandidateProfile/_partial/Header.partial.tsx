@@ -3,23 +3,20 @@ import { useNavigate } from "react-router-dom";
 import Card from "../../../../../../components/ui/Card";
 import Button from "../../../../../../components/ui/Button";
 import TableDataProfilePartial from "./TableDataProfile.partial";
-import { AssignClientToCandidateModalPartial } from "../../_partial/AssignJobToClientModal.partial";
 import { getCandidateCV } from "../../../../services/candidates";
 import { RootState } from "../../../../../../store";
 import { useSelector } from "react-redux";
-import { AssignJobModalPartial } from "../../../../common/AssignJobModal/Modal.partial";
 import {
   assignJobToCandidate,
   unAssignJobToCandidate,
 } from "../../../../../../store/slices/Candiates.slice";
 import { AssignClientModalPartial } from "../../../../common/AssignClientModal/Modal.partial";
+import { AssignJobModalPartial } from "../../.../../../../../Shared/common/AssignJobModal/Modal.partial";
 
 const HeaderPartial = ({ state }: any) => {
   const [modal, setModal] = useState<boolean>(false);
   const [clientModal, setClientModal] = useState<boolean>(false);
   const navgiateTo = useNavigate();
-
-  console.log({ state });
 
   const handleDownloadCV = async () => {
     const response = await getCandidateCV(state.selectedJob.id);

@@ -26,7 +26,7 @@ const AssignJobModalListItemPartial = ({
 	const [loading, setLoading] = React.useState(false);
 	const [selfAssign, setSelfAssign] = React.useState(false);
 
-	const isJobSelfCreated = job?.createdBy === userStorage.id;
+	const isJobSelfCreated = job?.createdBy.id === userStorage.id;
 
 	const isAssigned =
 		assignToModule === 'candidate'
@@ -44,7 +44,7 @@ const AssignJobModalListItemPartial = ({
 
 			if (isAssigned) {
 				if (assignToModule === 'client') {
-					if (userStorage.id === job.createdBy) {
+					if (userStorage.id === job.createdBy.id) {
 						unAssignAction && (await dispatch(unAssignAction({ jobId: job.id })));
 					}
 				}else if (assignToModule === 'candidate') {
@@ -66,6 +66,8 @@ const AssignJobModalListItemPartial = ({
 		}
 	};
 
+	
+
 	return (
 		<div className='flex items-center justify-between gap-4 rounded-xl border pr-2'>
 			<div className='flex gap-4'>
@@ -84,7 +86,7 @@ const AssignJobModalListItemPartial = ({
 							</h5>
 						)}
 						<span>|</span>
-						<span>{textValidationCheck(job?.experience)} </span>
+						<span>{job?.experienceMin} - {job?.experienceMax} </span>
 						<span>|</span>
 						<span>{textValidationCheck(job?.location)}</span>
 					</div>
@@ -95,7 +97,7 @@ const AssignJobModalListItemPartial = ({
 				<Tooltip placement='top'  text='You cannot Un Assign this job as it is created by client'>
 					<Button
 						rightIcon={isAssigned ? 'HeroTwiceCheck' : undefined}
-						color="zinc"
+						color="amber"
 						className='h-fit'
 						variant='solid'>
 						{isAssigned ? 'Assigned' : 'Assign'}

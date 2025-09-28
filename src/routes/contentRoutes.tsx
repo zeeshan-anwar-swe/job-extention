@@ -87,7 +87,10 @@ const SSOWaitingPage = lazy(
 );
 const ChatWithRecruiterPage = lazy(() => import('../modules/Team.module/pages/ChatPage/Chat.page'));
 const ClientJobsPage = lazy(
-	() => import('../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page'),
+	() =>
+		import(
+			'../modules/AgencyAdmin.module/pages/ClientsPage/ClientJobs/ClientJobs.page'
+		),
 );
 const ChatMain = lazy(() => import('../modules/Shared/pages/ChatPage2/ChatMain'));
 const TeamDashboardPage = lazy(
@@ -178,17 +181,21 @@ const CreateCustomCVPage = lazy(
 const ViewCustomCVPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page'),
 );
-const LandingPage = lazy(() => import('../modules/Landing.module/pages/Home/page'));
-const CONTACT = lazy(() => import('../modules/Landing.module/pages/Contact/page'));
-const BLOG = lazy(() => import('../modules/Landing.module/pages/Blogs/page'));
-const PRICING = lazy(() => import('../modules/Landing.module/pages/Pricing/page'));
-const BLOGPOST = lazy(() => import('../modules/Landing.module/pages/BlogPosts/page'));
+import LandingPage from '../modules/Landing.module/pages/Home/page';
+import CONTACT from '../modules/Landing.module/pages/Contact/page';
+import BLOG from '../modules/Landing.module/pages/Blogs/page';
+import PRICING from '../modules/Landing.module/pages/Pricing/page';
+import BLOGPOST from '../modules/Landing.module/pages/BlogPosts/page';
+
 const TeamClientsPage = lazy(() => import('../modules/Team.module/pages/ClientsPage/Clients.page'));
 const TeamJobsCreatePage = lazy(
 	() => import('../modules/Team.module/pages/Jobs/JobsCreateNewJob/JobsCreateNewJob.page'),
 );
 const TeamJobDelatils = lazy(
-	() => import('../modules/Team.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page'),
+	() =>
+		import(
+			'../modules/Team.module/pages/Jobs/JobsViewCadidates/JobsViewCandidates.page'
+		),
 );
 const TeamTaskboardPage = lazy(
 	() => import('../modules/Team.module/pages/TaskboardPages/Taskboard.page'),
@@ -274,7 +281,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages
+				.candidateCVEditAppPage.to,
 			element: <CandidateCVEditPage />,
 		},
 
@@ -294,7 +302,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages
+				.to,
 			element: <JobsCreateNewJobPage />,
 		},
 
@@ -309,12 +318,14 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			path: appPages.AgencyAdmin.clientsAppPages.subPages
+				.clientProfileAppPages.to,
 			element: <ClientProfilePage />,
 		},
 
 		{
-			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientJobsAppPages.to,
+			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientJobsAppPages
+				.to,
 			element: <ClientJobsPage />,
 		},
 
@@ -329,11 +340,13 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages
+				.to,
 			element: <ConnectCRMPage />,
 		},
 		{
-			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			path: appPages.AgencyAdmin.settingAppPages.subPages
+				.subcriptionAppPages.to,
 			element: <SubcriptionPage />,
 		},
 
@@ -421,7 +434,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages
+				.candidateCVEditAppPage.to,
 			element: <CandidateCVEditPage />,
 		},
 
@@ -436,7 +450,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages
+				.to,
 			element: <JobsCreateNewJobPage />,
 		},
 
@@ -451,7 +466,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			path: appPages.AgencyAdmin.clientsAppPages.subPages
+				.clientProfileAppPages.to,
 			element: <ClientProfilePage />,
 		},
 
@@ -466,11 +482,13 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages
+				.to,
 			element: <ConnectCRMPage />,
 		},
 		{
-			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			path: appPages.AgencyAdmin.settingAppPages.subPages
+				.subcriptionAppPages.to,
 			element: <SubcriptionPage />,
 		},
 
@@ -640,7 +658,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.candidatesAppPages.subPages.candidateCVEditAppPage.to,
+			path: appPages.AgencyAdmin.candidatesAppPages.subPages
+				.candidateCVEditAppPage.to,
 			element: <CandidateCVEditPage />,
 		},
 
@@ -655,7 +674,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages.to,
+			path: appPages.AgencyAdmin.jobsAppPages.subPages.createJobsAppPages
+				.to,
 			element: <JobsCreateNewJobPage />,
 		},
 
@@ -670,7 +690,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			path: appPages.AgencyAdmin.clientsAppPages.subPages
+				.clientProfileAppPages.to,
 			element: <ClientProfilePage />,
 		},
 
@@ -685,11 +706,13 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages.to,
+			path: appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages
+				.to,
 			element: <ConnectCRMPage />,
 		},
 		{
-			path: appPages.AgencyAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			path: appPages.AgencyAdmin.settingAppPages.subPages
+				.subcriptionAppPages.to,
 			element: <SubcriptionPage />,
 		},
 
@@ -751,7 +774,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.SuperAdmin.recruiterAppPages.subPages.recruiterProfilePage.to,
+			path: appPages.SuperAdmin.recruiterAppPages.subPages
+				.recruiterProfilePage.to,
 			element: <SuperAdminRecruiterProfilePage />,
 		},
 
@@ -761,7 +785,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.SuperAdmin.candidatesAppPages.subPages.cadidateProfileAppPage.to,
+			path: appPages.SuperAdmin.candidatesAppPages.subPages
+				.cadidateProfileAppPage.to,
 			element: <SuperAdminCandidatesProfilePage />,
 		},
 
@@ -781,7 +806,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.SuperAdmin.clientsAppPages.subPages.clientProfileAppPages.to,
+			path: appPages.SuperAdmin.clientsAppPages.subPages
+				.clientProfileAppPages.to,
 			element: <SuperAdminClientProfilePage />,
 		},
 
@@ -806,7 +832,8 @@ const contentRoutes: ContentRoutesType = {
 		},
 
 		{
-			path: appPages.SuperAdmin.settingAppPages.subPages.subcriptionAppPages.to,
+			path: appPages.SuperAdmin.settingAppPages.subPages.subcriptionAppPages
+				.to,
 			element: <SuperAdminSubcriptionPage />,
 		},
 

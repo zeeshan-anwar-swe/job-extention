@@ -162,6 +162,7 @@ export const unAssignJobToClient = createAsyncThunk(
 			const response = await axiosInstance.post('/job/unassign-client', {
 				jobId,
 			});
+			toast.success('Job unassigned successfully');
 			return response.data.data;
 		} catch (error: any) {
 			return await withAsyncThunkErrorHandler(error, rejectWithValue);

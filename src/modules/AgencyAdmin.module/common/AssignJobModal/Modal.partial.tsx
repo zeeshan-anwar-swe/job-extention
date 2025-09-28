@@ -37,13 +37,7 @@ export const AssignJobModalPartial = ({
 	const { paginatedList, pageLoading, error, paginationCount, search } = useSelector(
 		(state: RootState) => state.jobsSlice,
 	);
-	const dispatch: AppDispatch = useDispatch();
-
-	useEffect(() => {
-		if (modal) {
-			dispatch(getJobsList({ limit: 10, page: 1 }));
-		}
-	}, [modal]);
+	
 
 	const closeModal = () => {
 		setModal(false);
@@ -52,7 +46,7 @@ export const AssignJobModalPartial = ({
 
 	return (
 		<Modal isScrollable={true} isCentered isOpen={modal} setIsOpen={setModal}>
-			<ModalHeader>{title}</ModalHeader>
+			<ModalHeader>{title }</ModalHeader>
 			<div className='p-4'>
 				<Search
 					searchLimit={10}

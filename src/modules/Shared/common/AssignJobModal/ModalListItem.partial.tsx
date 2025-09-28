@@ -32,7 +32,7 @@ const AssignJobModalListItemPartial = ({
   const [loading, setLoading] = React.useState(false);
   const [selfAssign, setSelfAssign] = React.useState(false);
 
-  const isJobSelfCreated = job?.createdBy === userStorage.id;
+  const isJobSelfCreated = job.createdBy.id === userStorage.id;
 
   const isAssigned =
     assignToModule === "candidate"
@@ -52,7 +52,7 @@ const AssignJobModalListItemPartial = ({
 
       if (isAssigned) {
         if (assignToModule === "client") {
-          if (userStorage.id === job.createdBy) {
+          if (userStorage.id === job.createdBy.id) {
             unAssignAction &&
               (await dispatch(unAssignAction({ jobId: job.id })));
           }
@@ -99,7 +99,7 @@ const AssignJobModalListItemPartial = ({
               </h5>
             )}
             <span>|</span>
-            <span>{textValidationCheck(job?.experience)} </span>
+            <span>{textValidationCheck(job?.experienceMin)} - {textValidationCheck(job?.experienceMax)} </span>
             <span>|</span>
             <span>{textValidationCheck(job?.location)}</span>
           </div>

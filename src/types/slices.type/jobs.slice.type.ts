@@ -70,6 +70,8 @@ export interface JobDetailsType2 {
 	id: string;
 	title: string;
 	experience: string;
+	experienceMin: number;
+	experienceMax: number;
 	location: string;
 	type: string;
 	status: string;
@@ -80,7 +82,11 @@ export interface JobDetailsType2 {
 	appliedCandidates?: CandidateJobProfile[];
 	candidateJobProfiles?: CandidateJobProfile[];
 
-	createdBy: string;
+	createdBy: {
+		id: string;
+		name:string;
+		image: string;
+	};
 }
 
 

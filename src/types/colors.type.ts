@@ -1,7 +1,7 @@
 export type TColorFlat = 'inherit' | 'current' | 'transparent' | 'black' | 'white';
 export type TColors =
-	// | 'slate'
-	// | 'gray'
+	| 'slate'
+	| 'gray'
 	| 'zinc'
 	// | 'neutral'
 	// | 'stone'
