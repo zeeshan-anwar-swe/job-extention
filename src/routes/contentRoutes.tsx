@@ -181,6 +181,13 @@ const CreateCustomCVPage = lazy(
 const ViewCustomCVPage = lazy(
 	() => import('../modules/AgencyAdmin.module/pages/CustomCVPage/ViewCustomCVPage/page'),
 );
+
+const BlogsPage = lazy(
+	() => import('../modules/SuperAdmin.module/pages/BlogsPage/Blogs.page'),
+);
+const BlogsCategoryPage = lazy(
+	() => import('../modules/SuperAdmin.module/pages/BlogsPage/Category/BlogCategory.page'),
+);
 import LandingPage from '../modules/Landing.module/pages/Home/page';
 import CONTACT from '../modules/Landing.module/pages/Contact/page';
 import BLOG from '../modules/Landing.module/pages/Blogs/page';
@@ -766,6 +773,15 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: '/',
 			element: <LandingPage />,
+		},
+
+		{
+			path: appPages.SuperAdmin.blogAppPages.subPages.rootPage.to,
+			element: <BlogsPage />,
+		},
+		{
+			path: appPages.SuperAdmin.blogAppPages.subPages.categoryPage.to,
+			element:<BlogsCategoryPage/>
 		},
 
 		{

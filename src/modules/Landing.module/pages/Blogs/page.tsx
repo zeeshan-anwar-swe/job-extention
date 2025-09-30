@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../../../store";
 import PageLoader from "../../../../templates/layouts/main/PageLoader";
 import Pagination from "../../../../components/ui/Pagination";
-import { getBlogPosts } from "../../../../store/slices/LandingPage/Blog.slice";
-import type { TBlogPost } from "../../../../types/slices.type/agency/blog.slice.type";
+import { getBlogPosts } from "../../../../store/slices/Blog.slice";
+import type { TBlogPost } from "../../../../types/slices.type/blog.slice.type";
 import { BlogHeaderPartial } from "./_partial/BlogHeader.partial";
 
 const containerVariants = {

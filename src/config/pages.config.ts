@@ -811,6 +811,38 @@ export const appPages = {
 				},
 			},
 		},
+		blogAppPages: {
+			id: 'blogApp',
+			to: '/dashboard/blogs',
+			text: 'Blogs',
+			icon: 'HeroNewspaper',
+			subPages: {
+				rootPage: {
+					id: 'blogApp',
+					to: '/dashboard/blogs',
+					text: 'List',
+					icon: 'HeroRectangleStack',
+				},
+				createBlogPage: {
+					id: 'newBlogApp',
+					to: '/dashboard/blog/create',
+					text: 'New Blog',
+					icon: 'HeroPencilSquare',
+				},
+				blogDetailPage: {
+					id: 'blogDetailApp',
+					to: '/dashboard/blog/detail',
+					text: 'Blog Detail',
+					icon: 'HeroNewspaper',
+				},
+				categoryPage: {
+					id: 'categoryAppPage',
+					to: '/dashboard/blog/category',
+					text: 'Category',
+					icon: 'HeroQueueList',
+				},
+			},
+		},
 		pamentAppPages: {
 			id: 'pamentApp',
 			to: '/dashboard/payment',

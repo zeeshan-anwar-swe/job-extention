@@ -7,9 +7,9 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../hooks/useReduxStore";
-import { getBlogPosts } from "../../../../../store/slices/LandingPage/Blog.slice";
+import { getBlogPosts } from "../../../../../store/slices/Blog.slice";
 import PageLoader from "../../../../../templates/layouts/main/PageLoader";
-import { TBlogPost } from "../../../../../types/slices.type/agency/blog.slice.type";
+import { TBlogPost } from "../../../../../types/slices.type/blog.slice.type";
 
 export const CaseStudieSection = () => {
   const navigateTo = useNavigate();
@@ -19,7 +19,6 @@ export const CaseStudieSection = () => {
     (state) => state.blog.blogPosts,
   );
 
-  console.log({ loading, rows, error });
 
   useEffect(() => {
     dispatch(getBlogPosts({ page: 1, limit: 3 }));

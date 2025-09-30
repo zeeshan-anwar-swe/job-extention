@@ -20,7 +20,7 @@ import forgotPasswordSlice from './slices/ForgotPassword.slice';
 import adminStatics from './slices/SuperAdmin/Dashboard.slice';
 import recruitersAdmin from './slices/SuperAdmin/Recruiter.slice';
 import reportsAndAnalytics from './slices/Agency/ReportsAndAnalytics.slice';
-import blog from './slices/LandingPage/Blog.slice';
+import blog from './slices/Blog.slice';
 import SuperAdminClients from './slices/SuperAdmin/SuperAdminClients.slice';
 
 export const store = configureStore({

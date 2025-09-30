@@ -5,10 +5,10 @@ import {
 	getBlogPosts,
 	setBlogSearch,
 	setBlogTab,
-} from '../../../../../store/slices/LandingPage/Blog.slice';
+} from '../../../../../store/slices/Blog.slice';
 import CustomSearchComponent from '../../../../Shared/components/CustomSearch.component';
 import { useEffect } from 'react';
-import { TBlogCategory } from '../../../../../types/slices.type/agency/blog.slice.type';
+import { TBlogCategory } from '../../../../../types/slices.type/blog.slice.type';
 
 export const BlogHeaderPartial = () => {
 	const dispatch: AppDispatch = useDispatch();

@@ -1,6 +1,6 @@
 interface TCategoryCreator {
 	id: string;
-	image: string;
+	image: string | null;
 	lastName: string;
 	firstName: string;
 }
