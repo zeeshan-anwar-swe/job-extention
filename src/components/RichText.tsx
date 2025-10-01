@@ -20,6 +20,7 @@ import {
 	toggleMark,
 	Toolbar,
 	ToolbarChild,
+	insertImage,
 } from './helper/richtext.helper';
 import Button from './ui/Button';
 import { TBorderWidth } from '../types/borderWidth.type';
@@ -54,6 +55,7 @@ interface IRichTextProps extends HTMLAttributes<HTMLDivElement> {
 	isValid?: boolean;
 	isValidMessage?: boolean;
 	validFeedback?: string;
+	isImageInsertable?:boolean
 	rounded?: TRounded;
 	variant?: TRichTextVariants;
 	value: Descendant[] | [];
@@ -74,6 +76,7 @@ const RichText: FC<IRichTextProps> = (props) => {
 		validFeedback,
 		variant,
 		value,
+		isImageInsertable,
 		handleChange,
 		placeholder,
 		...rest
@@ -150,6 +153,7 @@ const RichText: FC<IRichTextProps> = (props) => {
 				onChange={handleChange}>
 				<Toolbar>
 					<ToolbarChild className='flex-wrap'>
+						
 						<MarkButton format='bold' icon='DuoBold' />
 						<MarkButton format='italic' icon='DuoItalic' />
 						<MarkButton format='underline' icon='DuoUnderline' />
@@ -163,6 +167,19 @@ const RichText: FC<IRichTextProps> = (props) => {
 						<BlockButton format='center' icon='DuoAlignCenter' />
 						<BlockButton format='right' icon='DuoAlignRight' />
 						<BlockButton format='justify' icon='DuoAlignJustify' />
+						{
+							isImageInsertable &&
+						<Button 
+						icon='DuoImage' // Assuming you have an image icon like 'DuoImage'
+						onMouseDown={(event) => {
+							event.preventDefault(); // IMPORTANT: Prevent the editor from losing focus
+							const url = window.prompt('Enter the image URL:');
+							if (url) {
+								insertImage(editor, url);
+							}
+						}}
+        				/>
+					}
 					</ToolbarChild>
 					<ToolbarChild>
 						<Button

@@ -185,6 +185,10 @@ const ViewCustomCVPage = lazy(
 const BlogsPage = lazy(
 	() => import('../modules/SuperAdmin.module/pages/BlogsPage/Blogs.page'),
 );
+
+const CreateBlogPostPage = lazy(
+	() => import('../modules/SuperAdmin.module/pages/BlogsPage/CreateBlog/CreateBlog.page'),
+);
 const BlogsCategoryPage = lazy(
 	() => import('../modules/SuperAdmin.module/pages/BlogsPage/Category/BlogCategory.page'),
 );
@@ -778,6 +782,10 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.SuperAdmin.blogAppPages.subPages.rootPage.to,
 			element: <BlogsPage />,
+		},
+		{
+			path: appPages.SuperAdmin.blogAppPages.subPages.createBlogPage.to,
+			element: <CreateBlogPostPage />,
 		},
 		{
 			path: appPages.SuperAdmin.blogAppPages.subPages.categoryPage.to,

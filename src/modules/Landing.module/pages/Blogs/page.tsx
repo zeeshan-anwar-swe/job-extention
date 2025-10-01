@@ -133,7 +133,7 @@ function BLOG() {
                     headingA={blogPost.category?.name}
                     headingB={blogPost.readingTime}
                     title={blogPost.title}
-                    description={blogPost.content}
+                    // description={blogPost.content}
                     navigatePath="/blog-post"
                   />
                 </motion.div>

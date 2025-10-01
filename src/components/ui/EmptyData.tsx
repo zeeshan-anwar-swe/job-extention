@@ -3,6 +3,7 @@ import { TFontSizes } from '../../types/fontSizes.type';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { CardSubTitle } from './Card';
+import { TIcons } from '../../types/icons.type';
 
 const EmptyData = ({
 	color,
@@ -10,7 +11,9 @@ const EmptyData = ({
 	className,
 	colorIntensity,
 	size,
+	icon
 }: {
+	icon?:TIcons
 	color?: TColors;
 	message?: string;
 	className?: string;
@@ -24,7 +27,7 @@ const EmptyData = ({
 					color={color ?? 'amber'}
 					colorIntensity={colorIntensity ?? '500'}
 					size={size}
-					icon='HeroFolderOpen'
+					icon={icon??'HeroFolderOpen'}
 				/>
 				<CardSubTitle className='text-xl font-medium'>
 					{message ?? 'no message'}

@@ -21,15 +21,20 @@ export const getBlogCategoryList = createAsyncThunk(
 			limit,
 			search,
 			idForList,
-		}: { limit: number; page: number; search?: string; idForList?: string },
+		}: { limit?: number; page?: number; search?: string; idForList?: string },
 		{ rejectWithValue },
 	) => {
 		try {
 			// Use URLSearchParams to build the query string
-			const params = new URLSearchParams({
-				page: String(page),
-				limit: String(limit),
-			});
+			const params = new URLSearchParams();
+
+			if(page){
+				params.append("page",String(page))
+			}
+
+			if(limit){
+				params.append("limit",String(limit))
+			}
 
 			if (search) {
 				params.append('search', search);
@@ -77,6 +82,26 @@ export const createBlogCategory = createAsyncThunk(
 		}
 	},
 );
+
+
+export const createBlog = createAsyncThunk(
+	'blog/createBlog',
+	async (payload: any, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.post(
+				'/blogs/create',
+				payload,
+			);
+			toast.success("Blog created successfully")
+			return response.data.data;
+		} catch (error: any) {
+			return await withAsyncThunkErrorHandler(error, rejectWithValue);
+		}
+	},
+);
+
+
+
 
 export const getBlogPosts = createAsyncThunk(
 	'blog/getBlogPosts',
@@ -159,6 +184,9 @@ export const updateBlogCategory = createAsyncThunk(
 		}
 	},
 );
+
+
+
 
 const blogSlice = createSlice({
 	name: 'blog',

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const HomeHeroSection = () => {
 	const { userTokenStorage } = useAuth();
-  const navigateTo = useNavigate();
+	const navigateTo = useNavigate();
 	// Variants for the staggered container animation
 	const containerVariants = {
 		hidden: { opacity: 0 },
@@ -23,6 +23,15 @@ export const HomeHeroSection = () => {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 	};
+
+	const handleStartTalk = async () => {
+		window.postMessage(
+			{ __kb: true, type: 'ASSISTANT_CMD', command: 'startMic' },
+			window.origin,
+		);
+
+	};
+
 
 	return (
 		<section className='py-5 md:py-8 lg:py-10'>
@@ -56,39 +65,66 @@ export const HomeHeroSection = () => {
 							variants={containerVariants}>
 							<motion.div
 								className='flex w-fit items-center rounded-full bg-white/50 px-1 py-1 text-sm text-[#010314]/50 lg:text-lg'
-								variants={itemVariants}>
+								variants={
+									itemVariants
+								}>
 								<div className='mr-2 rounded-full bg-gradient-to-r from-[#1F51E8] to-[#0D9DEC] px-3 text-sm text-white md:mr-3 lg:text-lg'>
-									Find, Track, Hire
+									Find,
+									Track,
+									Hire
 								</div>
 								Join our beta{' '}
-								<button className='cursor-pointer'>→</button>
+								<button className='cursor-pointer'>
+									→
+								</button>
 							</motion.div>
 							<div className='pt-5'>
 								<motion.span
 									className='block font-[Urbanist] text-3xl font-semibold text-[#0535A8] md:text-4xl lg:text-6xl'
-									variants={itemVariants}>
-									Your Koalifed AI <br /> Recruiting Assistant-{' '}
+									variants={
+										itemVariants
+									}>
+									Your
+									Koalifed
+									AI <br />{' '}
+									Recruiting
+									Assistant-{' '}
 									<br />
 								</motion.span>
 								<motion.span
 									className='block font-[Urbanist] text-3xl font-semibold text-[#1E1E1E] md:text-4xl lg:text-6xl'
-									variants={itemVariants}>
+									variants={
+										itemVariants
+									}>
 									Koalify
 								</motion.span>
 							</div>
 							<motion.div
 								className='py-5 text-justify text-[#475467] lg:text-lg'
-								variants={itemVariants}>
-								Koalify revolutionizes recruitment with an
-								AI-powered talking avatar assistant —search
-								candidates, manage jobs, and navigate effortlessly
-								using just your voice.
+								variants={
+									itemVariants
+								}>
+								Koalify
+								revolutionizes
+								recruitment with an
+								AI-powered talking
+								avatar assistant
+								—search candidates,
+								manage jobs, and
+								navigate
+								effortlessly using
+								just your voice.
 							</motion.div>
-							<motion.div variants={itemVariants}>
+							<motion.div
+								variants={
+									itemVariants
+								}>
 								<a
 									href='/signup'
 									className='cursor-pointer rounded-lg bg-gradient-to-r from-[#1E51E8] to-[#0BA5EC] px-4 py-2 text-white'>
-									Get Started &gt;
+									Get
+									Started
+									&gt;
 								</a>
 							</motion.div>
 						</motion.div>
@@ -100,13 +136,18 @@ export const HomeHeroSection = () => {
 							{/* Top Text */}
 							<motion.div
 								className='z-10 ml-auto w-auto rounded-full bg-[#0073FF] px-3 text-right text-sm text-white md:text-lg'
-								variants={itemVariants}>
-								Looking for top talent?
+								variants={
+									itemVariants
+								}>
+								Looking for top
+								talent?
 							</motion.div>
 							{/* Centered GIF */}
 							<motion.div
 								className='relative z-10 flex w-full flex-1 items-center justify-center'
-								variants={itemVariants}>
+								variants={
+									itemVariants
+								}>
 								<img
 									src='/images/animated-bear.gif'
 									alt='beargif'
@@ -115,15 +156,25 @@ export const HomeHeroSection = () => {
 							</motion.div>
 							{/* Bottom Button */}
 							<motion.div
-                onClick={userTokenStorage? () => navigateTo('/dashboard') : () => navigateTo('/signin')}
+								onClick={
+									handleStartTalk
+								}
 								className='z-10 flex w-auto items-center rounded-full bg-gradient-to-r from-[#2C5EF4] to-[#0D9BEC] px-3 text-xl text-white hover:cursor-pointer'
-								variants={itemVariants}>
+								variants={
+									itemVariants
+								}>
 								<img
-									src={microphone || '/placeholder.svg'}
+									src={
+										microphone ||
+										'/placeholder.svg'
+									}
 									alt='Microphone'
 									className='mr-2 h-4 w-4'
 								/>
-								<span className='text-white'>Start Talking</span>
+								<span className='text-white'>
+									Start
+									Talking
+								</span>
 							</motion.div>
 						</motion.div>
 					</motion.div>

@@ -69,7 +69,7 @@ export const CaseStudieSection = () => {
                 headingA={blog.category.name}
                 headingB={blog.readingTime}
                 title={blog.title}
-                description={blog.content}
+                // description={blog.content}
                 // navigatePath='/blog-post'
               />
             </motion.div>

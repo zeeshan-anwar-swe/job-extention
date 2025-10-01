@@ -820,7 +820,7 @@ export const appPages = {
 				rootPage: {
 					id: 'blogApp',
 					to: '/dashboard/blogs',
-					text: 'List',
+					text: 'Posts',
 					icon: 'HeroRectangleStack',
 				},
 				createBlogPage: {

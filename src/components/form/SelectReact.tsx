@@ -144,7 +144,7 @@ const SelectReact: FC<ISelectReactProps> = (props) => {
 					}),
 				menu: () =>
 					classNames('bg-white dark:bg-black overflow-hidden shadow-lg', [
-						`${rounded as TRounded}`,
+						`${"rounded-lg" as TRounded}`,
 					]),
 				group: () => classNames('border-zinc-500/25', '[&:not(:last-child)]:border-b'),
 				groupHeading: () => classNames('font-semibold', 'px-1.5', 'pt-1.5', 'pb-0.5'),
