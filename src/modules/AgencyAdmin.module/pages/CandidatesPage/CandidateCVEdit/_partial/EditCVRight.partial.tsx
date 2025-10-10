@@ -5,26 +5,22 @@ import Card, {
   CardHeader,
   CardSubTitle,
   CardTitle,
-} from "../../../../../../components/ui/Card";
-import { FormikProps } from "formik";
-import Button from "../../../../../../components/ui/Button";
+} from '../../../../../../components/ui/Card';
+import { FormikProps } from 'formik';
+import Button from '../../../../../../components/ui/Button';
 import {
   profileImageUrlValidationCheck,
   textValidationCheck,
-} from "../../../../../../utils/validationCheck";
-import { EditCVFormValues } from "../CandidateCVEdit.page";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../../store";
-import { getCandidateCV } from "../../../../services/candidates";
-import Icon from "../../../../../../components/icon/Icon";
-import { useEffect, useRef, useState } from "react";
+} from '../../../../../../utils/validationCheck';
+import { EditCVFormValues } from '../CandidateCVEdit.page';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../../store';
+import { getCandidateCV } from '../../../../services/candidates';
+import Icon from '../../../../../../components/icon/Icon';
+import { useEffect, useRef, useState } from 'react';
 
-export const EditCVRightPartial = ({
-  formik,
-}: {
-  formik: FormikProps<EditCVFormValues>;
-}) => {
+export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
   const { componentLoading, cadnidateProfile } = useSelector(
     (state: RootState) => state.candidates,
   );
@@ -35,7 +31,7 @@ export const EditCVRightPartial = ({
   const handleDownloadCV = async () => {
     const response = await getCandidateCV(cadnidateProfile.id);
     const url = window.URL.createObjectURL(response.data);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
     a.download = `${cadnidateProfile.id}.pdf`;
     document.body.appendChild(a);
@@ -51,7 +47,7 @@ export const EditCVRightPartial = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      formik.setFieldValue("file", file);
+      formik.setFieldValue('file', file);
 
       // cleanup old preview if exists
       if (preview) {
@@ -60,17 +56,17 @@ export const EditCVRightPartial = ({
 
       const objectUrl = URL.createObjectURL(file);
       setPreview(objectUrl);
-      formik.setFieldValue("isShowImage", "1");
+      formik.setFieldValue('isShowImage', '1');
     }
 
     // reset input so user can pick the same file again
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
 
   const handleRemoveImage = () => {
-    formik.setFieldValue("file", null);
+    formik.setFieldValue('file', null);
 
     if (preview) {
       URL.revokeObjectURL(preview);
@@ -79,7 +75,7 @@ export const EditCVRightPartial = ({
 
     // reset input
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
 
@@ -93,95 +89,87 @@ export const EditCVRightPartial = ({
   }, [preview]);
 
   return (
-    <Card className="col-span-3 !sticky top-0 h-fit w-full max-lg:col-span-12 ">
-      <CardHeader
-        onClick={handleDownloadCV}
-        className="!items-start hover:cursor-pointer"
-      >
+    <Card className='!sticky top-0 col-span-3 h-fit w-full max-lg:col-span-12 '>
+      <CardHeader onClick={handleDownloadCV} className='!items-start hover:cursor-pointer'>
         <div>
           <CardTitle>Preview</CardTitle>
-          <CardSubTitle className="cursor-pointer font-light">
+          <CardSubTitle className='cursor-pointer font-light'>
             Download and Preview CV.
           </CardSubTitle>
         </div>
-        <Icon size="text-xl" icon="HeroArrowUpRight" color="blue" />
+        <Icon size='text-xl' icon='HeroArrowUpRight' color='blue' />
       </CardHeader>
 
-      <CardBody className="flex flex-col justify-center">
+      <CardBody className='flex flex-col justify-center'>
         {/* Show image only if isShowImage is true */}
 
         <img
-          className="aspect-square w-full rounded-xl object-cover"
+          className='aspect-square w-full rounded-xl object-cover'
           src={
-            formik.values.isShowImage === "0"
-              ? profileImageUrlValidationCheck("")
+            formik.values.isShowImage === '0'
+              ? profileImageUrlValidationCheck('')
               : preview
                 ? preview
                 : profileImageUrlValidationCheck(
-                    cadnidateProfile?.candidate?.profilePictureUrl ?? "",
+                    cadnidateProfile?.candidate?.profilePictureUrl ?? '',
                   )
           }
-          alt="profile-image"
+          alt='profile-image'
         />
 
-        <div className="mt-4">
+        <div className='mt-4'>
           <h3>{textValidationCheck(cadnidateProfile?.candidate?.name)}</h3>
-          <p className="font-light">
-            {textValidationCheck(cadnidateProfile?.candidate?.email)}
-          </p>
+          <p className='font-light'>{textValidationCheck(cadnidateProfile?.candidate?.email)}</p>
         </div>
       </CardBody>
 
       <CardFooter>
-        <Button className="w-full"  onClick={handleUploadClick} color="zinc" variant="outline">
+        <Button className='w-full' onClick={handleUploadClick} color='zinc' variant='outline'>
           Upload New Picture
         </Button>
 
         {preview || formik.values.file ? (
-          <Button className="w-full" onClick={handleRemoveImage} color="red" variant="solid">
+          <Button className='w-full' onClick={handleRemoveImage} color='red' variant='solid'>
             Remove Uploaded Picture
           </Button>
         ) : null}
 
         <Button
-          className="flex-1"
+          className='flex-1'
           onClick={() =>
-            formik.setFieldValue(
-              "isShowImage",
-              formik.values.isShowImage === "1" ? "0" : "1",
-            )
+            formik.setFieldValue('isShowImage', formik.values.isShowImage === '1' ? '0' : '1')
           }
-          variant="solid"
-          color={formik.values.isShowImage === "1" ? "zinc" : "blue"}
-        >
-          {formik.values.isShowImage === "1"
-            ? "Hide Profile Picture"
-            : "Show Profile Picture"}
+          variant='solid'
+          color={formik.values.isShowImage === '1' ? 'zinc' : 'blue'}>
+          {formik.values.isShowImage === '1' ? 'Hide Profile Picture' : 'Show Profile Picture'}
         </Button>
 
         {/* Hidden file input */}
         <input
           ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
+          type='file'
+          accept='image/*'
+          className='hidden'
           onChange={handleFileChange}
         />
-        <CardFooterChild className="w-full">
+        <CardFooterChild className='w-full'>
           <Button
             isLoading={componentLoading}
             onClick={() => {
               formik.handleSubmit();
             }}
-            className="flex-1"
-            variant="solid"
-          >
-            {formik.values.action === "create"
-              ? "Create Custom CV"
-              : "Update Profile"}
+            className='flex-1'
+            variant='solid'>
+            {formik.values.action === 'create' ? 'Create Custom CV' : 'Update Profile'}
           </Button>
-          <Link className="w-full" to="/dashboard/candidates">
-            <Button className="w-full" variant="outline" color="zinc">
+          <Link className='w-full' target='_blank' to={cadnidateProfile?.publicProfileUrl}>
+            <Button variant='solid' className='w-full' icon='HeroLinkedIn'>
+              View LinkedIn Profile
+            </Button>
+          </Link>
+
+          <Link className='w-full' to='/dashboard/candidates'>
+            <Button className='w-full' variant='outline' color='zinc'>
               Back
             </Button>
           </Link>

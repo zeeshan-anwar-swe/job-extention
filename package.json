@@ -102,6 +102,7 @@
 		"@svgr/cli": "^8.1.0",
 		"@tailwindcss/typography": "^0.5.10",
 		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
+		"@types/chrome": "^0.1.18",
 		"@types/d3-fetch": "^3.0.7",
 		"@types/d3-scale": "^4.0.8",
 		"@types/lodash": "^4.17.0",
