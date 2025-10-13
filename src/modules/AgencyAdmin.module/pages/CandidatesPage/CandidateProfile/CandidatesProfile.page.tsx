@@ -33,12 +33,16 @@ const CandidatesProfilePage = () => {
 	const navigateTo = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 
+	console.log({state});
+	
 	const { pageLoading, cadnidateProfile, error } = useSelector(
 		(state: RootState) => state.candidates,
 	);
 
 	useEffect(() => {
 		if (state) {
+			console.log();
+			
 			dispatch(
 				getCandidateProfile({ id: state.selectedJob.id, candidateId: state.candidate.id }),
 			);

@@ -11,6 +11,10 @@ const SettingAside = () => {
 				/>
 				<NavItem
 					className='max-md:!w-fit'
+					{...appPages.AgencyAdmin.settingAppPages.subPages.dashboardAssistantAppPage}
+				/>
+				<NavItem
+					className='max-md:!w-fit'
 					{...appPages.AgencyAdmin.settingAppPages.subPages.connectCRMAppPages}
 				/>
 				<NavItem

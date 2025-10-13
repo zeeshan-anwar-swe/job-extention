@@ -197,6 +197,7 @@ import CONTACT from '../modules/Landing.module/pages/Contact/page';
 import BLOG from '../modules/Landing.module/pages/Blogs/page';
 import PRICING from '../modules/Landing.module/pages/Pricing/page';
 import BLOGPOST from '../modules/Landing.module/pages/BlogPosts/page';
+import DashboardAssistancePage from '../modules/AgencyAdmin.module/pages/SettingPage/DashboardAssistance/DashboardAssistance.page';
 
 const TeamClientsPage = lazy(() => import('../modules/Team.module/pages/ClientsPage/Clients.page'));
 const TeamJobsCreatePage = lazy(
@@ -348,6 +349,11 @@ const contentRoutes: ContentRoutesType = {
 		{
 			path: appPages.AgencyAdmin.settingAppPages.to,
 			element: <SettingPage />,
+		},
+
+		{
+			path: appPages.AgencyAdmin.settingAppPages.subPages.dashboardAssistantAppPage.to,
+			element: <DashboardAssistancePage />,
 		},
 
 		{

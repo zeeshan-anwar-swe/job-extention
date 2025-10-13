@@ -5,9 +5,12 @@ import TableDataActionsPartial from './TableDataActions.partial';
 import TableDataSourcePartial from './TableDataSource.partial';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
+import { Link } from 'react-router-dom';
 
 const TablePartial = () => {
 	const { jobDetails } = useSelector((state: RootState) => state.jobsSlice);
+	
+	console.log({jobDetails});
 	
 	return (
 		<Table className='table-fixed max-md:min-w-[70rem]'>
@@ -23,11 +26,13 @@ const TablePartial = () => {
 				{jobDetails?.candidateJobProfiles?.map((candidate: any) => (
 					<Tr key={candidate.id}>
 						<Td className='flex justify-start'>
-							<TableDataProfilePartial
-								imageUrl={candidate?.candidate?.profilePictureUrl}
-								title={candidate.candidate.name}
-								subTitle={candidate.candidate.email}
-							/>
+							<Link to="/dashboard/candidates/profile" state={{candidate:jobDetails, selectedJob: candidate}}>
+								<TableDataProfilePartial
+									imageUrl={candidate?.candidate?.profilePictureUrl}
+									title={candidate.candidate.name}
+									subTitle={candidate.candidate.email}
+								/>
+							</Link>
 						</Td>
 
 						<Td>

@@ -103,6 +103,12 @@ export const appPages = {
 					text: 'Subscription',
 					icon: 'HeroCreditCard',
 				},
+				dashboardAssistantAppPage: {
+					id: 'AssistantAppPage',
+					to: '/dashboard/setting/assistant',
+					text: 'Dashboard Assistant',
+					icon: 'HeroMicrophone',
+				},
 			},
 		},
 		pamentAppPages: {

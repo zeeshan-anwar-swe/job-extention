@@ -7,7 +7,6 @@ import {
   hideSingleJobToClient,
   inviteAndChangeCandidateStatus,
   removeAgencyCandidate,
-  showAllJobToClient,
   showSingleJobToClient,
 } from "../../../../../store/slices/Candiates.slice";
 import ConfirmationModal from "../../../../../components/modal/ConfirmationModal";
@@ -26,9 +25,12 @@ const TableDataActionsPartial = ({
   candidate,
   selectedJob,
 }: {
+
   candidate: any;
   selectedJob: TCandidateJobProfile;
 }) => {
+  console.log({candidate, selectedJob});
+  
   const [assignClientModal, setAssignClientModal] = useState<boolean>(false);
   const [inviteModal, setInviteModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);

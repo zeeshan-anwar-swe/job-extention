@@ -22,96 +22,96 @@ import { getAgencyStatics, getChartData } from '../../../../store/slices/Agency/
 import PageLoader from '../../../../templates/layouts/main/PageLoader';
 import { transLineChartData } from '../../../../utils/chart.util';
 import PeriodAndDateRange from '../../../Shared/partials/PeriodAndDateRange/PeriodAndDateRange.partial';
-
+import { WavingBear } from '../../../../components/WavingBear';
 
 const DashboardPage = () => {
-	const dispatch: AppDispatch = useDispatch();
-	const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
-	const [dateRange, setDateRange] = useState<any>({ startDate: dayjs().format('YYYY-MM-DD'), endDate: '' });
+  const dispatch: AppDispatch = useDispatch();
+  const [activeTab, setActiveTab] = useState<TPeriod>(PERIOD.MONTH);
+  const [dateRange, setDateRange] = useState<any>({
+    startDate: dayjs().format('YYYY-MM-DD'),
+    endDate: '',
+  });
 
-	
+  const { chartData, chartCategory, componentLoading, error } = useSelector(
+    (state: RootState) => state.agencyStatics,
+  );
 
-	const { chartData, chartCategory, componentLoading, error } = useSelector(
-		(state: RootState) => state.agencyStatics,
-	);
+ 
 
+  useLayoutEffect(() => {
+    if (activeTab === PERIOD.RANGE) {
+      if (!dateRange.startDate || !dateRange.endDate) return;
+    }
+    dispatch(
+      getAgencyStatics({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        period: activeTab.text.toLowerCase(),
+      }),
+    );
+    dispatch(
+      getChartData({
+        period: activeTab.text.toLowerCase(),
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+      }),
+    );
+  }, [activeTab, dateRange]);
 
-	useLayoutEffect(() => {
-		if(activeTab === PERIOD.RANGE){
-			if(!dateRange.startDate || !dateRange.endDate) return
-		}
-		dispatch(
-			getAgencyStatics({
-				startDate: dateRange.startDate,
-				endDate: dateRange.endDate,
-				period: activeTab.text.toLowerCase(),
-			}), 
-		);
-		dispatch(
-			getChartData({
-				period: activeTab.text.toLowerCase(),
-				startDate: dateRange.startDate,
-				endDate: dateRange.endDate,
-			}),
-		);
-	}, [activeTab, dateRange]);
+  return (
+    <>
+      <Header>
+        <HeaderLeft>
+          <Breadcrumb path='Pages / Dashboard' currentPage='Dashboard' />
+        </HeaderLeft>
+        <HeaderRight>
+          <DefaultHeaderRightCommon />
+        </HeaderRight>
+      </Header>
+      <PageWrapper name='Sales Dashboard'>
+        <PeriodAndDateRange
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          setDateRange={setDateRange}
+        />
+        <Container>
+			<WavingBear/>
+          <div className='grid grid-cols-12 gap-4'>
+            <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
+              <Balance1Partial />
+            </div>
+            <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
+              <Balance2Partial />
+            </div>
+            <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
+              <Balance3Partial />
+            </div>
+            <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
+              <Balance4Partial />
+            </div>
 
-	return (
-		<>
-			<Header>
-				<HeaderLeft>
-					<Breadcrumb path='Pages / Dashboard' currentPage='Dashboard' />
-				</HeaderLeft>
-				<HeaderRight>
-					<DefaultHeaderRightCommon />
-				</HeaderRight>
-			</Header>
-			<PageWrapper name='Sales Dashboard'> 
-				<PeriodAndDateRange
-					activeTab={activeTab}
-					setActiveTab={setActiveTab}
-					setDateRange={setDateRange}
-				/>
-				<Container>
-					<div className='grid grid-cols-12 gap-4'>
-						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance1Partial />
-						</div>
-						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance2Partial />
-						</div>
-						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance3Partial />
-						</div>
-						<div className='col-span-12 sm:col-span-6 lg:col-span-3'>
-							<Balance4Partial />
-						</div>
+            <div className='col-span-12 overflow-hidden rounded-xl xl:h-[500px] 2xl:col-span-8'>
+              <PageLoader loading={componentLoading} data={chartData} error={error}>
+                <ChartPartial categories={chartCategory} series={transLineChartData(chartData)} />
+              </PageLoader>
+            </div>
+            <div className=' col-span-12 2xl:col-span-4'>
+              <CommentPartial />
+            </div>
 
-						<div className='col-span-12 overflow-hidden rounded-xl xl:h-[500px] 2xl:col-span-8'>
-							<PageLoader loading={componentLoading} data={chartData} error={error}>
-								<ChartPartial
-									categories={chartCategory}
-									series={transLineChartData(chartData)}
-								/>
-							</PageLoader>
-						</div>
-						<div className=' col-span-12 2xl:col-span-4'>
-							<CommentPartial />
-						</div>
-
-						<div className='col-span-12 2xl:col-span-8'>
-							<Card className='h-full'>
-								<TablePartial />
-							</Card>
-						</div>
-						<div className='col-span-12 2xl:col-span-4'>
-							<MessagePartial />
-						</div>
-					</div>
-				</Container>
-			</PageWrapper>
-		</>
-	);
+            <div className='col-span-12 2xl:col-span-8'>
+              <Card className='h-full'>
+                <TablePartial />
+              </Card>
+            </div>
+            <div className='col-span-12 2xl:col-span-4'>
+              <MessagePartial />
+            </div>
+          </div>
+        </Container>
+      </PageWrapper>
+    </>
+  );
 };
 
 export default DashboardPage;

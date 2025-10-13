@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Import useState and useEffect
+import { useState, useEffect } from 'react'; // Import useState and useEffect
 import Card, {
 	CardBody,
 	CardHeader,
@@ -191,6 +191,10 @@ const ChartPartial = ({
 			},
 		}));
 	}, [isDarkMode, categories]); // Re-run if isDarkMode or categories change
+
+
+
+
 
 	return (
 		<Card className='h-full'>

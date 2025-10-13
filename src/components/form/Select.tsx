@@ -7,7 +7,7 @@ import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { IValidationBaseProps } from './Validation';
 
-export type TSelectVariants = 'solid';
+export type TSelectVariants = 'solid' | 'outlined';
 export type TSelectDimension = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 interface ISelectProps
@@ -64,7 +64,27 @@ const Select: FC<ISelectProps> = (props) => {
 				'!border-green-500 focus:ring-4 focus:ring-green-500/30':
 					!isValid && isTouched && !invalidFeedback,
 			}),
+			
 		},
+		outlined: {
+					general: classNames(
+						// Default
+						'bg-transparent',
+						[`${borderWidth as TBorderWidth}`],
+						
+						'text-black dark:text-white dark:!border-white',
+						// Hover
+						[`hover:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
+						// Active
+						[`active:border-${color as TColors}-${colorIntensity as TColorIntensity}`],
+						
+					),
+					validation: classNames({
+						'!border-red-500 ring-4 ring-red-500/30': !isValid && isTouched && invalidFeedback,
+						'!border-blue-500 focus:ring-4 focus:ring-blue-500/30':
+							!isValid && isTouched && !invalidFeedback,
+					}),
+				},
 	};
 	const selectVariantClasses = selectVariants[variant as TSelectVariants].general;
 	const selectValidationsClasses = selectVariants[variant as TSelectVariants].validation;
