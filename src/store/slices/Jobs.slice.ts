@@ -130,6 +130,37 @@ export const getJobsList = createAsyncThunk(
   },
 );
 
+export const getDraftJobsList = createAsyncThunk(
+  "jobs/getDraftJobsList",
+  async (
+    {
+      page,
+      limit,
+      search = "",
+      searchBy = "",
+      startDate = "",
+      endDate = "",
+    }: {
+      page: number;
+      limit: number;
+      search?: string;
+      searchBy?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await axiosInstance.get(
+        `/drafts/me?page=${page}&limit=${limit}`,
+      );
+      return response.data.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
 export const getSuperAdminJobsList = createAsyncThunk(
   "jobs/getSuperAdminJobsList",
   async (
@@ -197,10 +228,21 @@ export const getJobDetails = createAsyncThunk(
   },
 );
 
+export const getDraftJobDetails = createAsyncThunk(
+  "jobs/getDraftJobDetails",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/drafts/" + id);
+      return response.data.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
 export const createJobs = createAsyncThunk(
   "jobs/create",
-  async (payload: { type: string; payload: void }, { rejectWithValue }) => {
-    console.log({ payload });
+  async (payload: any, { rejectWithValue }) => {
 
     try {
       const response = await axiosInstance.post("/job", payload);
@@ -208,6 +250,50 @@ export const createJobs = createAsyncThunk(
     } catch (error: any) {
       return await withAsyncThunkErrorHandler(error, rejectWithValue);
     }
+  },
+);
+
+export const createDraftJob = createAsyncThunk(
+  "jobs/createDraftJob",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/drafts/create", payload);
+      toast.success("Draft Created Successfully");
+      return response.data.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+export const updateDraftJob = createAsyncThunk(
+  "jobs/updateDraftJob",
+  async ({payload, id}:{payload:any, id:string}, { rejectWithValue }) => {
+
+    try {
+      const response = await axiosInstance.put("/drafts/"+id+"/update", payload);
+      toast.success("Draft Updated Successfully");
+      return response.data.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+
+  },
+);
+
+
+export const publishDraftJob = createAsyncThunk(
+  "jobs/publishDraftJob",
+  async ({payload, id}:{payload:any, id:string}, { rejectWithValue }) => {
+
+    try {
+      const response = await axiosInstance.post("/drafts/"+id+"/publish", payload);
+      toast.success("Job Published Successfully");
+      return response.data.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+    
   },
 );
 
@@ -282,6 +368,20 @@ export const deleteJob = createAsyncThunk(
     try {
       const response = await axiosInstance.delete("/job/" + jobId);
       toast.success("Job Deleted Successfully");
+      return response.data.data;
+    } catch (error: any) {
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+
+export const deleteDraftJob = createAsyncThunk(
+  "jobs/deleteDraftJob",
+  async (jobId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete("/drafts/" + jobId+"/delete");
+      toast.success("Draft Job Deleted Successfully");
       return response.data.data;
     } catch (error: any) {
       return await withAsyncThunkErrorHandler(error, rejectWithValue);
@@ -447,6 +547,24 @@ export const jobsSlice = createSlice({
         };
         toast.error(action.payload.message);
       });
+
+     builder
+      .addCase(getDraftJobsList.pending, (state) => {
+        state.pageLoading = true;
+        state.error = null;
+      })
+      .addCase(getDraftJobsList.fulfilled, (state, action) => {
+        state.pageLoading = false;
+        state.paginatedList = action.payload.rows;
+        state.paginationCount = action.payload.count;
+      })
+      .addCase(getDraftJobsList.rejected, (state, action: any) => {
+        state.pageLoading = false;
+        state.error = action.payload || {
+          message: "Unknown error occurred while inviting client",
+        };
+        toast.error(action.payload.message);
+      });  
 
     builder
       .addCase(getTeamJobsList.pending, (state) => {

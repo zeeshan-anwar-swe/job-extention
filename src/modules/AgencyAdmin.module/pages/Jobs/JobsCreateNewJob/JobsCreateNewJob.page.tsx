@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../../store';
 import Button from '../../../../../components/ui/Button';
@@ -11,6 +11,7 @@ import PageWrapper from '../../../../../components/layouts/PageWrapper/PageWrapp
 import Subheader, { SubheaderLeft } from '../../../../../components/layouts/Subheader/Subheader';
 import Header, { HeaderLeft, HeaderRight } from '../../../../../components/layouts/Header/Header';
 import {
+	getDraftJobDetails,
 	setAssignedCandidatesWhileCreatingJob,
 	setClientWhileCreatingJob,
 } from '../../../../../store/slices/Jobs.slice';
@@ -19,6 +20,7 @@ import DefaultHeaderRightCommon from '../../../../../templates/layouts/Headers/_
 const JobsCreateNewJobPage = () => {
 	const dispatch: AppDispatch = useDispatch();
 	useEffect(() => {
+
 		return () => {
 			dispatch(setAssignedCandidatesWhileCreatingJob([]));
 			dispatch(setClientWhileCreatingJob(null));

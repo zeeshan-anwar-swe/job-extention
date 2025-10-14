@@ -51,6 +51,7 @@ const LabelSelectPartial = ({
 					onChange={handleChange}
 					className='w-full'
 					name='type'
+					value={{label:formData.type,value:formData.type}}
 					options={options}
 				/>
 			</FieldWrap>

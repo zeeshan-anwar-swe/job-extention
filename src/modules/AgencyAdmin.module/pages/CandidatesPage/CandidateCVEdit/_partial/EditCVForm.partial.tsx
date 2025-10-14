@@ -25,7 +25,7 @@ import Card, {
 import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
 import { cn } from "../../../../../../utils/cn";
 
-export const EditCVFormPartial = ({
+export const  EditCVFormPartial = ({
   formik,
 }: {
   formik: FormikProps<EditCVFormValues>;
