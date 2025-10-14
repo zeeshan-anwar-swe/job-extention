@@ -136,17 +136,17 @@ export const getDraftJobsList = createAsyncThunk(
     {
       page,
       limit,
-      search = "",
-      searchBy = "",
-      startDate = "",
-      endDate = "",
+      // search = "",
+      // searchBy = "",
+      // startDate = "",
+      // endDate = "",
     }: {
       page: number;
       limit: number;
-      search?: string;
-      searchBy?: string;
-      startDate?: string;
-      endDate?: string;
+      // search?: string;
+      // searchBy?: string;
+      // startDate?: string;
+      // endDate?: string;
     },
     { rejectWithValue },
   ) => {
