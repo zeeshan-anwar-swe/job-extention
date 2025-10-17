@@ -1,115 +1,103 @@
-import classNames from "classnames";
-import { Descendant } from "slate";
-import { FormikProps } from "formik";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { RootState } from "../../../../../../store";
-import { EditCVFormValues } from "../CandidateCVEdit.page";
-import Label from "../../../../../../components/form/Label";
-import Input from "../../../../../../components/form/Input";
-import RichText from "../../../../../../components/RichText";
-import Tooltip from "../../../../../../components/ui/Tooltip";
-import Textarea from "../../../../../../components/form/Textarea";
-import { JobSelectorForCustomCV } from "./JobSelectorForCustomCV";
-import Checkbox from "../../../../../../components/form/Checkbox";
-import FieldWrap from "../../../../../../components/form/FieldWrap";
-import { getSocialLinkWithId } from "../../../../../../utils/helper";
-import Validation from "../../../../../../components/form/Validation";
-import MultipleValueSelectorPartial from "../../../../components/MultipleValueSelector.partial";
+import classNames from 'classnames';
+import { Descendant } from 'slate';
+import { FormikProps } from 'formik';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { RootState } from '../../../../../../store';
+import { EditCVFormValues } from '../CandidateCVEdit.page';
+import Label from '../../../../../../components/form/Label';
+import Input from '../../../../../../components/form/Input';
+import Input2 from '../../../../../../components/form/Input2';
+import RichText from '../../../../../../components/RichText';
+import Tooltip from '../../../../../../components/ui/Tooltip';
+import Textarea from '../../../../../../components/form/Textarea';
+import { JobSelectorForCustomCV } from './JobSelectorForCustomCV';
+import Checkbox from '../../../../../../components/form/Checkbox';
+import FieldWrap from '../../../../../../components/form/FieldWrap';
+import { getSocialLinkWithId } from '../../../../../../utils/helper';
+import Validation from '../../../../../../components/form/Validation';
+import MultipleValueSelectorPartial from '../../../../components/MultipleValueSelector.partial';
 import Card, {
   CardBody,
   CardHeader,
   CardSubTitle,
   CardTitle,
-} from "../../../../../../components/ui/Card";
-import SelectReactCreateable from "../../../../../../components/form/SelectReactCreateable";
-import { cn } from "../../../../../../utils/cn";
+} from '../../../../../../components/ui/Card';
+import SelectReactCreateable from '../../../../../../components/form/SelectReactCreateable';
+import { cn } from '../../../../../../utils/cn';
 
-export const  EditCVFormPartial = ({
-  formik,
-}: {
-  formik: FormikProps<EditCVFormValues>;
-}) => {
-  const { cadnidateProfile } = useSelector(
-    (state: RootState) => state.candidates,
-  );
+export const EditCVFormPartial = ({ formik }: { formik: FormikProps<EditCVFormValues> }) => {
+  const { cadnidateProfile } = useSelector((state: RootState) => state.candidates);
   const [cvTextValue, setCvTextValue] = useState<Descendant[]>(
     cadnidateProfile?.cv
       ? (JSON.parse(cadnidateProfile?.cv) as Descendant[])
-      : (JSON.parse(
-          '[{"type":"paragraph","children":[{"text":""}]}]',
-        ) as Descendant[]),
+      : (JSON.parse('[{"type":"paragraph","children":[{"text":""}]}]') as Descendant[]),
   );
 
   useEffect(() => {
     if (cadnidateProfile) {
       const GitHub: { id: string; link: string } | null = getSocialLinkWithId(
         cadnidateProfile?.socialProfiles ?? [],
-        "GitHub",
+        'GitHub',
       );
 
-      GitHub && formik.setFieldValue("GitHub", GitHub.link);
+      GitHub && formik.setFieldValue('GitHub', GitHub.link);
 
-      formik.setFieldValue("LinkedIn", cadnidateProfile.publicProfileUrl);
+      formik.setFieldValue('LinkedIn', cadnidateProfile.publicProfileUrl);
 
-      formik.setFieldValue("roles", cadnidateProfile?.roles ?? []);
-      formik.setFieldValue("name", cadnidateProfile?.candidate?.name ?? "");
-      formik.setFieldValue("experience", cadnidateProfile?.experience ?? "");
-      formik.setFieldValue("education", cadnidateProfile?.education ?? "");
-      formik.setFieldValue("skills", cadnidateProfile?.skills ?? []);
+      formik.setFieldValue('roles', cadnidateProfile?.roles ?? []);
+      formik.setFieldValue('name', cadnidateProfile?.candidate?.name ?? '');
+      formik.setFieldValue('experience', cadnidateProfile?.experience ?? '');
+      formik.setFieldValue('education', cadnidateProfile?.education ?? '');
+      formik.setFieldValue('skills', cadnidateProfile?.skills ?? []);
 
-      formik.setFieldValue("about", cadnidateProfile?.about ?? "");
+      formik.setFieldValue('about', cadnidateProfile?.about ?? '');
     }
   }, [cadnidateProfile]); // Added formik.setValues to the dependency array
 
   return (
-    <Card className="col-span-9 flex flex-col gap-2 max-lg:col-span-12">
-      <CardHeader className="items-end">
+    <Card className='col-span-9 flex flex-col gap-2 max-lg:col-span-12'>
+      <CardHeader className='items-end'>
         <div>
           <CardTitle>CV Details</CardTitle>
           <CardSubTitle>Edit and Update Candidate CV</CardSubTitle>
         </div>
         <Checkbox
           className={cn(
-            formik.values.action === "update"
-              ? "animate-pulse"
-              : "text-zinc-800 dark:text-zinc-100",
+            formik.values.action === 'update'
+              ? 'animate-pulse'
+              : 'text-zinc-800 dark:text-zinc-100',
           )}
-          variant="switch"
-          label="Create as Custom Candidate"
-          id="optionA"
+          variant='switch'
+          label='Create as Custom Candidate'
+          id='optionA'
           onChange={(e) => {
             if (e.target.checked) {
-              formik.setFieldValue("action", "create");
+              formik.setFieldValue('action', 'create');
             } else {
-              formik.setFieldValue("action", "update");
+              formik.setFieldValue('action', 'update');
             }
           }}
-          checked={formik.values.action === "create" ? true : false}
+          checked={formik.values.action === 'create' ? true : false}
         />
       </CardHeader>
       <CardBody>
-        <form
-          className="flex flex-col gap-4"
-          noValidate
-          onSubmit={formik.handleSubmit}
-        >
-          <div className="grid grid-cols-1 gap-4">
-            {formik.values.action === "create" && (
+        <form className='flex flex-col gap-4' noValidate onSubmit={formik.handleSubmit}>
+          <div className='grid grid-cols-1 gap-4'>
+            {formik.values.action === 'create' && (
               <div>
-                <Label htmlFor="customCVTitle">Custom CV Title</Label>
+                <Label htmlFor='customCVTitle'>Custom CV Title</Label>
                 <Validation
                   isValid={formik.isValid}
                   isTouched={formik.touched.customCVTitle}
                   invalidFeedback={formik.errors.customCVTitle}
-                  validFeedback=""
-                >
+                  validFeedback=''>
                   <FieldWrap>
                     <Input
-                      dimension="lg"
-                      id="customCVTitle"
-                      name="customCVTitle"
-                      placeholder="Enter CV Title"
+                      dimension='lg'
+                      id='customCVTitle'
+                      name='customCVTitle'
+                      placeholder='Enter CV Title'
                       value={formik.values.customCVTitle}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -120,23 +108,20 @@ export const  EditCVFormPartial = ({
             )}
           </div>
 
-          <div className="flex gap-4">
-            <div
-              className={"flex-1 " + classNames({ "mb-0": !formik.isValid })}
-            >
-              <Label htmlFor="name">Name</Label>
+          <div className='flex gap-4'>
+            <div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
+              <Label htmlFor='name'>Name</Label>
               <Validation
                 isValid={formik.isValid}
                 isTouched={formik.touched.name}
                 invalidFeedback={formik.errors.name}
-                validFeedback=""
-              >
+                validFeedback=''>
                 <FieldWrap>
                   <Input
-                    dimension="lg"
-                    id="name"
-                    name="name"
-                    placeholder="Name"
+                    dimension='lg'
+                    id='name'
+                    name='name'
+                    placeholder='Name'
                     value={formik.values.name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -145,38 +130,33 @@ export const  EditCVFormPartial = ({
               </Validation>
             </div>
 
-            <Tooltip text="Write text and press enter">
-              <div
-                className={"flex-1 " + classNames({ "mb-0": !formik.isValid })}
-              >
-                <Label htmlFor="roles">Roles</Label>
+            <Tooltip text='Write text and press enter'>
+              <div className={'flex-1 ' + classNames({ 'mb-0': !formik.isValid })}>
+                <Label htmlFor='roles'>Roles</Label>
                 <MultipleValueSelectorPartial
                   initialValues={cadnidateProfile?.roles ?? []}
-                  id="rolesForEditCV"
-                  name="roles"
+                  id='rolesForEditCV'
+                  name='roles'
                   formik={formik}
                 />
               </div>
             </Tooltip>
           </div>
 
-          <div className="flex gap-4">
-            <div
-              className={"flex-1 " + classNames({ "mb-1": !formik.isValid })}
-            >
-              <Label htmlFor="experience">Experience</Label>
+          <div className='flex gap-4'>
+            <div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+              <Label htmlFor='experience'>Experience</Label>
               <Validation
                 isValid={formik.isValid}
                 isTouched={formik.touched.experience}
                 invalidFeedback={formik.errors.experience}
-                validFeedback=""
-              >
+                validFeedback=''>
                 <Input
-                  type="number"
-                  dimension="lg"
-                  id="experience"
-                  name="experience"
-                  placeholder="Years of Experience"
+                  type='number'
+                  dimension='lg'
+                  id='experience'
+                  name='experience'
+                  placeholder='Years of Experience'
                   value={formik.values.experience}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -184,21 +164,18 @@ export const  EditCVFormPartial = ({
               </Validation>
             </div>
 
-            <div
-              className={"flex-1 " + classNames({ "mb-1": !formik.isValid })}
-            >
-              <Label htmlFor="education">Education</Label>
+            <div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+              <Label htmlFor='education'>Education</Label>
               <Validation
                 isValid={formik.isValid}
                 isTouched={formik.touched.education}
                 invalidFeedback={formik.errors.education}
-                validFeedback=""
-              >
+                validFeedback=''>
                 <Input
-                  dimension="lg"
-                  id="education"
-                  name="education"
-                  placeholder="Highest Education"
+                  dimension='lg'
+                  id='education'
+                  name='education'
+                  placeholder='Highest Education'
                   value={formik.values.education}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -206,11 +183,11 @@ export const  EditCVFormPartial = ({
               </Validation>
             </div>
           </div>
-          <div className=" col-span-2">
-            <Label htmlFor="skills">Skills</Label>
+          <div className=' col-span-2'>
+            <Label htmlFor='skills'>Skills</Label>
             <SelectReactCreateable
-              name="skills"
-              placeholder="Add skills.."
+              name='skills'
+              placeholder='Add skills..'
               isMulti
               value={formik.values.skills.map((skill: string) => ({
                 label: skill,
@@ -218,27 +195,44 @@ export const  EditCVFormPartial = ({
               }))}
               onChange={(e: any) => {
                 const selectedOptions = e.map((option: any) => option.value);
-                formik.setFieldValue("skills", selectedOptions);
+                formik.setFieldValue('skills', selectedOptions);
               }}
             />
           </div>
-          <div className="flex gap-4">
-            <div
-              className={"flex-1 " + classNames({ "mb-1": !formik.isValid })}
-            >
-              <Label htmlFor="LinkedIn">LinkedIn Profile</Label>
+          <div className='col-span-2'>
+            <Label htmlFor='cv-file'>Upload CV File (PDF, DOCX)</Label>
+            {/* <input type="file" name="cv-file" id="cv-file"
+            
+            
+            /> */}
+            <Input2
+              dimension='lg'
+              id='cv-file'
+              name='cv-file'
+              type='file'
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                if (event.currentTarget.files) {
+                  formik.setFieldValue('cvFile', event.currentTarget.files[0]);
+                }
+              }}
+              accept='.pdf, .doc, .docx'
+              // value={formik.values.file}
+            />
+          </div>
+          <div className='flex gap-4'>
+            <div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+              <Label htmlFor='LinkedIn'>LinkedIn Profile</Label>
               <Validation
                 isValid={formik.isValid}
                 isTouched={formik.touched.LinkedIn}
                 invalidFeedback={formik.errors.LinkedIn}
-                validFeedback=""
-              >
+                validFeedback=''>
                 <FieldWrap>
                   <Input
-                    dimension="lg"
-                    id="LinkedIn"
-                    name="LinkedIn"
-                    placeholder="Enter your LinkediIn profile url"
+                    dimension='lg'
+                    id='LinkedIn'
+                    name='LinkedIn'
+                    placeholder='Enter your LinkediIn profile url'
                     value={formik.values.LinkedIn}
                     // onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -247,21 +241,18 @@ export const  EditCVFormPartial = ({
               </Validation>
             </div>
 
-            <div
-              className={"flex-1 " + classNames({ "mb-1": !formik.isValid })}
-            >
-              <Label htmlFor="GitHub">GitHub Profile</Label>
+            <div className={'flex-1 ' + classNames({ 'mb-1': !formik.isValid })}>
+              <Label htmlFor='GitHub'>GitHub Profile</Label>
               <Validation
                 isValid={formik.isValid}
                 isTouched={formik.touched.GitHub}
                 invalidFeedback={formik.errors.GitHub}
-                validFeedback=""
-              >
+                validFeedback=''>
                 <Input
-                  dimension="lg"
-                  id="GitHub"
-                  name="GitHub"
-                  placeholder="Enter your GitHub profile url"
+                  dimension='lg'
+                  id='GitHub'
+                  name='GitHub'
+                  placeholder='Enter your GitHub profile url'
                   value={formik.values.GitHub}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -270,21 +261,20 @@ export const  EditCVFormPartial = ({
             </div>
           </div>
 
-          <div className={classNames({ "mb-1": !formik.isValid })}>
-            <Label htmlFor="about">About</Label>
+          <div className={classNames({ 'mb-1': !formik.isValid })}>
+            <Label htmlFor='about'>About</Label>
             <Validation
               isValid={formik.isValid}
               isTouched={formik.touched.about}
               invalidFeedback={formik.errors.about}
-              validFeedback=""
-            >
+              validFeedback=''>
               <Textarea
-                dimension="lg"
-                id="about"
-                name="about"
+                dimension='lg'
+                id='about'
+                name='about'
                 rows={3}
-                className="max-h-72 min-h-36"
-                placeholder="Enter your bio"
+                className='max-h-72 min-h-36'
+                placeholder='Enter your bio'
                 value={formik.values.about}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -292,20 +282,20 @@ export const  EditCVFormPartial = ({
             </Validation>
           </div>
 
-          <div className={classNames({ "mb-1": !formik.isValid })}>
-            <Label htmlFor="cvText">Write CV</Label>
+          <div className={classNames({ 'mb-1': !formik.isValid })}>
+            <Label htmlFor='cvText'>Write CV</Label>
             {/* <Validation
 							isValid={formik.isValid}
 							isTouched={formik.touched.cvText}
 							invalidFeedback={formik.errors.cvText}
 							validFeedback=''> */}
             <RichText
-              id="cvText"
+              id='cvText'
               value={cvTextValue}
-              className="min-h-48"
+              className='min-h-48'
               handleChange={(event) => {
                 formik
-                  .setFieldValue("cvText", event)
+                  .setFieldValue('cvText', event)
                   .then(() => {
                     setCvTextValue(event);
                   })

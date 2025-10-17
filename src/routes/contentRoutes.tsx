@@ -198,6 +198,8 @@ import BLOG from '../modules/Landing.module/pages/Blogs/page';
 import PRICING from '../modules/Landing.module/pages/Pricing/page';
 import BLOGPOST from '../modules/Landing.module/pages/BlogPosts/page';
 import DashboardAssistancePage from '../modules/AgencyAdmin.module/pages/SettingPage/DashboardAssistance/DashboardAssistance.page';
+import ExtentionPrivacy from '../modules/Landing.module/pages/Privacy/ExtentionPrivacy.page';
+import PrivacyPolicyPage from '../modules/Landing.module/pages/Privacy/MainPrivacy.page';
 
 const TeamClientsPage = lazy(() => import('../modules/Team.module/pages/ClientsPage/Clients.page'));
 const TeamJobsCreatePage = lazy(
@@ -253,6 +255,17 @@ const landingPagesRoutes = [
 		path: LandingPages.pricing.to,
 		element: <PRICING />,
 	},
+
+	{
+		path: LandingPages.privacy.to,
+		element: <ExtentionPrivacy />,
+	},
+
+	{
+		path: LandingPages.privacy.to+"-main",
+		element: <PrivacyPolicyPage />,
+	},
+	
 ];
 
 interface ContentRoutesType {

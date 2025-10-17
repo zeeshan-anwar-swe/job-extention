@@ -584,6 +584,24 @@ export const hideSingleJobToClient = createAsyncThunk(
 );
 
 
+export const uploadCandidateCV = createAsyncThunk(
+  "candidates/uploadCandidateCV",
+  async ({ formData, profileId }: { formData: FormData , profileId:string}, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/linkedin-candidate/${profileId}/upload-cv`,
+        formData,
+      );
+
+      return response.data.data;
+    } catch (error: any) {
+      toast.error("Error in uploading CV");
+      return await withAsyncThunkErrorHandler(error, rejectWithValue);
+    }
+  },
+);
+
+
 // Candidate Slice
 
 export const candidatesSlice = createSlice({

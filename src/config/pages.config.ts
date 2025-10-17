@@ -1069,6 +1069,19 @@ export const LandingPages = {
 		text: 'Pricing',
 		icon: 'HeroArrowRightOnRectangle',
 	},
+	privacy: {
+		id: 'privacy',
+		to: '/privacy-policy',
+		text: 'Privacy',
+		icon: 'HeroLockClosed',
+	},
+
+	privacyMain: {
+		id: 'privacyMain',
+		to: '/privacy-main',
+		text: 'Privacy Main',
+		icon: 'HeroLockClosed',
+	},
 };
 const pagesConfig = {
 	...examplePages,

@@ -167,6 +167,13 @@ export const EditCVRightPartial = ({ formik }: { formik: FormikProps<EditCVFormV
               View LinkedIn Profile
             </Button>
           </Link>
+          {cadnidateProfile?.resumeLink && (
+            <Link className='w-full' target='_blank' to={cadnidateProfile.resumeLink}>
+              <Button variant='solid' className='w-full' icon='HeroDocumentText'>
+                Download Attached CV
+              </Button>
+            </Link>
+          )}
 
           <Link className='w-full' to='/dashboard/candidates'>
             <Button className='w-full' variant='outline' color='zinc'>

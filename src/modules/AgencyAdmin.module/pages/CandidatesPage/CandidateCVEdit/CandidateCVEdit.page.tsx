@@ -21,6 +21,7 @@ import {
   getCandidateProfile,
   setCandidateProfile,
   updateCandidateProfile,
+  uploadCandidateCV,
 } from "../../../../../store/slices/Candiates.slice";
 import PageLoader from "../../../../../templates/layouts/main/PageLoader";
 import { getSocialLinkWithId } from "../../../../../utils/helper";
@@ -39,6 +40,7 @@ export type EditCVFormValues = {
   action: "create" | "update" | "";
   name: string;
   file: File | null;
+  cvFile: File | null;
   about: string;
   skills: string[];
   availabilty: string;
@@ -60,6 +62,10 @@ const CandidateCVEditPage = () => {
 
   const { state } = useLocation();
 
+  console.log({cadnidateProfile});
+  
+  
+
   const formik = useFormik({
     initialValues: {
       customCVTitle:"",
@@ -68,6 +74,7 @@ const CandidateCVEditPage = () => {
       name: "",
       skills: [],
       file: null,
+      cvFile: null,
       about: "",
       availabilty: "",
       roles: [],
@@ -124,6 +131,7 @@ const CandidateCVEditPage = () => {
         skills,
         GitHub,
         about,
+        cvFile,
         selectedJob,
       } = values;
 
@@ -134,6 +142,13 @@ const CandidateCVEditPage = () => {
         );
 
       const formData = new FormData();
+      const cvFormData = new FormData();
+
+      if( cvFile ){
+        cvFormData.append("file", cvFile);
+
+        await dispatch(uploadCandidateCV({profileId:cadnidateProfile.id, formData:cvFormData}));
+      }
 
       if (isShowImage) {
         if (file) {
